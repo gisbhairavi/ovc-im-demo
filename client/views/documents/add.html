@@ -1,0 +1,739 @@
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+        <h3 class="page-header" ng-show="{{titleadd}}">{{ovcLabel.directiveType.list.addNewDirectiveType}} </h3>
+		<h3 class="page-header" ng-show="{{titleedit}}"> {{ovcLabel.directiveType.list.editDirectiveType}}: {{direct_nam}} </h3>
+		
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+		<section ng-controller="TranstabCntrl as tab">
+			<div class="pro_menu  clearfix">
+				<ul class="nav nav-pills">
+					<li ng-class="{active:tab.isSet(1)}"><a href id="desc_detail" ng-click="tab.setTab(1)">{{ovcLabel.directiveType.list.description}}</a></li>
+					<li ng-class="{active:tab.isSet(2)}"><a href id="rule_detail" ng-click="tab.setTab(2)">{{ovcLabel.directiveType.list.ruleDefinition}}</a></li>
+				</ul>
+			</div>
+			
+			<form role="form" name="form" >
+					<!-- <br clearform-group="all" /><br clear="all" /> -->
+				<div class="ven_tblk clearfix">
+				<div class="row r_margin ng-scope">
+				<div class="col-md-12">
+				<div class="add_vendorb clearfix">
+			
+				<div ng-show="tab.isSet(1)">
+					<div class="col-lg-6 panleft">
+						<div class="panel-default">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+										
+										<div class="form-group">
+											<input type="hidden" ng-if="title == 'Edit'" name="id" ng-model="d_add.id" >
+											<label class="control-label ng-binding">{{ovcLabel.directiveType.list.editDirectiveType}}</label>
+											<input class="form-control" name="docid" ng-model="d_add.docid" placeholder="{{ovcLabel.directiveType.placeholder.directivetypes}}" required  ng-disabled="moldirtyp">
+											<span  ng-show="form.docid.$error.required  && submitted" class="alert alert-danger ng-binding" >{{ovcLabel.directiveType.error.directive_type}}</span>
+										</div>
+																	
+										<div class="form-group">
+											<label class="control-label">{{ovcLabel.directiveType.labels.directive_name}}</label>
+											<input class="form-control" name="docname" ng-model="d_add.docname" placeholder="{{ovcLabel.directiveType.placeholder.directive_name}}" required  ng-disabled="moldirtyp">
+											<span  ng-show="form.docname.$error.required  && submitted" class="alert alert-danger ng-binding" >{{ovcLabel.directiveType.error.directive_name}}</span>
+										</div>
+																	
+										<div class="form-group">
+											<label class="control-label">{{ovcLabel.directiveType.labels.description}}</label>
+											<input class="form-control" name="docdesc" ng-model="d_add.docdesc" placeholder="{{ovcLabel.directiveType.placeholder.description}}"  ng-disabled="moldirtyp">
+																				
+										</div>
+																	
+																	
+										<div class="form-group">
+											<label>{{ovcLabel.directiveType.labels.status}}</label>
+											<br>
+											<div class="btn-group ng-scope"  ng-if='moldirtyp==true' >
+												<label class="rdio_btn  radio_disabled">
+													<input type="radio" value = "1" ng-model="d_add.status" name = "status" class = "required" 	ng-checked="{{status}}" />
+													<p class="{{newclass1}}">{{ovcLabel.directiveType.labels.active}}</p>
+												</label>
+											
+												<label class ="rdio_btn radio_disabled"  >
+													<input type="radio" value = "0" ng-model="d_add.status" name = "status" class = "required"  />
+													<p class="{{newclass2}}">{{ovcLabel.directiveType.labels.inactive}}</p>
+												</label>
+											</div>
+											<div class="btn-group ng-scope"  ng-if='moldirtyp==false' >
+												<label class="rdio_btn" ng-click="changeclass1()" >
+													<input id="active_checkbx" type="radio" value = "1" ng-model="d_add.status" name = "status" class = "required" 	ng-checked="{{status}}" />
+													<p class="{{newclass1}}">{{ovcLabel.directiveType.labels.active}}</p>
+												</label>
+											
+												<label class ="rdio_btn" ng-click="changeclass2()" >
+													<input id="inactive_checkbx" type="radio" value = "0" ng-model="d_add.status" name = "status" class = "required"  />
+													<p class="{{newclass2}}">{{ovcLabel.directiveType.labels.inactive}}</p>
+												</label>
+											</div>
+										</div>
+										
+		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="panel-default">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+
+												<label class="control-label ng-binding">{{ovcLabel.directiveType.labels.link_transaction_type}}</label>
+												
+													<select ng-options=" tran.tranTypeId as tran.tranName for tran in tran_datas  | orderBy:'tranName' " class="form-control" name="transactionTypeId"
+			  ng-model="d_add.transactionTypeId" ng-change="GetSelectedTransaction(d_add.transactionTypeId)"   ng-disabled="moldirtyp"  required><option value="">{{ovcLabel.directiveType.placeholder.empty_tran_type}}</option></select>
+													<span  ng-show="form.transactionTypeId.$error.required  && submitted" class="alert alert-danger ng-binding" >{{ovcLabel.directiveType.error.sel_linktrans}}</span>
+										</div>
+										
+										<div class="form-group">
+											<label class="control-label">{{ovcLabel.directiveType.labels.req_fields}}</label>
+											<a href id="docs_detail"  ng-hide="true" ng-click="select_alldocs()" class="btn btn-primary">{{ovcLabel.directiveType.labels.carrier_alpha_code}}</a>
+											<a href id="selreq_detail"  ng-hide="true" ng-click="select_reqs()" class="btn btn-primary">{{ovcLabel.directiveType.labels.carrier_alpha_code}}</a>
+											<table style="width: 480px" ng-if="title == 'Add'">
+											  <tbody>
+												<tr>
+												  <td  ng-hide="true" >
+													<div dropdown-multiselectdoc="" items="FirstItems" selected-items="FirstSelectedItems" ></div>
+													
+												  </td>
+												  <td>
+													<div>
+													  <div style="float: left;padding:5px 5px 0px 5px;border:2px solid #efefef; margin-right:2px;" ng-repeat="firstItem in FirstSelectedItems">
+														<label>
+																	{{firstItem.description}}</label>
+														<!-- <a ng-click="removeFirstItem(firstItem)">
+																	X</a> -->
+													  </div>
+													</div>
+												  </td>
+												</tr>
+												</tbody>
+											</table>
+											
+											<table style="width: 480px" ng-if="title == 'Edit'">
+											  <tbody>
+												<tr>
+												  <td   ng-hide="true">
+													<div dropdown-multiselectdoc="" items="SecondItems" selected-items="SecondSelectedItems"></div>
+												  </td>
+												  <td>
+													<div>
+													  <div style="float: left;padding:5px 5px 0px 5px;border:2px solid #efefef;margin-right:2px;" ng-repeat="secondItem in SecondSelectedItems">
+														<label>
+																	{{secondItem.description}}</label>
+														<!-- <a ng-click="removeFirstItem(secondItem)">
+																	X</a> -->
+													  </div>
+													</div>
+												  </td>
+												</tr>
+												</tbody>
+											</table>
+											<span  ng-show="fieldsrequired  && submitted" class="alert alert-danger ng-binding" >{{ovcLabel.directiveType.error.sel_reqfields}}</span>
+												
+										</div>			
+										
+										
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			<div ng-show="tab.isSet(2)">
+			<div class="trans_blk">
+				<div class="col-md-12" ng-if="title=='Add'">
+					
+					<div class="col-md-6">
+									
+						<div class="col-md-12">
+													
+							<fieldset>
+												
+										<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.directiveType.labels.physical_balances}}</label></legend>
+								<div class="col-md-12">
+													
+										<div class="form-group">
+										<label class="trans_ti">{{ovcLabel.directiveType.labels.balance_fields}}</label>
+										</div>
+													
+										<div class="form-group col-md-12 clearfix">
+													
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.no_action}}</label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.add}} </label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.subtract}}</label>
+										</div>
+										</div>
+											<div class="option_fst clearfix">		
+										<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in translist['BALFIELDS'] ">
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										<i class="fa fa-exclamation-circle"></i>&nbsp;
+										<label class="control-label">{{data.rulename}} </label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" ng-model="balanlist[data.rulelabel]" name="{{data.rulelabel}}"  ng-disabled="true"  value="Noaction" />
+										<img class="c_disabled" />
+										</label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}"  ng-model="balanlist[data.rulelabel]"   ng-disabled="true"  value="Add" />
+										 <img class="c_disabled" />
+										</label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"   ng-disabled="true"  value="Subtract" />
+										 <img class="c_disabled" />
+										</label>
+										</div>
+													
+										</div> 
+											</div>		
+										<hr width="100%">
+													
+										<div class="form-group">
+										<label>{{ovcLabel.directiveType.labels.held_stock}}</label>
+										</div>
+													
+										<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in translist['HELDSTOCK'] ">
+														
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										<i class="fa fa-exclamation-circle"></i>&nbsp;
+										<label class="control-label">{{data.rulename}} </label>
+										</div>
+															
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" ng-disabled="true"  value="Noaction" />
+										<img class="c_disabled" />
+										</label>
+										</div>
+															
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true"  value="Add" />
+										 <img class="c_disabled" />
+										</label>
+										</div>
+															
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true" value="Subtract" />
+										<img class="c_disabled" />
+										</label>
+										</div>
+									</div>
+													
+								</div>
+							</fieldset>
+						</div>	
+									
+						<div class="col-md-12">
+													
+							<fieldset>
+															
+								<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.directiveType.labels.calculated_fields}}</label></legend>
+													
+									<div class="form-group col-md-12 clearfix">
+												
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										</div>
+																
+										<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.no_action}}</label>
+										</div>
+													
+										<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.recalc}} </label>
+										</div>
+													
+										<div class="col-md-2 col-sm-3 col-xs-4">
+										<!-- <label class="control-label">Subtract: </label> -->
+										</div>
+									</div>
+															
+									<div class="form-group col-md-12 balanceoh clearfix"  ng-repeat="data in translist['CALCFIELDS'] ">
+														
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										<i class="fa fa-exclamation-circle"></i>&nbsp;
+										<label class="control-label">{{data.rulename}} </label>
+										</div>
+																
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true" value="Noaction" />
+										<img class="c_disabled" />
+										</label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+										<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true" value="Recalculate" />
+										<img class="c_disabled" />
+										</label>
+										</div>				
+									</div>
+															
+							</fieldset>			
+											
+						</div>
+					</div>
+									
+					<div class="col-md-6">
+												
+							<div class="col-md-12">
+													
+								<fieldset>
+									
+											<legend>
+												<!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth"> {{ovcLabel.directiveType.labels.status_balances}}</label>
+											</legend>
+																	
+											<div class="col-md-12 clearfix">
+																		
+											<div class="form-group">
+																
+												<label class="trans_tit">{{ovcLabel.directiveType.labels.goods_in}} </label>
+															
+											</div>
+															
+											<div class="form-group col-md-12 clearfix">
+													
+											<div class="col-md-6 col-sm-3 col-xs-12">
+																
+											</div>
+																
+											<div class="col-md-2 col-sm-3 col-xs-4">
+																	
+												<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.no_action}} </label>
+																
+											</div>
+																
+											<div class="col-md-2 col-sm-3 col-xs-4">
+																	
+												<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.add}} </label>
+																
+											</div>
+																
+											<div class="col-md-2 col-sm-3 col-xs-4" >
+																	
+												<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.subtract}}</label>
+																
+											</div>
+											</div>
+												<div class="option_fst clearfix">	
+											<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in dranslist['GOODSIN'] ">
+																
+											<div class="col-md-6 col-sm-3 col-xs-12">
+																	
+												<i class="fa fa-exclamation-circle"></i>&nbsp;
+												<label class="control-label">{{data.rulename}} </label>
+																
+											</div>
+																
+											<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+												<input type="radio" id="Noaction{{data.rulelabel}}" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]" 							value="Noaction" />
+												<img />
+												</label>
+											</div>
+																				
+											<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+												<input type="radio" id="Add{{data.rulelabel}}" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]" 							value="Add" />
+												<img />
+												</label>
+											</div>
+																
+											<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+												<input type="radio" id="Subtract{{data.rulelabel}}" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]" 							value="Subtract" />
+												<img />
+												</label>
+																
+											</div>
+															
+										</div>
+											</div>					
+											<hr width="100%">
+															
+											<div class="form-group">
+																				
+											<label class="trans_tit">{{ovcLabel.directiveType.labels.goods_out}} </label>
+											</div>
+																			
+											<div class="form-group col-md-12 balanceoh clearfix"  ng-repeat="data in dranslist['GOODSOUT'] ">
+																
+											<div class="col-md-6 col-sm-3 col-xs-12">
+												<i class="fa fa-exclamation-circle"></i>&nbsp;
+												<label class="control-label">{{data.rulename}} </label>
+											</div>
+																
+											<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+												<input type="radio" id="Noaction{{data.rulelabel}}" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]" 			value="Noaction" />
+												<img />
+												</label>
+											</div>
+																			
+											<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+												<input type="radio" id="Add{{data.rulelabel}}" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]" 			value="Add" />
+												<img />
+												</label>
+											</div>
+																			
+											<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+												<input type="radio" id="Subtract{{data.rulelabel}}" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]" 		value="Subtract" />
+												<img />
+												</label>
+											</div>
+																			
+										</div>
+																		
+									</div>		
+												
+								</fieldset>
+								
+							</div>
+									
+					</div>
+									
+				</div>
+				
+				<!----add completed---->
+				
+				<div class="col-md-12" ng-if="title=='Edit'">
+					<div class="trans_blk">
+					<div class="col-md-6 col-sm-12">
+					
+						<div class="col-md-12">
+									
+							<fieldset>
+								
+								<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.directiveType.labels.physical_balances}}</label></legend>
+								<div class="col-md-12">
+									
+									<div class="form-group">
+										<label>{{ovcLabel.directiveType.labels.balance_fields}}</label>
+									</div>
+									
+									<div class="form-group col-md-12 clearfix">
+									
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.no_action}}</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.add}} </label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.subtract}}</label>
+										</div>
+									</div>
+									<div class="option_fst clearfix">
+									<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in translist['BALFIELDS']">
+										<div class="col-md-6 col-sm-3 col-xs-12">
+											<i class="fa fa-exclamation-circle"></i>&nbsp;
+											<label class="control-label">{{data.rulename}} </label>
+										</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input type="radio" ng-model="balanlist[data.rulelabel]"name="{{data.rulelabel}}"  ng-disabled="true"    value="Noaction" />
+											 <img class="c_disabled" />
+										</label>
+									</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input type="radio" name="{{data.rulelabel}}"  ng-model="balanlist[data.rulelabel]"   ng-disabled="true"  value="Add" />
+											 <img class="c_disabled" />
+										</label>
+									</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"   ng-disabled="true" value="Subtract" />
+											 <img class="c_disabled" />
+										</label>
+									</div>
+									
+									</div> 
+									</div>
+									<hr width="100%">
+									
+									<div class="form-group">
+											<label>{{ovcLabel.directiveType.labels.held_stock}}</label>
+									</div>
+									<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in translist['HELDSTOCK']">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+												<i class="fa fa-exclamation-circle"></i>&nbsp;
+												<label class="control-label">{{data.rulename}} </label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" ng-disabled="true"  value="Noaction" />
+													 <img class="c_disabled" />
+												</label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true" value="Add" />
+													 <img class="c_disabled" />
+												</label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" ng-disabled="true"  value="Subtract" />
+													 <img class="c_disabled" />
+												</label>
+										</div>
+									</div>
+									
+								</div>
+							</fieldset>
+						</div>	
+					
+						<div class="col-md-12">
+									
+							<fieldset>
+											
+											<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.directiveType.labels.calculated_fields}}</label></legend>
+									
+								<div class="form-group col-md-12 clearfix">
+									
+									<div class="col-md-6 col-sm-3 col-xs-12">
+									</div>
+												
+									<div class="col-md-2 col-sm-3 col-xs-4" >
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.no_action}}</label>
+									</div>
+									
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.recalc}} </label>
+									</div>
+									
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<!-- <label class="control-label">Subtract: </label> -->
+									</div>
+								</div>
+											
+								 <div class="form-group col-md-12 balanceoh clearfix"  ng-repeat="data in translist['CALCFIELDS'] ">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+													<i class="fa fa-exclamation-circle"></i>&nbsp;
+													<label class="control-label">{{data.rulename}} </label>
+										</div>
+												
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true" value="Noaction" />
+												 <img class="c_disabled" />
+											</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"  ng-disabled="true" value="Recalculate" />
+													 <img class="c_disabled" />
+												</label>
+										</div>				
+								</div>
+											
+							</fieldset>			
+							
+						</div>
+					</div>
+					
+					<div class="col-md-6 col-sm-12option_fst">
+								
+						<div class="col-md-12">
+									
+							<fieldset>
+								<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.directiveType.labels.status_balances}}</label></legend>
+											
+								<div class="col-md-12">
+												
+									<div class="form-group">
+										
+										<label class="trans_tit">{{ovcLabel.directiveType.labels.goods_in}} </label>
+									
+									</div>
+									
+									<div class="form-group col-md-12 clearfix">
+									
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											
+											<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.no_action}} </label>
+										
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											
+											<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.add}} </label>
+										
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											
+											<label class="control-label trans_tit">{{ovcLabel.directiveType.labels.subtract}}</label>
+										
+										</div>
+									</div>
+							<div class="option_fst clearfix">
+									 <div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in dranslist['GOODSIN']">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+											
+											<i class="fa fa-exclamation-circle"></i>&nbsp;
+											<label class="control-label">{{data.rulename}} </label>
+										
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]"  ng-disabled="moldirtyp" value="Noaction" />
+												<img  ng-if='moldirtyp==false' />
+												<img class="c_disabled" ng-if='moldirtyp==true' >
+											</label>
+										</div>
+														
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]"  ng-disabled="moldirtyp" value="Add" />
+												<img  ng-if='moldirtyp==false' />
+												<img class="c_disabled" ng-if='moldirtyp==true' >
+											</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]"  ng-disabled="moldirtyp" value="Subtract" />
+												<img  ng-if='moldirtyp==false' />
+												<img class="c_disabled" ng-if='moldirtyp==true' >
+											</label>
+										
+										</div>
+									
+									</div>
+										</div>
+									<hr width="100%">
+									
+									<div class="form-group">
+														
+									<label class="trans_tit">{{ovcLabel.directiveType.labels.goods_out}} </label>
+									</div>
+													
+									<div class="form-group col-md-12 balanceoh clearfix"  ng-repeat="data in dranslist['GOODSOUT']">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+											<i class="fa fa-exclamation-circle"></i>&nbsp;
+											<label class="control-label">{{data.rulename}} </label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]"  ng-disabled="moldirtyp" value="Noaction" />
+												<img ng-if='moldirtyp==false' />
+												<img class="c_disabled" ng-if='moldirtyp==true' >
+											</label>
+										</div>
+													
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]"  ng-disabled="moldirtyp" value="Add" />
+												<img ng-if='moldirtyp==false' />
+												<img class="c_disabled" ng-if='moldirtyp==true' >
+											</label>
+										</div>
+													
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input type="radio" name="{{data.rulelabel}}" ng-model="doclist[data.rulelabel]"  ng-disabled="moldirtyp" value="Subtract" />
+												<img  ng-if='moldirtyp==false' />
+												<img class="c_disabled" ng-if='moldirtyp==true' >
+											</label>
+										</div>
+													
+									</div>
+												
+								
+											
+								</div>		
+						
+							</fieldset>
+				
+						</div>
+					
+					</div>
+					
+				</div>
+				</div>
+			</div>
+			</div>
+
+			
+			<div class="col-md-12">
+				<div class="pull-right">
+				<a ng-click="add_error()">
+				<button id="ovcSave" class="btn btn-primary ng-binding" ng-click="document_add(d_add,doclist)"   ng-disabled="moldirtyp" type="submit">{{ovcLabel.directiveType.buttons.save}}</button>
+				</a>
+				<a href name="commonCancel" ng-click="document_cancel()"><button class="btn btn-primary ng-binding" >{{ovcLabel.directiveType.buttons.cancel}}</button></a>
+
+				</div>
+			</div>
+			
+			</div>
+			</div>
+			</div>
+			</div>
+			</form>
+		</section>
+	</div>
+</div>
+		
+		

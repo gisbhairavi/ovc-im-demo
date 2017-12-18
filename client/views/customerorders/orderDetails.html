@@ -1,0 +1,120 @@
+<div class="col-lg-12" ng-controller="stylematrixctrl">
+	<div class="stk_sear">
+		<div class="col-md-12">
+			<div class="col-md-6 col-sm-8 col-xs-8">
+				<ovcautocomplete attr-input-name="commonskuSearch" attr-input-class="sku_result form-control" class="search_scroll" ng-model="customerorders.skuresult" attr-input-id = "prodresult" id="slpsearch" attr-placeholder="{{translation.messages[0].search_by_sku}}..." click-activation="false" data="newmodule.addedproducts" on-type="dosrchproduct" on-select="doSelectproduct" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+			</div>
+			<div class="col-md-2 col-sm-2 col-xs-2">
+				<button name="customer_order_add" type="submit" class="btn btn-primary pull-right" ng-click="addSkus(customerorders);"><i class="fa fa-plus"></i> {{translation.buttontypes[0].add}}</button>
+			</div>
+		</div>
+
+	</div>
+	<div class="erroralert col-md-6">
+		<span ng-show="tab.error['skuresult']" class="alert alert-danger">{{tab.errormsg['skuresult']}}</span>
+	</div>
+
+	
+	<div ng-if="loadmat == true">
+		<img src="images/loading.gif" />
+	</div>
+	<div class="col-lg-12" ng-show="showstyle"  id="dropstylematrix"></div> 
+	<div class="col-sm-12" style="margin-top:20px;">
+		<div class="ven_tbody ">
+			<div class="ven_tbody">
+				<div>
+					<vendor-group status="draft" ></vendor-group>
+				</div>
+			</div>
+								<!-- /.panel -->
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<button name="co_nextbtn"type="button" class="btn btn-primary pull-right" ng-click="nextpage(customerorders,1);">{{translation.buttontypes[0].next}}</button>
+	</div>
+    <div class="select_reason">
+	<script type="text/ng-template" id="vendormodal.html">
+		<div class="modal fade"  id="vendormodal" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					<!-- {{dropship}}------------- -->
+						<button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">{{translation.vendors[0].select_vendor_for_skus}}</h4>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12" ng-repeat="(key,skuvendors) in dropship.skuvendors"  ng-if="key !='skutype'">
+							<div class="col-md-12">
+								<label class="col-md-2" >{{translation.returnreceipt.sku}}:</label><span>{{key}}</span>
+							</div>
+							<div class="col-md-12 balanceoh" ng-repeat="vendors in skuvendors">
+								<label style="margin: 0% 0% 5% 8%;float: left;" class="ng-binding col-md-6"> {{vendors.vendorname}} :
+								</label>
+								<span class="balradio">
+									<label>				
+									<input type="radio" name="{{key}}" ng-model="dropship.selectedskuvendors[key]" value="{{vendors.vendorid}}"  />
+									<img />
+									</label>
+								</span>						
+							</div>
+							<div ng-show="reasonform.error" class="col-md-12">
+
+								<span class =  "col-md-12" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+
+									{{reasonform.errormessage}}
+
+								</span>
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" ng-click="close('No')" class="btn btn-primary" data-dismiss="modal">{{translation.buttontypes[0].cancel}}</button>
+						<button type="button" ng-click="close(dropship)" class="btn btn-primary" data-dismiss="modal">{{translation.buttontypes[0].ok}}</button> 
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	</div>
+</div>
+<style>
+#vendormodal .modal-dialog{
+	position: absolute;
+    top: 30%;
+    left: 30%;
+}
+#vendormodal .modal-header {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #336699;
+    color: #fff;
+}
+#vendormodal .modal-body {
+    position: relative;
+    padding: 10px;
+    border: none !important;
+    max-height: 350px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#vendormodal .modal-footer {
+    padding: 10px 15px;
+    text-align: center;
+    border-top: none !important;
+}
+
+#vendormodal .close {
+    font-size: 24px;
+    color: #ffffff;
+    opacity: 1;
+}
+
+#vendormodal .modal-header > h4{
+font-size: 18px;
+font-weight: bold;
+}
+
+</style>

@@ -1,0 +1,67 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.stockLocation.add_stockLocation}}:</h3>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+  
+			<form role="form" name="form" angular-validator-submit="addLocation(loc)" novalidate angular-validator>
+			<div class="ven_tblk stock_loc clearfix">
+			<div class="row r_margin ng-scope">
+				<div class="col-lg-12">
+				<div class="add_vendorb clearfix">
+					<div class="col-lg-5 addlocation" style="padding: 0px;">
+					<div class=" panel-default">
+					<div class="panel-body">
+						<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group col-md-10 col-xs-12 col-sm-12" style="padding: 0px;">
+								<label class="control-label">{{ovcLabel.stockLocation.store}}: </label><br />
+								
+								<select id="stockingStore" ng-options="col.id as col.displayName for col in store_datas"  class="form-control" name="locationId" ng-model="loc.locationId" ng-change="getparent_datas(loc.locationId)" validator = "myCustomValidator(loc.locationId)" required-message="'{{ovcLabel.stockLocation.error.store_select}}'" required><option value="">-- {{ovcLabel.stockLocation.placeholder.select_store}} --</option></select>
+							</div>
+							<div class="form-group col-md-10 col-xs-12 col-sm-12" style="padding: 0px;">
+								<label class="control-label">{{ovcLabel.stockLocation.parent_location_id}}: </label>
+								<select id="parentLocationId" ng-options="prnt._id as prnt.stockingLocationId for prnt in parent_loc_datas" style="float: left;" class="form-control" name="parentStockingLocationId" ng-model="loc.parentStockingLocationId"><option value="">-- {{ovcLabel.stockLocation.placeholder.sel_parlocid}} --</option></select>
+							</div>
+							
+							<div class="form-group col-md-10 col-xs-12 col-sm-12" style="padding:0">
+								<label class="control-label">{{ovcLabel.stockLocation.stock_location_id}}: </label>
+								<input id= "stockingLocationId" class="form-control stockingLocationId" ng-trim="false" ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="{{ovcLabel.stockLocation.placeholder.ent_stklocid}}" ng-model="loc.stockingLocationId" name="stockingLocationId" validator = "myCustomValidator(loc.stockingLocationId)" required-message="'{{ovcLabel.stockLocation.stock_locn}}'" invalid-message="'{{ovcLabel.stockLocation.stock_white_space_error}}'" required>
+							</div><br clear="all" />
+							
+							<div class="form-group col-md-10 col-xs-12 col-sm-12" style="padding:0">
+								<label class="control-label">{{ovcLabel.stockLocation.location_name}}: </label>
+								<input id="locationName" class="form-control locationName" placeholder="{{ovcLabel.stockLocation.placeholder.ent_location_name}}" ng-model="loc.locationName" name="locationName" validator = "myCustomValidator(loc.locationName)" required-message="'{{ovcLabel.stockLocation.error.stock_locn}}'" required>
+							</div>
+							<div class="form-group col-md-10 col-xs-12 col-sm-12" style="padding:0">
+								<label class="control-label">{{ovcLabel.stockLocation.description}}: </label>
+								<textarea id="stockingDescription" class="form-control stockingLocationDescription" rows="3" name="stockingLocationDescription" ng-model="loc.stockingLocationDescription"></textarea>
+							</div>
+							<br clear="all" />
+							<div class="form-group">
+								<div class="balanceoh"><div class="balradio"><label><input id="checkActive" type="checkbox" name="isActive" class="checkbox_chk" ng-model="loc.isActive" 
+								ng-init="loc.isActive=false" ng-checked="true"> <img class="mar_r squ_box" />{{ovcLabel.stockLocation.active}}</label></div></div>
+							</div><br clear="all" />
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					<div class="save_can acc_det clearfix">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button type="submit" class="btn btn-primary" id="ovcSave" ng-click="submitted=true">{{ovcLabel.stockLocation.button.save}}</button>
+							<a ui-sref="ovc.location-list" name="commonCancel" class="btn btn-primary"> {{ovcLabel.stockLocation.button.cancel}}</a>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					<!-- /.panel -->	
+			</form>
+		
+    <!-- /.col-lg-12 -->

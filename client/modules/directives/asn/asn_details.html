@@ -1,0 +1,12 @@
+<div style = "padding-top:20px;">
+	<form style="margin-bottom: 14px;" class="clearfix">
+		<div class="col-sm-7 coll-xs-12">
+			<autocomplete attr-input-class="form-control" attr-input-id="looksearch"  id="slpsearch" ng-model="asn_details_obj.searchText" attr-placeholder="{{translation.messages[0].search_by_sku}}..." click-activation="false" data="transactions" on-type="dosrchproduct" on-select="doSelectproduct" ng-model-options ="{ updateOn: 'default', debounce: {'default': 300} }" ></autocomplete>
+		</div>
+		<div class="col-sm-5 col-xs-12"><input type="submit" class="btn btn-primary" value="Add" ng-click="addSkus();" />
+		</div>
+	</form>
+
+	<asn-table mode="edit"></asn-table>
+	
+</div>

@@ -1,0 +1,44 @@
+{
+    "recoData": [
+        {
+            "img": "widgets/recommendation-widget/images/shirt_1.png",
+            "description": "Wu Slacks",
+            "price": "$59.99"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_2.png",
+            "description": "Soho Shimmer",
+            "price": "$70.00"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_3.png",
+            "description": "The Stiletto",
+            "price": "$150.00"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_4.png",
+            "description": "Stiletto Boot",
+            "price": "$150.00"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_6.png",
+            "description": "The Stiletto",
+            "price": "$150.00"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_5.png",
+            "description": "Stiletto Boot",
+            "price": "$150.00"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_2.png",
+            "description": "The Stiletto",
+            "price": "$150.00"
+        },
+        {
+            "img": "widgets/recommendation-widget/images/shirt_1.png",
+            "description": "Stiletto Boot",
+            "price": "$150.00"
+        }
+    ]
+}

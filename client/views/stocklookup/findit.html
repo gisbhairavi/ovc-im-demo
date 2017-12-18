@@ -1,0 +1,186 @@
+<button class="col-md-12 text-left btn btn-default" ng-if="stocklookup" ng-click="back()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ovcLabel.findit.list.backtostocklookup}}
+</button>
+<div style="height: 900px;">
+<div class="row header_blk ng-scope">
+    <div class="col-lg-12">
+        <h3 class="page-header">{{ovcLabel.findit.list.heading}}</h3>
+    </div>
+</div>
+<div class="panel-body search_box" id="searchboxstklook">
+    <div class="row">
+        <form role="form" name="form">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="col-md-12 stk_sear" style="padding:0;">
+                    <ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="looksearchfindit" id="slpsearch" ng-model="ship.result" attr-placeholder="{{ovcLabel.findit.placeholder.search}}" click-activation="false" data="transactions" on-type="dosrchproduct" on-select="doSelectproduct" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 stk_sear col-xs-12 find_btn">
+                <a class="btn btn-primary" id="ovcSearchBtn" ng-click="searchfindit(ship)">{{ovcLabel.findit.buttons.find_it}}</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <div class="row" id="finditstylematrix"></div>
+</div>
+<div>
+    <div class="panel-body" ng-if="showstores">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div>
+                    <p>{{ovcLabel.findit.labels.sku}} : {{action.selecetedSku}}</p>
+                    <p>{{action.skuDescription}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <!-- <div class="col-md-8">
+      <div class="col-sm-3 pad_style">
+        <label class="control-label">{{ovcLabel.findit.labels.shiptostore}}
+        </label>    
+        <select ng-options="col.id as col.displayName for col in findstore.storedatas " class="form-control" name="locationId"  ng-model="findstore.locationId" ng-change="srchstoredetail(findstore.locationId)" >
+            <option value="">-{{ovcLabel.findit.labels.selectstore}}-</option>
+        </select>
+      </div>
+    </div> -->
+            <!--    </br>
+      -->
+            <div class="col-md-8 container">
+                </br>
+                <div>
+                    <div class="panel panel-default panel-size text-center" ng-click="collapse_franchies=!collapse_franchies">
+                        <div>
+                            <h4>{{ovcLabel.findit.labels.franchies}}</h4>
+                        </div>
+                    </div>
+                    <div ng-show="collapse_franchies">
+                        <div ng-if="storevalue.siblingstores.length > 0">
+                            <table class="table table-hover table-fix find_table">
+                                <tbody>
+                                    <tr ng-repeat="key in franchies1 | limitTo:limit ">
+                                        <td class="col-xs-5" style="font-size: 16px;"><b>{{key.displayName}}</b>
+                                        </td>
+                                        <td class="col-xs-4">{{key.streetName}}</td>
+                                        <td class="col-xs-2">
+                                            <!--  <a ng-if="!sample[key.id] key.id in loc">{{key.atsvalue}}</br>{{ovcLabel.findit.labels.available}} </a> -->
+                                             <a ng-if="!userObj" ng-click="sample[key.id] ? redirect(action.selecetedSku,key.id,key.displayName ):angular.noop()" ng-class="{'no-link' : (!sample[key.id])}"> {{key.atsvalue}}</br>{{ovcLabel.findit.labels.available}}</a>
+                                            <div ng-if="userObj" ng-class="{'no-link' : (!sample[key.id])}"> {{key.atsvalue}}</br>{{ovcLabel.findit.labels.available}}</div>
+                                        </td>
+                                        <td class="col-xs-2" ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currencylabel[currencylist[key.id]]}} {{key.cost |number:2}} </td>
+                                        <td class="col-xs-4">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="draftordernumber('IBT_M',key.id,key.atsvalue)">{{ovcLabel.findit.labels.transfer}}</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <center class="more_btn_neg">
+                            <a ng-show="franchies1.length>3&& franchies1.length != limit" ng-click="loadmore()">{{ovcLabel.findit.buttons.showmore}}<i class="fa fa-arrow-down"></i></a>
+                            <a ng-show="limit==franchies1.length" ng-click="loadless()">{{ovcLabel.findit.buttons.showless}}<i class="fa fa-arrow-up"></i></a>
+                        </center>
+                        <span ng-if="storevalue.siblingstores.length == 0"> <h4 class="textalign">{{ovcLabel.findit.labels.nofranchise}}</h4> </span>
+                    </div>
+                </div>
+                <div>
+                    </br>
+                    <div class="panel panel-default panel-size  text-center" ng-click="collapse_vendor=!collapse_vendor">
+                        <div>
+                            <h4>{{ovcLabel.findit.labels.vendor}} </h4>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="storevalue.vendorsvalue.length > 0">
+                    <table ng-show="collapse_vendor" class="table table-hover table-fix">
+                        <tbody>
+                            <tr ng-repeat="vendor in storevalue.vendorsvalue">
+                                <td class="col-xs-4" style="font-size: 16px;"><b>{{vendor.companyName}}</b></td>
+                                <td class="col-xs-4">
+                                    <!-- {{vendor.address1}} {{vendor.address2}} -->
+                                </td>
+                                <td class="col-xs-4">
+                                    <!-- {{vendor.country}}  -->
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="draftordernumber('MAN',vendor._id)">{{ovcLabel.findit.labels.purchase}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="vendors" ng-if="storevalue.vendorsvalue.length == 0">
+                    <span> <h4 class="textalign">{{ovcLabel.findit.labels.novendor}}</h4> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog finditpopupbox" style="vertical-align: middle;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" ng-click="reset()" class="close" data-dismiss="modal">&times;
+                        </button>
+                        <h3 class="modal-title text-center">{{findstore.transferName}} </h3>
+                    </div>
+                    <div class="modal-body" ng-class=" (findstore.showError || findstore.errorloc)  ? '': 'searchboxcss'">
+                        <div>
+                            <div ng-show="!purchase">
+                                <label class="control-label">{{ovcLabel.findit.labels.shiptostore}}
+                                </label>
+                                <select ng-if="config.organization_name == organizationStruct['2']" id="orderselect1" ng-options="col.id as col.displayName for col in storevalue.popupLoc" class="form-control popup"  name="locationId"  ng-model="findstore.locationId" ng-change="get_draft('IBT_M',findstore.locationId);locConfirm()">
+                                    <option value="">-- {{ovcLabel.findit.labels.selectstore}} --   </option></select>
+                                <select ng-if="config.organization_name == organizationStruct['1']" class="form-control orderstore" id="orderselect1" name="orderstore" ng-model="findstore.locationId" ng-change="get_draft('IBT_M',findstore.locationId);locConfirm()">
+                                    <option value="">-- {{ovcLabel.findit.labels.selectstore}} --</option>
+                                    <option ng-repeat="item in CorparateLocation" value="{{ item.id }}" ng-disabled="{{item.type}}">
+                                    {{ item.indent }} {{ item.displayName }}
+                                    </option>
+                                </select>
+                                <div class="erroralert" ng-if="findstore.showError">
+                                    <span class="alert alert-danger">Please Select Store</span>
+                                </div>
+                            </div>
+                            <div ng-show="purchase">
+                                <label class="control-label">{{ovcLabel.findit.labels.shiptostore}}
+                                </label>
+                                <select class="form-control orderstore" id="orderselect1" name="orderstore" ng-model="findstore.locationId" ng-change="get_draft('MAN',findstore.locationId);locConfirm()">
+                                    <option value="">-- {{ovcLabel.findit.labels.selectstore}} --</option>
+                                    <option ng-repeat="item in storevalue.popupLoc" value="{{ item.id }}" ng-disabled="{{item.type}}">
+                                    {{ item.indent }} {{ item.displayName }}
+                                    </option>
+                                </select>
+                                <div class="erroralert" ng-if="findstore.showError">
+                                    <span class="alert alert-danger">Please Select Store</span>
+                                </div>
+                            </div>
+                            <label class="control-label">{{ovcLabel.findit.labels.quantity}}: </label>
+                            <input class="form-control popup" only-digits type="number" ng-model="findstore.skuqty" ng-change="checkAtsQty(findstore.ordertype,findstore.locationId,findstore.skuqty)" min="0">
+                            <!-- <autocomplete ng-if="posWidget" attr-input-class="form-control " attr-input-id="finditsearch" ng-model="findstore.searchvalue" id="findsearch" click-activation="false" attr-placeholder="{{ovcLabel.findit.placeholder.search}}" data="findstore.ordernumbers"  on-type="ordernumbernew" on-select="ordernumbernew">
+                            </autocomplete> -->
+                            <!-- <div class="alert alert-danger" role="alert" ng-if="findstore.errorMsg" ><span>
+                                Please Select Location
+                            </span></div> -->
+                            <div class="erroralert" ng-if="findstore.errorloc">
+                                    <span class="alert alert-danger">Please Select Order Number</span>
+                                </div>
+                        </div>
+                        </br>
+                    </div>
+                    </br>
+                    </br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="reset()">{{ovcLabel.findit.buttons.cancel}}
+                        </button>
+                        <button  type="button" ng-if="!purchase" class="btn btn-primary" ng-disabled="findstore.saveasdraft" ng-click="saveasdraft('neworder','submitted')">{{ovcLabel.findit.labels.transfer}} 
+                        </button>
+                        <button type="button" ng-if="posWidget" class="btn btn-primary" ng-disabled="findstore.saveasdraft" ng-click="saveasdraft('neworder','draft')">{{ovcLabel.findit.buttons.saveasdraft}}
+                        </button>
+                        <!-- <button type="button" ng-if="posWidget" class="btn btn-primary" ng-disabled="findstore.addtoexist" ng-click="saveasdraft('existingorder')">{{ovcLabel.findit.buttons.addtoexist}}
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ng-if = "config.action.stockPr.pfind" -->
+</div>    

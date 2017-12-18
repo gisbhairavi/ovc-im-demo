@@ -1,0 +1,213 @@
+<transaction-history></transaction-history>
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+         <h3 class="page-header clearfix">
+			<div class="col-md-4 trans_det"> {{ovcLabel.manualshipment.title[action.title]}}  {{ovcLabel.manualshipment.manualShipment}}</div>
+		 	<div class="col-md-4 view_num"></div>
+		  	<div class="col-md-4 v_progress">
+		  		<div class="pull-right">
+		  			<span class="label status" ng-class="{'alert-shipped':ship.status=='Shipped','alert-received':ship.status=='receivedInFull','alert-receivedwith':ship.status=='Recevied with Descrepencies'}">{{ship.status}}</span>
+		  		</div>
+		  	</div>
+		 </h3>
+	</div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+	<section ng-controller="TranstabCntrl as tab">
+		<div class="pro_menu  clearfix">
+			<ul class="nav nav-pills">
+				<li ng-class="{active:tab.isSet(1)}"><a href id="desc_detail" ng-click="tab.setTab(1)">{{ovcLabel.manualshipment.summary}}</a></li>
+				<li ng-class="{active:tab.isSet(2)}"><a href id="manualtab2" ng-click="tab.setTab(2); ">{{ovcLabel.manualshipment.shipments}}</a></li>
+				<li style="float:right;margin-top:9px;margin-right:15px;">
+					<div ng-if="tab.isSet(1)">
+						<ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.manualshipment.export_Heading.manualshipment}}" type="summary"></ovcdata-export>
+					</div>
+					<div ng-if="tab.isSet(2)">
+						<ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.manualshipment.export_Heading.manualshipment}}" type="shipment"></ovcdata-export>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="row r_margin ng-scope">
+			<div class="ven_tblk clearfix">
+				<div class="col-md-12">
+					<div class="panel-default">
+							<div class="panel-body search_box">
+								<div class="row">
+									<div class="col-lg-12 purs_order"  >
+										<div class="col-md-4 trans_det export_pre_header" >
+											<p class="clearfix" ng-hide="!(ship.orderNumber)"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.porderno1}}</label><span class="view_ot">: {{ship.orderNumber}}</span></p>
+											<p class="clearfix" ng-hide="!(form.pordercode)"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.order_type}}</label><span class="view_ot">: {{form.pordercode}}</span></p>
+											<p class="clearfix" ng-hide="!(ship.fromstorelocation)"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.ship_to}} </label><span class="view_ot">: {{ship.fromstorelocation}}</span></p>
+											<p class="clearfix" ng-hide="!(ship.shipToStore)"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.ship_from}}</label><span class="view_ot">: {{ship.shipToStore}}</span></p>
+											<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.createdby}}</label><span class="view_ot">: {{ship.createdby}}</span></p>
+										</div>
+										<div class="col-md-4 trans_det export_pre_header" >
+											<textarea class="spl_inst form-control add_or" style ="margin: 0px -32px;
+    										height: 91px;" name="transfer_comment" ng-model="ship.comment" placeholder="{{ovcLabel.manualshipment.buttons.enter_msg}}"></textarea>
+										</div>
+										<div class="col-md-4 export_pre_header">
+											<p><label class="mar_al view_amt">{{ovcLabel.manualshipment.labels.tot_qty}}</label><span>:  <label class="view_tot">{{form.allitems}}</label></span></p>
+
+											<p><label class="mar_al view_amt">{{ovcLabel.manualshipment.labels.tot_skus}}</label><span>:  <label class="view_tot">{{ship.totalsku}}</label></span></p>
+
+											<p ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_amt">{{ovcLabel.manualshipment.labels.transfer_value}}</label><span>:  <label class="view_tot">{{currency}}  {{form.overtotal| number:2}}</label></span></p>
+										</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		 <form role="form" name="shipform" >
+			<div ng-show="tab.isSet(1)">
+				<div class="row r_margin ng-scope">
+				<div class="ven_tblk clearfix">
+					<div class="col-md-12">
+						<div class="panel-default">
+							<!-- <div class="col-md-4 search_b">
+										<span>{{translation.buttontypes[0].search}}:</span>
+										<input id="search" class="form-control" type="text" placeholder="" ng-model="search"  ng-disabled="molporder" name="search">
+										</div> -->
+							<form role="forms"  >
+								<div class="panel-default">			
+									<div class="ven_tbody ">
+										<div class="row">
+										<!--Style Grouping in Summary Screen-->
+											<div class="col-md-12">
+												<grouped-style></grouped-style>
+											</div>
+											
+											<!-- <div class="col-md-12" ng-show="(filteredItems > 0) && (rplorder=='true') ">     -->
+											<div class="col-md-12" ng-show="rplorder">    
+											<div class="panel-body fliter_i">
+
+												<div pagination="" page="currentPage" max-size="5"  on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
+												
+												<div class="col-md-3 pglimit">
+												<div class="pg_limit">
+														<label>{{ovcLabel.manualshipment.list.pagesize}}:</label>
+														<select ng-model="entryLimit" class="pgsizes">
+															<option>10</option>
+															<option>20</option>
+															<option>50</option>
+															<option>100</option>
+														</select>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</form>
+						</div>
+						<div class="save_can acc_det clearfix" ng-if="userRolePermissions.orderPermissions.copymanualShipment">
+							<div class="col-md-12">
+								<div class="pull-right">
+								<!-- <button class="btn btn-primary" ng-click="action.cancelbtn()">{{translation.buttontypes[0].cancel}}</button> -->
+								<button class="btn btn-primary ng-binding" ui-sref="ovc.manualShipment-copy({porderid:ship.copyid})" ng-disabled="molporder" ng-hide = "ship.typeshipment == 'Outbound'">{{ovcLabel.manualshipment.copy_order}}</button>
+								</div>
+							</div>
+						</div>
+				</div>
+				</div>
+			</div>
+			</div>
+			<div ng-show="tab.isSet(2)">
+				<asn-table mode = "transfer"></asn-table>
+				<div class="ven_tblk clearfix"  >
+					<div class="select_reason">
+					<script type="text/ng-template" id="pushmodal.html">
+						<div class="modal fade"  id="resolve_push" data-backdrop="static" data-keyboard="false">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title">{{ovcLabel.manualshipment.select_reason}}</h4>
+									</div>
+									<div class="modal-body">
+										<!-- <p>It's your call...</p> -->
+										<div class="col-md-6">
+											<label class="control-label ng-binding" >{{ovcLabel.manualshipment.mark_quantity}} : </label>
+											<select class="form-control"  data-ng-options="discrepancy.code as discrepancy.label for discrepancy in reasonform.reasons" name="reasonCode" data-ng-model="reasonform.form.reasonCode" >
+											<option value="" >-- {{ovcLabel.manualshipment.select_reason}} --</option>
+											</select>
+										</div>
+										<div ng-show="reasonform.error" class="col-md-12">
+
+											<span class =  "col-md-12" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+
+												{{reasonform.errormessage}}
+
+											</span>
+
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" ng-click="close('No')" class="btn btn-primary" data-dismiss="modal">{{ovcLabel.manualshipment.buttons.cancel}}</button>
+										<button type="button" ng-click="resolve('Yes')" class="btn btn-primary" data-dismiss="modal">{{ovcLabel.manualshipment.buttons.ok}}</button> 
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</script>
+					</div>
+					<div class="col-md-12">
+						<div class="pull-right">
+						<button  ng-if="asn_details.resolvebtn  && action.shippack == true"  class="btn btn-primary" ng-click="show();" >{{ovcLabel.manualshipment.buttons.resolve}}</button>		
+						</div>
+					</div>
+				</div>
+				
+				<!-- <div class="col-md-12">
+						<div class="pull-right" style="margin-top: 10px;">
+						<button class="btn btn-primary" ng-click="action.cancelbtn()">{{translation.buttontypes[0].cancel}}</button>			
+						</div>
+				</div> -->
+			</div>
+		 </form>
+	    </section>
+<style>
+#resolve_push .modal-dialog{
+	position: absolute;
+    top: 30%;
+    left: 30%;
+}
+#resolve_push .modal-header {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #336699;
+    color: #fff;
+}
+#resolve_push .modal-body {
+    position: relative;
+    padding: 10px;
+    border: none !important;
+    max-height: 350px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#resolve_push .modal-footer {
+    padding: 10px 15px;
+    text-align: right;
+    border-top: none !important;
+}
+
+#resolve_push .close {
+    font-size: 24px;
+    color: #ffffff;
+    opacity: 1;
+}
+
+#resolve_push .modal-header > h4{
+font-size: 18px;
+font-weight: bold;
+}
+
+</style>

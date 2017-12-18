@@ -1,0 +1,232 @@
+<style>
+body {
+	overflow-y:hidden !important; 
+}
+</style>
+
+<transaction-history></transaction-history>
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+         <h3 class="page-header clearfix">
+			<div class="col-md-4 trans_det"> {{ovcLabel.transfer.reviewtransfer}}</div>
+		 	<div class="col-md-4 view_num"></div>
+		  	<div class="col-md-4 v_progress">
+		  		<div class="pull-right">
+		  			<span class="label status" ng-class="{'alert-submitted': ordrstatus == 'Submitted','alert-draft': ordrstatus == 'Draft','alert-confirmed':ordrstatus=='Confirmed','alert-partiallyshipped':ordrstatus=='Partially Shipped', 'alert-shipped':ordrstatus=='Shipped Full','alert-received':ordrstatus=='Received Full','alert-receivedwith':ordrstatus=='Recevied with Descrepencies','alert-rejected':ordrstatus=='Rejected'}">{{ordrstatus}}
+		  			</span>
+		  		</div>
+		  	</div>
+		 </h3>
+	</div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+	<section>
+		<div class="pro_menu  clearfix">
+			<ul class="nav nav-pills">
+				<li ng-class="{active:tab.page == 1}"><a href id="desc_detail" ng-click="tab.page = 1">{{ovcLabel.transfer.summary}}</a></li>
+				<li ng-class="{active:tab.page == 2}"><a href id="rule_detail" ng-click="tab.page = 2 ">{{ovcLabel.transfer.shipments}}</a></li>
+				<!-- <li ng-class="{active:tab.isSet(3)}"><a href id="rule_detail" ng-click="tab.setTab(3)">{{translation.purchaseorders[0].history}}</a></li> -->
+				<li style="float:right;margin-top:9px;margin-right:15px;">
+					<div ng-if="tab.page == 1">
+						<ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.transfer.export.transfer}}" type="summary"></ovcdata-export>
+					</div>
+					<div ng-if="tab.page == 2"> 
+						 <ovcdata-export pdf-id="order_summary_export" heading="{{transferType === 'Outbound' ? ovcLabel.transfer.export.packingslip:ovcLabel.transfer.export.transfer}}" type="shipment" export-content-type = "{{transferType}}" ></ovcdata-export>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="row r_margin ng-scope">
+			<div class="ven_tblk clearfix">
+				<div class="col-md-12">
+					<div class="panel-default">
+							<div class="panel-body search_box">
+								<div class="row">
+									<div class="col-lg-12 purs_order"  >
+										<div class="col-md-4 trans_det export_pre_header" >
+											<p class="clearfix" ng-hide="!(orderdetails.purchaseOrderNumber)"><label class="mar_al view_p">{{ovcLabel.transfer.ordernumber}} </label><span class="view_ot">: {{orderdetails.purchaseOrderNumber}}</span></p>
+											<!-- <p class="clearfix" ng-hide="!(orderdetails.erpPurchaseOrder)"><label class="mar_al view_p">{{translation.purchaseorders[0].erporder}}: </label><span class="view_ot">{{orderdetails.erpPurchaseOrder}}</span></p> -->
+											<p class="clearfix" ng-hide="!(purchasetype)"><label class="mar_al view_p">{{ovcLabel.transfer.list.ordertype}}</label><span class="view_ot">: {{purchasetype}}</span></p>
+											<p class="clearfix" ng-hide="!(orderFrom)"><label class="mar_al view_p">{{ovcLabel.transfer.shipfrom}}</label><span class="view_ot">: {{orderFrom}}</span></p>
+											<p class="clearfix" ng-hide="!(shiptoloc)"><label class="mar_al view_p">{{ovcLabel.transfer.shipto}}</label><span class="view_ot">: {{shiptoloc}}</span></p>
+											<!-- <p class="clearfix" ng-hide="!(orderdetails.purchaseOrderDate)"><label class="mar_al view_p">{{translation.purchaseorders[0].order_date}}: </label><span class="view_ot">{{orderdetails.purchaseOrderDate | dateForm}}</span></p> -->
+											<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transfer.createdby}}</label><span class="view_ot">: {{orderdetails.createduser}}</span></p>
+										</div>
+										<div class="col-md-4 trans_det" >
+											<!-- <p class="clearfix" ng-hide="!(orderFrom)"><label class="mar_al view_p">{{translation.purchaseorders[0].order_form}}: </label><span class="view_ot">{{orderFrom}}</span></p> -->
+											
+											<!-- <p class="clearfix" ng-hide="!(markforloc)"><label class="mar_al view_p">{{translation.purchaseorders[0].mark_for}}: </label><span class="view_ot">{{markforloc}}</span></p> -->
+
+											<textarea class="spl_inst form-control add_or" style ="margin: 0px -32px;
+    										height: 91px;" name="transfer_comment" ng-model="orderdetails.comment" placeholder="{{ovcLabel.transfer.entermsg}}"></textarea>
+											<!-- <p class="clearfix" ng-hide="!(billtoStore)"><span ng-show="showbill"><label class="mar_al view_p">{{translation.purchaseorders[0].bill_to}}: </label><span class="view_ot">{{billtoStore}}</span> </span></p>
+											<p class="clearfix" ng-hide="!(spmethod)"><span ng-show="showbill"><label class="mar_al view_p">{{translation.purchaseorders[0].shipping_method}}: </label><span class="view_ot">{{spmethod}}</span> </span></p> -->
+										</div>
+										<div class="col-md-4 export_pre_header">
+											<p><label class="mar_al view_amt">{{ovcLabel.transfer.totalstyles}}</label><span>: <label class="view_tot">{{orderdetails.styleLength}}</label></span></p>
+
+											<p><label class="mar_al view_amt">{{ovcLabel.transfer.totalskus}}</label><span>: <label class="view_tot">{{orderdetails.totalSkus}}</label></span></p>
+											<!-- <p ng-show="shprice && vwpuprice"><label class="mar_al view_amt">{{translation.purchaseorders[0].subtotal}}:</label><span>{{currency}}{{orderdetails.PoSubtotalAsn ? orderdetails.PoSubtotalAsn : orderdetails.PoSubtotalConfirm ? orderdetails.PoSubtotalConfirm : orderdetails.PoSubtotal | number:2}}</span></p> -->
+
+											<!-- <p ng-show=" puprice"><label class="mar_al view_amt">{{translation.purchaseorders[0].tax}}:</label><span>{{currency}}{{orderdetails.totalPoTax}}</span></p> -->
+
+											<p ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_amt">{{ovcLabel.transfer.transfervalue}}</label><span>: <label class="view_tot">{{currency}}  {{orderdetails.totalPoCostAsn ? orderdetails.totalPoCostAsn : orderdetails.totalPoCostConfirm ? orderdetails.totalPoCostConfirm : orderdetails.totalPoCost | number:2}}</label></span></p>
+										</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		 <form role="form" name="form" >
+			<div ng-show="tab.page==1">
+				<div class="row r_margin ng-scope">
+				<div class="ven_tblk clearfix">
+					<div class="col-md-12">
+						<div class="panel-default">
+							<!-- <div class="col-md-4 search_b">
+										<span>{{translation.buttontypes[0].search}}:</span>
+										<input id="search" class="form-control" type="text" placeholder="" ng-model="search"  ng-disabled="molporder" name="search">
+										</div> -->
+							<form role="forms"  >
+								<div class="panel-default">			
+									<div class="ven_tbody ">
+										<div class="row">
+										<!--Style Grouping in Summary Screen-->
+											<div class="col-md-12">
+												<grouped-style></grouped-style>
+											</div>
+											
+											<!-- <div class="col-md-12" ng-show="(filteredItems > 0) && (rplorder=='true') ">     -->
+											<div class="col-md-12" ng-show="rplorder">    
+											<div class="panel-body fliter_i">
+
+												<div pagination="" page="currentPage" max-size="5"  on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
+												
+												<div class="col-md-3 pglimit">
+												<div class="pg_limit">
+														<label>{{translation.vendors[0].page_size}}:</label>
+														<select ng-model="entryLimit" class="pgsizes">
+															<option>10</option>
+															<option>20</option>
+															<option>50</option>
+															<option>100</option>
+														</select>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="save_can acc_det clearfix" >
+							<div class="col-md-12">
+								<div class="pull-right">
+								<!-- <button class="btn btn-primary" ng-click="getibtlist()">{{translation.buttontypes[0].cancel}}</button> -->
+								<button class = "btn btn-primary" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" ng-click = "action.reverseIBT()" ng-if = "(transferType == 'Inbound' && orderdetails.orderStatus == 'submitted') || (transferType == 'Outbound' && orderdetails.orderStatus == 'confirmed') ||(transferType == 'Outbound' && orderdetails.orderStatus == 'rejected') ">{{ovcLabel.transfer.buttons.reverse}}</button>
+
+								<button class="btn btn-primary ng-binding" ng-click="confirm_transfer(sku)" ng-if = "userRolePermissions.orderPermissions.modifyTransfer && (transferType == 'Outbound' && orderdetails.orderStatus == 'submitted')">{{ovcLabel.transfer.buttons.confirm}}</button>
+								<button class="btn btn-primary ng-binding" ng-click="porder_copy(orderdetails._id)" ng-if="userRolePermissions.orderPermissions.copyTransfer && transferType != 'Outbound' && orderdetails.purchaseOrderType == 'IBT_M'">{{ovcLabel.transfer.buttons.copyorder}}</button>
+								</div>
+							</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			</div>
+			<div ng-show="tab.page == 2"  ng-controller = "ibtTransferAsnCtrl">
+				<asn-table mode = "transfer"></asn-table>
+				
+				<div class="ven_tblk clearfix"  >
+					<div class="row r_margin ng-scope">
+						<asn-transfer></asn-transfer>
+					</div>
+					<div class="select_reason">
+					<script type="text/ng-template" id="modal.html">
+						<div class="modal fade"  id="resolve_modal" data-backdrop="static" data-keyboard="false">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title">{{ovcLabel.transfer.selectreason}}</h4>
+									</div>
+									<div class="modal-body">
+										<div class="col-md-6">
+											<label class="control-label ng-binding" >{{ovcLabel.transfer.markquantity}} : </label>
+											<select class="form-control"  data-ng-options="discrepancy.code as discrepancy.label for discrepancy in reasonform.reasons" name="reasonCode" data-ng-model="reasonform.form.reasonCode" >
+											<option value="" >-- {{ovcLabel.transfer.selectreason}} --</option>
+											</select>
+										</div>
+										<div ng-show="reasonform.error" class="col-md-12">
+
+											<span class =  "col-md-12" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+
+												{{reasonform.errormessage}}
+
+											</span>
+
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" ng-click="close('No')" class="btn btn-primary" data-dismiss="modal">{{ovcLabel.transfer.buttons.cancel}}</button>
+										<button type="button" ng-click="resolve('Yes')" class="btn btn-primary" data-dismiss="modal">{{ovcLabel.transfer.buttons.ok}}</button> 
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</script>
+					</div>
+					<div class="col-md-12">
+						<div class="pull-right">
+						<button  ng-if="asn_details.resolvebtn  && action.shippack == true"  class="btn btn-primary" ng-click="show();" >{{ovcLabel.transfer.buttons.resolve}}</button>
+						<!-- <button class="btn btn-primary" ng-click="getibtlist()">{{translation.buttontypes[0].cancel}}</button> -->			
+						</div>
+					</div>
+				</div>
+			</div>
+		 </form>
+	    </section>
+<style>
+#resolve_modal .modal-dialog{
+	position: absolute;
+    top: 30%;
+    left: 30%;
+}
+#resolve_modal .modal-header {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #336699;
+    color: #fff;
+}
+#resolve_modal .modal-body {
+    position: relative;
+    padding: 10px;
+    border: none !important;
+    max-height: 350px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#resolve_modal .modal-footer {
+    padding: 10px 15px;
+    text-align: right;
+    border-top: none !important;
+}
+
+#resolve_modal .close {
+    font-size: 24px;
+    color: #ffffff;
+    opacity: 1;
+}
+
+#resolve_modal .modal-header > h4{
+font-size: 18px;
+font-weight: bold;
+}
+
+</style>

@@ -1,0 +1,110 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header">{{translation.sidebar[0].move_sim}}
+		</h3>
+		
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row r_margin">
+<div class="ven_tblk clearfix">
+    <div class="col-lg-12"  ng-controller="MyCtrl">
+		<!-- /.table-responsive -->
+		<div class="col-md-12" style="padding: 0px;">
+			<div class="srch_panel">
+				<form role="form" name="form" angular-validator-submit="addShipments(ship)" novalidate angular-validator>
+					<div class="col-md-12" style="padding:0;">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label">{{translation.locations[0].store}}: </label><br />
+								<select ng-options="col.id as col.displayName for col in store_datas | orderBy:'displayName' " class="form-control" name="locationId" ng-change="getparent_datas(ship.locationId)" ng-model="ship.locationId" validator = "myCustomValidator(ship.locationId)" required-message="'{{translation.messages[0].store_select}}'" required><option value="">-- {{translation.locations[0].select_store}} --</option></select>
+								
+							</div>	
+						</div>
+						<div class="col-md-7">
+						<div class="col-md-6">
+							<div class="form-group">
+								
+								<label class="control-label">{{translation.transaction[0].transaction_type}}: </label><br />
+								<select ng-options="tran.tranTypeId as tran.tranName for tran in tran_type_datas  | orderBy:'tranName' " class="form-control" name="transactionTypeId" ng-model="ship.transactionTypeId"    ng-change="gettransaction()"  ><option value="">-- {{translation.shipments[0].empty_tran_type}} --</option></select>
+							</div>	
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								
+								<label class="control-label">{{translation.sidebar[0].document}}: </label><br />
+								<select ng-options="tran.directiveTypeId as tran.directiveName for tran in doc_type_datas  | orderBy:'directiveName' " class="form-control" name="documentTypeId" ng-model="ship.documentTypeId"  ng-change="getdirective()" ><option value="">-- {{translation.document[0].sel_direct}} --</option></select>
+							</div>	
+						</div>
+						<span  ng-show="fieldsrequired  && submitted" class="alert alert-danger ng-binding" >{{translation.shipments[0].sel_reqfields}}</span>
+						</div>
+						<br clear="all">
+						<hr />
+						<div class="panel-default">
+						<div class="panel-body search_box">
+						<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="col-md-12" style="padding:0;">
+									<autocomplete attr-input-class="prod_result form-control" ng-model="ship.result" attr-placeholder="search for product name..." click-activation="false" data="transactions" on-type="doSomething" on-select="doSomethingElse" ></autocomplete>
+								</div> 
+								<div ng-if="loadval == 1">
+									<img src="images/loading.gif" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 search_btns">
+						<div class="pg_limit b_margin">
+							<button type="submit" class="btn btn-primary" id="moveship" ng-click="submitted=true"><i class="fa fa-plus"></i> {{translation.buttontypes[0].add}}</button>
+						</div>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+				</form>
+				<br clear="all" /><br clear="all" />
+			</div>		
+		</div>
+		<br clear="all" />
+			<form role="forms" name="forms" angular-validator-submit="moveShipments(shipm)" novalidate angular-validator>
+					<table class="table table-striped table-bordered"  ng-show="filteredItems > 0">
+						<thead>
+							<th>{{translation.vendors[0].sku}}</th>
+							<th>{{translation.shipments[0].name}}</th>
+							<th>{{translation.vendors[0].cost}}</th>
+							<th>{{translation.shipments[0].UOM}}</th>
+							<th>{{translation.shipments[0].qty}}</th>
+							<th>{{translation.shipments[0].move_to}}</th>
+							<th> {{translation.buttontypes[0].delete}}</th>
+						</thead>
+						<tbody>
+							
+							<tr ng-repeat="(productIndex,data) in list">
+								
+								<td>{{data.productCode}} <input type="text" ng-model="data.productCode" class="form-control ng-hide" value="{{data.productCode}}" /><input type="text" ng-model="data.locationid" class="form-control ng-hide" value="{{data.locationid}}" /></td>
+								<td>{{data.name}} <input type="text" ng-model="data.name" class="form-control ng-hide" value="{{data.name}}" /><input type="text" ng-model="data.transtypeid" class="form-control ng-hide" value="{{data.transtypeid}}" /><input type="text" ng-model="data.docutypeid" class="form-control ng-hide" value="{{data.docutypeid}}" /></td>
+								<td style="width:130px"><div class="input-group margin-bottom-sm"><span class="input-group-addon">{{currency}}</span><input type="number" min="0" ng-model="data.cost" step="any" class="form-control" /></div></td>
+								<td><select ng-model="data.selectedUOM" class="form-control"><option value="">--select UOM--</option><option ng-repeat="uom in UOM | orderBy:'name' " value="{{uom.id}}" ng-selected="uom.name == 'Each'">{{uom.name}}</option>
+ 								</select></td>
+								<td style="width:130px"><input type="number" min="0" ng-model="data.qty" class="form-control" /></td>
+								<td><select ng-options="prnt._id as prnt.stockingLocationId+' - '+prnt.locationName for prnt in parent_loc_datas" style="float: left;width: 85%;" class="form-control" name="StockingLocationId" ng-model="data.StockingLocationId"><option value="">-- {{translation.locations[0].sel_locid}} --</option></select></td>
+								<td><button type="button" value="" class="btn btn-primary removbtn" ng-click="removeRow(productIndex)"><i class="fa fa-trash"></i></button></td>
+							</tr>
+						</tbody>
+					</table>
+				
+				<div class="save_can acc_det clearfix" ng-show="filteredItems > 0">
+				<div class="col-md-12">
+					<div class="pull-right">
+						<button type="submit" class="btn btn-primary" ng-click="submitted=true"> {{translation.buttontypes[0].move}}</button>
+						<a href class="btn btn-primary" ng-click="cancel_transaction()"> {{translation.buttontypes[0].cancel}}</a>
+					</div>
+					</div>
+				</div>
+			</form>	
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+</div>

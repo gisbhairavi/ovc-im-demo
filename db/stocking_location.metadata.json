@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":NumberInt(1),"key":{"_id":NumberInt(1)},"name":"_id_","ns":"sar.stocking_location"},{"v":NumberInt(1),"unique":true,"key":{"locationId":NumberInt(1),"stockingLocationId":NumberInt(1)},"name":"locationId_1_stockingLocationId_1","ns":"sar.stocking_location","background":true,"safe":null}]}

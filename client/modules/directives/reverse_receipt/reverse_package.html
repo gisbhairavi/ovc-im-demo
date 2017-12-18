@@ -1,0 +1,111 @@
+<tr ng-repeat="(package,packdata) in asn_data.packages">
+	<td colspan = "7" ng-if = "packdata.packageId == rev_packid">
+		<div class="col-sm-12 trans_det">
+			<table class="table table-algin table-condensed")>
+				<thead class = "package_details head" ng-click="					packdetails=!packdetails" ng-class="{'alert-warning' : (packdata.packageStatus == 'shipped'), 'alert-success' : (packdata.packageStatus === 'received'), 'alert-info' : (packdata.packageStatus == 'receiveInProgress'),'alert-close': (packdata.packageStatus == 'closed')}">
+					<tr>
+						<th><p>{{ovcLabel.asnPackage.package}} : <b>{{packdata.packageId}}  </b></th></p>
+						<th><p>{{ovcLabel.asnPackage.noOfSkus}} :
+						<b>{{packdata.numberOfSKU}}</b></p></th>
+						<th><p>{{ovcLabel.asnPackage.shipDate}} : <b>{{packdata.shipDate | dateForm}}</b></p></th>
+
+						
+						<th><p>{{ovcLabel.asnPackage.deliveryDate}} :
+						<b>{{packdata.expectedDeliveryDate | dateForm}}</b></p></th>
+						<!-- <th><p ng-if = "packageStatus === 'received'">{{translation.asn_service.receivedDate}} :</p> -->
+						<th ng-if="packdata.packageStatus === 'received'"><p>{{ovcLabel.asnPackage.packageStatus[packdata.packageStatus]}} : <b> {{packdata.receivedDate | dateForm}}</b></p></th>
+						<th><p>{{ovcLabel.asnPackage.packageStatus[packdata.packageStatus]}}</p></th>
+					</tr>
+				</thead>
+				<tbody ng-show="packdetails && configData.showskugroup">
+					<tr ng-repeat="(style,styledata) in packdata.skus | array | filter : searchDetais">
+						<td colspan = "7">
+							<div class="col-sm-12 trans_det">
+								<table class="table table-condensed">
+									<thead class = "package_details head" ng-click="styleDetail = !styleDetail">
+										<tr>
+											<th> {{ovcLabel.asnPackage.productCode}} </th>
+											<th> {{ovcLabel.asnPackage.description}} </th>
+											<th> {{ovcLabel.asnPackage.skuShipped}} </th>
+											<th ng-if="packdata.packageStatus != 'received'"> {{ovcLabel.asnPackage.totalQuantityShipped}} </th>
+											<th ng-if="packdata.packageStatus === 'received' "> {{ovcLabel.asnPackage.totalQuantityReceived}} </th>  
+										</tr>
+										<tr>
+											<td  ng-show="style=='undefined'"></td>
+											<td ng-show="style!='undefined'"> {{styledata.stylecode}} </td>
+											<td> {{styledata.styleDescription}} </td>
+											<td> {{styledata.skuArr.length}} </td>
+											<td> {{styledata.TotalQuantity}}</td>
+										</tr>
+									</thead>
+									<tbody ng-show="styleDetail">
+										<tr>
+											<td colspan = "6">
+												<table class="table table-condensed">
+													<tr>
+														<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+														<th> {{ovcLabel.asnPackage.sku}} </th>
+														<th> {{ovcLabel.asnPackage.description}} </th>
+														<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+														<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+														<th ng-if= "packdata.packageStatus === 'received' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+													</tr>
+													<tbody style = "border-top : 1px solid #ddd">
+														<tr ng-repeat="(ln_no,skus) in styledata.skuArr track by $index">
+															<td>{{skus.lineNumber}}</td>
+															<td>{{skus.sku}}</td>
+															<td>{{skus.description}}</td>
+															<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}}  {{skus.skuCost != '' ? skus.skuCost: 0 }}</td>
+															<td>{{skus.qty || 0}}</td>
+															<td ng-if = "packdata.packageStatus === 'received' ">{{skus.newQty}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tbody ng-show = "packdetails && !configData.showskugroup" class="noborder" >
+					<td colspan = "7">
+						<div class="col-sm-12 trans_det">
+							<table class="table table-condensed">
+								<tbody>
+									<tr>
+										<td colspan = "6">
+											<table class="table table-condensed"  >
+												<thead>
+													<tr>
+													<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+													<th> {{ovcLabel.asnPackage.sku}} </th>
+													<th> {{ovcLabel.asnPackage.description}} </th>
+													<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+													<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+													<th ng-if= "packdata.packageStatus === 'received' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+													</tr>
+												</thead>
+												<tbody style = "border-top : 1px solid #ddd" ng-repeat="(style,styledata) in packdata.skus | array | filter : searchDetais">
+													<tr ng-repeat="(ln_no,skus) in styledata.skuArr track by $index">
+														<td>{{skus.lineNumber}}</td>
+														<td>{{skus.sku}}</td>
+														<td>{{skus.description}}</td>
+														<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}}  {{skus.skuCost != '' ? skus.skuCost: 0 }}</td>
+														<td>{{skus.qty || 0}}</td>
+														<td ng-if = "packdata.packageStatus === 'received' ">{{skus.newQty}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+				</tbody>
+			</table>
+		</div>
+	</td>
+</tr>

@@ -1,0 +1,158 @@
+{
+  "AWSEBDockerrunVersion": "2",
+  "Authentication": {
+    "Bucket": "ovc-github-access",
+    "Key": "dockercfg"
+  },
+  "containerDefinitions": [
+    {
+      "name": "apigateway",
+      "image": "oneviewcommerce/sar-apigateway:TAGNAME",
+      "essential": true,
+      "hostname": "im-apigateway",
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 3007,
+          "containerPort": 3000
+        },
+        {
+          "hostPort": 3008,
+          "containerPort": 3008
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "client",
+      "image": "oneviewcommerce/sar-client:TAGNAME",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "oauth2",
+      "image": "oneviewcommerce/sar-oauth2:TAGNAME",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 3009,
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "location",
+      "image": "oneviewcommerce/sar-location:TAGNAME",
+      "essential": true,
+      "memory": 128,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "vendor",
+      "image": "oneviewcommerce/sar-vendor:TAGNAME",
+      "essential": true,
+      "memory": 128,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "transaction",
+      "image": "oneviewcommerce/sar-transaction:TAGNAME",
+      "essential": true,
+      "memory": 1024,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "order",
+      "image": "oneviewcommerce/sar-order:TAGNAME",
+      "essential": true,
+      "memory": 1024,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "product",
+      "image": "oneviewcommerce/sar-product:TAGNAME",
+      "essential": true,
+      "memory": 512,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "dashboard",
+      "image": "oneviewcommerce/sar-dashboard:TAGNAME",
+      "essential": true,
+      "memory": 512,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "loadjson",
+      "image": "oneviewcommerce/sar-loadjson:TAGNAME",
+      "essential": true,
+      "memory": 1024,
+      "links": [
+        "apigateway"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000
+        }
+      ],
+      "mountPoints": []
+    }
+  ]
+}

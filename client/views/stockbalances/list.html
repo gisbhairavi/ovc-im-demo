@@ -1,0 +1,277 @@
+<div class="row header_blk ng-scope">
+    <div class="col-lg-12">
+        <h3 class="page-header">
+            {{ovcLabel.stockBalance.list.heading}}
+        </h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row r_margin">
+    <div class="ven_tblk clearfix">
+        <div class="col-md-12">
+        </div>
+        <div class="col-lg-12" ng-controller="stylematrixctrl">
+            <div class="panel-default">
+                <!-- /.panel-heading -->
+                <div class="panel-body search_box">
+                    <div class="row">
+                        <form angular-validator="" angular-validator-submit="getFunctions(ship)" name="form" novalidate="" role="form">
+                            <!-- <form> -->
+                            <div class="col-sm-12 col-md-3">
+                                <div class="col-md-12">
+                                    <label class="control-label">
+                                        {{ovcLabel.stockBalance.store}}
+                                    </label>
+                                    <div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+                                    <div style="position:relative;">
+                                        <input type="text" class="form-control" ng-model="locationDisplayName" id="commonLocation" ng-focus="showLoc = true" placeholder="{{ovcLabel.stockBalance.placeholder.store}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation(locationDisplayName);" />
+                                                
+                                        <span class="fa" ng-click="showLoc = !showLoc" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;cursor: pointer;"></span>
+                                    </div>
+                                    <div tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" stock-lookup = "true" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"  mode="stock"></div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="col-md-12 stk_sear product_padd" style="padding:0;">
+                                    <autocomplete attr-input-class="prod_result" attr-input-id="balanceStockSKU" attr-placeholder="{{ovcLabel.stockBalance.placeholder.search_by_sku}}..." class="search_scroll" click-activation="false" data="transactions" id="slpsearch" ng-model="ship.result" on-select="doSelectproduct" on-type="dosrchproduct">
+                                    </autocomplete>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="col-md-12 stk_sear product_padd" style="padding:0;">
+                                    <autocomplete attr-input-class="prstyle_result" attr-input-id="balanceStockStyle" attr-placeholder="{{ovcLabel.stockBalance.placeholder.search_style}}" class="search_scroll" click-activation="false" data="transactionstyles" id="stylsearch" ng-model="ship.styleresult" on-select="Selectprstyle" on-type="srchprstyle">
+                                    </autocomplete>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 search_btns stk_sear product_padd">
+                                <div class="col-md-12">
+                                    <div class="btn-group col-md-12 col-sm-12" data-ng-class="{open: open}" style="padding:0;">
+                                        <button class="btn btn-large col-md-12 col-sm-12" id="selectStock" data-ng-click="openDropdown()" style="background: #fff;border-radius:5px;border: 1px solid #ccc;">
+                                            Select
+                                            <span class="caret" style="margin: 8px 0;">
+                                            </span>
+                                        </button>
+                                        <ul aria-labelledby="dropdownMenu" class="dropdown-menu col-md-12" style="top: 95%;  width: 100%;padding: 10px;">
+                                            <li data-ng-repeat="option in stockbalanceselected">
+                                                <label style="font-weight:normal;cursor:pointer;  text-align: center;">
+                                                    <span  style="">
+                                                    <input  id="{{option.label}}" ng-model="option.selected" type="checkbox"/>
+                                                                           {{option.Name}} </span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pg_limit b_margin stl_bal">
+                                    <button class="btn btn-primary" id="stockExport" ng-click="stockbalances(true);ship.styleresult='';">
+                                        <i class="fa fa-share-square-o" style="margin-right:3px;">
+                                        </i>
+                                        {{ovcLabel.stockBalance.button.export}}
+                                    </button>
+                                    <button class="btn btn-primary" id="ovcSearchBtn" ng-click="stockbalances();ship.result='';" type="submit">
+                                        <i class="fa fa-search" style="margin-right:3px;">
+                                        </i>
+                                        {{ovcLabel.stockBalance.button.add}}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                    </div>
+                </div>
+                <div ng-if="loadmat == true">
+                    <img src="images/loading.gif"/>
+                </div>
+                <div class="row" id="stlkpmatrix" ng-show="showstyle">
+                </div>
+                <!-- /.table-responsive -->
+                <br clear="all"/>
+                <div class="ven_tbody stock_l">
+                    <div class="row">
+                        <div class="st_header">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table_tit clearfix">
+                                <span class="col-md-2">
+                                </span>
+                                <span class="hdr_2 col-md-3">
+                                    {{ovcLabel.stockBalance.balance_fields}}
+                                </span>
+                                <span class="col-md-2">
+                                    {{ovcLabel.stockBalance.calculated_field}}
+                                </span>
+                                <span class="hdr_2 col-md-5">
+                                    {{ovcLabel.stockBalance.doc_balancefields}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 table-responsive">
+                            <table class="table table-striped table-bordered stocklook_tb table-fixed" id="table">
+                                <tbody class="st_headt">
+                                    <tr class="height_scr" ng-repeat="(productIndex,data) in list">
+                                        <td class="height_scr" colspan="4">
+                                            <table class="table table-striped table-bordered ">
+                                                <tr>
+                                                    <td style="border-top: medium none;  width: 16.6667%;">
+                                                        <div class="list_dat">
+                                                            <p>
+                                                                {{ovcLabel.stockBalance.SKU}}:{{data.SKU}}
+                                                            </p>
+                                                            <p>
+                                                                {{ovcLabel.stockBalance.store}}:{{data.location}}
+                                                            </p>
+                                                            <button class="btn btn-primary" ng-click="removeRow(productIndex)" type="button" value="">
+                                                                <i class="fa fa-trash">
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td class="stock_pad stock_pad1 stk-balance">
+                                                        <table class="table table-striped table-bordered stk-bal">
+                                                            <tr class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}" ng-repeat="bdata in balancefields1" ng-show="data[bdata.label]">
+                                                                <!-- <td style="border-left: medium none; border-top: medium none;" class="td_wdth">{{translation.stocklookup[0].OH}}</td> -->
+                                                                <td ng-show="data[bdata.label]" class="td_wdth" style="border-left: medium none; border-top: medium none;">
+                                                                    {{bdata.title}}
+                                                                </td>
+                                                                <td ng-show="data[bdata.label]" class="td_wdthr" ng-mouseleave="hoverOut()" ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" style=" border-right: medium none; border-top: medium none;">
+                                                                    <!-- <center>{{data.OH}}</center> -->
+                                                                    <center>
+                                                                        {{data[bdata.label]}}
+                                                                    </center>
+                                                                    <div ng-if="invavaillength &gt; 0" ng-show="SelectedInventory == bdata.label+productIndex &amp;&amp; showhover==true ">
+                                                                        <invetory-details>
+                                                                        </invetory-details>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td class="stock_pad stock_pad2 stk-balance">
+                                                        <table class="table table-striped table-bordered">
+                                                            <tr class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}" ng-repeat="bdata in balancefields2" ng-show="data[bdata.label]">
+                                                                <td ng-show="data[bdata.label]" class="td1_wdth" style=" border-left: medium none;border-top: medium none;">
+                                                                    {{bdata.title}}
+                                                                </td>
+                                                                <td ng-show="data[bdata.label]" class="td_wdthr" ng-mouseleave="hoverOut()" ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" style=" border-right: medium none; border-top: medium none;">
+                                                                    <center>
+                                                                        {{data[bdata.label]}}
+                                                                    </center>
+                                                                    <div ng-if="invavaillength &gt; 0" ng-show="SelectedInventory == bdata.label+productIndex &amp;&amp; showhover==true ">
+                                                                        <invetory-details>
+                                                                        </invetory-details>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td class="stock_pad stock_pad3 stk-balance">
+                                                        <table class="table table-striped table-bordered">
+                                                            <tbody>
+                                                                <tr class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}" ng-repeat="bdata in balancefields31" ng-show="data[bdata.label]">
+                                                                    <td ng-show="data[bdata.label]" class="td2_wdth" style="border-left: medium none;border-top: medium none;padding-left:{{bdata.level ? 25*bdata.level : 9}}px;">
+                                                                        {{bdata.title}}
+                                                                    </td>
+                                                                    <td ng-show="data[bdata.label]" class="td_wdthr" ng-mouseleave="hoverOut()" ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" style=" border-right: medium none; border-top: medium none;">
+                                                                        <center>
+                                                                            {{data[bdata.label]}}
+                                                                        </center>
+                                                                        <div ng-if="invavaillength &gt; 0" ng-show="SelectedInventory == bdata.label+productIndex &amp;&amp; showhover==true ">
+                                                                            <invetory-details>
+                                                                            </invetory-details>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td class="stock_pad stock_pad4 stk-balance">
+                                                        <table class="table table-striped table-bordered">
+                                                            <tbody>
+                                                                <tr class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}" ng-repeat="bdata in balancefields32" ng-show="data[bdata.level]">
+                                                                    <td ng-show="data[bdata.label]" class="td3_wdth" style=" border-left: medium none;border-top: medium none;padding-left:{{bdata.level ? 25*bdata.level : 9}}px;">
+                                                                        {{bdata.title}}
+                                                                    </td>
+                                                                    <td ng-show="data[bdata.label]" class="td_wdthr" ng-mouseleave="hoverOut()" ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" style=" border-right: medium none; border-top: medium none;">
+                                                                        <center>
+                                                                            {{data[bdata.label]}}  {{data[bdata.label]}}
+                                                                        </center>
+                                                                        <div class="scklokup_hover" ng-if="invavaillength &gt; 0" ng-show="SelectedInventory == bdata.label+productIndex &amp;&amp; showhover==true ">
+                                                                            <invetory-details>
+                                                                            </invetory-details>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="invDetails.html" type="text/ng-template">
+    <div class="animate-show callout" style = "padding: 10px;width: auto;">
+		<b class="notch"></b>
+		<div class="inside_t" style = "height: auto;max-height: 150px;overflow-y: auto">
+			<table class="table table-striped table-bordered">
+				<tr ng-repeat="(key,value) in inventoryData1">
+					<td style = "padding:5px;">{{key}} </td>
+					<td style = "padding:5px 10px;">{{ value }}</td>
+				</tr>
+			
+			</table>
+		</div>
+	</div>
+</script>
+<style>
+    .callout {
+    margin: 10px 0;
+    /* easy rounded corners for modern browsers */
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.callout .notch {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ADDFFF;
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+     /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+}
+.stock_l .stocklook_tb .stock_pad1.stk-balance {
+    width: 20%;
+}
+.stock_l .stocklook_tb .stock_pad2.stk-balance {
+    width: 20%;
+}
+.stock_l .stocklook_tb .stock_pad3.stk-balance {
+    width: 25%;
+}
+.stock_l .stocklook_tb .stock_pad4.stk-balance {
+    width: 20%;
+}
+</style>

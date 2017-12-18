@@ -1,0 +1,122 @@
+<div class="row header_blk ng-scope">
+	<div class="col-lg-12">
+		<h3 class="page-header">{{ovcLabel.directiveType.list.heading}}:
+			<div class="pull-right add_ven clearfix">
+			<a id="ovcAddBtn" title="{{ovcLabel.directiveType.buttons.addDirectiveType}}"  ng-if="!moldirtyp" ui-sref="ovc.document-add" class="btn btn-primary">
+			<i class="fa fa-plus-circle"></i>{{ovcLabel.directiveType.buttons.addDirectiveType}}
+			</a>
+			<a id="ovcAddBtn" title="{{ovcLabel.directiveType.buttons.addDirectiveType}}" ng-if="moldirtyp"  ng-disabled="moldirtyp"  href="" class="btn btn-primary">
+			<i class="fa fa-plus-circle"></i>{{ovcLabel.directiveType.buttons.addDirectiveType}}
+			</a>
+			</div>
+		</h3>
+	
+	</div>
+    <!-- /.col-lg-12 -->
+</div>
+
+	 <div class="row r_margin">
+	<div class="ven_tblk clearfix"> 
+
+	<!--<div class="col-md-12">
+	
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="control-label">{{translation.locations[0].store}}: </label><br />
+				<select ng-options="col.id as col.displayName for col in store_datas" class="form-control" name="locationId"  ng-model="trans.locationId" ><option value="">-- {{translation.locations[0].select_store}} --</option></select>
+			</div>	
+		</div>
+		
+		
+		<div class="col-sm-3">
+			<label class="control-label">{{translation.transaction[0].transaction_code}}</label>
+			<select id="trcodes" class="form-control"  data-ng-options="trcod.code as trcod.label for trcod in transcodes" name="transactcodes" data-ng-model="trans.transactcodes"><option value="">--{{translation.transaction[0].sel_transcode}}--</option>
+			</select>
+		</div>
+
+		<div class="col-sm-3">
+			<label class="control-label">{{translation.transaction[0].type}}</label>
+			<select id="transtypes" class="form-control"  data-ng-options="trtype.code as trtype.label for trtype in transtype" name="transtypes" data-ng-model="trans.transtypes"><option value="">--{{translation.transaction[0].sel_type}}--</option>
+			</select>
+		</div>
+
+		<div class="col-sm-3">
+			<label class="control-label">{{translation.transaction[0].status}}</label>
+			<select id="trstatus" class="form-control"  data-ng-options="trstatus.code as trstatus.label for trstatus in transstatus" name="transtatus" data-ng-model="trans.transtatus"><option value="">--{{translation.transaction[0].sel_status}}--</option>
+			</select>
+		</div>
+
+</div> 
+<br clear="all" />
+<hr class="ng-scope">-->
+
+    <div class="col-lg-12">
+        <div class="panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body search_box">
+					<form>
+						<div class="col-md-6 col-sm-6">
+							<input type="text"  name="search" id="search" placeholder="{{ovcLabel.adjustments.buttons.search}}" class="form-control" ng-model = "search"/>
+						</div>
+						
+						<div class="col-md-5 col-sm-6 search_btns">
+							<button id="ovcResetBtn" type="reset" class="btn btn-primary rst_btn" ng-click="docu_reset()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.directiveType.buttons.reset}}</button>
+							<button id="ovcSearchBtn" type="submit" class="btn btn-primary" ng-click="doctype_search()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.directiveType.buttons.search}}</button>
+						</div>
+					</form>
+				</div>
+                <!-- /.table-responsive -->
+               <div class="ven_tbody">
+				<div class="row">
+					<div class="col-md-12 table-responsive">
+						<table class="table table-striped table-bordered">
+							<thead>
+							<th>{{ovcLabel.directiveType.labels.directive_name}}&nbsp;<a class="sort_align" ng-click="sort_by('directiveTypeId');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.directiveType.labels.directive_type}}&nbsp;<a class="sort_align" ng-click="sort_by('directiveName');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.directiveType.labels.transaction_type}}&nbsp;</th>
+							<th >{{ovcLabel.directiveType.labels.status}}&nbsp;</th>
+							<th>{{ovcLabel.directiveType.labels.action}}</th>
+							</thead>
+							<tbody>
+							<tr ng-repeat="data in list | orderBy : predicate :reverse | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+								<td class="name_li"><a id="directive_id" ui-sref="ovc.document-edit({docid:data._id})">{{data.directiveTypeId}}</a></td>
+								<td>{{data.directiveName}}</td>
+								<td>{{data.tranTypeId}}</td>
+								<td><p ng-show="{{data.isActive}}">{{ovcLabel.directiveType.labels.active}}</p><p ng-hide="{{data.isActive}}">{{ovcLabel.directiveType.labels.inactive}}</p></td>
+								<td class="action_f" style="width:150px;">
+								<a href="" id="delete_icon" ng-click="docs_delete(data._id,data.docTypeId)"  ng-hide="moldirtyp" class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+								<a href="" ng-click="" ng-show="moldirtyp"   ng-disabled="moldirtyp" class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+								</td>
+							</tr> 
+								
+								
+							</tbody>
+						</table>
+					</div>
+					<div id="ovcError" class="col-md-12" ng-if="filteredItems == 0">
+						<div class="col-md-12">
+							<h4>{{ovcLabel.directiveType.list.no_docs}}</h4>
+						</div>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems > 0">   
+						<div class="panel-body fliter_i">							
+						<uib-pagination total-items="filteredItems"  items-per-page ="entryLimit"  ng-model="currentPage"  max-size = "5"  boundary-links="true" ng-change="" ></uib-pagination>		
+							<div class="col-md-3 pglimit">
+							<div class="pg_limit page_size_drdn">
+									<label>{{ovcLabel.directiveType.list.pagesize}}:</label>
+									<select 	convert-to-number	ng-model="entryLimit" class="pgsizes">
+										<option>10</option>
+										<option>20</option>
+										<option>50</option>
+										<option>100</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>
+				</div>
+</div> 
+</div>  

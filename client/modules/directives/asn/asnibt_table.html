@@ -1,0 +1,304 @@
+<div  ng-show="asn_details.showgroup">
+	<style>
+		.table{
+			margin-bottom: 10px;
+		}
+		.arrow_d {
+			padding:0;
+		}
+		.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th{
+			background-color: #f9f9f9;
+		}
+		.table-bordered > thead > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+		    border: 1px solid #ddd; 
+		}
+		.asn_wrapper{
+			background:#fff;
+		}
+		.table.table-condensed th, td {
+			 border-top: none !important;
+			 border-bottom: none !important;
+		}
+		.table.table-condensed th {
+			 font-weight: normal;
+		}
+		.asn_details {
+			background-color: #cccccc;
+		}
+		.package_details {
+			background-color: #e6e6e6;
+			font-weight: bold;
+			width:100%;
+		}
+		#wrapper tr {
+			border: none !important;
+		}
+		.asn_details th p {
+			font-weight: 600;
+		}
+		.table>thead>tr>th {
+		    border: none;
+		    vertical-align: middle;
+		    padding: 10px 10px;
+		    max-width: 110px;
+		}
+		.asntable-algin{
+			width:100% !important;
+			margin-bottom: 0 !important;
+		}
+		.package_details th, .package_details td{
+			padding: 10px !important;
+			max-width: 120px !important;
+		}
+		.alert-success{
+			background-color: #E5F9E5;
+			color: #333 !important;
+		}
+		.alert-warning{
+			background-color: #FFF8EB;
+			color: #333 !important;
+		}
+		.alert-info{
+			background-color: #d9edf7;
+			color: #333 !important;
+		}
+		.alert-shipin{
+			background-color: #FFDBFF;
+			color: #333 !important;
+		}
+		.alert-close{
+			background-color: #E8EFD0 !important;
+			color: #333 !important;
+		}
+		.head{
+			cursor:pointer;
+		}
+		.asnlevels{
+			padding:0 !important;
+		}
+		.asn_group{
+			width:97%;
+			float:left;
+		}
+		.asn_icons{
+			padding:6px;
+		}
+		
+	</style>
+
+	<div class="col-sm-12 asn_wrapper">
+		<div class = "col-md-4 pull-right"  ng-hide= "pack_reverse">
+			<label > {{ovcLabel.asnPackage.search}}:</label>
+      	  	<input id="search" class="form-control" type="text" placeholder="" ng-model="search"  name="search" />
+      	  	<br /><br clear="all" />
+      	</div>
+      	
+
+      	<span id="ovcError" ng-if = "asn_records">
+        	<h4>{{ovcLabel.asnPackage.error.noRecords}}</h4>
+        </span>
+    <div>
+     <br clear="all" />
+		<!-- <h4 ng-if="asn_details && asn_obj.mode == 'asn'" class="alert alert-warning" >{{translation.sidebar[0].inTransit}}</h4>
+		 -->
+	<div ng-hide= "pack_reverse">
+		<div class="col-md-12 trans_det asn_pack_group" ng-repeat="asn_item in asn_details['asns'] | array | filter:search" ng-if="(((asn_obj.mode == 'edit' || asn_obj.mode == 'asn')) || asn_obj.mode === 'transfer')">
+			<span ng-if = "asn_item.packstatus && showreverse && userRolePermissions.orderPermissions.modifyInTransit && userRolePermissions.orderPermissions.vreverseReceipt"><a  class="arrow_d pull-right" title="{{ovcLabel.asnPackage.reverseReceipt}}" ng-click="reverse_package(asn_item)"><i class="fa fa-reply"></i></a></span>
+			<div class = "table-responsive col-sm-12" style = "padding:0;">
+				<div class="col-sm-12 trans_det">
+					<table class="table  table-bordered master_table" ng-if = "asn_item.numberOfPackages > 0">
+						<tbody  ng-class="{'uncheckedASN' : ! asn_item.selectedASN, 'checkedASN' : asn_item.selectedASN}" ng-init = "asndetail.showDetails = (asn_obj.mode == 'edit')?true:false">
+							<tr ng-repeat="(package,packdata) in asn_item.packages"  ng-if=" packdata.packageStatus != 'shipInProgress' ">
+								<td colspan = "7"  class="asnlevels">
+									<div class="col-sm-12 trans_det">
+										<div class="asn_group"  >
+										<table class="table asntable-algin table-condensed">
+											<thead class = "asn_details head"  ng-click="asndetail.showDetails = ! asndetail.showDetails"  ng-class="{'alert-warning' : (packdata.packageStatus == 'shipped' || packdata.packageStatus == 'shippedReversed' ), 'alert-success' : (packdata.packageStatus === 'received'),
+											'alert-info' : (packdata.packageStatus == 'receiveInProgress'),'alert-close': (packdata.packageStatus == 'closed')}">
+												<tr>
+													<th><p><span class="export_label">{{ovcLabel.asnPackage.asn}}</span> : <b class="export_value">{{asn_item.asnId}}</b></p></th>
+													<th ng-if="(asn_obj.mode === 'asn' || asn_obj.mode === 'edit')">
+														<p><span class="export_label">{{ovcLabel.asnPackage.po}}</span> : <b class="export_value">{{asn_item.poId}}</b></p>
+														
+													</th>
+
+												<th><p ><span class="export_label">{{ovcLabel.asnPackage.store}} </span> :</p> <b class="export_value">{{asn_item.shipToLocation}}</b> </th>
+													<th><p><span class="export_label">{{ovcLabel.asnPackage.shipDate}}</span> : <b class="export_value">{{packdata.shipDate | dateForm}}</b></p></th>
+
+													
+													<th><p><span class="export_label">{{ovcLabel.asnPackage.deliveryDate}}</span> :
+													<b class="export_value">{{packdata.expectedDeliveryDate | dateForm}}</b></p></th>
+													
+													<th ng-if="(asn_obj.mode === 'asn' || asn_obj.mode === 'edit' || asn_obj.mode === 'transfer') && userRolePermissions.permissions.viewPurchasePrice">
+														<p><span class="export_label">{{ovcLabel.asnPackage.asnValue}}</span> : <b class="export_value">{{ovcLabel.global.currency[asn_item.currency]}} {{asn_item.asnCost}}</b></p>
+													</th>
+													
+													<!-- <th ng-if = "(asn_obj.mode === 'asn' || asn_obj.mode === 'edit' || asn_obj.mode === 'order')">
+														<p ><span class="export_label">{{translation.asn_service.orderType}}</span> : <b class="export_value">{{translation.orderstypelist[0][asn_item.purchaseOrderType]}}</b> </p>
+													</th> -->
+													<!-- <th><p><span class="export_label">{{translation.asn_service.package_qty}}</span> : <b class="export_value">{{asn_item.numberOfPackage}}</b>   </p></th> -->
+													<th><p><span class="export_label">{{ovcLabel.asnPackage.trackingno}} </span> : <b class="export_value">{{packdata.trackingNumber}}</b> </p></th>
+													<th><p><span class="export_label">{{ovcLabel.asnPackage.totalAsnQuantity}}</span> : <b class="export_value">{{asn_item.packageQty}}</b> </p></th>
+													<th><p class="hide_pdf">{{ovcLabel.asnPackage.packageStatus[packdata.packageStatus]}}&nbsp;&nbsp; <i class="fa fa-exclamation-triangle exclamicon" ng-if="(packdata.receive_discrepancy) &&  (asn_item.purchaseOrderType == 'IBT_M' || asn_item.purchaseOrderType == 'PUSH')  "  title="Quantity Discrepancy"></i>
+													</p>
+													</th>
+												</tr>
+											</thead>
+											<!--Style Configration-->
+											<tbody ng-show="asndetail.showDetails && config.showskugroup"  ng-init = "packdetails = (asn_obj.mode == 'edit')?true:flase">
+												<tr ng-repeat="(style,styledata) in packdata.skus">
+													<td colspan = "8">
+														<div class="col-sm-12 trans_det">
+															<table class="table table-condensed">
+																<thead class = "package_details head" ng-click="styleDetail = !styleDetail">
+																	<tr>
+																		<th> {{ovcLabel.asnPackage.productCode}} </th>
+																		<th> {{ovcLabel.asnPackage.description}} </th>
+																		<th> {{ovcLabel.asnPackage.skuShipped}} </th>
+																		<th ng-if="packdata.packageStatus != 'received'"> {{ovcLabel.asnPackage.totalQuantityShipped}} </th>
+																		<th ng-if="packdata.packageStatus === 'received' "> {{ovcLabel.asnPackage.totalQuantityReceived}} </th>
+																	<!-- 	<th ng-if="styledata.receive_discrepancy"><th> -->
+																		  
+																	</tr>
+
+																	<tr>
+																		<td  ng-show="styledata.stylecode=='undefined'" class="hide_pdf"></td>
+																		<td ng-show="styledata.stylecode!='undefined'"> {{styledata.stylecode}} </td>
+																		<td> {{styledata.styleDescription}} </td>
+																		<td> {{styledata.skuArr.length}} </td>
+																		<td> {{styledata.TotalQuantity}}</td>
+																		<!-- <td ng-if="styledata.receive_discrepancy"></td> -->
+																	</tr>
+																</thead>
+																<tbody ng-show="styleDetail" ng-init = "styleDetail = (asn_obj.mode == 'edit')?true:flase">
+																	<tr >
+																		<td colspan = "6">
+																			<table class="table table-condensed">
+																				<thead>
+																					<tr>
+																						<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+																						<th> {{ovcLabel.asnPackage.sku}} </th>
+																						<th> {{ovcLabel.asnPackage.description}} </th>
+																						<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+																						<th> {{ovcLabel.asnPackage.UOM}} </th>
+																						<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+																						<th ng-if= "packdata.packageStatus === 'received' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+																						<th class="hide_pdf" ng-if="(asn_obj.mode === 'edit')">{{ovcLabel.asnPackage.receivedQty}}</th>
+																						<th class="hide_pdf" ng-if="(styledata.receive_discrepancy) && action.shippack == true "><span class="selectall fa" ng-class="{'fa-check-square-o' : styledata.selected, 'fa-square-o' : !styledata.selected }" ng-click="selectstyleskus(asn_item,packdata.packageid,styledata.stylecode,styledata.selected)" ></span>&nbsp;{{ovcLabel.asnPackage.selectAll}}</th>
+																					</tr>
+																					<tr ng-repeat="(ln_no,skus) in styledata.skuArr track by $index"  class="{{ ((skus.qty != skus.newQty) && skus.qtyStatus != 'shipped'  &&  (skus.resolved == false) && (asn_item.purchaseOrderType =='IBT_M' || asn_item.purchaseOrderType == 'PUSH' ) )? 'class-tr-bg' : 'no-class'}} ">
+																						<td>{{skus.lineNumber}}</td>
+																						<td >{{skus.sku}}</td>
+																						<td>{{skus.description}}</td>
+																						<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.global.currency[asn_item.currency]}}  {{skus.skuCostAsn ? skus.skuCostAsn : skus.skuCostConfirm ? skus.skuCostConfirm : skus.skuCost | number:2}}</td>
+																						<td>{{skus.producUom}}</td>
+																						<td>{{skus.qty || 0}}</td>
+																						<td class="hide_pdf" ng-if="(asn_obj.mode === 'edit')">
+																							<input type="text" ng-model="$parent.skus.newQty" only-digits ng-change="changeQty(ln_no, asn_item.asnId);" class="edit_box" />
+																						</td>
+																						<td ng-if = "(asn_obj.mode === 'transfer' || asn_obj.mode === 'asn') && packdata.packageStatus === 'received' ">{{skus.newQty}}</td>
+																						<!-- <td ng-if="styledata.receive_discrepancy && (skus.qty != skus.newQty) "><span class="selectall fa" ng-class="{'fa-check-square-o' : skus.selected, 'fa-square-o' : !skus.selected }" ng-click="  selectstyleskus(asn_item,package,style,styledata.selected, skus.selected) = !skus.selected " ></span></td> -->
+																						<td class="hide_pdf" ng-if="(styledata.receive_discrepancy) && (skus.qty != skus.newQty) &&   (skus.resolved == false)  && action.shippack == true "><span class="selectall fa" ng-class="{'fa-check-square-o' : skus.selected, 'fa-square-o' : !skus.selected }" ng-click="selectresolveskus(asn_item,packdata.packageid,styledata.stylecode,styledata.selected, $index, skus.selected)" ></span></td>
+																					</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</td>	
+												</tr>
+											</tbody>
+											<!--Sku Configration-->
+											<tbody ng-show="asndetail.showDetails && !config.showskugroup"  ng-init = "packdetails = (asn_obj.mode == 'edit')?true:flase" class= "noborder">
+												<tr>
+													<td colspan = "8">
+														<div class="col-sm-12 trans_det">
+															<table class="table table-condensed">
+																<thead style="border-bottom: 1px solid #DDD">
+																	<tr>
+																		<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+																		<th> {{ovcLabel.asnPackage.sku}} </th>
+																		<th> {{ovcLabel.asnPackage.description}} </th>
+																		<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+																		<th> {{ovcLabel.asnPackage.UOM}} </th>
+																		<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+																		<th ng-if= "packdata.packageStatus === 'received' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+																		<th class="hide_pdf" ng-if="(asn_obj.mode === 'edit')">{{ovcLabel.asnPackage.receivedQty}}</th>
+																		<th ng-if="(styledata.receive_discrepancy) && action.shippack == true " class="hide_pdf"><span class="selectall fa" ng-class="{'fa-check-square-o' : styledata.selected, 'fa-square-o' : !styledata.selected }" ng-click="selectstyleskus(asn_item,packdata.packageid,styledata.stylecode,styledata.selected)" ></span>&nbsp;{{ovcLabel.asnPackage.selectAll}}</th>
+																		
+																	</tr>
+																</thead>
+																<tbody ng-repeat="(style,styledata) in packdata.skus" >
+																	<tr ng-repeat="(ln_no,skus) in styledata.skuArr track by $index"  class="{{ ((skus.qty != skus.newQty) &&  (skus.resolved == false) && (asn_item.purchaseOrderType =='IBT_M' || asn_item.purchaseOrderType == 'PUSH' ) )? 'class-tr-bg' : 'no-class'}} ">
+																		<td>{{skus.lineNumber}}</td>
+																		<td >{{skus.sku}}</td>
+																		<td>{{skus.description}}</td>
+																		<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.global.currency[asn_item.currency]}}  {{skus.skuCostAsn ? skus.skuCostAsn : skus.skuCostConfirm ? skus.skuCostConfirm : skus.skuCost | number:2}}</td>
+																		<td>{{skus.producUom}}</td>
+																		<td>{{skus.qty || 0}}</td>
+																		<td ng-if="(asn_obj.mode === 'edit')">
+																			<input type="text" ng-model="$parent.skus.newQty" only-digits ng-change="changeQty(ln_no, asn_item.asnId);" class="edit_box" />
+																		</td>
+																		<td ng-if = "(asn_obj.mode === 'transfer' || asn_obj.mode === 'asn') && packdata.packageStatus === 'received' ">{{skus.newQty}}</td>
+																		<!-- <td ng-if="styledata.receive_discrepancy && (skus.qty != skus.newQty) "><span class="selectall fa" ng-class="{'fa-check-square-o' : skus.selected, 'fa-square-o' : !skus.selected }" ng-click="  selectstyleskus(asn_item,package,style,styledata.selected, skus.selected) = !skus.selected " ></span></td> -->
+																		<td ng-if="(styledata.receive_discrepancy) && (skus.qty != skus.newQty) &&   (skus.resolved == false)  && action.shippack == true "><span class="selectall fa" ng-class="{'fa-check-square-o' : skus.selected, 'fa-square-o' : !skus.selected }" ng-click="selectresolveskus(asn_item,packdata.packageid,styledata.stylecode,styledata.selected, $index, skus.selected)" ></span></td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</td>	
+												</tr>
+											</tbody>
+											</table>
+											</div >
+											<div  class="asn_icons" >
+												<span  ng-if="(packdata.packageStatus === 'shipped'  || packdata.packageStatus === 'receiveInProgress' || packdata.packageStatus === 'shippedReversed')  &&  action.receivepack == true" class="hide_pdf">
+													<a   ng-if="(asn_obj.mode !== 'edit' && ! is_blind_receive && userRolePermissions.orderPermissions.modifyInTransit)" class="arrow_d pull-right"   
+													 ng-click="asn_details_storage()" ui-sref="ovc.asn-detailview({asnid:asn_item.asnId, packageid : packdata.packageid, orderid : asn_item.poId})"  title="{{ovcLabel.asnPackage.beginReceiving}}">
+													<i class="fa fa-download"></i>
+													</a>
+
+													<a  class="arrow_d pull-right" ng-click="packdata.checkBox = ! packdata.checkBox;"  ng-if="(is_blind_receive)">
+													<i class="fa" ng-class="{'fa-square-o' : ! packdata.checkBox, 'fa-check-square' : packdata.checkBox}"></i>
+													</a>
+													{{packdata.che_box}}
+												</span>
+												<span ng-if	="packdata.packageStatus ==='received' && !showreverse && userRolePermissions.orderPermissions.modifyInTransit  && userRolePermissions.orderPermissions.vreverseReceipt && action.receivepack" class="hide_pdf">
+												<a   href="" class="arrow_d pull-right" title="{{translation.asn_service.reverse_receipt}}" ng-click="reverse_package({asn:asn_item,packageid : packdata.packageId})"><i class="fa fa-reply"></i></a>
+												</span>
+												<span ng-if	="action.receivepack == false" class="hide_pdf"><a  class="arrow_d pull-right" title="Click to print particular ASN" ng-click="asn_item.selectedASN = ! asn_item.selectedASN;"  >
+													<i class="fa" ng-class="{'fa-square-o' : ! asn_item.selectedASN, 'fa-check-square' : asn_item.selectedASN}"></i>
+													</a>
+												</span>
+											</div >
+										</div>
+										
+									</td>
+								</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--For Reverse the Package -->
+		<div ng-show="pack_reverse">
+			<reverse-receipt></reverse-receipt>
+		</div>
+		<span  ng-if="(asn_obj.mode != 'edit' && is_blind_receive && asn_receive && asn_details.receivebtn && showreceive)">
+			<button   ng-show="action.receivepack"  type="submit" class="btn btn-primary pull-right" ng-click="receivePackages('received');" >{{ovcLabel.asnPackage.buttons.receive}}</button>
+		</span>
+
+		<div class="col-sm-12" ng-if="(asn_obj.mode === 'edit')">
+			<button type="submit" class="btn btn-primary pull-right" ng-click="receivePackages('received');" >{{ovcLabel.asnPackage.buttons.receive}}</button>
+			<button type="submit" class="btn btn-primary pull-right" ng-click="receivePackages('receiveInProgress');" style = "margin:0 10px;" >{{ovcLabel.asnPackage.buttons.save}}</button>
+			<span class="file-input btn btn-primary btn-file pull-right" style = "margin:0 10px 0 0;">{{ovcLabel.asnPackage.buttons.importFile}}
+		    	<input type="file" on-read-file="showContent($fileContent,myFile)" file-model="myFile" />
+		    </span>
+			<button type="submit" class="btn btn-primary pull-right" ng-click="backBtn();">{{ovcLabel.asnPackage.buttons.back}}</button>
+		</div>
+		</div>
+	</div>
+</div>
+

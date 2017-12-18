@@ -1,0 +1,96 @@
+<button class="col-md-12 text-left btn btn-default" ng-if="dash" ng-click="redirect()">
+	<i class="fa fa-arrow-left" aria-hidden="true"></i>
+	{{translation.buttontypes[0].backtodashboard}}
+</button>
+<div>
+	<div class="row header_blk">
+		<div class="col-lg-12">
+			<h3 class="page-header" >{{ovcLabel.transfer.list.heading}}
+				<div class="pull-right add_ven clearfix">
+					<a   id="ovcAddBtn" ui-sref="ovc.transfer-add"  title="{{translation.list.add}}" name="add_transfer_btn"class="btn btn-primary" ng-class = "{disabled: ! userRolePermissions.orderPermissions.modifyTransfer}"><i class="fa fa-plus-circle"></i>{{ovcLabel.transfer.list.add}} </a>
+					<span ng-if="list.length > 0">
+						<ovcdata-export pdf-id="Inbound_ibt_export" heading="{{ovcLabel.transfer.export.listtitle}}" ng-if="type_ibt == 'Inbound'"></ovcdata-export>
+						<ovcdata-export pdf-id="Outbound_ibt_export" heading="{{ovcLabel.transfer.export.listtitle}} " ng-if="type_ibt == 'Outbound'"></ovcdata-export>
+					</span>
+				</div>	
+			</h3>
+		</div>
+	</div>
+
+	<div class="col-sm-12 clearfix">
+				<div class="panel-body search_box border_T0">
+				<form angular-validator-submit="searchPurchaseOrder()">
+					<div class="col-md-3 col-sm-12 col-xs-12">
+						<label class="control-label">{{ovcLabel.transfer.list.fromdate}}</label>
+						<input id="common_fromdate" calendar  ng-model='form.fromdate'  class="form-control hidcal"  ng-change='change_frdate()'  />
+					</div>
+					<div class="col-md-3 col-sm-12 col-xs-12">
+						<label class="control-label">{{ovcLabel.transfer.list.todate}}</label>
+						<input id="common_todate"calendar  ng-model='form.todate'  class="form-control hidcal" ng-change='change_todate()' />
+					</div>
+						<span class="col-md-3 col-sm-12 col-xs-12"> 
+							<label class="control-label">{{ovcLabel.transfer.list.location}}</label><br />
+							<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+								<div style="position: relative;" class="tooltip-pro width_padd">
+									<input id="common_heirarchy_check"  type="text" class="form-control"
+										ng-model="location.displayName" ng-focus="showLoc = true"
+										placeholder="{{ovcLabel.transfer.list.location}}"
+										style="padding: 6px 18px 6px 10px;"
+										ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+										class="fa"
+										ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+										style="position: absolute; right: 7px; top: 10px;">
+								</div>
+								<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+									node-label="name" ng-show="showLoc"
+									class="dropdown-menu treeViewDrop"
+									style="display: block; width: 300px;" mode="listlocation"></div>
+							</div>
+						</span>
+					<div class="col-md-3 col-sm-12 col-xs-12">
+					<label class="control-label">{{ovcLabel.transfer.list.status}}</label>
+					<div  id="ovcStatusDrop" multiselect-common="" items="statusData.transferStatusList" selected-items="statusData.transferStatusSelected" naming={{ovcLabel.transfer.list.status}} dynamic="Status">
+					</div>
+					</div>
+					<div class="col-sm-12 col-md-6 col-xs-12" style="margin-top:25px;">
+						<input name="transfer_no"type="text" class="form-control" ng-model="form.transfer_number" placeholder="{{ovcLabel.transfer.list.transfernumber}}"/>
+					</div>
+					<div class="col-sm-3  col-xs-3 adv_align">
+
+					<a class='btn' id="ovcAdvancedBtn" ng-click="advanceSearch()">{{advanced ? ovcLabel.transfer.buttons.basic : ovcLabel.transfer.buttons.advanced}}</a>
+					</div>
+					<br clear ="all">
+					<div ng-if="advSearch.isAdvanceSearch === true">
+						<div class = "row">
+							<advanced-search></advanced-search>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-3 col-xs-6 pull-right" style="margin-top:25px;">
+						<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="searchPurchaseOrder(); dashremove();" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.transfer.buttons.search}}</button>
+						<button id="ovcResetBtn"type="submit" class="btn btn-primary ng-binding" ng-click="resetOrderStatus()" style="margin-right:10px;"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.transfer.buttons.reset}}</button>
+					</div>
+					</form>
+				</div>
+				<span  ng-show="action.fieldsrequired  && action.submitted" class="alert alert-danger ng-binding datevalid" >{{translation.error.date}}</span>	
+	</div>
+
+	    <div class="col-sm-12 col-xs-12">
+			<ul class="nav nav-tabs">
+				<li ng-class="(type_ibt == 'Inbound') ? 'active' : ''">
+					<a name="transfer_inbound" data-toggle="tab" href="" ng-click = "inbound()">{{ovcLabel.transfer.list.inbound}}</a>
+				</li>
+				<li ng-class="(type_ibt == 'Outbound') ? 'active' : ''">
+					<a name="transfer_outbound"data-toggle="tab" href="" ng-click = "outbound()">{{ovcLabel.transfer.list.outbound}}</a>
+				</li>
+			</ul>
+	    </div>
+
+	    <div class="tab-content" ng-hide="action.itemsPerPage == 0">
+	    	<div role="tabpanel" class="tab-pane active" ng-include="'views/ibt/list.html'"></div>	
+	  	</div>
+	  	<div class="col-sm-12">
+	  		<div id="ovcError" ng-if="action.itemsPerPage == 0">{{ovcLabel.transfer.list.noproducts}}</div>
+	  	</div>
+</div>
+
+<br clear="all" />

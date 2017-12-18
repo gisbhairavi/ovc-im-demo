@@ -1,0 +1,108 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header clearfix"> {{ovcLabel.deliveries.list.heading}}
+
+			<div class="pull-right add_ven clearfix">
+				<ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.deliveries.list.listOfDelivery}}" type="in_transit"></ovcdata-export>
+			</div>
+		</h3>
+    </div>
+</div>
+
+<div class="panel-body search_box ">
+    <div class="row">					
+		<form>
+			<div class="col-md-12 col-sm-12 col-xs-12 purchase_sech">	
+				<div class="col-sm-12 col-md-3 col-xs-12">
+					<label class="control-label">{{ovcLabel.deliveries.list.fromDate}}</label>
+					<input calendar  id="common_fromdate" ng-model='asnSearchData.fromdate'  class="form-control hidcal"  ng-change='change_frdate()'  />
+				</div>
+				<div class="col-sm-12 col-md-3 col-xs-12">
+					<label class="control-label">{{ovcLabel.deliveries.list.toDate}}</label>
+					<input calendar id="common_todate" ng-model='asnSearchData.todate'  class="form-control hidcal" ng-change='change_todate()' />
+				</div>
+				<!-- <div class="col-sm-3">
+					<label class="control-label">{{translation.locations[0].store}}</label>
+					<select ng-options="col.id as col.displayName for col in store_datas"  ng-change = "storeselect()"  class="form-control" name="shiptostore"  ng-model="asnSearchData.shiptostore"><option value="">-- {{translation.locations[0].select_store}} --</option></select>
+				</div> -->
+				<span class="col-sm-12 col-md-3 col-xs-12"> 
+					<label class="control-label">{{ovcLabel.deliveries.list.location}}</label><br />
+					<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+						<div style="position: relative;" class="tooltip-pro width_padd">
+							<input type="text" class="form-control" id="common_heirarchy_check"
+								ng-model="location.displayName" ng-focus="showLoc = true"
+								placeholder="{{ovcLabel.deliveries.placeholder.location}}"
+								style="padding: 6px 18px 6px 10px;"
+								ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+								class="fa"
+								ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+								style="position: absolute; right: 7px; top: 10px;"></span>
+						</div>
+						<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+							node-label="name" ng-show="showLoc"
+							class="dropdown-menu treeViewDrop"
+							style="display: block; width: 300px;" mode="listlocation"></div>
+					</div>
+				</span>
+				<!-- <div class="col-sm-3">
+					<label class="control-label">{{translation.locations[0].status}}</label><br />
+					<dropdown-multiselect pre-selected="selectedpackageStatus" model="asnSearchData.status" options="packageStatus"></dropdown-multiselect>
+				</div> -->
+				<!-- <multiselect-box selectid="demo" ng-model="myValue" drop="t.name for t in packageStatus" change = "changefun()"></multiselect-box> -->
+				<!-- <div class="col-md-3">
+				 <label class="control-label">{{translation.locations[0].status}}</label><br /> -->
+				 <!-- <multiselect-directive pre-selected="selectedtransferStatus" model="form.status" options="transferstatus"></multiselect-directive> -->
+				 <div class= "col-sm-12 col-md-3 col-xs-12">
+				 	<label class="control-label">{{ovcLabel.deliveries.list.status}}</label>
+				 	<div   id="ovcStatusDrop" multiselect-common="" items="firstseasonitems" selected-items="firstseasonselected" naming={{ovcLabel.deliveries.list.status}} dynamic="Status"></div>
+				 </div>
+				 <!-- <select id="multipleSelectDrop" data-placeholder="Select an option" multiple style="width:250px !important" ng-model = "asnSearchData.status" ng-change="change();"> <option ng-repeat="item in packageStatus" value="{{item.id}}">{{item.name}}</option></select> -->
+				 
+
+				
+
+
+
+
+			</div>
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="col-sm-12 col-md-3 col-xs-12">
+					<autocomplete class="search_scroll" attr-input-class="form-control" attr-input-id="ordernumberDeliveries" ng-model="asnSearchData.selectedOrderId" attr-placeholder="{{ovcLabel.deliveries.placeholder.orderNumber}}" click-activation="false" data="purchaseOrders" on-type="searchOrderNumber" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></autocomplete>
+
+				</div>
+				<div class="col-sm-12 col-md-3 col-xs-12">
+					<autocomplete attr-input-class="form-control" attr-input-id="asnNumberSearch" ng-model="asnSearchData.selectedAsnId" attr-placeholder="{{ovcLabel.deliveries.placeholder.asnNumber}}" click-activation="false" data="asnNumbers" attr-input-autocomplete="off" ></autocomplete>
+
+					<!-- <autocomplete attr-input-class="form-control" attr-input-id="asnNumberSearch"   ng-model="asnSearchData.selectedAsnId" attr-placeholder="{{translation.asn_service.asn_number}}" click-activation="false" data="asnNumbers" attr-input-autocomplete="off" ></autocomplete> -->
+				</div>
+				<div class="col-sm-12 col-md-3 col-xs-12">
+					<autocomplete attr-input-class="form-control" attr-input-id="allSkus"  ng-model="asnSearchData.selectedSku" attr-placeholder="{{ovcLabel.deliveries.placeholder.status}}" click-activation="false" data="allSkus" attr-input-autocomplete="off" ></autocomplete>
+				</div>
+				<!--For Status Ordertype-->
+				<div class= "col-sm-12 col-md-3 col-xs-12">
+				 	<!-- <label class="control-label">{{translation.locations[0].status}}</label> -->
+				 	<div  id="ovcOrdertypeDrop" multiselect-common="" items="delTypeData" selected-items="delTypeDataSelected" naming={{ovcLabel.deliveries.placeholder.orderType}} dynamic="Status"></div>
+				 </div>
+
+				<div class="col-sm-12 col-md-3 col-xs-12 trans-search" style="margin-top: 25px;">
+				<a class='btn' id="ovcAdvancedBtn" ng-click="advanceSearch()">{{advsearch?ovcLabel.deliveries.list.basic:ovcLabel.deliveries.list.advance}}</a>
+				</div>
+				<div ng-if="advSearch.isAdvanceSearch === true">
+					<div class = "row">
+						<advanced-search></advanced-search>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 search_btns porder_srch" style = "margin-top: 25px;">
+					<button type="submit" id="ovcSearchBtn" class="btn btn-primary ng-binding" ng-click="asnSearch()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.deliveries.button.search}}</button>
+					<button type="reset" id="ovcResetBtn" class="btn btn-primary rst_btn ng-binding" ng-click="asnSearchReset()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.deliveries.button.reset}}</button>
+				</div>
+				<span ng-show="fieldsrequired  && submitted" class="alert alert-danger ng-binding datevalid" >{{ovcLabel.deliveries.error.from_todate}}</span>
+			</div>
+		</form>
+	</div>
+</div>
+<section>
+	<div class = "col-md-12 col-sm-12 col-xs-12" id="order_summary_export">
+		<asn-table mode="asn" backTo = "true"></asn-table>
+	</div>
+</section>

@@ -1,0 +1,1 @@
+Files folder is required for upload CSV to work. The uploaded CSV Contain Replenishment Rules for SKU's

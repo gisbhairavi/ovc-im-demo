@@ -1,0 +1,71 @@
+
+<div class = "panel-body search_box border_T0">
+	<div class="ven_tbody">
+		<div class="row">
+			<div class="col-md-12 table-responsive">
+				<table class="table table-striped table-bordered" iphone-view  style =" margin-top: 10px;" id="{{type_ibt}}_ibt_export">
+					<thead>
+						<th >{{ovcLabel.manualshipment.labels.porderno1}}&nbsp;<a class="sort_align" ng-click="sort_by('purchaseOrderNumber');"><i class="fa " ng-class="{'fa-sort': predicate!='purchaseOrderNumber','fa-sort-asc': predicate=='purchaseOrderNumber' && reverse===false,'fa-sort-desc': predicate=='purchaseOrderNumber' && reverse===true}"></i></a></th>
+						<th>{{ovcLabel.manualshipment.labels.order_type}} &nbsp;<a class="sort_align" ng-click="sort_by('ordertype');"><i class="fa " ng-class="{'fa-sort': predicate!='ordertype','fa-sort-asc': predicate=='ordertype' && reverse===false,'fa-sort-desc': predicate=='ordertype' && reverse===true}"></i></a></th>
+						<th width="116px">{{ovcLabel.manualshipment.labels.ship_from}} &nbsp;<a class="sort_align" ng-click="sort_by('from_location');"><i class="fa " ng-class="{'fa-sort': predicate!='from_location','fa-sort-asc': predicate=='from_location' && reverse===false,'fa-sort-desc': predicate=='from_location' && reverse===true}"></i></a></th>
+						<th>{{ovcLabel.manualshipment.labels.ship_to}} &nbsp;<a class="sort_align" ng-click="sort_by('ship_to_location');"><i class="fa " ng-class="{'fa-sort': predicate!='ship_to_location','fa-sort-asc': predicate=='ship_to_location' && reverse===false,'fa-sort-desc': predicate=='ship_to_location' && reverse===true}"></i></a></th>
+						<th  width="85px">{{ovcLabel.manualshipment.labels.status}}&nbsp;<a class="sort_align" ng-click="sort_by('orderStatus');"><i class="fa " ng-class="{'fa-sort': predicate!='orderStatus','fa-sort-asc': predicate=='orderStatus' && reverse===false,'fa-sort-desc': predicate=='orderStatus' && reverse===true}"></i></a></th>
+						<!-- <th>{{translation.qtystatuslist[0].submitted}}</th>
+						<th>{{translation.qtystatuslist[0].confirmed}}</th> -->
+						<th>{{ovcLabel.manualshipment.labels.shipped}}</th>
+						<th>{{ovcLabel.manualshipment.labels.received}}</th>
+						<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.manualshipment.labels.total_cost}}&nbsp;<a class="sort_align" ng-click="sort_by('totalPoCost');"><i class="fa " ng-class="{'fa-sort': predicate!='totalPoCost','fa-sort-asc': predicate=='totalPoCost' && reverse===false,'fa-sort-desc': predicate=='totalPoCost' && reverse===true}"></i></a></th>
+						<th>{{ovcLabel.manualshipment.labels.created}}&nbsp;<a class="sort_align" ng-click="sort_by('created');"><i class="fa " ng-class="{'fa-sort': predicate!='created','fa-sort-asc': predicate=='created' && reverse===false,'fa-sort-desc': predicate=='created' && reverse===true}"></i></a></th>
+						<th data-hidePdf="true" class="hideExport" ng-if="userRolePermissions.orderPermissions.copymanualShipment">{{ovcLabel.manualshipment.labels.action}}</th>
+					</thead>
+					<tbody>		
+						<tr ng-repeat="data in list | orderBy : predicate :reverse" class=" {{ (data.showdiscrepancy == true)? 'class-tr-bg' : 'no-class'}}"      >
+							
+							<td class="name_li">
+								<a  name="shipment_edit" ui-sref="ovc.manualShipment-edit({porderid:data._id,shipmentstatus:displayStatusObject[data.purchaseOrderNumber]})" ng-if="(((data.orderStatusKey)=='draft' || (data.orderStatusKey)=='Draft') && (data.purchaseOrderType == 'PUSH'))" data-hidePdf="true" class="hideExport">{{data.purchaseOrderNumber}} </a>
+
+								<a name="shipment_edit" ui-sref="ovc.manualShipment-summary({summaryid:data._id,transfertype:type_ibt, transferfunc:'summary',status:displayStatusObject[data.purchaseOrderNumber]})" ng-if="((data.orderStatusKey)=='inProgress' && (data.purchaseOrderType == 'PUSH'))" data-hidePdf="true">{{data.purchaseOrderNumber}} </a> 
+							</td>
+							<td>{{data.orderType}}</td>
+							<td>{{data.from_location}}</td>
+							<td>{{data.ship_to_location}}</td>
+							<td>{{ovcLabel.global.orderStatus[displayStatusObject[data.purchaseOrderNumber]]}}</td>
+							<!-- <td><center>{{data.allqty.submitted ? data.allqty.submitted : 0}}</center></td>
+							<td><center>{{data.allqty.confirmed ? data.allqty.confirmed : 0}}</center></td> -->
+							<td><center>{{data.allqty.shipped ? data.allqty.shipped : 0}}</center></td>
+							<td><center>{{data.allqty.received ? data.allqty.received : 0}}</center></td>
+							<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{data.currency}}{{data.totalPoCostAsn ? data.totalPoCostAsn : data.totalPoCostConfirm ? data.totalPoCostConfirm : data.totalPoCost |number : 2}}<!-- {{data.totalPoCost}} --></td>
+							<td>{{data.created | datetimeForm}}</td>
+							<td  data-hidePdf="true" class="hideExport"  ng-if="userRolePermissions.orderPermissions.copymanualShipment" ng-hide=" ((data.showdiscrepancy == true) && (data.orderStatusKey =='received' || 'inProgress') && (type_ibt	==	'Outbound')) ">
+								<a name="copyButton" ui-sref="ovc.manualShipment-copy({porderid:data._id})" title="{{ovcLabel.manualshipment.copy_shipment}}" class="btn btn-primary del_i" ng-show="(data.purchaseOrderType == 'PUSH')  && type_ibt	==	'Inbound' "><i class="fa fa-files-o"></i></a>
+							</td>
+							<td  data-hidePdf="true" class="hideExport"  ng-show=" ((data.showdiscrepancy == true) && (data.orderStatusKey =='received' || 'inProgress') && (type_ibt	==	'Outbound') ) ">
+								<a  ui-sref="ovc.manualShipment-summary({summaryid:data._id,transfertype:type_ibt,transferfunc:'resolve'})" title="{{ovcLabel.manualshipment.resolve_shipment}}" class="btn btn-danger del_i" ng-show="ModifyListPurchaseOrder" ><i class="fa fa-lightbulb-o"></i>
+								</a> 
+								<a href="" ng-hide="ModifyListPurchaseOrder" title="{{ovcLabel.manualshipment.resolve_shipment}}" class="btn btn-danger del_i" ng-disabled="viewModifyListPurchaseOrder" ><i class="fa fa-lightbulb-o"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div ng-show = "action.products"><h4>{{ovcLabel.manualshipment.list.no_shipment}}</h4></div>	
+		<div class="col-md-12" ng-show="action.totalItems > 0">
+			<uib-pagination total-items="action.totalItems" items-per-page = "action.entryLimit" ng-model="action.currentPage" class="pagination-sm" boundary-links="true" ng-change="pageChanged()" ></uib-pagination>
+			<div class="col-md-3 pglimit">
+				<div class="pg_limit page_size_drdn">
+					<label>{{ovcLabel.manualshipment.list.pagesize}}:</label>
+						<select  convert-to-number	ng-model="action.entryLimit" class="pgsizes" ng-change="searchPurchaseOrder()">
+							<option>10</option>
+							<option>20</option>
+							<option>50</option>
+							<option>100</option>
+						</select>
+				</div>
+			</div>
+
+		</div>
+</div>
+

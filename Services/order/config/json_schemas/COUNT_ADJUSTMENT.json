@@ -1,0 +1,158 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Root Schema.",
+    "description": "This document contains a Schema for validating the Adjustment export message.",
+    "properties": {
+        "adjustment": {
+            "items": {
+                "properties": {
+                    "adjustmentCode": {
+                        "description": "Transaction Code.",
+                        "enum": [
+                            "NEG",
+                            "POS",
+                            "TWO"
+                        ],
+                        "title": "The Adjustmentcode Schema",
+                        "type": "string"
+                    },
+                    "adjustmentItem": {
+                        "items": {
+                            "properties": {
+                                "lineNumber": {
+                                    "description": "Unique lineNumber of the product.",
+                                    "title": "The LineNumber Schema",
+                                    "type": "integer"
+                                },
+                                "qty": {
+                                    "description": "Quantity of the product.",
+                                    "title": "The Qty Schema",
+                                    "type": "integer"
+                                },
+                                "sku": {
+                                    "description": "Unique Number for the product.",
+                                    "title": "The Sku Schema",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "sku",
+                                "qty",
+                                "lineNumber"
+                            ],
+                            "type": "object"
+                        },
+                        "type": "array"
+                    },
+                    "adjustmentName": {
+                        "description": "Name of the manual transaction.",
+                        "title": "The Adjustmentname Schema",
+                        "type": "string"
+                    },
+                    "balanceUpdate": {
+                        "type": "object",
+                        "patternProperties": {
+                          ".*": {
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "balanceType": {
+                                            "description": "balanceType affected by the transaction.",
+                                            "enum":[ 
+                                                "openOnOrderIn",
+                                                "atp",
+                                                "wac",
+                                                "asnIn",
+                                                "oh",
+                                                "confirmedOrdersIn",
+                                                "ats",
+                                                "unConfirmedIn",
+                                                "rejectedIn",
+                                                "confirmedOrdersOut",
+                                                "transferOut",
+                                                "transferIn",
+                                                "openOnOrderOut",
+                                                "returnToVendor",
+                                                "allocated",
+                                                "rejectedOut",
+                                                "unConfirmedOut",
+                                                "held",
+                                                "reserved",
+                                                "asnOut"
+                                            ],
+                                            "title": "The Balancetype Schema",
+                                            "type": "string"
+                                        },
+                                        "updateType": {
+                                            "description": "balanceType calculation operation type.",
+                                            "enum": [
+                                                "add",
+                                                "subtract",
+                                                "recalculate"
+                                            ],
+                                            "title": "The Updatetype Schema",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "updateType",
+                                        "balanceType"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "reasonCode": {
+                        "description": "reasonCodeId of the manual adjustment.",
+                        "title": "The Reasoncode Schema",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "adjustmentCode",
+                    "adjustmentItem",
+                    "balanceUpdate"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "adjustmentNumber": {
+            "description": "Unique adjustment Number in OVC.",
+            "title": "The AdjustmentNumber Schema",
+            "type": "string"
+        },
+        "created": {
+            "description": "date and time when Adjustment was created in OVC.",
+            "title": "The Created Schema",
+            "type": "string"
+        },
+        "createdBy": {
+            "description": "userId of the user who created the Adjustment.",
+            "title": "The Createdby Schema",
+            "type": "string"
+        },
+        "status": {
+            "description": "Staus of the Adjustment.",
+            "title": "The Status Schema",
+            "type": "string"
+        },
+        "storeId": {
+            "description": "Store ID where adjustment was created.",
+            "title": "The Storeid Schema",
+            "type": "string"
+        },
+        "updatedBy": {
+            "description": "userId of the user who updated the adjustment.",
+            "title": "The Updatedby Schema",
+            "type": "string"
+        }
+    },
+    "required": [
+        "adjustmentNumber",
+        "created",
+        "storeId",
+        "adjustment"
+    ]
+}

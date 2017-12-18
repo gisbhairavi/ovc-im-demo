@@ -1,0 +1,103 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+		 <h3 class="page-header"  ng-if="title == 'Add'"> {{ovcLabel.unitOfMeasure.adduomtitle}}</h3>
+        <h3 class="page-header"  ng-if="title == 'Edit'"> {{ovcLabel.unitOfMeasure.edituomtitle}}</h3>
+	
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<form role="form" name="form" >
+<div class="ven_tblk clearfix">
+<div class="row r_margin ng-scope">
+<div class="col-md-12">
+<div class="add_vendorb clearfix">
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-12">
+
+						<div class="form-group">
+							<input type="hidden" ng-if="title == 'Edit'" name="id" ng-model="u_add.id" >
+							<label class="control-label">{{ovcLabel.unitOfMeasure.uomid}} </label>
+							<input class="form-control" id="uomId" placeholder="{{ovcLabel.unitOfMeasure.enteruomid}}" ng-model="u_add.unitofmeasureid"
+							name="unitofmeasureid" required  ng-disabled="moluom">
+																		
+																		 
+							<span  ng-show="form.unitofmeasureid.$error.required  && submitted" class="alert alert-danger">{{ovcLabel.unitOfMeasure.uomidrequired}}
+							</span>
+																	
+						</div>
+
+						<div class="form-group">
+
+							<label class="control-label">{{ovcLabel.unitOfMeasure.description}}</label>
+							<input class="form-control" id="uomDescription" placeholder="{{ovcLabel.unitOfMeasure.enterdescription}}" ng-model="u_add.description"
+							name="description" required ng-disabled="moluom">
+							<span  ng-show="form.description.$error.required  && submitted" class="alert alert-danger">Description is Required
+							</span>
+						</div>											
+
+						<div class="form-group">
+
+							<label class="control-label">{{ovcLabel.unitOfMeasure.baseqty}}</label>
+							<input  type="number"  step="any"  id="uomQty" class="form-control" placeholder="{{ovcLabel.unitOfMeasure.enterbaseqty}}" ng-model="u_add.basequantity"
+							name="basequantity"  required ng-disabled="moluom">
+								<span  ng-show="form.basequantity.$error.required  && submitted" class="alert alert-danger">{{ovcLabel.unitOfMeasure.quantbase}}
+							</span>
+						</div>	
+
+
+						<div class="form-group">
+
+							<label>{{ovcLabel.unitOfMeasure.status}}</label>
+							<br>
+							<div class="btn-group"  ng-if='moluom==true' >									
+								<label class = "rdio_btn radio_disabled" id="active">
+									<input type="radio" value = "1" ng-model="u_add.status" name = "status" class = "required" ng-checked="{{status}}" />
+									<p class="{{newclass1}}">{{ovcLabel.unitOfMeasure.active}}</p>
+								</label>
+
+								<label class = "rdio_btn radio_disabled" id="inactive" >
+									<input type="radio" value = "0" ng-model="u_add.status" name = "status" class = "required"/>
+									<p class="{{newclass2}}">{{ovcLabel.unitOfMeasure.inactive}}</p>
+								</label>										
+							</div>	
+							<div class="btn-group"  ng-if='moluom==false'>									
+								<label class = "rdio_btn" id="active" ng-click="changeclass1()" >
+									<input type="radio"  value = "1" ng-model="u_add.status" name = "status" class = "required" ng-checked="{{status}}" />
+									<p class="{{newclass1}}">{{ovcLabel.unitOfMeasure.active}}</p>
+								</label>
+
+								<label class = "rdio_btn" id="inactive" ng-click="changeclass2()" >
+									<input type="radio"  value = "0" ng-model="u_add.status" name = "status" class = "required"/>
+									<p class="{{newclass2}}">{{ovcLabel.unitOfMeasure.inactive}}</p>
+								</label>										
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="save_can acc_det clearfix">
+<div class="col-md-12">
+	<div class="pull-right">
+
+	     <a><button type="submit" id="ovcSave" ng-click="uom_add(u_add)" ng-disabled="moluom" class="btn btn-primary">{{ovcLabel.unitOfMeasure.buttons.save}}</button></a>
+	     <a href ng-click="unit_cancel()" name="commonCancel" class="btn btn-primary" >{{ovcLabel.unitOfMeasure.buttons.cancel}}</a>
+
+	</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+									
+											
+											

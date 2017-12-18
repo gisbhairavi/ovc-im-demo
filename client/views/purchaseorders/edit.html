@@ -1,0 +1,650 @@
+<transaction-history></transaction-history>
+<div class="row add_tit ng-scope">
+    <div class="col-lg-12" ng-if="action.state	==	'order' ">
+        <h3 class="page-header" ng-hide="hideordtype">{{ovcLabel.poOrder.edit}}: {{ordernum}} 
+			<div class="col-md-2 pull-right">
+				<div class="pull-right">
+					<span ng-class="{'alert-draft': orderstatus == 'Draft'}" class="label status" > {{orderstatus}} </span >
+				</div>
+			</div>
+		</h3>
+        <h3 class="page-header" ng-show="hideordtype">{{ovcLabel.poOrder.editreplenishment}} :{{ordernum}}
+		 <div class="col-md-2 pull-right">
+			<div class="pull-right">
+		 		<span class="label status" ng-class="{'alert-draft': orderstatus == 'Draft'}" >{{orderstatus}}</span> 
+		 	</div>
+		 </div >
+		</h3>
+    </div>
+    <div class="col-lg-12" ng-if="action.state	==	'transfer' ">
+        <h3 class="page-header" ng-hide="hideordtype">{{ovcLabel.transfer.edit}}: {{ordernum}} 
+			<div  class="col-md-2 pull-right">
+				<div class="pull-right">
+					<span  class=" label status" ng-class="{'alert-draft': orderstatus == 'Draft'}" > {{orderstatus}} </span >
+				</div>
+			</div>
+		</h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- <section  ng-controller="TabController as tab"> -->
+        <section>
+            <div class="pro_menu purchase_m clearfix">
+                <div class="col-md-12">
+                    <ul class="nav nav-pills">
+                        <li class="purchase_or" ng-class="{active:tab.page == 1}">
+                            <a href id="co_detail" ng-if="action.state	==	'order' " ng-click="tab.page=1"><span class="count_n">1</span>{{ovcLabel.poOrder.orderDetail}}</a>
+                            <a href id="co_detail" ng-if="action.state	==	'transfer' " ng-click="tab.page = 1"><span class="count_n">1</span>{{ovcLabel.transfer.transferDetail}}</a></li>
+                        <li class="purchase_shipp" ng-class="{active:tab.page == 2}" ng-show="shiptab"><a href id="acc_detail" ng-click="tab.page = 2"><span class="count_n">2</span>{{action.state	==	'order' ? ovcLabel.poOrder.shipping : ovcLabel.transfer.shipping}}</a></li>
+                        <li class="purchase_pay" ng-class="{active:tab.page == 3}" ng-hide="hidepayment==true ||  billtab==false ">
+                            <a href id="vp_detail" ng-click="tab.page = 3">
+                                <span class="count_n" ng-show="shiptab">3</span> <span class="count_n" ng-hide="shiptab">2</span>{{action.state == 'order' ? ovcLabel.poOrder.payment : ovcLabel.transfer.payment}}</a>
+                        </li>
+                        <li class="purchase_place" ng-class="{active:tab.page == 4}">
+                            <a href id="fr_detail" ng-click="tab.page = 4">
+                                <span class="count_n" ng-show="hidepayment==false &&  billtab==true  && shiptab==true">4</span>
+                                <span class="count_n" ng-show="hidepayment==false &&  billtab==false  && shiptab==true">3</span>
+                                <span class="count_n" ng-show="hidepayment==true &&  billtab==false  && shiptab==true">3</span>
+                                <span class="count_n" ng-show="hidepayment==true &&  billtab==true  && shiptab==true">3</span>
+                                <span class="count_n" ng-show="hidepayment==false &&  billtab==true  && shiptab==false">3</span>
+                                <span class="count_n" ng-show="hidepayment==false &&  billtab==false  && shiptab==false">2</span>
+                                <span class="count_n" ng-show="hidepayment==true && billtab==false  && shiptab==false">2</span>
+                                <span class="count_n" ng-show="hidepayment==true && billtab==true  && shiptab==false">2</span>{{ action.state == 'order' ? ovcLabel.poOrder.reviewplace : ovcLabel.transfer.reviewplace}}</a>
+                        </li>
+                        <li style="float:right;margin-top:9px;margin-right:15px;" ng-if="printEnable">
+                            <div ng-if="tab.page == 4">
+                                <ovcdata-export pdf-id="order_summary_export" heading="{{action.state	==	'order' ?  ovcLabel.poOrder.export.title : ovcLabel.transfer.export.transfer}}" type="summary"></ovcdata-export>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <form role="form" name="form">
+                <div ng-if="tab.page == 1">
+				    <div class="ven_tblk clearfix">
+				        <div class="row r_margin ng-scope" ng-controller="stylematrixctrl">
+				        <div class="col-md-12 stk_sear">
+				                <div class="panel-default">
+				                    <div class="panel-body search_box">
+				                        <div class="row">
+				                            <div class="col-lg-12">
+				                                <form role="form" name="form">
+				                                    <div class="col-md-7  col-sm-12 col-xs-12 clearfix panleft">
+				                                        <div class="col-sm-12  col-md-6 col-xs-12 trans_det clearfix">
+				                                            <div class="v_edit " style="padding-left:0px;margin-bottom: 10px;" ng-hide="hideordtype">
+				                                                <label class="control-label ng-binding export_pre_header" ng-if="action.state	==	'order' ">{{ovcLabel.poOrder.ordertype}}:</label>
+				                                                <select ng-if="action.state	==	'order' " id="commonorderType" class="form-control" ng-options="prtypes.code as prtypes.label for prtypes in ordertype" name="pordercode" ng-model="po_add.pordercode" ng-change="Getordertype(po_add.pordercode)" ng-disabled="true">
+				                                                    <option value="">-- {{ovcLabel.poOrder.selectorder}} --</option>
+				                                                </select>
+				                                                <label class="control-label ng-binding" ng-if="action.state	==	'transfer' ">{{ovcLabel.transfer.transfertype}}:</label>
+				                                                <select ng-if="action.state	==	'transfer' " id="commonorderType" class="form-control" ng-options="prtypes.code as prtypes.label for prtypes in ordertype" name="pordercode" ng-model="po_add.pordercode" ng-change="Getordertype(po_add.pordercode)" ng-disabled="true">
+				                                                    <option value="">-- {{ovcLabel.transfer.selecttransfer}} --</option>
+				                                                </select>
+				                                            </div>
+				                                            <div class="v_edit " style="padding-left:0px;margin-bottom: 10px;" ng-hide="vendorhide">
+				                                                <label class="control-label ng-binding">{{ovcLabel.poOrder.vendor}}:</label>
+				                                                <select ng-options=" vndr.vendorId as vndr.companyName for vndr in vendor_datas  | orderBy:'companyName' " class="form-control" id="vendorName" name="vendorName" ng-model="po_add.vendorName" ng-change="GetSelectedVendor(po_add.vendorName)" ng-disabled="true">
+				                                                    <option value="">-- {{ovcLabel.poOrder.selectvendor}} --</option>
+				                                                </select>
+				                                            </div>
+				                                            <div class="v_edit " style="padding-left:0px;margin-bottom: 10px;">
+				                                                <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.shiptostore : ovcLabel.transfer.shiptostore}}: </label>
+				                                                <!--<select ng-options="col.id as col.displayName for col in store_datas  | orderBy:'displayName' " id="shiptostore" class="form-control" name="shiptostore"  ng-model="po_add.shiptostore" ng-change="getstore_details(po_add.shiptostore,'shiptostore')" ng-disabled="true">
+																			<option value="">-- {{translation.locations[0].select_store}} --</option></select>-->
+				                                                <select class="form-control shipstoreval" id="shiptostore" name="shiptostore" ng-model="po_add.shiptostore" ng-change="getstore_details(po_add.shiptostore,'shiptostore')" ng-disabled="true">
+				                                                    <option value="">-- {{action.state == 'order' ? ovcLabel.poOrder.selectstore : ovcLabel.transfer.selectstore}} --</option>
+				                                                    <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+				                                                        {{ item.indent }} {{ item.displayName }}
+				                                                    </option>
+				                                                </select>
+				                                            </div>
+				                                            <div class="v_edit " style="padding-left:0px;margin-bottom: 10px;" ng-hide="orderfmstore" ng-if	=	"action.state	==	'transfer' ">
+				                                                <label class="control-label">{{ovcLabel.transfer.orderfromstore}}</label>
+				                                                <select ng-if="config.organization_name == organization_struct['2']" ng-options="col.id as col.displayName for col in fromstore_datas" id="orderstore" class="form-control" name="orderstore" ng-model="po_add.orderstore" ng-change="getselected_store(po_add.orderstore)" ng-disabled="true">
+				                                                    <option value="">-- {{ovcLabel.transfer.selectstore}} -- </option>
+				                                                </select>
+				                                                <select ng-if="config.organization_name == organization_struct['1']" class="form-control orderstore" id="orderselect1" name="orderstore" ng-model="po_add.orderstore" ng-change="getselected_store(po_add.orderstore)" ng-disabled="true">
+				                                                    <option value="">-- {{ovcLabel.transfer.selectstore}} --</option>
+				                                                    <option ng-repeat="item in CorparateLocation" value="{{ item.id }}" ng-disabled="{{item.type}}">
+				                                                        {{ item.indent }} {{ item.displayName }}
+				                                                    </option>
+				                                                </select>
+				                                            </div>
+				                                            <div  ng-if = "config.config_arr.enableMarkForLocation.featureValue" class="v_edit" style="padding-left:0px;margin-bottom: 10px;">
+				                                                <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.markforstore : ovcLabel.transfer.markforstore}}</label>
+				                                                <!--<select ng-options="col.id as col.displayName for col in store_datas | orderBy:'displayName' " class="form-control" name="markforstore"  id="markforlocation" ng-model="po_add.markforstore" ng-change="getstore_details(po_add.markforstore,'markforstore')" >
+																			<option value="">-- {{translation.locations[0].select_store}} --   </option></select>-->
+				                                                <select class="form-control shipstoreval" id="markforlocation" name="markforstore" ng-model="po_add.markforstore" ng-change="getstore_details(po_add.markforstore,'markforstore')">
+				                                                    <option value="">-- {{ action.state == 'order' ? ovcLabel.poOrder.selectstore : ovcLabel.transfer.markforstore}} --</option>
+				                                                    <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+				                                                        {{ item.indent }} {{ item.displayName }}
+				                                                    </option>
+				                                                </select>
+				                                            </div>
+				                                        </div>
+				                                        <div class="col-md-6 col-sm-12 col-xs-12 clearfix ">
+				                                            <div class="form-group">
+				                                                <div ng-if="action.enableNeedByDate">
+				                                                    <label class="control-label">{{ovcLabel.poOrder.needbydate}}</label>
+				                                                    <input need-by-date id="need_by_date" ng-model='O_add.need_by_date' ng-change="needByDateChange()" class="form-control hidcal" ng-change="hideErrorMsg()" />
+				                                                    <span ng-show="tab.error['needByDate']" class="alert alert-danger">{{tab.errormsg['needByDate']}}</span>
+				                                                    <span ng-show="showErrorMsg.id" class="alert alert-danger">{{showErrorMsg.message}}</span>
+				                                                </div>
+				                                                <!-- <div class="erroralert">
+				                                                    <span ng-if="showErrorMsg.id" class="alert alert-danger">
+																				{{showErrorMsg.message}}
+																				</span>
+				                                                </div> -->
+				                                                <label class="control-label">{{ action.state == 'order' ? ovcLabel.poOrder.instructions : ovcLabel.transfer.instructions}}:</label>
+				                                                <textarea class="spl_inst form-control  add_or" name="shipping_special" id="specialInstruction" ng-model="O_add.shipping_special" placeholder="{{ action.state	==	'order' ?  ovcLabel.poOrder.instructions : ovcLabel.transfer.entermsg}}" ng-disabled="molporder"></textarea>
+				                                            </div>
+				                                        </div>
+				                                        <div class="col-md-12" style="padding-left:0px;">
+				                                            <div class="col-md-7 pad_box" style="padding-left:0px; margin-left:0px;width: 296px;">
+				                                                <label class="control-label ng-binding">{{translation.vendors[0].products}}</label>
+				                                                <ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="po_add.prodresult" attr-placeholder="{{translation.buttontypes[0].search}}..." click-activation="false" data="addedproducts" on-type="dosrchproduct" on-select="doSelectproduct" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+				                                            </div>
+				                                            <div class="col-md-5" style="margin-top: 24px;">
+				                                                <button id="ovcSkuAdd" class="btn btn-primary" ng-click="poAddSkus(po_add,1)"><i class="fa fa-plus"></i> {{translation.buttontypes[0].add}}</button>
+				                                                <button id="ovcFileUpload" class="file-input btn btn-primary btn-file pull-right">{{translation.buttontypes[0].importFile}}
+				                                                    <input type="file" ng-click="orderAddSkus($event)" on-read-file="uploadOrders($fileContent,$file,0)" file-model="orderfile" accept=".dat" />
+				                                                </button>
+				                                            </div>
+				                                            <div class="col-md-6 erroralert">
+				                                                <span ng-show="tab.error['prodresult']" class="alert alert-danger">{{tab.errormsg['prodresult']}}</span>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                    <div class="col-md-5 col-sm-12 col-xs-12 clearfix">
+				                                        <div>
+				                                            <div class="p_total"><span class="ven_tblk clearfix"><label>{{action.state	==	'order' ?  ovcLabel.poOrder.totalqty : ovcLabel.transfer.totalqty}}</label>: <label class="view_tot">{{allitems}}</label></span>
+				                                                <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{action.state	==	'order' ?  ovcLabel.poOrder.subtotal : ovcLabel.transfer.subtotal}}</label>: <label class="view_tot">{{currency}} {{allsubtotal | number : 2}}</label></span>
+				                                                <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label>{{action.state	==	'order' ?  ovcLabel.poOrder.tax : ovcLabel.transfer.tax}}</label>: <label class="view_tot">{{currency}} {{allsubtaxes | number : 2}}</label></span>
+				                                                <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label>{{action.state	==	'order' ?  ovcLabel.poOrder.VAT : ovcLabel.transfer.VAT}}</label>: <label class="view_tot">{{currency}} {{allsubvates | number : 2}}</label></span>
+				                                                <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{action.state	==	'order' ?  ovcLabel.poOrder.total : ovcLabel.transfer.total}}</label>: <label class="view_tot">{{currency}} {{overtotal | number : 2}}</label></span></div>
+				                                        </div>
+				                                    </div>
+				                                </form>
+				                            </div>
+				                       </div>
+				                            <!-- /.row (nested) -->
+				                    </div>
+				                        <!-- /.panel-body -->
+				                        <div ng-if="loadmat == true">
+				                            <img src="images/loading.gif" />
+				                        </div>
+				                        <div class="row" ng-show="showstyle" id="epomatrix"></div>
+				                        <form role="forms" name="forms" angular-validator-submit="productorders(newprods)" novalidate angular-validator>
+				                            <div class="ven_tbody ">
+				                                <div class="ven_tbody">
+				                                    <div ng-if="!withPagination">
+														<grouped-style  skuitems="skuslist" ></grouped-style>
+													</div>
+													<div ng-if="withPagination">
+														<grouped-style  template-url="modules/styleGroup/SKU_Group_PO.html" skuitems="skuslist" ></grouped-style>
+													</div>
+				                                    <div class="row">
+				                                        <div class="col-md-12" ng-show="rplorder && !withPagination">
+				                                            <div class="panel-body fliter_i">
+				                                                <!-- 	<div pagination="" page="currentPage" max-size="5"  on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;" ></div> -->
+				                                                <uib-pagination total-items="filteredItems" items-per-page="entryLimit" ng-model="currentPage" class="pagination-sm" max-size="5" boundary-links="true"></uib-pagination>
+				                                                <div class="col-md-3 pglimit">
+				                                                    <div class="pg_limit">
+				                                                        <label>{{ovcLabel.poOrder.list.pagesize}}:</label>
+				                                                        <select convert-to-number ng-model="entryLimit" class="pgsizes" ng-change="pageChanged(entryLimit)">
+				                                                            <option>10</option>
+				                                                            <option>20</option>
+				                                                            <option>50</option>
+				                                                            <option>100</option>
+				                                                        </select>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                                <!-- /.panel -->
+				                            </div>
+				                        </form>
+				                </div>
+				        </div>
+				        </div>
+				    </div>
+				        <!-- /.col-lg-12 -->
+				    <div class="ven_tblk clearfix">
+				            <div class="row r_margin ng-scope">
+				                <div class="save_bg">
+				                    <div class="save_can clearfix">
+				                        <div class="col-md-12">
+				                            <div class="pull-right">
+				                                <!-- <button type="submit"  class="btn btn-primary"  ng-click="deletePoorder()" >{{translation.buttontypes[0].delete}}</button> -->
+				                                <div ng-if="action.state == 'order' || action.state == 'transfer'">
+				                                    <div ng-if="action.state == 'order'">
+				                                        <a href id="co_detail" ng-click="tabreturn(po_add,1)" ng-if="shiptab==true">
+				                                            <span ng-hide="molporder">
+																<button type="submit"  name="commonNext" class="btn btn-primary" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	>{{ovcLabel.poOrder.buttons.next}}</button>
+															</span>
+				                                            <span ng-show="molporder">
+																<button type="submit" name="commonNext" class="btn btn-primary"  ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	  >{{ovcLabel.poOrder.buttons.next}}</button>
+															</span>
+														</a>
+				                                        <a href id="co_detail" ng-click="tabreturn(po_add,2)" ng-if="(hidepayment==false && billtab==true && shiptab==false)">
+				                                            <span ng-hide="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+															</span>
+				                                            <span ng-show="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary" > {{ovcLabel.poOrder.buttons.next}}</button>
+															</span>
+														</a>
+				                                        <a href id="co_detail" ng-click="tabreturn(po_add,3)" ng-if="((hidepayment==true || billtab==false) && shiptab==false) ||(hidepayment==true && billtab==true  && shiptab==false)
+														|| (hidepayment==false &&  billtab==false  && shiptab==false)">
+				                                            <span ng-hide="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+															</span>
+				                                            <span ng-show="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+															</span>
+														</a>
+				                                    </div>
+				                                    <div ng-if="action.state == 'transfer'">
+				                                        <a class="btn btn-primary" name="commonCancel" ng-if="orderstatus=='Draft'" ng-click="action.cancelBtn()">{{ovcLabel.transfer.buttons.cancel}}</a>
+				                                        <a href id="co_detail" ng-click="tabreturn(po_add,1)" ng-if="shiptab==true">
+				                                            <span ng-hide="molporder">
+																<button type="submit"  name="commonNext" class="btn btn-primary" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	>{{ovcLabel.transfer.buttons.next}}</button>
+															</span>
+				                                            <span ng-show="molporder">
+																<button type="submit" name="commonNext" class="btn btn-primary"  ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	  >{{ovcLabel.transfer.buttons.next}}</button>
+															</span>
+														</a>
+				                                        <a href id="co_detail" ng-click="tabreturn(po_add,2)" ng-if="(hidepayment==false && billtab==true && shiptab==false)">
+				                                            <span ng-hide="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+															</span>
+				                                            <span ng-show="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary" > {{ovcLabel.transfer.buttons.next}}</button>
+															</span>
+														</a>
+				                                        <a href id="co_detail" ng-click="tabreturn(po_add,3)" ng-if="((hidepayment==true || billtab==false) && shiptab==false) ||(hidepayment==true && billtab==true  && shiptab==false)
+														|| (hidepayment==false &&  billtab==false  && shiptab==false)">
+				                                            <span ng-hide="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+															</span>
+				                                            <span ng-show="molporder">
+																<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+															</span>
+														</a>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				    </div>
+				</div>
+                <div ng-show="tab.page == 2">
+                    <div class="ven_tblk clearfix">
+                        <div class="row r_margin ng-scope">
+                            <div class="col-md-12">
+                                <div class="add_vendorb clearfix">
+                                    <div class="panel-default">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 ">
+                                                    <div class="col-lg-6 panleft">
+                                                        <div class="form-group" ng-hide="hidepayment">
+                                                            <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.shippingmethod : ovcLabel.transfer.shippingmethod}}: </label>
+                                                            <select ng-options="col.Name as col.description for col in smethods | orderBy:'description' " ng-model="O_add.shipmethod" id="shipmethod" class="form-control" name="shipmethod" ng-change="getship_method(O_add.shipmethod)" ng-disabled="molporder">
+                                                                <option value="">-- {{action.state == 'order' ? ovcLabel.poOrder.selectShippingMethod : ovcLabel.transfer.selectShippingMethod}} --</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.contactname : ovcLabel.transfer.contactname}}:</label>
+                                                            <input class="form-control" name="shipping_contact" ng-model="O_add.shipping_contact" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.contactname : ovcLabel.transfer.contactname}}" ng-disabled="molporder">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.streetname : ovcLabel.transfer.streetname}}: </label>
+                                                            <input class="form-control" id="street_name" name="street_name" ng-model="O_add.street_name" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.streetname: ovcLabel.transfer.streetname}}" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.streetnumber : ovcLabel.transfer.streetnumber}}: </label>
+                                                            <input class="form-control" id="street_number" name="street_number" ng-model="O_add.street_number" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.streetnumber : ovcLabel.transfer.streetnumber}}" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.city : ovcLabel.transfer.city}}: </label>
+                                                            <input class="form-control" id="shipcity" name="shipping_city" ng-model="O_add.shipping_city" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.city : ovcLabel.transfer.city}}" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0px;">
+                                                                <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.zipcode : ovcLabel.transfer.zipcode}}: </label>
+                                                                <input class="form-control" id="shipzipcode" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.zipcode : ovcLabel.transfer.zipcode}}" name="shipping_zipcode" ng-model="O_add.shipping_zipcode" ng-disabled="molporder" />
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-right: 0px;">
+                                                                <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.country : ovcLabel.transfer.country}}: </label>
+                                                                <select data-ng-model="O_add.shipping_country" id="shipcountry" class="form-control" name="shipping_country" data-ng-options="country.countryname for country in countries track by country.label" data-ng-change="GetSelectedCountry()" ng-disabled="molporder">
+                                                                    <option value="">-- {{action.state == 'order' ? ovcLabel.poOrder.selectcountry : ovcLabel.transfer.selectcountry}} --</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br clear="all" />
+                                                        <br clear="all" />
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>{{action.state == 'order' ? ovcLabel.poOrder.phonenumber : ovcLabel.poOrder.phonenumber}}:</label>
+                                                            <input class="form-control" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.enterphoneno : ovcLabel.transfer.enterphoneno}}" id="shipphone" name="shipping_phone" ng-model="O_add.shipping_phone" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{action.state == 'order' ? ovcLabel.poOrder.emailaddress : ovcLabel.transfer.emailaddress}}:</label>
+                                                            <input class="form-control" placeholder="{{action.state	==	'order' ?  ovcLabel.poOrder.emailaddress : ovcLabel.transfer.emailaddress}}" name="shipping_email" ng-model="O_add.shipping_email" ng-disabled="molporder">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ven_tblk clearfix">
+                        <div class="row r_margin ng-scope">
+                            <div class="save_bg">
+                                <div class="save_can clearfix">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <div ng-if="action.state == 'order' || action.state == 'transfer'">
+                                                <div ng-if="action.state == 'order' ">
+                                                    <a href id="co_detail" ng-click="tab.page = 1">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 3" ng-hide="(hidepayment==true || billtab==false)">
+                                                        <span ng-show="molporder"> 
+												<button name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 type="submit"  class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+												</span>
+                                                        <span ng-hide="molporder"> 
+												<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	  class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+												</span>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 4" ng-show="(hidepayment==true || billtab==false) ">
+                                                        <span ng-show="molporder"> 
+												<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+												</span>
+                                                        <span ng-hide="molporder"> 
+												<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary">{{ovcLabel.poOrder.buttons.next}}</button>
+												</span>
+                                                    </a>
+                                                </div>
+                                                <div ng-if="action.state == 'transfer' ">
+                                                    <a href id="co_detail" name="commonPrevious" ng-click="tab.page = 1">
+                                                        <button type="submit" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 3" ng-hide="(hidepayment==true || billtab==false)">
+                                                        <span ng-show="molporder"> 
+												<button name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 type="submit"  class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+												</span>
+                                                        <span ng-hide="molporder"> 
+												<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	  class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+												</span>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 4" ng-show="(hidepayment==true || billtab==false) ">
+                                                        <span ng-show="molporder"> 
+												<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+												</span>
+                                                        <span ng-hide="molporder"> 
+												<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary">{{ovcLabel.transfer.buttons.next}}</button>
+												</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel -->
+                <div ng-show="tab.page == 3">
+                    <div class="ven_tblk clearfix">
+                        <div class="row r_margin ng-scope">
+                            <div class="col-md-12">
+                                <div class="add_vendorb clearfix">
+                                    <div class="panel-default">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="col-lg-6 panleft">
+                                                    {{O_add.billtostoreId}}
+                                                        <div class="form-group" ng-if="billto	==	true ">
+                                                            <label class="control-label">{{ovcLabel.poOrder.billto}}: </label>
+                                                            <input readonly class="form-control" name="billtostore" ng-model="O_add.billtostore" ng-disabled="molporder">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{ovcLabel.poOrder.currencycode}}: </label>
+                                                            <select ng-options="s.id as s.code for s in currencytypes" ng-model="O_add.currency_code" id="state" class="form-control" name="currency_code" ng-disabled="molporder">
+                                                                <option value="">-- {{ovcLabel.poOrder.currencycode}} --</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{ovcLabel.poOrder.remitattention}}: </label>
+                                                            <input class="form-control" name="remit_attend" ng-model="O_add.remit_attend" placeholder="{{ovcLabel.poOrder.remitattention}}" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{ovcLabel.poOrder.address}}: </label>
+                                                            <input class="form-control" name="address" ng-model="O_add.address" placeholder="{{ovcLabel.poOrder.address}}" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{ovcLabel.poOrder.city}}: </label>
+                                                            <input class="form-control" name="city" ng-model="O_add.city" placeholder="{{ovcLabel.poOrder.city}}" ng-disabled="molporder" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0px;">
+                                                                <label class="control-label">{{ovcLabel.poOrder.zipcode}}: </label>
+                                                                <input class="form-control" placeholder="{{ovcLabel.poOrder.enterzipcode}}" ng-model="O_add.zipcode" name="zipcode" ng-disabled="molporder">
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-right: 0px;">
+                                                                <label class="control-label">{{ovcLabel.poOrder.country}}: </label>
+                                                                <select data-ng-model="O_add.country" id="country" class="form-control" name="country" data-ng-options="country.countryname for country in countries track by country.label" data-ng-change="GetSelectedCountry2()" ng-disabled="molporder">
+                                                                    <option value="">-- {{ovcLabel.poOrder.selectcountry}} --</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 ">
+                                                        <div class="form-group">
+                                                            <label>{{ovcLabel.poOrder.phonenumber}}:</label>
+                                                            <input class="form-control" placeholder="{{ovcLabel.poOrder.enterphoneno}}" name="phoneNumber" ng-model="O_add.phoneNumber" ng-disabled="molporder">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{ovcLabel.poOrder.emailaddress}}:</label>
+                                                            <input class="form-control" placeholder="{{ovcLabel.poOrder.emailaddress}}" name="email_address" ng-model="O_add.email_address" ng-disabled="molporder">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ven_tblk clearfix">
+                        <div class="row r_margin ng-scope">
+                            <div class="save_bg">
+                                <div class="save_can clearfix">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <div ng-if="action.state == 'order' || action.state == 'transfer'">
+                                                <div ng-if="action.state == 'order' ">
+                                                    <a href id="co_detail" ng-click="tab.page = 1" ng-if="((hidepayment==false && billtab==true) && shiptab==false)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 2" ng-if="(shiptab==true)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 4">
+                                                        <span ng-show="molporder">
+							<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary" >{{ovcLabel.poOrder.buttons.next}}</button>
+							</span>
+                                                        <span ng-hide="molporder">
+							<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder"	 class="btn btn-primary">{{ovcLabel.poOrder.buttons.next}}</button>
+							</span>
+                                                    </a>
+                                                </div>
+                                                <div ng-if="action.state == 'transfer' ">
+                                                    <a href id="co_detail" ng-click="tab.page = 1" ng-if="((hidepayment==false && billtab==true) && shiptab==false)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 2" ng-if="(shiptab==true)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 4">
+                                                        <span ng-show="molporder">
+							<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary" >{{ovcLabel.transfer.buttons.next}}</button>
+							</span>
+                                                        <span ng-hide="molporder">
+							<button type="submit" name="commonNext" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer"	 class="btn btn-primary">{{ovcLabel.transfer.buttons.next}}</button>
+							</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="tab.page == 4">
+                    <div class="row r_margin ng-scope">
+                        <div class="ven_tblk clearfix">
+                            <div class="col-md-12">
+                                <div class="panel-default">
+                                    <div class="panel-body search_box">
+                                        <div class="row">
+                                            <div class="col-lg-12 purs_order">
+                                                <div class="col-md-7 export_pre_header ">
+                                                    <h4 ng-if="action.state	==	'order' ">{{ovcLabel.poOrder.ordersummary}}:</h4>
+                                                    <h4 ng-if="action.state	==	'transfer' ">{{ovcLabel.transfer.transfersummary}}:</h4>
+                                                    <p class="clearfix" ng-show="false">
+                                                        <label class="mar_al view_p">{{ovcLabel.poOrder.list.orderno}}</label><span class="view_ot">: {{ordernum}}</span></p>
+                                                    <p class="clearfix" ng-if="!hidepayment">
+                                                        <label class="mar_al view_p">{{ovcLabel.poOrder.vendor}}</label><span class="view_ot">: {{selvendor}}</span></p>
+                                                    <p class="clearfix" ng-if="hidepayment">
+                                                        <label class="mar_al view_p">{{action.state == 'order' ? ovcLabel.poOrder.orderfromstore : ovcLabel.transfer.orderfromstore}}</label><span class="view_ot">: {{fromstr}}</span></p>
+                                                    <p class="clearfix">
+                                                        <label class="mar_al view_p">{{action.state == 'order' ? ovcLabel.poOrder.shiptostore : ovcLabel.transfer.shiptostore}}</label><span class="view_ot">: {{shippingstr1}}</span></p>
+                                                    <p ng-if = "config.config_arr.enableMarkForLocation.featureValue" class="clearfix">
+                                                        <label class="mar_al view_p">{{action.state == 'order' ? ovcLabel.poOrder.markfor : ovcLabel.transfer.markfor}}</label><span class="view_ot">: {{markforstr}}</span></p>
+                                                    <p class="clearfix" ng-if="!hidepayment" ng-if="billto	==	true ">
+                                                        <label class="mar_al view_p">{{ovcLabel.poOrder.billto}}</label><span class="view_ot">: {{O_add.billtostore}}</span></p>
+                                                    <p class="clearfix" ng-if="!hidepayment">
+                                                        <label class="mar_al view_p">{{action.state == 'order' ? ovcLabel.poOrder.shippingmethod : ovcLabel.transfer.shippingmethod}}</label><span class="view_ot">: {{spmethod}}</span></p>
+                                                    <p class="clearfix" ng-if="action.enableNeedByDate">
+                                                        <label class="mar_al view_p">{{action.state =='order' ? ovcLabel.poOrder.needbydate : ovcLabel.transfer.needbydate}}</label>
+                                                        <span class="view_ot">: {{O_add.need_by_date}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-5 export_pre_header">
+                                                	<p class="clearfix"><label class="mar_al view_p">{{action.state	==	'order' ?  ovcLabel.poOrder.totalqty : ovcLabel.transfer.totalqty}}</label><span class="view_ot"> : {{allitems}}</span></p>
+                                                    <p class="clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_p">{{action.state	==	'order' ?  ovcLabel.poOrder.subtotal : ovcLabel.transfer.subtotal}}</label><span class="view_ot"> : {{currency}} {{allsubtotal | number : 2}}</span></p>
+                                                    <p class="clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label class="mar_al view_p">{{action.state	==	'order' ?  ovcLabel.poOrder.tax : ovcLabel.transfer.tax}}</label><span class="view_ot"> : {{currency}} {{allsubtaxes| number : 2}}</span></p>
+                                                    <p class="clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label class="mar_al view_p">{{action.state	==	'order' ?  ovcLabel.poOrder.VAT : ovcLabel.transfer.VAT}}</label><span class="view_ot"> : {{currency}} {{allsubvates | number : 2}}</span></p>
+                                                    <p class="clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_p">{{action.state	==	'order' ?  ovcLabel.poOrder.total : ovcLabel.transfer.total}}</label><span class="view_ot"> : {{currency}} {{overtotal | number : 2}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ven_tbody ">
+                                        <div ng-if="!withPagination">
+											<grouped-style  skuitems="skuslist" ></grouped-style>
+										</div>
+										<div ng-if="withPagination">
+											<grouped-style  template-url="modules/styleGroup/SKU_Group_PO.html" skuitems="skuslist" ></grouped-style>
+										</div>
+                                        <div class="row">
+                                            <div class="col-md-12" ng-show="rplorder && !withPagination">
+                                                <div class="panel-body fliter_i">
+                                                    <uib-pagination total-items="filteredItems" items-per-page="entryLimit" ng-model="currentPage" class="pagination-sm" max-size="5" boundary-links="true"></uib-pagination>
+                                                    <div class="col-md-3 pglimit">
+                                                        <div class="pg_limit">
+                                                            <label>{{translation.vendors[0].page_size}}:</label>
+                                                            <select convert-to-number ng-model="entryLimit" class="pgsizes">
+                                                                <option>10</option>
+                                                                <option>20</option>
+                                                                <option>50</option>
+                                                                <option>100</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="errorShow" class="col-md-12">
+                        <span class="col-md-12" style="background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+
+						{{error_msg}}
+
+					</span>
+                    </div>
+                    <div class="ven_tblk clearfix">
+                        <div class="row r_margin ng-scope">
+                            <div class="save_bg">
+                                <div class="save_can clearfix">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <div ng-if="action.state == 'order' || action.state == 'transfer' ">
+                                                <div ng-if="action.state == 'order' ">
+                                                    <a href id="co_detail" ng-click="tab.page = 1" ng-show="((hidepayment==true || billtab==false) && shiptab==false)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 3" ng-show="(hidepayment==false && billtab== true)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 2" ng-show="((hidepayment==true || billtab==false) && shiptab==true)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.previous}}</button>
+                                                    </a>
+                                                    <!-- <a  class="btn btn-primary" ng-click="action.cancelBtn()">{{ovcLabel.poOrder.buttons.cancel}}</a> -->
+                                                    <button type="submit" class="btn btn-primary" name="commonDelete" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" ng-click="deletePoorder()">{{ovcLabel.poOrder.buttons.delete}}</button>
+                                                    <button class="btn btn-primary" name="commonDraft" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" ng-click="action.cancel(po_add,O_add)">{{ovcLabel.poOrder.buttons.savedraft}}</button>
+                                                    <a href ng-click="add_error()">
+                                                        <button type="submit" name="commonSubmit" ng-click="order_update(po_add,O_add,null,'submit' , $event)" ng-disabled="!userRolePermissions.orderPermissions.modifyOrder" class="btn btn-primary">{{ovcLabel.poOrder.buttons.submit}}</button>
+                                                    </a>
+                                                </div>
+                                                <div ng-if="action.state == 'transfer' ">
+                                                    <a href id="co_detail" ng-click="tab.page = 1" ng-show="((hidepayment==true || billtab==false) && shiptab==false)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 3" ng-show="(hidepayment==false && billtab== true)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.previous}}</button>
+                                                    </a>
+                                                    <a href id="co_detail" ng-click="tab.page = 2" ng-show="((hidepayment==true || billtab==false) && shiptab==true)">
+                                                        <button type="submit" name="commonPrevious" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.previous}}</button>
+                                                    </a>
+                                                    <!-- <a  class="btn btn-primary" ng-click="action.cancelBtn()">{{ovcLabel.transfer.buttons.cancel}}</a> -->
+                                                    <button type="submit" class="btn btn-primary" name="commonDelete" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" ng-click="deletePoorder()">{{ovcLabel.transfer.buttons.delete}}</button>
+                                                    <button class="btn btn-primary" name="commonDraft" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" ng-click="action.cancel(po_add,O_add)">{{ovcLabel.transfer.buttons.savedraft}}</button>
+                                                    <button type="submit" name="commonSubmit" ng-click="order_update(po_add,O_add)" ng-disabled="!userRolePermissions.orderPermissions.modifyTransfer" class="btn btn-primary">{{ovcLabel.transfer.buttons.submit}}</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

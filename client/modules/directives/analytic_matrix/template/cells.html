@@ -1,0 +1,21 @@
+<div>
+	 <span tabindex="0" id="{{gridValue.sku}}" ng-focus="previewItems({gridY : gridY, gridX : gridX})" ng-show="gridMode === 'readOnly'" class="editGrid" >{{gridValue[gridBalance]}}</span>
+   <span tabindex="0" ng-focus="previewItems({gridY : gridY, gridX : gridX})" ng-show="gridMode === 'noOH'" class="editGrid"></span>
+	<!-- 	<span ng-click="editItems({gridY : gridY, gridX : gridX, gridIndex : gridIndex})"  ng-show="gridMode === 'edit' && ! gridValue.editedAction" 
+		title="{{translation.messages[0].current_oh}}  = {{ changedSkus[gridValue.sku] >= 0 ?changedSkus[gridValue.sku]:gridValue.oh }}" ng-class="gridValue.sku" class="editGrid clickevent">{{changedSkus[gridValue.sku]}}</span> -->
+      <!-- <div class="editInput" ng-show="gridValue.editedAction"> -->
+		 <input type="text" id="edit_{{gridY+'-'+gridX}}" class="form-control qty-center borderremove focuscolorstyle" title="{{translation.messages[0].current_oh}}  = {{ changedSkus[gridValue.sku] >= 0 ?changedSkus[gridValue.sku]:gridValue.oh }}" data-ng-model="changedSkus[gridValue.sku]" ng-show="gridMode === 'edit' && ! gridValue.editedAction" ng-change="changeoh(gridValue.sku)" ng-focus = "previewItems({gridY : gridY, gridX : gridX}); getDefaultReorder({gridSku:gridSku});" ng-enter="$parent.saveVarients()" only-digits/>
+	 <!-- </div> -->
+
+      <div ng-show="hoverEdit" class="animate-show" ng-if="gridValue.oh >= 0  &&  gridValue.display">
+        <span custom-popover></span>
+          <div class="inside_t">
+            <table class="table table-striped table-bordered">
+            <tr data-ng-repeat="(d_key, d_value) in gridValue.display">
+            <td>{{d_key}} </td>
+            <td> {{ d_value }}</td>
+            </tr>
+            </table>
+          </div>
+      </div>
+</div>

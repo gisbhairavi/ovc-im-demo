@@ -1,0 +1,121 @@
+	<transaction-history></transaction-history>
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+		<h3 class="page-header" ng-if="newmodule.title  != 'Edit'">{{newmodule.title}} {{ovcLabel.customerOrder.side_heading}}
+		</h3>
+		<h3 class="page-header" ng-if="newmodule.title  == 'Edit'">{{newmodule.title}} {{ovcLabel.customerOrder.side_heading}}: {{customerorders.purchaseOrderNumber}}
+			<div  class="col-md-2 pull-right clearfix" >
+				<div class="pull-right">
+					<span class="label status" ng-class="{'alert-draft': customerorders.orderStatus == 'draft'}"> {{ovcLabel.customerOrder.dropship_statuses[customerorders.orderStatus]}}</span>
+				</div>
+			</div >
+		</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<section>
+			<div class="pro_menu purchase_m clearfix">
+				<div class="col-md-12">
+					<ul class="nav nav-pills">
+						<li class="purchase_or" ng-class="{active:tab.page == 1}"><a href id="orderdetail" ng-click="tab.page = 1"><span class="count_n">1</span> {{ovcLabel.customerOrder.purchase_order_details}}</a>
+						</li>
+						<li class="purchase_shipp" ng-class="{active:tab.page == 2}"><a href id="shippingdetail" ng-click="tab.page = 2"><span class="count_n">2</span>{{ovcLabel.customerOrder.purchase_shipping}}</a>
+						</li>
+						<li class="purchase_pay" ng-class="{active:tab.page == 3}"><a href id="paymentdetail" ng-click="tab.page = 3 "><span class="count_n">3</span>{{ovcLabel.customerOrder.purchase_Payment}}</a>
+						</li>
+						<li class="purchase_place" ng-class="{active:tab.page == 4}"><a href id="reviewdetail" ng-click="tab.page = 4"><span class="count_n">4</span>{{ovcLabel.customerOrder.purchase_review_place}}</a>
+						</li>
+						<li style="float:right;margin-top:9px;margin-right:15px;">
+							<div ng-if="tab.page == 4 && customerorders.orderStatus =='draft'">
+								<ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.customerOrder.print.cust_order}}" type="summary"></ovcdata-export>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<form role="form" name="form">
+			<div class="ven_tblk clearfix">
+				<!-- <form role="form" name="form"> -->
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class= "col-sm-12 col-md-3 col-xs-12 form-group export_pre_header" ng-if="tab.page == 1">
+								<label>{{ovcLabel.customerOrder.order_type}}</label>
+								<select ng-if="tab.page == 1" id="cstypeCode" class="form-control"  data-ng-options="csordertype.code as csordertype.label for csordertype in newmodule.ordertypes" name="ordertype" data-ng-model="customerorders.ordertype" ng-change="getOrdertype(customerorders.ordertype)"><option value="" >-- {{ovcLabel.customerOrder.sel_order}} --</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xs-12 form-group export_pre_header" ng-if="tab.page == 1">
+								<label>{{ovcLabel.customerOrder.originated_from}}</label>
+								<!--<select ng-if="tab.page == 1" id="Storeid" class="form-control selectstore"  data-ng-options="store.id as store.displayName for store in newmodule.store_datas | orderBy:'displayName' " name="location" data-ng-model="customerorders.location" ng-change="getlocation_details(customerorders.location)"><option value="" >-- {{translation.locations[0].select_store}} --</option>
+								</select>-->
+
+
+								<select ng-if="tab.page == 1" id="Storeid" class="form-control selectstore" name="location" data-ng-model="customerorders.location" ng-change="getlocation_details(customerorders.location)" >
+                                    <option value="">-- {{ovcLabel.customerOrder.select_store}} --</option>
+                                    <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+                                    {{ item.indent }} {{ item.displayName }}
+                                    </option>
+                                </select>
+							</div>
+							<div class="col-sm-12 col-md-6 col-xs-12 export_pre_header" ng-if ="tab.page != 1">
+								<p class="clearfix"><label class="mar_al view_p"><b>{{ovcLabel.customerOrder.order_type}}</b></label><span class="view_ot">: {{newmodule.ordertype }}</span></p>
+								<p class="clearfix"><label class="mar_al view_p"><b>{{ovcLabel.customerOrder.originated_from}}</b></label><span class="view_ot">: {{newmodule.orderstore }}</span></p>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xs-12 form-group export_pre_header">
+								<p ng-if="tab.page == 1">
+								<label class="mar_al view_p" >{{ovcLabel.customerOrder.special_instructions}}</label >
+								<textarea class="form-control add_or"  rows="5" name="specialInstructions" ng-model="customerorders.specialInstructions" placeholder="{{ovcLabel.customerOrder.enter_msg}}"></textarea>
+								</p>
+								<p class="clearfix" ng-if="tab.page != 1" >
+								<label class="mar_al view_p">{{ovcLabel.customerOrder.special_instructions}}</label><span ng-hide="true" >{{customerorders.specialInstructions}}</span>
+								<textarea class="form-control add_or" ng-disabled="tab.page != 1" rows="5" name="specialInstructions" ng-model="customerorders.specialInstructions" placeholder="{{ovcLabel.customerOrder.placeholder.enter_msg}}"></textarea>
+								</p>
+							</div>
+							<div class="col-sm-12 col-md-3 col-xs-12 export_pre_header ">
+								<!-- <p><b>Total Vendors</b>: {{customerorders.allvendors}}</p>
+								<p><b>{{translation.purchaseorders[0].tot_qty}}</b>: {{customerorders.allitems}}</p> -->
+								<p><label class="mar_al view_amt">{{ovcLabel.customerOrder.totalPackages}}</label>:<span> <label class="view_tot">{{customerorders.allstyles}}</label></span></p>
+								<p><label class="mar_al view_amt">{{ovcLabel.customerOrder.total_skus}}</label>:<span> <label class="view_tot">{{customerorders.allskus}}</label></span></p>
+								<p ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_amt">{{ovcLabel.customerOrder.subtotal}}</label>:<span> <label class="view_tot">{{currency}}{{customerorders.allsubtotal}}</label></span></p>
+								<p ng-if="userRolePermissions.permissions.viewPurchasePrice" ><label class="mar_al view_amt">{{ovcLabel.customerOrder.tax}}</label>:<span> <label class="view_tot">{{currency}}{{customerorders.alltax}}</label></span></p>
+								<p ng-if="userRolePermissions.permissions.viewPurchasePrice" ><label class="mar_al view_amt">{{ovcLabel.customerOrder.vat}}</label>:<span><label class="view_tot">{{currency}}{{customerorders.allvat}}</label></span></p>
+								<p ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_amt">{{ovcLabel.customerOrder.total}}</label>:<span><label class="view_tot">{{currency}} {{customerorders.alltotal}}</label></span></p>
+							</div>
+						</div>
+					</div>
+				<!-- </form> -->
+			</div>
+			<div class=" col-md-4 col-xs-12 col-sm-12 erroralert">
+				<span ng-show="tab.error['location']" class="alert alert-danger">{{tab.errormsg['location']}}</span>
+			</div>
+			<div ng-show="tab.page ==1">
+				
+				<div class="col-md-12" ng-include="'views/customerorders/orderDetails.html'">
+				</div>
+			</div>
+
+			<div ng-show="tab.page == 2">
+				<div class="col-md-12" ng-include="'views/customerorders/ShippingDetails.html'"></div>
+			</div>
+
+			<div ng-show="tab.page == 3">
+				<div class="col-lg-12" ng-include="'views/customerorders/payment.html'"></div>
+			</div>
+
+			<div ng-show="tab.page == 4">
+				<div class="col-lg-12" ng-include="'views/customerorders/reviewAndPlace.html'" ></div>
+				<div class="col-md-12">
+					<div class="pull-right">
+						<button name="co_previous_btn" type="button"  class="btn btn-primary" ng-click="moveNextPreviousBtn('paymentdeta	il');">{{ovcLabel.customerOrder.button.previous}}</button>
+						<a name="co_cancel_btn" class="btn btn-primary" ng-click="cancelorder();">{{ovcLabel.customerOrder.button.cancel}}</a>
+						<a name="co_delete_btn" class="btn btn-primary" ng-if="newmodule.title  == 'Edit' "ng-click="deleteorder();">{{ovcLabel.customerOrder.button.delete}}</a>
+						<a name="co_saveasdraft_btn" class="btn btn-primary" ng-click="submit_dropship('draft','draftOrder');">{{ovcLabel.customerOrder.button.savedraft}}</a>
+						<a name="co_submit_btn" href  ng-click="add_error()" > <button type="button" ng-click="submit_dropship('submitted','submitted');" class="btn btn-primary" ng-show="customerorders.purchaseOrderNumber">{{ovcLabel.customerOrder.button.submit}}</button></a>
+					</div>
+
+				</div>
+			</div>
+			</form>
+		</section>
+	</div>
+</div>

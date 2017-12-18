@@ -1,0 +1,136 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Transaction Schema for 3rd Party",
+	"properties": {
+		"tranId": {
+			"type": "string",
+			"description": "Transaction number in the pos session"
+		},
+		"tranTypeId": {
+			"type": "string",
+			"description": "Transaction Type",
+			"enum": [
+				"regularSale",
+				"layawaySale",
+				"pendingSale",
+				"partialApprovalSale",
+				"layawayPayment",
+				"layawayRefund",
+				"layawayFinalize",
+				"currentTransVoid",
+				"login",
+				"logoff",
+				"postTranVoid",
+				"regularReturn",
+				"suspended",
+				"noSale",
+				"updateStoreCredit",
+				"payIn",
+				"payOut",
+				"tillSpotCheck",
+				"storeSpotCheck",
+				"float",
+				"deposit",
+				"quote",
+				"deletedQuote",
+				"completedQuote",
+				"changeSalesPerson",
+				"endOfDay",
+				"safeSpotCheck",
+				"expiredQuote",
+				"startOfDay",
+				"tillCount",
+				"tillCountRecount",
+				"openCashSession",
+				"closeCashSession",
+				"scheduleAppointment",
+				"specialOrder",
+				"specialOrderPayment",
+				"pickUp",
+				"addCurrency",
+				"endOfDaySafe",
+				"endOfDayTill",
+				"invalidDeposit",
+				"invalidFloat",
+				"cancelledCashManagementOperation"
+			]
+		},
+		"storeId": {
+			"type": "string",
+			"description": "Store location of the transaction",
+			"maxLength": 64
+		},
+		"tranDate": {
+			"type": "string",
+			"description": "Date of the transaction in ISO8601 format:[yyyy-MM-dd'T'HH:mm:ss.SSSZZ] example:[2016-01-11T22:46:56.402Z]"
+		},
+		"tillId": {
+			"type": "string",
+			"description": "Id number of the till associated with the device"
+		},
+		"userId": {
+			"type": "string",
+			"description": "Username of the user that completed this action (cashier)",
+			"maxLength": 64
+		},
+		"deviceId": {
+			"type": "string",
+			"description": "String that identifies the device where the transaction was done"
+		},
+		"system": {
+			"type": "string",
+			"description": "pos"
+		},
+		"tranItems": {
+			"type": "array",
+			"description": "Tran Item Array",
+			"items": {
+				"$ref": "#/definitions/tranItem"
+			}
+		}
+	},
+	"definitions": {
+		"tranItem": {
+			"type": "object",
+			"properties": {
+				"sku": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "SKU of the Product"
+				},
+				"qty": {
+					"type": [
+						"number",
+						"null"
+					],
+					"description": "Quantity of the product"
+				},
+				"cost": {
+					"type": [
+						"number",
+						"null"
+					],
+					"description": "Cost of the product"
+				}
+			},
+			"required": [
+				"sku",
+				"qty"
+			]
+		}
+	},
+	"required": [
+		"tranItems",
+		"userId",
+		"storeId",
+		"deviceId",
+		"tillId",
+		"tranTypeId",
+		"tranId",
+		"tranDate"
+	]
+}

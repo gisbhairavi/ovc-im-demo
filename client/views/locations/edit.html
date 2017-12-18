@@ -1,0 +1,54 @@
+<div class="row add_tit">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.stockLocation.edit_stockLocation}}: {{editloc_name}}</h3>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+  	<div class="col-lg-12">
+		<section ng-controller="TranstabCntrl as tab">
+			<div class="pro_menu  clearfix">
+				<ul class="nav nav-pills">
+					<li ng-class="{active:tab.isSet(1)}"><a href id="stkloc_detail" ng-click="tab.setTab(1)">{{ovcLabel.stockLocation.location_details}}</a></li>
+					<li ng-class="{active:tab.isSet(2)}"><a href id="locprod_detail" ng-click="tab.setTab(2)">{{ovcLabel.stockLocation.products}}</a></li>
+				</ul>
+			</div>
+
+			<!-- <form role="form" name="form" angular-validator-submit="editLocNode(loc)" novalidate angular-validator> -->
+				<div class="ven_tblk clearfix">
+					<div class="row r_margin ng-scope">
+						<div class="col-md-12">
+							<!-- <div class="add_vendorb clearfix"> -->
+								<div ng-show="tab.isSet(1)">
+									<div ng-include="'/views/locations/edit_location.html'"  ></div>
+								</div>
+								<div ng-show="tab.isSet(2)">
+									<div ng-include="'/views/locations/add_product.html'"  ></div>
+
+								</div>
+							<!-- </div> -->
+						</div>
+					</div>
+				</div>
+
+			<!-- </form> -->
+		</section>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+   

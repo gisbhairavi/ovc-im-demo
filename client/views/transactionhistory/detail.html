@@ -1,0 +1,340 @@
+<button class="col-md-12 text-left btn btn-default" ng-if="balanceReport" ng-click="backToReport()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ovcLabel.transactionHistory.buttons.backtoBalance}}
+</button>
+<div>
+<div class="row header_blk ng-scope">
+	<div class="col-lg-12">
+		<h3 class="page-header" ng-if="tranpo">{{ovcLabel.transactionHistory.po_ordertran}}
+		<span style="float:right;margin-right:15px;"><ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.transactionHistory.po_ordertran}}" type="tranDetail"></ovcdata-export>
+   		</span></h3>
+		<h3 class="page-header" ng-if="trancount" >{{ovcLabel.transactionHistory.count_tran}}<span style="float:right;margin-right:15px;">
+        <ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.transactionHistory.count_tran}}" type="tranDetail"></ovcdata-export>
+   		</span></h3>
+		<h3 class="page-header" ng-if="tranman">{{ovcLabel.transactionHistory.manual_tran}}<span style="float:right;margin-right:15px;">
+        <ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.transactionHistory.manual_tran}}" type="tranDetail"></ovcdata-export>
+   		</span></h3>
+		<h3 class="page-header" ng-if="tranPOS">{{ovcLabel.transactionHistory.POS_tran}}<span style="float:right;margin-right:15px;">
+        <ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.transactionHistory.POS_tran}}" type="tranDetail"></ovcdata-export>
+   		</span></h3>
+		<h3 class="page-header" ng-if="tranReceipt">{{ovcLabel.transactionHistory.receipt_tran}}<span style="float:right;margin-right:15px;">
+        <ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.transactionHistory.receipt_tran}}" type="tranDetail"></ovcdata-export>
+   		</span></h3>
+		<h3 class="page-header" ng-if="tranUpload">{{ovcLabel.transactionHistory.trantypelist.stockUpload}}<span style="float:right;margin-right:15px;">
+   		</span></h3>
+	</div>
+</div>
+<div class="row r_margin">
+	<div class="col-md-12"> 
+		<div class="col-md-12  trhistorydet">
+
+				<div class="col-md-4 trans_det export_pre_header"  ng-if="tranpo">
+					<p class="clearfix" ng-if="dirtype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.directivetype}}</span></p>
+					<p class="clearfix"  ng-if="trntype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} :  </label>
+					<span class="view_ot">{{transdet.transtypeName}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_date}}:  </label>
+					<span class="view_ot">{{transdet.transactiondate  | datetimeForm }}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_reason}} :</label>
+					<span class="view_ot">{{transdet.transactionreason}}</span></p>
+					<p class="clearfix" ><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.porderno}} : </label>
+					<span class="view_ot  name_li2" ng-class = "{'link-change':orderlinkChange}"><a href="" ng-if="userRolePermissions.orderPermissions.viewOrder" id="orderChangeClick" ng-click = "orderstatechange()">{{transdet.ponumber}}</a><font ng-if="!userRolePermissions.orderPermissions.viewOrder" >{{transdet.ponumber}}</font></span></p>
+					<p class="clearfix" ng-if="asndet"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.asn_no}} :</label>
+					<span class="view_ot  name_li2" ng-class = "{'link-change':orderlinkChange}"><a href="" id="asnChangeClick" ng-if="userRolePermissions.orderPermissions.viewOrder" ng-click = "asnstateChange()">{{transdet.asnnumber}}</a><font ng-if ="!userRolePermissions.orderPermissions.viewOrder">{{transdet.asnnumber}}</font></span></p>
+				</div>
+				<div class="col-md-4 trans_det export_pre_header"  ng-if="tranReceipt">
+					<p class="clearfix" ng-if="dirtype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.directivetype}}</span></p>
+					<p class="clearfix"  ng-if="trntype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} :  </label>
+					<span class="view_ot">{{transdet.transtypeName}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_date}}:  </label>
+					<span class="view_ot">{{transdet.transactiondate  | datetimeForm }}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_reason}} :</label>
+					<span class="view_ot">{{transdet.transactionreason}}</span></p>
+					<p class="clearfix" ><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.porderno}} : </label>
+					<span class="view_ot  name_li2" ng-class = "{'link-change':orderlinkChange}" ><a href="" id="orderChangeClick" ng-click = "orderstatechange()">{{transdet.ponumber}}</a></span></p>
+					<p class="clearfix" ng-if="asndet"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.asn_no}} :</label>
+					<span class="view_ot  name_li2"><a href=""  id="asnChangeClick" ng-click = "asnstateChange()">{{transdet.asnnumber}}</a></span></p>
+				</div>
+				<div class="col-md-4 trans_det export_pre_header "   ng-if="trancount">
+					<!-- <p class="clearfix"><label class="mar_al view_p">{{translation.tranhistory[0].tran_name}} :</label>
+					<span class="view_ot">{{transdet.tranactionname}}</span></p> -->
+					<p class="clearfix" ng-if="dirtype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.directivetype}}</span></p>
+					<p class="clearfix" ng-if="trntype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.transtypeName}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_date}} : </label>
+					<span class="view_ot">{{transdet.transactiondate  | datetimeForm  }}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_reason}} :</label>
+					<span class="view_ot">{{transdet.countreason}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.count_name}}: </label>
+					<span class="view_ot">{{transdet.countname}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.count_number}}: </label>
+					<span class="view_ot  name_li2" ng-class = "{'link-change':orderlinkChange}" ><a id="CountClick" ui-sref="ovc.Counts-edit({id:transdet.countno,pageFrom:'transactionHistory'})">{{transdet.countno}}</a></span></p>
+				</div>
+
+				<div class="col-md-8 trans_det export_pre_header "  ng-if="tranman">
+					<p class="clearfix" ng-if="dirtype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.directivetype}}</span></p>
+					<p class="clearfix" ng-if="trntype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.transtypeName}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_date}} :  </label>
+					<span class="view_ot">{{transdet.transactiondate  | datetimeForm }}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_reason}} : </label>
+					<span class="view_ot">{{transdet.transactionreason}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.adjust_num_lab}} : </label>
+					<span class="view_ot  name_li2" ng-class = "{'link-change':orderlinkChange}" ><a id="adjustClick" ui-sref="ovc.adjustment-summary({adjust_id:orderId,pageFrom:'transactionHistory'})">{{transdet.adjnumber}}</a></span></p>
+					<!-- <p class="clearfix"><label class="mar_al view_p">{{translation.tranhistory[0].effect_date}} : </label>
+					<span class="view_ot">{{transdet.effectivedate}}</span></p> -->
+				</div>
+				<div class="col-md-4 trans_det export_pre_header"  ng-if="tranPOS">
+					<p class="clearfix" ng-if="dirtype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.directivetype}}</span></p>
+					<p class="clearfix" ng-if="trntype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.transtypeName}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_date}} :  </label>
+					<span class="view_ot">{{transdet.transactiondate  | datetimeForm }}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_reason}} : </label>
+					<span class="view_ot">{{transdet.transactionreason}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.postranNo}} : </label>
+					<span class="view_ot  name_li2">{{transdet.postranNo}}</span></p>
+					<!-- <p class="clearfix"><label class="mar_al view_p">{{translation.tranhistory[0].effect_date}} : </label>
+					<span class="view_ot">{{transdet.effectivedate}}</span></p> -->
+				</div>
+				<div class="col-md-4 trans_det export_pre_header "   ng-if="tranUpload">
+					<!-- <p class="clearfix"><label class="mar_al view_p">{{translation.tranhistory[0].tran_name}} :</label>
+					<span class="view_ot">{{transdet.tranactionname}}</span></p> -->
+					<p class="clearfix" ng-if="dirtype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.directivetype}}</span></p>
+					<p class="clearfix" ng-if="trntype"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.transaction_type}} : </label>
+					<span class="view_ot">{{transdet.transtypeName}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.tran_date}} : </label>
+					<span class="view_ot">{{transdet.transactiondate  | datetimeForm  }}</span></p>
+				</div>
+				<div class ="col-md-8 trans_det export_pre_header" ng-if="tranman || trancount || tranPOS || tranpo || tranUpload || tranReceipt">
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.createdby}} : </label><span class="view_ot">{{createdby}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.store_lab}} : </label><span class="view_ot">{{location}}</span></p>
+					<p class="clearfix" ng-if="transdet.reasoncode"><label class="mar_al view_p">{{ovcLabel.transactionHistory.labels.reasonCode}} : </label><span class="view_ot">{{transdet.reasoncode}}</span></p>
+				</div>
+		</div>
+	</div>
+</div>
+	
+<div class="col-md-12">
+	
+	<div ng-if="list1.length" class="col-md-12">
+		<div class="col-md-2 col-sm-5 search_btns">
+			<div class="pg_limit b_margin">
+						
+						<div class="pg_limit b_margin col-md-3">
+						<ul>
+							<li id="tbalance_pop" class="pull-right list_bx minipop_menu"><a class="btn btn-primary  admin_det  refinelookup" ng-click="trefineopen()" id="tcancel_btn">{{ovcLabel.transactionHistory.buttons.refine}}</a>
+						
+								<ul  ng-click="trefinechange()" class="dropdown-menu dropdown-messages hoveropup st_mar">
+									<li class="user-header bg-light-blue"  ng-class="{active: collapseVar==5}">
+										<div class="stk_menu">
+											<div class="menu_blk1 pull-left">
+												<div class="balanceoh check_left">
+													<div class="balradio"><label>
+														<input id="tlpbalance" type="checkbox"  value="tlpbalance"  ng-click="selectAll(action.bal1checked,balancefields1,1)" ng-model="action.bal1checked" ng-init="action.bal1checked=true"/><img class="mar_r" /></label>
+													</div>
+												</div>
+											</div>
+											<a href="" ng-click="check(5)" id="balanceField" class="chck_f"> {{ovcLabel.transactionHistory.buttons.balance_fields}} <span class="fa arrow"></span></a>
+										</div>
+										<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=5">
+											<li class="user-header bg-light-blue"  ng-repeat="balances1 in balancefields1">
+												<div class="menu_blk1" >
+													<div class="balanceoh check_left"><div class="balradio"><label>
+													<input id="{{balances1.id}}" type="checkbox" ng-model="balances1.selected" value="{{balances1.id}}"  ng-click="toggleSelection(balances1)" ng-init="balances1.selected=true"/><img class="mar_r"/>{{balances1.title}}</label></div></div>
+												</div>
+											</li> 
+										</ul>
+									</li>
+									<li class="user-header bg-light-blue"  ng-class="{active: collapseVar==6}">
+										<div class="stk_menu">
+											<div class="menu_blk1 pull-left">
+												<div class="balanceoh check_left">
+													<div class="balradio">
+														<label><input id="tlpcalc" type="checkbox"  value="tlpcalc"  ng-click="selectAll(action.bal2checked,balancefields2,2)" ng-model="action.bal2checked" ng-init="action.bal2checked=true"/><img class="mar_r"/></label>
+													</div>
+												</div>
+											</div>
+											<a href="" ng-click="check(6)" id="calculatedField" class="chck_f">{{ovcLabel.transactionHistory.buttons.calculated_fields}}	 <span class="fa arrow"></span></a>
+										</div>
+										<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=6">
+											<li class="user-header bg-light-blue"  ng-repeat="balances2 in balancefields2">
+												<div class="menu_blk1" >
+												<div class="balanceoh check_left"><div class="balradio"><label>
+												<input id="{{balances2.id}}" type="checkbox" ng-model="balances2.selected" value="{{balances2.id}}"  ng-click="toggleSelection(balances2)" ng-init="balances2.selected=true"/><img class="mar_r"/>{{balances2.title}}</label></div></div>
+											</div>
+											</li> 
+										</ul>
+									</li> 
+									 
+								    <li class="user-header bg-light-blue" ng-class="{active: collapseVar==7}">
+									<div class="stk_menu">
+									<div class="menu_blk1 pull-left">
+										<div class="balanceoh check_left"><div class="balradio"><label>
+											<input id="tlpdocs" type="checkbox"  value="tlpdocs"  ng-click="selectAll(action.bal3checked,balancefields3,3)" ng-model="action.bal3checked" ng-init="action.bal3checked=true"/><img class="mar_r"/></label></div></div>
+									</div>
+									<a href="" ng-click="check(7)" id="statusBalances" class="chck_f">{{ovcLabel.transactionHistory.buttons.status_balances}}<span class="fa arrow"></span></a>
+									</div>
+										
+									<ul class="nav nav-second-level cal_blkli bal3"  uib-collapse="collapseVar!=7">
+										<li class="user-header bg-light-blue"  ng-repeat="balances3 in balancefields3">
+									
+											<div class="menu_blk1" >
+											<div class="balanceoh check_left"><div class="balradio"><label>
+									
+												<input id="{{balances3.id}}" type="checkbox" ng-model="balances3.selected" value="{{balances3.id}}"  ng-click="toggleSelection(balances3)" ng-init="balances3.selected=true"/><img class="mar_r"/>{{balances3.title}}</label></div></div>
+										
+											</div>
+										</li> 
+									</ul>
+							   </li> 
+								<a class="btn btn-primary done_btn" id="doneRefine" ng-click="refineremove() ">{{ovcLabel.transactionHistory.buttons.done}}</a>
+								<a class="btn btn-primary done_btn" id="cancelRefine" ng-click="trefinecancel()">{{ovcLabel.transactionHistory.buttons.cancel}}</a>
+							</ul>
+						</li>
+					</ul>
+				</div>
+						
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<br clear="all">
+<br />
+    <div ng-if="list1.length" class="col-lg-12">
+        <div class="panel-default">
+           
+			   <div class="ven_tbody stock_l">
+				<div class="row">
+				
+					<div class="col-lg-12  transt_hover">
+						<table class="table table-striped table-bordered export_table" id="order_summary_export" iphone-view>
+							<tr>
+								<thead>
+								<th>{{ovcLabel.transactionHistory.labels.SKU}}</th>
+								<th>{{ovcLabel.transactionHistory.labels.description}}</th>
+								<!-- <th>{{translation.tranhistory[0].prodpartnerid}}</th> -->
+								<!--<th>{{translation.tranhistory[0].prodclasscode}}</th>-->
+								<!-- <th>{{translation.tranhistory[0].stylecode}}</th>
+								<th>{{translation.tranhistory[0].sizecode}}</th>
+								<th>{{translation.tranhistory[0].colorcode}}</th> -->
+							<!-- 	<th>{{translation.tranhistory[0].xd}}</th>
+								<th>{{translation.tranhistory[0].yd}}</th>
+								<th>{{translation.tranhistory[0].zd}}</th> -->
+								<th>{{ovcLabel.transactionHistory.labels.transferqty}}</th>
+								<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.transactionHistory.labels.cost}}</th>
+								<!--<th>{{translation.tranhistory[0].oldprice}}</th>
+								<th>{{translation.tranhistory[0].newprice}}</th>-->
+								<th>{{ovcLabel.transactionHistory.labels.UOM}}</th>
+								<!--<th>{{translation.tranhistory[0].touom}}</th>
+								<th>{{translation.tranhistory[0].convfactor}}</th>
+								<th>{{translation.tranhistory[0].fromstockloc}}</th>
+								<th>{{translation.tranhistory[0].tostockloc}}</th>-->
+								</thead>
+							</tr>
+							<tbody>
+								<tr ng-repeat="data in list1">	
+								<!-- <tr> -->
+									<td>{{data.productCode}}</td>
+									<td>{{data.description}}</td>
+								<!-- 	<td>{{data.prodpartnerid}}</td> -->
+									<!--<td>{{data.prodclasscode}}</td>-->
+									<!-- <td>{{data.stylecode}}</td>
+									<td>{{data.sizecode}}</td>
+									<td>{{data.colorcode}}</td> -->
+									<!-- <td>{{data.xd}}</td>
+									<td>{{data.yd}}</td>
+									<td>{{data.zd}}</td> -->
+									<td ng-mouseover="hoverIn()"  ng-mouseleave="hoverOut()">{{data.qty ? data.qty : 0}}
+									<div class="trans_listor animate-show" ng-if="hoverEdit">		
+									<div class="trans_his">		
+										<span class="arrow_i"><i class="fa fa-caret-up"></i></span>											
+										<table class="table table-striped table-bordered  hover_list hover_scroll"  >
+										
+										<tr><th></th><td>{{ovcLabel.transactionHistory.labels.old}}</td><td>{{ovcLabel.transactionHistory.labels.new}}</td></tr>
+									<!-- 	<tr><th>OH :</th><td>{{invendetails[1].newValue}}</td> <td></td></tr>
+										<tr><th>ASN in:</th><td></td><td></td></tr> -->
+										<tr ng-repeat = "bdata in totbalances" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+											<th class="border_l">{{bdata.title}}</th>
+											<td class="border_l">{{CheckOldValue(data._id , bdata.label)}}</td>
+											<td>{{CheckNewValue(data._id , bdata.label) }}</td>
+										</tr>
+										
+										</table>
+										</div>
+									</div>
+									</td>
+									<td ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{currency}} {{data.cost |number :2}}</td>
+									<!--<td>{{data.oldprice}}</td>
+									<td>{{data.newprice}}</td>-->
+									<td>{{data.uom}}</td>
+									<!--<td>{{data.touom}}</td>
+									<td>{{data.convfactor}}</td>
+									<td>{{data.fromstockloc}}</td>
+									<td>{{data.tostockloc}}</td>-->
+									
+								</tr>
+							</tbody>
+						</table>	
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-if="!list1.length" class="col-lg-12">
+		<div class="col-lg-6">
+			{{"There are no SKUs in this Transaction"}}
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="col-md-2 col-sm-5  search_btns">
+			<div class="pg_limit b_margin">
+				<a ui-sref="ovc.transaction-history" id="backTransaction" ><button  class="btn btn-primary">{{ovcLabel.transactionHistory.buttons.back}} </button></a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12" ng-if="filteredItems">    
+		<div class="panel-body">
+			<uib-pagination total-items="filteredItems"  items-per-page ="action.entryLimit"  ng-model="action.currentPage"  max-size = "5"  boundary-links="true" ng-change="pageChanged();" ></uib-pagination>	
+			<div class="col-md-3 pglimit">
+				<div class="pg_limit page_size_drdn">
+					<label>{{ovcLabel.poOrder.list.pagesize}}:</label>
+					<select  convert-to-number	ng-model="action.entryLimit" class="pgsizes" ng-change="pageChanged()">
+					<option>10</option>
+					<option>20</option>
+					<option>50</option>
+					<option>100</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<!-- 
+<style>
+
+html, body {
+
+overflow: visible;
+}
+#wrapper {
+
+overflow: visible;
+position: relative !important;
+width: 100%;
+}
+#page-wrapper {
+
+height: 351px !important;
+overflow-x: visible;
+overflow-y: auto;
+padding: 0;
+}
+</style> -->

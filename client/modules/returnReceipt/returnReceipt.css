@@ -1,0 +1,81 @@
+.package_table{
+    width:96% !important;
+    padding:0 !important;
+}
+
+.package_arrw{
+    width:4% !important;
+    padding:0 !important;
+    text-align: center;
+}
+.add_package {
+    margin-bottom: 10px;
+}
+.package_recipt {
+    border: 1px solid #ddd;
+    padding: 10px;
+	margin-bottom: 20px;
+}
+
+
+.pack_head{
+background-color: #cccccc;
+}
+
+.style_head{
+background-color: #e6e6e6;
+/*font-weight: bold;*/
+width:100%;
+}
+
+.package_input{
+	
+	text-align: right;
+    padding: 4px;
+}
+
+.package_id{
+	padding: 10px;
+}
+.return_arr{
+padding: 13px !important;
+}
+.package_text {
+    line-height: 27px;
+    text-align: left;
+}
+.star_icon {
+    color: #ff007f;
+    font-size: 7px;
+	top: -5px;
+    position: relative;
+}
+.return_details {
+    position: relative;
+}
+.star_iconf {
+    color: #ff0000;
+    font-size: 18px;
+    font-weight: normal;
+    margin-left: 24px;
+	 padding-top: 5px;
+}
+
+.autocomplete ul{
+           padding: 5px 0px 0px 0px !important;
+}
+
+.mpack{
+	text-align: left;
+	padding:0px !important;
+}
+#wrapper tr {
+        border-bottom:none !important;
+}
+.reverse_btns{
+    margin-top:10px;
+}
+
+.reverse_cancel {
+    margin-right:10px;
+}

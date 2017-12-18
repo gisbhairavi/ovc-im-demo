@@ -1,0 +1,113 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{translation.replenishmentRules[0].replenishmentRules}}</h3>
+    </div>
+</div>
+
+<div class="ven_tblk clearfix">
+	<div class="col-lg-12">
+	    <div class="panel-default">
+	        <div class="panel-body search_box">
+	        	<form>
+		        	<div class = "col-md-12" style = "padding:0;">
+		        		<div class = "col-md-6">
+		        			<div class = "form-group" style = "float:left;width:100%;">
+		        				<span class = "col-md-12" style = "padding:0;">
+									<label>{{translation.replenishmentRules[0].location}}</label>
+		        					<select ng-options="col.id as col.displayName for col in data.store_datas"  class="form-control" ng-model="formData.locationId" ng-change = "getReplenishmentRules()"><option value="">-- {{translation.replenishmentRules[0].selectLocation}} --</option></select>
+		        				</span>
+		        			</div>
+
+		        			<div class = "form-group" style = "float:left;width:100%;">
+			        			<span class = "col-md-5" style = "padding:0;">
+									<label>{{translation.replenishmentRules[0].backgroundReplenishment}}</label>
+								</span>
+								<span class = "col-md-5">
+									<input type="checkbox" ng-model="formData.backgroundReplenishment" class = "pull-left" style = "margin-top:5px;"/> 
+								</span>
+							</div>
+							
+
+							<div ng-if = "formData.backgroundReplenishment && formData.locationId != null">
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-12" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].reorderPoint}}</label>
+										<input type="number" ng-model="formData.reorder" class = "form-control"/> 
+									</span>
+								</div>
+
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-12" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].minimumOrderQuantity}}</label>
+										<input type="number" ng-model="formData.minOrder" class = "form-control"/> 
+									</span>
+								</div>
+
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-12" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].maximumOrderQuantity}}</label>
+										<input type="number" ng-model="formData.maxOrder" class = "form-control"/> 
+									</span>
+								</div>
+
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-5" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].orderQuantityRounding}}</label>
+									</span>
+									<span class = "col-md-3">
+										<label style = "cursor:pointer;">
+											<input type="checkbox" ng-model="formData.orderQuantityRounding" class = "pull-left" style = "margin-top:5px;margin-right:5px;" ng-true-value = "'up'" /> {{translation.replenishmentRules[0].up}}
+										</label>
+									</span>
+									<span class = "col-md-3">
+										<label style = "cursor:pointer;">
+											<input type="checkbox" ng-model="formData.orderQuantityRounding" class = "pull-left" style = "margin-top:5px;margin-right:5px;" ng-true-value = "'down'" /> {{translation.replenishmentRules[0].down}}
+										</label>
+									</span>
+								</div>
+
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-5" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].allowPush}}</label>
+									</span>
+									<span class = "col-md-5">
+										<input type="checkbox" ng-model="formData.allowPush" class = "pull-left" style = "margin-top:5px;"/> 
+									</span>
+								</div>
+
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-5" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].managerApproval}}</label>
+									</span>
+									<span class = "col-md-5">
+										<input type="checkbox" ng-model="formData.managerApproval" class = "pull-left" style = "margin-top:5px;"/> 
+									</span>
+								</div>
+								
+								<div class = "form-group" style = "float:left;width:100%;">
+									<span class = "col-md-12" style = "padding:0;">
+										<label>{{translation.replenishmentRules[0].windowChange}}</label>
+										<input type="number" ng-model="formData.windowChange" class = "form-control"/>
+									</span>
+								</div>
+							</div>
+						</div>
+
+			        </div>
+				</form>
+			</div>
+			<div class="ven_tblk clearfix">
+				<div class="save_can clearfix">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button type="submit"  class="btn btn-primary"  ng-click="saveReplenishmentRules()">{{translation.buttontypes[0].save}}</button>
+
+							<button class="btn btn-primary" ng-click="cancelPermissions()">{{translation.buttontypes[0].cancel}}</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

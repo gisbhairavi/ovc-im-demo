@@ -1,0 +1,118 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header">{{ovcLabel.stockLocation.list.heading}} :
+			<div class="pull-right add_ven clearfix">
+				<a class="btn btn-primary" id="ovcAddBtn" ng-if="!molstklcn" ui-sref="ovc.location-add" title="{{ovcLabel.stockLocation.button.add_location}}"><i class="fa fa-plus-circle"></i> {{ovcLabel.stockLocation.button.add_location}}</a>
+				<a class="btn btn-primary" id="ovcAddBtn" ng-if="molstklcn"  ng-disabled="molstklcn"  href="" title="{{ovcLabel.stockLocation.button.add_location}}"><i class="fa fa-plus-circle"></i> {{ovcLabel.stockLocation.button.add_location}}</a>
+				
+			</div>
+		</h3>
+		</div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row r_margin">
+	<div class="ven_tblk clearfix">
+    <div class="col-lg-12">
+	<div class="col-md-3" style="padding: 0px;">
+			<label class="control-label">{{ovcLabel.stockLocation.store}}: </label><br />
+			<select id = "stockListLocation" ng-options="col.id as col.displayName for col in store_datas" class="form-control" name="locationId" ng-model="loc.locationId" ng-change="getstore_lists(loc.locationId)">
+			<option value="">-- {{ovcLabel.stockLocation.placeholder.select_store}} --</option>
+			</select>
+		</div>
+		<br clear="all" />
+		<hr />
+		<!-- /.table-responsive -->
+		<div class="col-md-12" style="padding: 0px;">
+			<div class="panel-body search_box srch_panel">
+			<div class="row">
+				<form action="" id="samp_form" onsubmit="return false;">
+					<div class="col-md-12" id="amount" style="padding:0;">
+						<div class="col-md-6 col-sm-6">
+								<div class="input text">
+									<!-- <input placeholder="Search for Location id, Description, parent location..." class="form-control srch_field" value="" type="text" ng-model="searchLocation"> -->
+									<input id="searchText" placeholder="{{ovcLabel.stockLocation.placeholder.search_placeholder}}..." class="form-control srch_field" value="" type="text" ng-model="search">
+								</div>
+						</div>
+						<div class="col-md-5 col-sm-6 search_btns" >
+							<button id="ovcResetBtn" type="reset" class="btn btn-primary rst_btn" ng-click="restSearchFilter()"><i class="fa fa-refresh"></i> {{ovcLabel.stockLocation.button.reset}}</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button id="ovcSearchBtn" class="btn btn-primary" ng-click="applySearchFilter()"><i class="fa fa-search"></i> {{ovcLabel.stockLocation.button.search}}</button>
+						</div>
+					</div>
+				</form>
+			</div>		
+			</div>
+		</div>
+	   <br/>
+		<div class="row">
+		<div class="list_tree clearfix">
+		<a id="list_v" class="btn btn-success tree_view" ui-sref="ovc.location-list">
+			<i class="fa fa-th-list"></i>
+			  {{ovcLabel.stockLocation.list_view}}
+		</a>
+			<a id="tree_v" ui-sref="ovc.location-tree" class="btn btn-success tree_view" >
+			<i class="fa fa-tree"></i>&nbsp;&nbsp; {{ovcLabel.stockLocation.tree_view}}
+			</a>
+			</div>
+			<div class="col-md-12">
+				<table class="table table-striped table-bordered" iphone-view ng-if="filteredItems > 0">
+				<thead>
+					<th>{{ovcLabel.stockLocation.stock_location_id}}&nbsp;
+					<a class="sort_align" ng-click="sort_by('stockingLocationId');">
+					<i class="fa fa-sort"></i></a></th>
+					<th>{{ovcLabel.stockLocation.location_name}}&nbsp;
+					<a class="sort_align" ng-click="sort_by('locationName');">
+					<i class="fa fa-sort"></i></a></th>
+					<th>{{ovcLabel.stockLocation.parent_location}}&nbsp;
+					<a class="sort_align" ng-click="sort_by('parentStockingLocationName');">
+					<i class="fa fa-sort"></i></a></th>
+					<th>{{ovcLabel.stockLocation.products}}</th>
+					<th>{{ovcLabel.stockLocation.status}}</th>
+					<th>{{ovcLabel.stockLocation.last_updated}}</th>
+					<!--<th>{{translation.locations[0].action}}</th>-->
+				</thead>
+				<tbody ng-if="filteredItems > 0">
+					<tr ng-repeat="data in list | filter:searchLocation | orderBy : predicate :reverse | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+						<td class="name_li">
+						<a id="{{data.stockingLocationId}}link" ui-sref="ovc.location-edit({locationid:data._id,parentName:data.parentStockingLocationName,productdetail:false})" class="btn">{{data.stockingLocationId}}</a>
+						</td>
+						<td>{{(!data.locationName) ? " - " : data.locationName}}</td>
+						<td>{{(!data.parentStockingLocationName) ? " - " : data.parentStockingLocationName}}</td>	
+						<td>
+						<a id="{{data.stockingLocationId}}products" ui-sref="ovc.location-edit({locationid:data._id,parentName:data.parentStockingLocationName,productdetail:true})" class="btn btn-primary ng-binding">{{ovcLabel.stockLocation.products}}</a>
+						</td>
+						<td>{{(data.isActive == true) ? "Active" : "Inactive"}}</td>
+						<td>{{data.lastModified | dateForm }}</td>
+						<!--<td><a ui-sref="ovc.location-edit({locationid:data._id})" class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; {{translation.buttontypes[0].edit}} </a></td>-->
+					</tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="col-md-12" ng-show="filteredItems == 0">
+				<div class="col-md-12">
+					<h4>{{ovcLabel.stockLocation.list.no_locations}}</h4>
+				</div>
+			</div>
+			<div class="col-md-12" ng-show="filteredItems > 0">    
+			<div class="panel-body fliter_i">
+				
+				<uib-pagination total-items="filteredItems"  items-per-page ="entryLimit"  ng-model="currentPage"  max-size = "5"  boundary-links="true" ng-change="" ></uib-pagination>
+				<div class="col-md-3 pglimit">
+				<div class="pg_limit page_size_drdn">
+					<label>{{ovcLabel.stockLocation.list.pagesize}}:</label>
+					<select  convert-to-number  ng-model="entryLimit" class="pgsizes">
+						<option>10</option>
+						<option>20</option>
+						<option>50</option>
+						<option>100</option>
+					</select>							
+				</div>						
+			</div>
+			</div>
+			</div>
+		</div>
+    </div>
+	</div>
+    <!-- /.col-lg-12 -->
+</div>

@@ -1,0 +1,52 @@
+.table-fix tbody {
+  /*height: 200px;*/
+  /*overflow-y: auto;*/
+  display: block;
+  border: thick;
+}
+.modal-center{
+	vertical-align: middle;
+}
+.panel-size{
+	height: 40px;
+	padding: 0px;
+	background-color: #D3D3D3;
+	/*border-collapse: collapse;*/
+	/*width: 660px;*/
+	cursor: pointer;
+}
+.span-name{
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 16px;
+}
+.backbtn{
+	font-size: 20px;
+}
+.textalign{
+	text-align: center;
+	font-style: italic;
+}
+.quantity {
+    font-size: 16px;
+    text-align: right;
+    padding-top: 4px;
+}
+.quansize{
+	width: 60px;
+	height:30px;
+}
+.attributes{
+	font-size: 18px;
+	font-style: italic;
+
+}
+
+.finditpopupbox{
+position: fixed;
+left: 30%;
+height: 500px;
+top: 25%;
+} 
+.searchboxcss{
+	height: 150px;
+}

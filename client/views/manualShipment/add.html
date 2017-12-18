@@ -1,0 +1,253 @@
+<transaction-history></transaction-history>
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12" ng-if	=	"action.title	!=='edit'">
+		<h3 class="page-header">{{ovcLabel.manualshipment.title[action.title]}}  {{ovcLabel.manualshipment.manualShipment}}</h3>
+	</div>
+	<div class="col-lg-12"  ng-if	=	"action.title	==	'edit' " >
+	<h3 class="page-header" ng-hide="hideordtype">{{ovcLabel.manualshipment.title[action.title]}} {{ovcLabel.manualshipment.manualShipment}}: {{ship.orderNumber}} 
+		 <div class="col-md-2 pull-right"> 
+		 	<div class="pull-right">
+		 		<span class="label status" ng-class="{'alert-draft': ship.status == 'Draft'}">{{ship.status}}</span>
+		 	</div>
+		 </div >
+	 </h3>
+	</div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+    	<section>
+			<div class="pro_menu purchase_m clearfix">
+				<div class="col-md-12">
+					<ul class="nav nav-pills">
+						<li class="purchase_or" ng-class="{active:tab.page == 1}">
+							<a href id ="co_detail" ng-click="tab.page = 1"><span class="count_n">1</span>{{ovcLabel.manualshipment.transfer_details}}</a>
+						</li>
+						<li class="purchase_place" ng-class="{active:tab.page == 4}" ng-click="saveShipment(form,po_add,'draft',tab)">
+							<a href  id="fr_detail" ng-click="tab.page =4"><span class="count_n">2</span>
+							{{ovcLabel.manualshipment.purchase_review_ship_place}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		  	<form role="form" name="outForm">
+				<div ng-show="tab.page ==1">
+					<div class="ven_tblk clearfix">
+						<div class="row r_margin ng-scope"  ng-controller="stylematrixctrl" >
+							<div class="col-md-12 stk_sear">
+								<div class="panel-default">
+									<div class="panel-body search_box">
+										<div class="row">
+											<div class="col-lg-12">
+												<form role="form" name="innerForm">
+													<div class="col-md-7 col-sm-12 col-xs-12 panleft">
+														<div class="col-md-6 col-sm-12 col-xs-12 trans_det">
+															<div class="v_edit" style="padding-left:0px;margin-bottom: 10px;">
+																<label class="control-label ng-binding export_pre_header"   >{{ovcLabel.manualshipment.labels.shipment_type}}</label> 
+																<select id="prcode" class="form-control"  data-ng-options="prtypes.code as prtypes.label for prtypes in ordertype" name="pordercode" data-ng-model="form.pordercode" ng-disabled="action.hidedrop" >
+																<option value="" >{{ovcLabel.manualshipment.placeholder.selectStore}}</option></select>
+															</div>
+															<div class="v_edit " style="padding-left:0px;margin-bottom: 10px;" >
+																<label class="control-label">{{ovcLabel.manualshipment.labels.ship_from_store}} </label>
+																<!--<select ng-options="col.id as col.displayName for col in store_datas | orderBy:'displayName' " class="form-control orderselect" name="orderstore"  
+																ng-model="form.orderstore" id="orderselection" ng-change="getstore_details(form.orderstore,'shiptostore')" ng-disabled="action.hidedrop"><option value="">-- {{translation.locations[0].select_store}} --</option></select>-->
+
+																<select class="form-control orderselect" name="orderstore"  
+																ng-model="form.orderstore" id="orderselection" ng-change="getstore_details(form.orderstore,'shiptostore')" ng-disabled="action.hidedrop">
+								                                    <option value="">{{ovcLabel.manualshipment.placeholder.selectStore}}</option>
+								                                    <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+								                                    {{ item.indent }} {{ item.displayName }}
+								                                    </option>
+								                                </select>
+
+																<div class="erroralert">
+																	<span ng-show="tab.error['orderselection']" class="alert alert-danger">
+																	{{tab.errormsg['orderselection']}}</span>
+																</div>
+															</div>
+															<div class="v_edit" style="padding-left:0px;margin-bottom: 10px;">
+																<label class="control-label">{{ovcLabel.manualshipment.labels.shipping_tostore}} </label>
+																<select ng-if="config.organization_name == organization_struct['2']" id="shipstore" ng-options="col.id as col.displayName for col in fromstore_datas" class="form-control shiptostore" name="shiptostore"  ng-model="form.shiptostore" ng-change="getSelectedStore(form.shiptostore,'shipFromStore')" ng-disabled="action.hidedrop"><option value="">-- {{ovcLabel.manualshipment.placeholder.selectStore}} --   </option></select>
+
+																<select ng-if="config.organization_name == organization_struct['1']" class="form-control shiptostore" name="shiptostore"  
+																ng-model="form.shiptostore" id="shipstore" ng-change="getSelectedStore(form.shiptostore,'shipFromStore')" ng-disabled="action.hidedrop">
+								                                    <option value="">-- {{ovcLabel.manualshipment.placeholder.selectStore}} --</option>
+								                                    <option ng-repeat="item in corporateLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+								                                    {{ item.indent }} {{ item.displayName }}
+								                                    </option>
+								                                </select>
+
+																<div class="erroralert">
+																	<span ng-show="tab.error['shipstore']" class="alert alert-danger">
+																	{{tab.errormsg['shipstore']}}</span>
+																</div>
+															</div>
+															<div ng-if = "config.config_arr.enableMarkForLocation.featureValue" class="v_edit" 
+															style="padding-left:0px;margin-bottom: 10px;" >
+																<label class="control-label">{{ovcLabel.manualshipment.labels.mark_for_store}}</label>
+																<select  class="form-control" name="markforstore"  ng-model="form.markforstore"  ng-change="getSelectedStore(form.markforstore,'markLocation')">
+								                                    <option value="">-- {{ovcLabel.manualshipment.placeholder.selectStore}} --</option>
+								                                    <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+								                                    {{ item.indent }} {{ item.displayName }}
+								                                    </option>
+								                                </select>
+															</div>
+														</div>
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label class="control-label">{{ovcLabel.manualshipment.labels.special_instructions}}</label>
+																<textarea class="spl_inst form-control add_or"  name="shipping_special" ng-model="form.comment" placeholder="{{ovcLabel.manualshipment.placeholder.enter_msg}}"></textarea>
+															</div>
+														</div>
+														<div class="col-md-6" style="margin-top: 10%;padding-right: 1.5%;">
+														    <button id="ovcUploadBtn" class="file-input btn btn-primary btn-file pull-right">{{ovcLabel.manualshipment.labels.importFile}}
+														    <input type="file" ng-click ="shipmentFileupload($event)"  on-read-file="uploadOrders($fileContent,$file,0)" file-model="orderfile" accept=".dat"/>
+														    </button>
+														</div>	
+														<div class="v_edit padd_box">
+															<div class="col-md-10" style="padding-left:0px; " >
+																<label class="control-label ng-binding">{{ovcLabel.manualshipment.labels.products}}</label>
+																<div class="col-md-12" style="padding-left:0px; " >
+																	<ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="po_add.prodresult" attr-placeholder="{{ovcLabel.manualshipment.placeholder.search}}..." click-activation="false" data="addedproducts" on-type="dosrchproduct" on-select="doSelectproduct" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+																</div>
+
+															</div>
+															<div class="col-md-2 search_btns stk_sear">
+																<div class="pg_limit add_btns">
+																	<button name="add_product_btn" type="submit" class="btn btn-primary" ng-click="poAddSkus(po_add)"><i class="fa fa-plus"></i> {{ovcLabel.manualshipment.buttons.add}}</button>
+																</div>
+															</div>
+															<div class="col-md-6 erroralert">
+																	<span ng-show="tab.error['prodresult']" class="alert alert-danger">
+																	{{tab.errormsg['prodresult']}}</span>
+																</div>
+														</div>
+													</div>
+													<div class="col-md-5 col-sm-12 col-xs-12">
+														<div>
+															<div class="p_total" >
+															 	<span class="ven_tblk clearfix"><label>{{ovcLabel.manualshipment.labels.tot_qty}}</label>: <label class="view_tot"> {{form.allitems}}</label></span>
+															  	<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{ovcLabel.manualshipment.labels.subtotal}}</label>: <label class="view_tot">{{currency}} {{form.allsubtotal | number : 2}}</label></span>
+															  	<span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label>{{ovcLabel.manualshipment.labels.tax}}</label>: <label class="view_tot">{{currency}} {{form.allsubtaxes | number : 2}}</label></span>
+															  	<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label>{{ovcLabel.manualshipment.labels.vat}}</label>: <label class="view_tot">{{currency}} {{form.allsubvates | number : 2}}</label></span>
+															 	<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{ovcLabel.manualshipment.labels.total}}</label>: <label class="view_tot">{{currency}} {{form.overtotal | number : 2}}</label></span>
+															</div>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div><!--class row-->
+									</div><!--PANEL BODY SEARCH-->
+									<div ng-if="loadmat == true">
+										<img src="images/loading.gif" />
+									</div>
+									<div class="row" ng-show="showstyle"  id="mspmatrix"></div> 
+									<form role="forms" name="forms" angular-validator-submit="productorders(newprods)" novalidate angular-validator>
+										<div class="ven_tbody ">
+											<div class="ven_tbody">
+												<div>
+													<grouped-style  skuitems="skuslist" status="draft"></grouped-style>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="ven_tblk clearfix">
+						<div class="row r_margin ng-scope">
+							<div class="save_bg">
+								<div class="save_can clearfix">
+									<div class="col-md-12">
+										<div class="pull-right">
+											<!-- <a href id="co_detail"> <button type="button"  class="btn btn-primary"  ng-click="saveManualShipment(form,po_add,'draft',tab)">{{translation.buttontypes[0].next}}</button></a> -->
+											<button type="button"  class="btn btn-primary"  ng-if="action.title	== 'edit'" ng-click="deleteShipment()" >{{ovcLabel.manualshipment.buttons.delete}}</button>
+											<a href id="co_detail" name="commonNext"> <button type="button"  class="btn btn-primary"  ng-click="saveShipment(form,po_add,'draft',tab)">{{ovcLabel.manualshipment.buttons.next}}</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="tab.page == 4">
+					<div class="row r_margin ng-scope">
+						<div class="ven_tblk clearfix">
+							<div class="col-md-12">
+								<div class="panel-default">
+									<div class="panel-body search_box">
+										<div class="row">
+											<div class="col-lg-12 purs_order">
+												<div class="col-md-7">
+													<h4>{{ovcLabel.manualshipment.labels.shipment_summary}}</h4>
+													<span><p class="clearfix"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.ship_from_store}}</label><span class="view_ot">: {{ship.shipToStore}}</span></p></span>
+													<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.shipping_tostore}}</label><span class="view_ot">: {{ship.shipFromStore}}</span></p>
+													<p ng-if = "config.config_arr.enableMarkForLocation.featureValue" class="clearfix"><label class="mar_al view_p">{{ovcLabel.manualshipment.labels.mark_for_store}}</label><span class="view_ot">: {{ship.markFromlocation}}</span></p>
+													<!-- <p><label>{{translation.purchaseorders[0].bill_to}}:</label>{{billstore1}}</p> -->
+													<!-- <p><label>{{translation.purchaseorders[0].shipping_method}}:</label>{{spmethod}}</p> -->
+												</div>
+												<div class="col-md-5">
+													<div class="p_total po_total" >
+														<span class="ven_tblk clearfix"><label>{{ovcLabel.manualshipment.labels.tot_qty}}</label>: <label class="view_tot"> {{form.allitems}}</label></span>
+														<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{ovcLabel.manualshipment.labels.subtotal}}</label>: <label class="view_tot">{{currency}} {{form.allsubtotal | number:2}}</label></span>
+														<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{ovcLabel.manualshipment.labels.tax}}</label>: <label class="view_tot">{{currency}} {{form.allsubtaxes | number:2}}</label></span>
+														<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{ovcLabel.manualshipment.labels.vat}}</label>: <label class="view_tot"> {{currency}} {{form.allsubvates | number:2}}</label></span>
+														<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{ovcLabel.manualshipment.labels.total}}</label>: <label class="view_tot"> {{currency}} {{form.overtotal | number:2}}</label></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<table class="table table-condensed" iphone-view  ng-show="ship.showtrack">
+											<thead class="style_body">
+												<tr>
+													<th>{{ovcLabel.manualshipment.labels.asn_no}}</th>
+													<th>{{ovcLabel.manualshipment.labels.ship_date}}</th>
+													<th>{{ovcLabel.manualshipment.labels.delivery_date}}</th>
+													<th>{{ovcLabel.manualshipment.labels.tracking_number}}</th>
+												</tr>
+												<tr>
+													<td>{{asnData.asnNumber}}</td>
+													<td class="col-md-3"><input calendar  ng-model='asnData.fromDate'  class="form-control hidcal"/></td>
+													<td class="col-md-3"><input calendar  ng-model='asnData.toDate'  class="form-control hidcal col-md-4"/></td>
+													<td><input  ng-model='asnData.trackNumber'  class="form-control hidcal"/></td>
+												</tr>
+											</thead>
+										</table>
+									</div>
+									<div class="ven_tbody ">
+										<div>
+											<grouped-style  skuitems="skuslist" ></grouped-style>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-show="errorShow" class="col-md-12">
+						<span class =  "col-md-12" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">{{error_msg}}</span>
+					</div>
+					<div class="ven_tblk clearfix">
+						<div class="row r_margin ng-scope">
+							<div class="save_bg">
+								<div class="save_can clearfix">
+									<div class="col-md-12">
+										<div class="pull-right">
+											<button name="commonPrevious" type="submit"  class="btn btn-primary" ng-click="tab.page = 1">{{ovcLabel.manualshipment.buttons.previous}}</button>
+											<button name="commonDelete" type="button"  class="btn btn-primary"  ng-if="action.title	== 'edit'" ng-click="deleteShipment()" >{{ovcLabel.manualshipment.buttons.delete}}</button>
+											<button name="commonCancel" type="submit" class="btn btn-primary" ng-click="action.cancelbtn()">{{ovcLabel.manualshipment.buttons.cancel}}</button>
+											<button name="commonDraft" type="submit" class="btn btn-primary" ng-click="action.cancel(form,po_add,'draft',tab)">{{ovcLabel.manualshipment.buttons.savedraft}}</button>	
+											<button name="commonSubmit" type="submit" ng-click="saveManualShipment(form,po_add,'inProgress',tab)" class="btn btn-primary">{{ovcLabel.manualshipment.buttons.ship}}</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		  	</form>
+		</section>
+    </div>
+</div>

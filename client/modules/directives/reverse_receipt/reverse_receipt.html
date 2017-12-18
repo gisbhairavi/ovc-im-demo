@@ -1,0 +1,66 @@
+<div>
+<div>
+    <div class="row">			
+		<form>
+			<div class="col-md-12">	
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.receiptDate}}</label> : {{receiptDate | dateForm}}</p>
+				</div>
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.receivedBy}}</label> : {{received_user}}</p>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.reversalDate}}</label> : {{date | dateForm}}</p>
+				</div>
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.reversedBy}}</label> : {{reverse_user}}</p>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-sm-3">
+					<p><label class="control-label">{{ovcLabel.asnPackage.reasonCode}}</label> <select ng-options="res.id as res.name for res in reason_codedata" class="form-control" name="reason_code"  ng-model="res_code_data" ng-change="res_code_data ? showReverseReason = false : showReverseReason = true"><option value="">-- {{ovcLabel.asnPackage.selectReason}}--</option></select>
+					<span ng-show="showReverseReason" class="alert alert-danger">{{ovcLabel.asnPackage.reasonError}}</span>
+					</p>
+				</div>
+				<div class="pull-right" style="margin-top:10px;">
+					<button class="btn btn-primary" ng-click="cancelReverse()" style="margin-right:10px;">{{ovcLabel.asnPackage.buttons.cancel}}</button>
+					<button class="btn btn-primary" ng-click="savereverse(reverse_data)" >{{ovcLabel.asnPackage.buttons.reverse}}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+	<div class="col-md-12 trans_det" ng-repeat="asn_data in reverse_data">
+		<div class = "table-responsive col-sm-12" style = "padding:0;">
+					<div class="col-sm-12 trans_det">
+						<table class="table  table-bordered">
+							<thead class = "asn_details head"  ng-click="asndetail.showDetails = ! asndetail.showDetails">
+								<tr>
+									<th><p>{{ovcLabel.asnPackage.asn}} : <b>{{asn_data.asnId}}</b></p></th>
+									<th ng-if="(asn_obj.mode === 'asn' || asn_obj.mode === 'edit')">
+										<p>{{ovcLabel.asnPackage.po}} : <b>{{asn_data.poId}}</b></p>
+									</th>
+									
+									<th ng-if="(asn_obj.mode === 'asn' || asn_obj.mode === 'edit' || asn_obj.mode === 'order' || asn_obj.mode === 'transfer') && userRolePermissions.permissions.viewPurchasePrice">
+										<p>{{ovcLabel.asnPackage.asnValue}} : <b>{{currency}} {{asn_data.asnCost}}</b></p>
+									</th>
+									<th ng-if = "(asn_obj.mode === 'asn' || asn_obj.mode === 'edit' || asn_obj.mode === 'order')">
+										<p >{{ovcLabel.asnPackage.orderType}} :{{translation.orderstypelist[0][asn_data.purchaseOrderType]}} </p>
+									</th>
+									<th><p>{{ovcLabel.asnPackage.packageQty}} : {{asn_data.numberOfPackages}}   </p></th>
+									<th><p>{{ovcLabel.asnPackage.totalAsnQuantity}} : {{asn_data.asnQty}} </p></th>
+								</tr>
+							</thead>
+							<tbody ng-show="asndetail.showDetails && asn_data.numberOfPackages > 0 && asn_obj.mode !== 'transfer'" ng-include="'/modules/directives/reverse_receipt/reverse_package.html'" >
+							</tbody>
+							<tbody ng-show="asndetail.showDetails && asn_data.numberOfPackages === 0" ng-include="'/modules/directives/reverse_receipt/reverse_asn.html'">
+							<tbody ng-show="asndetail.showDetails && asn_data.numberOfPackages === 1 && asn_obj.mode === 'transfer'" ng-include="'/modules/directives/reverse_receipt/reverse_asn_ibt.html'">
+								
+							</tbody>
+						</table>
+					</div>
+		</div>
+	</div>
+</div>

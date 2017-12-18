@@ -1,0 +1,246 @@
+<style>
+	#wrapper tr {
+     border: none; 
+	}
+</style>
+<button class="col-md-12 text-left btn btn-default" ng-if="findit" ng-click="back()">
+  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+  {{ovcLabel.balanceInquiry.buttons.backtofindit}}
+</button>
+<button class="col-md-12 text-left btn btn-default" ng-if="dash" ng-click="backtodash()">
+  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+  {{ovcLabel.balanceInquiry.buttons.backtodashboard}}
+</button>
+<div class="row header_blk ng-scope">
+	<div class="col-lg-12">
+		<h3 class="page-header">{{ovcLabel.balanceInquiry.list.heading}}
+			<!-- Export Function in Stocklookup -->
+			<span ng-if="!config.showskugroup && showExportFunction"><button class="btn btn-default dropdown-toggle pull-right" type="button" id="stocklookupExport" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{ovcLabel.balanceInquiry.labels.export}}<span class="fa fa-clone"></span>
+			</button>
+			<ul class="dropdown-menu dropdown-menu-right" id= "exportExcelBtn" aria-labelledby="stocklookupExport"><li><a href="javascript:void(0);" ng-click="exportStocklookupExport('exportTable|exportTable1|exportTable2|exportTable3|exportTable4|exportTable5');"><span class="fa fa-file-excel-o"> </span> {{ovcLabel.balanceInquiry.labels.excel}}</a></li>
+			</ul>
+			<!-- Print Function in Stocklookup -->
+			<a class="btn pull-right" ng-click="printStocklookup('printableArea')"><span class="fa fa-file-pdf-o"></span>{{ovcLabel.balanceInquiry.labels.print}}</a></span>
+		</h3>
+	</div>
+    <!-- /.col-lg-12 -->
+</div>
+    <div class="col-lg-12">
+        <div class="panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body search_box" id="searchboxstklook">
+                <div class="row">	
+					<form role="form" name="form" ng-submit="searchStocklookup(ship);lookupsubmit();">
+						<div class="col-md-3">
+							<label class="control-label">{{ovcLabel.balanceInquiry.list.store}}</label>
+							<div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+								<div style="position:relative;">
+									<input id="stocklookup_heirarchy" type="text" class="form-control" ng-model="locationDisplayName" ng-focus="showLoc = true" placeholder="{{tovcLabel.balanceInquiry.placeholder.slct_store}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation(locationDisplayName);" />
+									<span class="fa" ng-click="showLoc = !showLoc" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;cursor: pointer;"></span>
+								</div>
+								<div id="stocklookup_heirarchy_values" tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" stock-lookup = "true" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"  mode="stock"></div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<!-- <label class="control-label">{{translation.stocklookup[0].search}}</label>
+							<br> -->
+							<div class="col-md-12 stk_sear"  style="padding:0;">
+							<ovcautocomplete    class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="looksearch"  id="slpsearch" ng-model="ship.result" attr-placeholder="{{ovcLabel.balanceInquiry.placeholder.search}}..." click-activation="false" data="transactions" on-type="dosrchproduct" ng-model-options ="{ updateOn: 'default', debounce: {'default': 300} }" ng-click="onclickproduct(ship)" ></ovcautocomplete>
+							</div>
+						</div>
+
+						<div class="col-md-1 stk_sear">
+							<a id="advanced" class='btn' ng-click="basiclookup = !basiclookup">{{basiclookup?ovcLabel.balanceInquiry.buttons.basic:ovcLabel.balanceInquiry.buttons.advanced}}</a>
+						</div>
+						 <div class="col-md-3 col-sm-5 col-xs-9 search_btns tanhs_btn">
+							 <button id="ovcSearchBtn" class="btn btn-primary" type="submit" ><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.balanceInquiry.buttons.search}}</button>
+							 <button type="reset" id="ovcResetBtn" class="btn btn-primary rst_btn ng-binding" ng-click="reset_balinquiry()"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.balanceInquiry.buttons.reset}}</button>
+						</div>
+					</form>								
+				</div>
+				<div class="row stk_sear" ng-show="basiclookup" id="advanced">
+				   	<div ng-repeat = "(key,value) in  dropdownDashCall.productProperty" class="inline_box">
+						<div  class= "col-md-12" multiselect-common="" items="" selected-items="" naming="{{value.propertyName}}" dynamic="'name'+value.propertyName" prodata="value" style="margin-bottom: 10px;" reset="value.reset">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					
+					<div ng-if="showError" class="col-md-12">
+						<span class="col-md-12 ng-binding" style="background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+	 						{{error_searchmsg}}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class= "col-md-12 table-responsive" resize ng-style=style()>
+			<table class="table" style="background:transparent;width: 100%;" ng-if="lookup.showtable">
+				<thead class="style_header stklook_par_head clearfix" ng-if="config.showskugroup">
+				     <tr class="table-tr2 clearfix" id="table_width">
+				      <th class="head_title" ng-repeat = "item in header track by $index" ><p class="item-wdth">{{item}}</p></th>
+				    </tr>
+				</thead>
+				<!-- <thead ng-if="!config.showskugroup" class="style_header stklook_par_head tablethead-th2 clearfix">
+					<tr class="table-tr2 clearfix" >
+				      <th ng-repeat = "item in header track by $index"><p class="item-wdth">{{item}}</p></th>
+					</tr>
+				</thead> -->
+				<tbody class="stklook_body tbodytable3" resize size="{{divheight}}" ng-style=style()>
+					<tr ng-repeat = "(index,data) in StyleArray" class="stklook_table table-tr3 clearfix">
+					 	<td colspan="8" class="stklook_table tdtable-th3 clearfix" ng-class="!config.showskugroup ? 'HideRowline':'no-class'">
+					 		<table class="table table-th3 clearfix" style="background:transparent;margin-bottom:0px !important;">
+					 			<thead id="stockheader" class="style_header style_table stklook_thead thead-th3 clearfix"  ng-if="config.showskugroup" ng-click= "getFunctions(data['Style'],index);setsessions(data['Style'],index,'style',pagination.currentPage)">
+						 			<tr class="thead-tr3 clearfix">
+						 				<th  class="thead-2" ng-repeat= "value in header track by $index"><p class="item2-wdth">{{(data[value])? data[value] : ''}}</p> </th>
+						 			</tr>
+					 			</thead>
+					 			<!-- <thead id="stockheader"class="style_header style_table stklook_thead thead-th3 clearfix" ng-if ="!config.showskugroup"  ng-click= "getFunctions(data['SKU'],index,'SKU');setsessions(data['SKU'],index,'SKU')">
+						 			<tr class="thead-tr3 clearfix">
+						 				<th class="thead-2" ng-repeat= "value in header track by $index"><p class="item2-wdth">{{(data[value]) ? data[value] : ''}}</p> </th>
+						 			</tr>
+					 			</thead> -->
+					 			<!-- <thead ng-if ="!config.showskugroup"></thead> -->
+					 			<tbody class="stklook_table"> 
+					 			<tr>
+					 			<td colspan="8" ng-show = "showStylesData[index]">
+					 			<div class= "col-md-12" style="padding: 0;" >
+					 					<!--Refine Button-->
+									<div ng-if="loadmat == true">
+											<img src="images/loading.gif" />
+										</div>
+										<div  class="row"   id="{{index}}"></div>
+										<!-- <div> -->
+												<!-- <style-matrix></style-matrix> -->
+										<!-- </div> -->
+
+										<!-- /.table-responsive -->
+										
+									</div></td></tr>
+					 			</tbody>
+					 		</table>
+					 	</td>
+					</tr>	
+				</tbody>
+			</table>
+
+			<div class="col-md-12 panel-body" ng-show="pagination.filteredItems == 0">
+				<div class="col-md-12">
+					<h4>{{ovcLabel.balanceInquiry.error.nostylesku}}</h4>
+				</div>
+			</div>
+			<div class="col-md-12" ng-if="(pagination.filteredItems > 1 && !SKUtrue)">    
+				<div class="panel-body fliter_i" style="width:{{tableWidth}}px;">
+					<uib-pagination total-items="pagination.filteredItems"  items-per-page ="pagination.entryLimit"  ng-model="pagination.currentPage"  max-size = "5"  boundary-links="true" ng-change="pageChanged(ship)" ></uib-pagination>
+					<div class="col-md-3 col-sm-3 col-xs-3 pglimit">
+						<div class="pg_limit page_size_drdn ">
+							<label>{{ovcLabel.balanceInquiry.list.pagesize}}:</label>
+							<select  convert-to-number	ng-model="pagination.entryLimit" class="pgsizes" ng-change="pageChanged(ship)" ng-disabled="pagination.filteredItems == 1">
+								<option>10</option>
+								<option>20</option>
+								<option>50</option>
+								<option>100</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+<script type="text/ng-template" id="invDetails.html" >
+	<div class="animate-show callout" id="{{tableid}}" style = "padding: 10px;width: auto;" >
+		<b class="notch"></b>
+		<div class="inside_t" style = "height: auto;max-height: 150px;overflow-y: auto">
+			<table class="table table-striped table-bordered">
+				<tr ng-repeat="(key,value) in inventoryData1">
+					<td style = "padding:5px;">{{key}} </td>
+					<td style = "padding:5px 10px;">{{ value }}</td>
+				</tr>
+			
+			</table>
+		</div>
+	</div>
+</script>
+<style>
+.callout {
+    margin: 10px 0;
+    /* easy rounded corners for modern browsers */
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.callout .notch {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ADDFFF;
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+     /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+}
+/*body,html{
+	overflow-y: hidden;
+}*/
+th.thead-1,.table-tr1,.tbodytable3,.table-tr3,.table-th3,.thead-th3,.thead-3,.thead-tr3 ,.table-tr2,.table-tr3{display: block;}
+.thead-3 {
+    float: left;
+    display: block;
+}
+.tdtable-th{
+    display: block;
+    float: left;
+    width: 100%;
+}
+table thead th.thead-2 {
+    border: 0px;
+    
+    max-width: 147px;
+    word-break: break-word;
+}
+table thead.style_header tr th:first-child {
+	width:100%;
+    max-width:147px;
+    text-align: left;
+}
+table thead.style_header tr th:last-child {
+	text-align: right;
+}
+#wrapper tr{
+	width:auto;
+}
+.item-wdth {
+    overflow: hidden;
+    text-align: center;
+    width: 130px;
+    word-wrap: break-word;
+}
+
+.item2-wdth {
+    overflow: hidden;
+    text-align: center;
+    width: 140px;
+    word-wrap: break-word;
+}
+.style_header tr th {
+    text-align: left;
+    width: auto;
+}
+.HideRowline{
+	border-top: none !important;
+}
+</style>
+		

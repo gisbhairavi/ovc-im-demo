@@ -1,0 +1,116 @@
+<div class="row header_blk ng-scope">
+	<div class="col-lg-12">
+		<h3 class="page-header">{{ovcLabel.transactionType.list.heading}}:
+			<div class="pull-right add_ven clearfix">
+			<a name="add_transactionType" title="{{ovcLabel.transactionType.buttons.addTransactionType}}" id="ovcAddBtn" ng-if="!moltrantyp" ui-sref="ovc.transaction-code" class="btn btn-primary">
+			<i class="fa fa-plus-circle"></i>{{ovcLabel.transactionType.buttons.addTransactionType}}
+			</a>
+			<a name="add_transactionType" title="{{ovcLabel.transactionType.buttons.addTransactionType}}" id="ovcAddBtn" ng-if="moltrantyp"  ng-disabled="moltrantyp"  href="" class="btn btn-primary">
+			<i class="fa fa-plus-circle"></i>{{ovcLabel.transactionType.buttons.addTransactionType}}
+			</a>
+			</div>
+		</h3>
+	
+	</div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- <trtypes.label for trtypes in transtypes track by trtypes.codes.> -->
+	<div class="row r_margin">
+	<div class="ven_tblk clearfix">
+
+	<!--<div class="col-md-12">
+	<div class="col-sm-3">
+	<label class="control-label">{{translation.transaction[0].transaction_code}}</label>
+	<select id="trcodes" class="form-control"  data-ng-options="trcod.code as trcod.label for trcod in transcodes" name="transactcodes" data-ng-model="trans.transactcodes"><option value="">--{{translation.transaction[0].sel_transcode}}--</option>
+	</select>
+</div>
+
+<div class="col-sm-3">
+	<label class="control-label">{{translation.transaction[0].type}}</label>
+	<select id="transtypes" class="form-control"  data-ng-options="trtype.code as trtype.label for trtype in transtype" name="transtypes" data-ng-model="trans.transtypes"><option value="">--{{translation.transaction[0].sel_type}}--</option>
+	</select>
+</div>
+
+<div class="col-sm-3">
+	<label class="control-label">{{translation.transaction[0].status}}</label>
+	<select id="trstatus" class="form-control"  data-ng-options="trstatus.code as trstatus.label for trstatus in transstatus" name="transtatus" data-ng-model="trans.transtatus"><option value="">--{{translation.transaction[0].sel_status}}--</option>
+	</select>
+	</div>
+</div>
+<br clear="all" />
+<hr class="ng-scope">-->
+
+    <div class="col-lg-12">
+        <div class="panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body search_box">
+			<div class="row">
+					<form>
+						<div class="col-md-6 col-sm-6">
+							<input type="text"  name="search" id="search" placeholder="{{ovcLabel.transactionType.buttons.search}}" ng-model = "search" class="form-control" />
+						</div>
+						
+						<div class="col-md-5 col-sm-6 search_btns">
+							<button id="ovcResetBtn" type="reset" class="btn btn-primary rst_btn" ng-click="trans_reset()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.transactionType.buttons.reset}}</button>
+							<button id="ovcSearchBtn" type="submit" class="btn btn-primary" ng-click="transtype_search()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.transactionType.buttons.search}}</button>
+						</div>
+					</form>
+					</div>
+				</div>
+                <!-- /.table-responsive -->
+               <div class="ven_tbody">
+				<div class="row">
+					<div class="col-md-12 table-responsive">
+						<table class="table table-striped table-bordered">
+							<thead>
+							<th>{{ovcLabel.transactionType.labels.transaction_id}}&nbsp;<a class="sort_align" ng-click="sort_by('tranTypeId');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.transactionType.labels.transaction_name}}&nbsp;<a class="sort_align" ng-click="sort_by('tranName');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.transactionType.labels.transaction_code}}&nbsp;<a class="sort_align" ng-click="sort_by('transcodedesc');"><i class="fa fa-sort"></i></a></th>
+							<th >{{ovcLabel.transactionType.labels.status}}&nbsp;<a class="sort_align" ng-click="sort_by('isActive');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.transactionType.labels.action}}</th>
+							</thead>
+							<tbody>
+							<tr ng-repeat="data in list | orderBy : predicate :reverse | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+								<td name="exist_transactionType" class="name_li"><a ui-sref="ovc.transaction-edit({transid:data._id})" class="">{{data.tranTypeId}}</a></td>
+								<td>{{data.tranName}}</td>
+								<td>{{data.transcodedesc}}</td>
+								<td><p ng-show="{{data.isActive}}">{{ovcLabel.transactionType.labels.active}}</p><p ng-hide="{{data.isActive}}">{{ovcLabel.transactionType.labels.inactive}}</p></td>
+								<td id="common_deleteBtn" class="action_f" style="width:150px;">
+								<a href="" ng-click="trans_delete(data._id,data.tranTypeId)"  ng-hide="moltrantyp"  class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+								<a href="" ng-click=""   ng-show="moltrantyp" ng-disabled="moltrantyp"  class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+								</td>
+							</tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<div id="ovcError" class="col-md-12" ng-if="filteredItems == 0">
+						<div class="col-md-12">
+							<h4>{{ovcLabel.transactionType.list.no_trans}}</h4>
+						</div>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems > 0">   
+					<div class="panel-body fliter_i">							
+						<!-- <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div> -->
+						<uib-pagination total-items="filteredItems"  items-per-page ="entryLimit"  ng-model="currentPage"  max-size = "5"  boundary-links="true" ng-change="" ></uib-pagination>	
+						
+						<div class="col-md-3 pglimit">
+						<div class="pg_limit page_size_drdn">
+								<label>{{ovcLabel.transactionType.list.pagesize}}:</label>
+								<select  convert-to-number  ng-model="entryLimit" class="pgsizes">
+									<option>10</option>
+									<option>20</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+							</div>
+						</div>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			</div>
+			</div>

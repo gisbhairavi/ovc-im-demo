@@ -1,0 +1,100 @@
+<div class="col-sm-12" style="background-color: white;">
+	<div class="col-sm-6 paddingL_0">
+		<autocomplete attr-input-class="form-control" attr-input-id="confirmationsearch"  id="slpsearch" ng-model="selectedOrderId" attr-placeholder="{{ovcLabel.updateOrder.searchOrderLabel}}" click-activation="false" data="purchaseOrders" ></autocomplete>
+	</div>
+
+	<div class="col-sm-6 paddingL_0">
+		<button id="ovcSearchBtn" class="btn btn-primary" ng-click="getSkus('confirmation', selectedOrderId);">{{ovcLabel.updateOrder.search}}</button>
+	</div>
+
+	<div class="col-md-12 paddingL_0 purchase_sech" ng-if="skus.length > 0">
+		<div class='col-md-3 paddingL_0'>
+		<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+          <input type='text' ng-model="confirmForm.dateTime" class="form-control" placeholder="Date & Time" calendar-date-time  ng-change="errorMessageCheck('dateTime')"/>
+          	<div class="erroralert">
+				<span ng-show ="error.datetime" class="alert alert-danger">{{errormsg.datetime}}</span>
+			</div>
+        </div>
+		<div class='col-md-3 padding_asterisk'>
+        	<select class="form-control" id="confirmOrderType"  data-ng-options="orderType.code as orderType.label for orderType in confirmForm.orderTypeData" data-ng-model="confirmForm.orderType">
+			<option value="" >-- Select Order Type --</option>
+			</select>
+        </div>
+		<div class='col-md-3 padding_asterisk'>
+            <select id="AFS" ng-options="afs.AfsId as afs.AfsName for afs in confirmForm.AFSData" class="form-control"  ng-model="confirmForm.AFS">
+            	<option value="">--AFS--</option>
+            </select>
+        </div>
+    </div>
+	<div class="col-md-12 paddingL_0" ng-if="skus.length > 0">
+		<div class='col-md-3 paddingL_0'>
+			<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+        	<input type="text" id="erpNumber" ng-model='confirmForm.erpNumber'   class="form-control" placeholder="ERP Order Number" ng-change = "errorMessageCheck('erpNumber')"/>
+        	<div class="erroralert">
+				<span ng-show ="error.erpNumber" class="alert alert-danger">Enter ERP Number</span>
+			</div>
+        </div>
+		<div class='col-md-3 padding_asterisk'>
+        	<select class="form-control shipstoreval" id="shipToLocation" ng-model="confirmForm.shipToLocation" ng-change="shiptoStoreChange(confirmForm.shipToLocation,'CONFIRM')">
+             <option value="">--Ship To Location--</option>
+             <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">{{ item.indent }} {{ item.displayName }}</option>
+            </select>
+        </div>
+		<div class='col-md-3 padding_asterisk'>
+        	<input type="text" id="ERPNotes" ng-model='confirmForm.ERPNotes'   class="form-control" placeholder="ERP Notes"/>
+        </div>
+	</div>
+
+	<div class="col-sm-12 result_content">
+		<div class="table-responsive" ng-show="skusResults">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>{{ovcLabel.updateOrder.skus}}</th>
+						<th>{{ovcLabel.updateOrder.description}}</th>
+						<th>{{ovcLabel.updateOrder.qty}}</th>
+						<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.updateOrder.price}}</th>
+						<th>{{ovcLabel.updateOrder.confirmed_price}}</th>
+						<th>{{ovcLabel.updateOrder.confirmed}}</th>
+						<th>{{ovcLabel.updateOrder.unconfirmed}}</th>
+						<th>{{ovcLabel.updateOrder.rejected}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in skus">
+						<td>{{item.SKU}}</td>
+						<td>{{item.productName}}</td>
+						<td>{{item.qty}}</td>
+						<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{item.productCost | number : 2}}</td>
+						<td>
+							<input type="number" id="{{item.SKU}}ConfirmedPrice" ng-model="orderSkus[item.SKU].confirmed.skuCostConfirm"/>
+						</td>
+						<td>
+							<input type="number" min="0" id="{{item.SKU}}Confirmed" ng-model="orderSkus[item.SKU].confirmed.qty" ng-change="changeQty(item.SKU, 'confirmed');"/>
+						</td>
+						<td>
+							<input type="number" min="0" id="{{item.SKU}}Unconfirmed" ng-model="orderSkus[item.SKU].unconfirmed.qty" ng-change="changeQty(item.SKU, 'unconfirmed');"/>
+						</td>
+						<td>
+							<input type="number" min="0" id="{{item.SKU}}Rejected" ng-model="orderSkus[item.SKU].rejected.qty" ng-change="changeQty(item.SKU, 'rejected');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>	
+		<div class="col-md-6" ng-if="confirmForm.JsonForm">
+			<h3>JSON Message</h3>
+			<textarea readonly rows="20" cols="80">{{ confirmForm.JsonForm | json:4}}</textarea>
+		</div>	
+			<button id="ovcUpdate" ng-if="skus.length > 0" class="btn btn-primary pull-right" ng-click="saveConfirmJson();">{{ovcLabel.updateOrder.update}}
+			</button>
+	</div>
+
+		<div class="alert alert-warning" ng-show="noResults">
+			{{ovcLabel.updateOrder.no_results}}
+		</div>
+</div>
+
+
+<!-- FOR DATE TIME PICKER REFERENCE
+http://eonasdan.github.io/bootstrap-datetimepicker/#enableddisabled-dates -->

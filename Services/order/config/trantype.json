@@ -1,0 +1,7 @@
+ {
+     "regularReturn": "POS_RETURN",
+     "regularSale": "POS_SALE",
+     "layawaySale": "ALLOCATED",
+     "layawayFinalize": "ALLOCATED_SALE",
+     "layawayReturn": "LAY_POS_RETURN"
+ }

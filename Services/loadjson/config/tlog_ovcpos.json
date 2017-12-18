@@ -1,0 +1,2865 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Transaction Schema for MPOS Release Version 5.19.0",
+	"properties": {
+		"changelog": {
+			"type": [
+				"string"
+			],
+			"description": "Added recountAmountArray to cashMgmtItem under tranItem to capture tillConfirmation recounts, added new cardPayment fields in the payload Definition. Added refTranStoreId and refTranTillId at the item level, Added quoteBarcode field at tran level"
+		},
+		"version": {
+			"type": [
+				"string"
+			],
+			"description": "Version number of the transaction Object for the ability to support versioning changes"
+		},
+		"loyaltyId": {
+			"type": [
+				"string"
+			],
+			"description": "ID number of the loyalty customer; for hybris, the loyalty email will be used if an id number is not provided"
+		},
+		"training": {
+			"type": "integer",
+			"description": "0=not done in ‘training mode’, 1= done in ‘training mode'",
+			"enum": [
+				0,
+				1
+			]
+		},
+		"deviceId": {
+			"type": "string",
+			"description": "String that identifies the device where the transaction was done"
+		},
+		"receiptJSON": {
+			"type": "object",
+			"description": "Receipt JSON",
+			"$ref": "#/definitions/receiptJSON"
+		},
+		"balance": {
+			"type": "string",
+			"description": "Balance Total of the transaction"
+		},
+		"total": {
+			"type": "string",
+			"description": "Sum of the merchTotal and tax"
+		},
+		"discountTotal": {
+			"type": "string",
+			"description": "Discount Total of the transaction"
+		},
+		"priceMatchTotal": {
+			"type": "string",
+			"description": "Price match Total of the transaction"
+		},
+		"tax": {
+			"type": "array",
+			"description": "Sub total of the tax value (sales tax method), grouped by tax rate id",
+			"items": {
+				"$ref": "#/definitions/taxSummary"
+			}
+		},
+		"netTax": {
+			"type": "array",
+			"description": "Net Tax Array",
+			"items": {
+				"$ref": "#/definitions/taxSummary"
+			}
+		},
+		"taxExempt": {
+			"type": "array",
+			"description": "Tax Exempt Array",
+			"items": {
+				"$ref": "#/definitions/taxSummary"
+			}
+		},
+		"totalVAT": {
+			"type": "array",
+			"description": "Total VAT Array",
+			"items": {
+				"$ref": "#/definitions/taxSummary"
+			}
+		},
+		"totalAddOnVAT": {
+			"type": "array",
+			"description": "Total Addon VAT Array",
+			"items": {
+				"$ref": "#/definitions/taxSummary"
+			}
+		},
+		"totalTaxValue": {
+			"type": "string",
+			"description": "Sum of the tax value"
+		},
+		"customerEmail": {
+			"type": [
+				"string"
+			],
+			"description": "Customer Email"
+		},
+		"merchTotal": {
+			"type": "string",
+			"description": "Sub total of the merchandise value"
+		},
+		"tillId": {
+			"type": "string",
+			"description": "Id number of the till associated with the device"
+		},
+		"currencyId": {
+			"type": "string",
+			"description": "Currency of the transaction"
+		},
+		"barcode": {
+			"type": "string",
+			"description": "The barcode number that appears on the receipt"
+		},
+		"quoteBarcode": {
+ 			"type": "string",
+ 			"description": "The custom barcode number that appears on a quote receipt"
+ 		},
+		"tranItems": {
+			"type": "array",
+			"description": "Tran Item Array",
+			"items": {
+				"$ref": "#/definitions/tranItem"
+			}
+		},
+		"totalItems": {
+			"type": "integer",
+			"description": "Number of items in the transaction"
+		},
+		"totalRefundItems": {
+			"type": "integer",
+			"description": "Number of refund items in the transaction"
+		},
+		"tranNo": {
+			"type": "integer",
+			"description": "Transaction number in the pos session",
+			"minimum": 0,
+			"maxLength": 11
+		},
+		"refTranId": {
+			"type": [
+				"string",
+				"null"
+			],
+			"description": "Transaction Id of the referring transaction",
+			"maxLength": 128
+		},
+		"isTranVoid": {
+			"type": "boolean",
+			"description": "Is this a transaction void"
+		},
+		"retailerId": {
+			"type": "string",
+			"description": "ID or name of the retailer where this transaction originated",
+			"maxLength": 64
+		},
+		"storeId": {
+			"type": "string",
+			"description": "Store location of the transaction",
+			"maxLength": 64
+		},
+		"storeName": {
+			"type": "string",
+			"description": "Store location name of the transaction",
+			"maxLength": 256
+		},
+		"storeTimeZone": {
+			"type": "string",
+			"description": "Store Location Time Zone",
+			"maxLength": 64
+		},
+		"userId": {
+			"type": "string",
+			"description": "Username of the user that completed this action (cashier)",
+			"maxLength": 64
+		},
+		"layawayObj": {
+			"type": "object",
+			"description": "Layaway Object",
+			"$ref": "#/definitions/layawayObj"
+		},
+		"loyaltyUser": {
+			"type": "object",
+			"description": "Loyalty User Object",
+			"$ref": "#/definitions/loyaltyUser"
+		},
+		"tranTypeId": {
+			"type": "string",
+			"description": "Transaction Type",
+			"enum": [
+				"regularSale",
+				"layawaySale",
+				"pendingSale",
+				"partialApprovalSale",
+				"layawayPayment",
+				"layawayRefund",
+				"layawayFinalize",
+				"currentTransVoid",
+				"login",
+				"logoff",
+				"postTranVoid",
+				"regularReturn",
+				"suspended",
+				"noSale",
+				"updateStoreCredit",
+				"payIn",
+				"payOut",
+				"tillSpotCheck",
+				"storeSpotCheck",
+				"float",
+				"deposit",
+				"quote",
+				"deletedQuote",
+				"completedQuote",
+				"changeSalesPerson",
+				"endOfDay",
+				"safeSpotCheck",
+				"expiredQuote",
+				"startOfDay",
+				"tillCount",
+				"tillCountRecount",
+				"openCashSession",
+				"closeCashSession",
+				"scheduleAppointment",
+				"specialOrder",
+				"specialOrderPayment",
+				"pickUp",
+				"addCurrency",
+				"endOfDaySafe",
+				"endOfDayTill",
+				"invalidDeposit",
+				"invalidFloat",
+				"cancelledCashManagementOperation",
+				"tillConfirmation",
+				"tillConfirmationRecount",
+				"tracerBag",
+				"cancelledTracerBag"
+			]
+		},
+		"promoTotal": {
+			"type": "string",
+			"description": "Value of promotional savings applied to the transaction"
+		},
+		"tranDate": {
+			"type": "string",
+			"description": "Date of the transaction in ISO8601 format:[yyyy-MM-dd'T'HH:mm:ss.SSSZZ] example:[2016-01-11T22:46:56.402Z]"
+		},
+		"id": {
+			"type": "string",
+			"description": "String that identifies the transaction in the database; not the same as the transaction ID that prints as a barcode on receipts",
+			"maxLength": 128
+		},
+		"alertObjects": {
+			"type": "array",
+			"description": "Alert Object",
+			"items": {
+				"type": "object"
+			},
+			"uniqueItems": true
+		},
+		"surveyDetails": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Open Typed Survey Details Object which is usually a object with Question and answers captured."
+		},
+		"extIntegrationId": {
+			"type": "string",
+			"description": "External order integration id"
+		},
+		"unusedCoupons": {
+			"type": "array",
+			"description": "Unused Coupons",
+			"items": {
+				"type": "string"
+			},
+			"uniqueItems": true
+		},
+		"usedCoupons": {
+			"type": "array",
+			"description": "Used Coupons",
+			"items": {
+				"type": "string",
+				"uniqueItems": true
+			}
+		}
+	},
+	"definitions": {
+		"promoSaving": {
+			"type": "object",
+			"additionalProperties": false,
+			"description": "Promo saving",
+			"properties": {
+				"tranItemIdx": {
+					"type": "integer",
+					"description": "Id of Tran Item that has the savings"
+				},
+				"amount": {
+					"type": "string",
+					"description": "Savings amount"
+				}
+			},
+			"required": [
+				"tranItemIdx",
+				"amount"
+			]
+		},
+		"taxSummary": {
+			"type": "object",
+			"title": "Tax Summary",
+			"description": "Tax Summary",
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": [
+						"integer",
+						"string"
+					],
+					"description": "String that identifies the particular Tax Record"
+				},
+				"displayCode": {
+					"type": "string",
+					"description": "Display code for the Tax Record"
+				},
+				"total": {
+					"type": "string",
+					"description": "Total Tax value"
+				},
+				"indicator": {
+					"type": "string",
+					"description": "Tax Indicator String"
+				}
+			}
+		},
+		"priceOverrideObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"title": "Price Override",
+			"description": "Price Override",
+			"additionalProperties": false,
+			"properties": {
+				"tranItemIdx": {
+					"type": [
+						"integer"
+					],
+					"description": "Identifies tranItemIdx price override tran item is located"
+				},
+				"unitPriceChangeAmount": {
+					"type": "string",
+					"description": "The amount price override has changed the price"
+				},
+				"used": {
+					"type": "boolean",
+					"description": "Shows if price override is used or not"
+				},
+				"previousPriceAmount": {
+					"type": "string",
+					"description": "The amount of the product before the price ovveride was applied"
+				}
+			}
+		},
+		"layawayObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"title": "Layaway Object",
+			"additionalProperties": false,
+			"description": "Details of Layaway object attached to the Transaction",
+			"properties": {
+				"id": {
+					"type": [
+						"integer",
+						"string"
+					],
+					"description": "String that identifies the particular layaway order in the layaway_tbl"
+				},
+				"balance": {
+					"type": "string",
+					"description": "Amount currently owed"
+				},
+				"deposit": {
+					"type": "string",
+					"description": "Initial deposit paid towards layaway"
+				},
+				"email": {
+					"type": "string",
+					"description": "Email"
+				},
+				"loyaltyId": {
+					"type": "string",
+					"description": "ID number of the loyalty customer; for hybris, the loyalty email will be used if an id number is not provided"
+				},
+				"firstName": {
+					"type": "string",
+					"description": "First Name"
+				},
+				"lastName": {
+					"type": "string",
+					"description": "Last Name"
+				},
+				"loyaltyEmail": {
+					"type": "string",
+					"description": "Loyalty Email"
+				},
+				"homePhone": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Home Phone"
+				},
+				"mobilePhone": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Mobile Phone"
+				},
+				"postalCode": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Postal code"
+				},
+				"town": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Town"
+				},
+				"taxExemptInfo": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Tax exempt Info including tax Id stored in loyalty record (May contain country,certificateNum,taxExemptStartDate,taxExemptEndDate)"
+				},
+				"originatingLocationId": {
+					"type": "string",
+					"description": "ID of the store location where layaway order was created"
+				},
+				"maximumExpirationDaysAllowedForExpiration": {
+					"type": "integer",
+					"description": "Days until the layaway expires per configured value"
+				},
+				"paymentRequiredEveryXDays": {
+					"type": "integer",
+					"description": "Number of days each payment must fall within until order becomes elible to be closed"
+				},
+				"layawayAgeInDays": {
+					"type": "integer",
+					"description": "Age in days of the layaway order"
+				},
+				"cancellationReason": {
+					"type": "string",
+					"description": "Reason for cancelling/closing the layaway prematurely if any"
+				},
+				"mailCheck": {
+					"type": "integer",
+					"description": "If the check needs to be mailed or not when the layaway is closed. 0 - no and 1 -yes.",
+					"enum": [
+						0,
+						1
+					]
+				},
+				"doNothing": {
+					"type": "integer",
+					"description": "No Action Required when the layaway is closed.  0 - no and 1 -yes.",
+					"enum": [
+						0,
+						1
+					]
+				}
+			}
+		},
+		"loyaltyUser": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"title": "Loyalty User",
+			"description": "Details of Loyalty User attached to the Transaction",
+			"properties": {
+				"loyaltyId": {
+					"type": "string",
+					"description": "ID number of the loyalty customer; for hybris, the loyalty email will be used if an id number is not provided"
+				},
+				"loyaltyFName": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Loyalty First name"
+				},
+				"taxExemptInfo": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Tax exempt Info including tax Id stored in loyalty record (May contain country,certificateNum,taxExemptStartDate,taxExemptEndDate)"
+				},
+				"loyaltyEmail": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Loyalty Email"
+				},
+				"loyaltyLName": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Loyality Last Name"
+				},
+				"numberOfLayaways": {
+					"type": "number",
+					"description": "No of Layaways"
+				},
+				"storeCreditBalance": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Store Credit Balance"
+				},
+				"alertType": {
+					"type": "integer",
+					"description": "Alert Type"
+				},
+				"optIn": {
+					"type": "boolean",
+					"description": "optIn"
+				},
+				"emailOptIn": {
+					"type": "boolean",
+					"description": "Email Optin"
+				},
+				"mobilePhoneOptIn": {
+					"type": "boolean",
+					"description": "Mobile Phone Optin"
+				},
+				"phoneOptIn": {
+					"type": "boolean",
+					"description": "Phone Optin"
+				},
+				"loyaltyAddress": {
+					"type": [
+						"object",
+						"null"
+					],
+					"$ref": "#/definitions/loyaltyAddressObj"
+				}
+			},
+			"required": [
+				"loyaltyId",
+				"loyaltyFName",
+				"loyaltyLName"
+			]
+		},
+		"receiptJSON": {
+			"type": "object",
+			"description": "JSON Object representation of the Receipt Object used for printing receipts"
+		},
+		"loyaltyAddressObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Current customer address",
+			"additionalProperties": false,
+			"properties": {
+				"address": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Address line"
+				},
+				"city": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "City"
+				},
+				"zip": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Zipcode"
+				},
+				"phone": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Phone number"
+				},
+				"state": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "State"
+				},
+				"country": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Country"
+				},
+				"mobilePhone": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Mobile Phone"
+				}
+			}
+		},
+		"tranItem": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"discValue": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Not used currently, future use"
+				},
+				"itemType": {
+					"type": "number",
+					"description": "Identifies the type of line item in the transaction : ITEM_TY_ADD_PRODUCT = 1, ITEM_TY_VOID_ITEM = 2, ITEM_TY_VOID_TXN = 3, ITEM_TY_DISCOUNT_ITEM = 4, ITEM_TY_DISCOUNT_TXN = 5, ITEM_TY_REFUND_PRODUCT = 6, ITEM_TY_REFUND_TXN = 7, ITEM_TY_PRICE_CHANGE = 8, ITEM_TY_TAX_EXEMPT = 9, ITEM_TY_PROMO = 10, ITEM_TY_CUSTOMER_TYPE = 11, ITEM_TY_POST_VOID = 12, ITEM_TY_ADD_SITE_PICKUP_PRODUCT = 13, ITEM_TY_ADD_STORE_PICKUP_PRODUCT = 14, ITEM_TY_SUSPEND_TXN = 15, ITEM_TY_RESUME_TXN = 16, ITEM_TY_APPOINTMENT = 17, ITEM_TY_LOYALTY_ID = 18, ITEM_TY_CHANGE_QTY= 19, ITEM_TY_PRICE_MATCH = 20, ITEM_TY_CHANGE_TENDER = 22, ITEM_TY_COLLEAGUE_DISCOUNT_TXN = 25, ITEM_TY_VOID_COLLEAGUE_DISCOUNT_TXN = 26, ITEM_TY_SIGNIN = 30, ITEM_TY_SIGNOFF = 31, ITEM_TY_GIFTCERT_TENDER = 32, ITEM_TY_TRAINING_MODE= 35, ITEM_TY_PHYSICAL_TENDER = 36, ITEM_TY_EINTEGRATED_TENDER = 37, ITEM_TY_EEXTERNAL_TENDER = 38, ITEM_TY_EINTERNAL_TENDER = 39, ITEM_TY_VOID_DISCOUNT_TXN= 46, ITEM_TY_VOID_DISCOUNT_ITEM= 47, ITEM_TY_CLOCK_IN_TXN= 48, ITEM_TY_CLOCK_OUT_TXN= 49, ITEM_TY_NO_SALE=50, ITEM_TY_STORECREDIT_TENDER=51, ITEM_TY_STORECREDIT_SALE=55, ITEM_TY_RESUME_QUOTE = 56, ITEM_TY_VOID_LOYALTY_ID= 57, ITEM_TY_DELETE_QUOTE= 58, ITEM_TY_MGR_OVERRIDE= 59, ITEM_TY_DELIVERY_OPTION= 60, ITEM_TY_DELIVERY_VOID_ITEM= 73, ITEM_TY_STORE_COLLECT_OPTION= 74, ITEM_TY_STORE_COLLECT_VOID_ITEM= 75, ITEM_TY_VOID_OVERRIDE_ITEM=77, ITEM_TY_VOID_PRICE_MATCH_ITEM=78, ITEM_TY_COUPON = 80, ITEM_TY_SPECIAL_PAYMENT_TENDER = 81, ITEM_TY_CREATE_QUOTE = 82, ITEM_TY_CM_TILL_CONFIRMATION = 91, ITEM_TY_CM_TILL_COUNT = 92, ITEM_TY_CM_PAY_IN = 93, ITEM_TY_CM_PAY_OUT = 94, ITEM_TY_CM_PICKUP = 95, ITEM_TY_CM_ADD_CURRENCY = 97, ITEM_TY_CM_FLOAT = 98, ITEM_TY_CM_END_OF_DAY_SAFE = 99, ITEM_TY_CM_END_OF_DAY_TILL = 100, ITEM_TY_CM_TILL_SPOT_CHECK = 101, ITEM_TY_CM_STORE_SPOT_CHECK = 102, ITEM_TY_CM_SAFE_SPOT_CHECK = 103, ITEM_TY_CM_DEPOSIT = 104, ITEM_TY_LAYAWAY_SUSPEND_TXN = 105, ITEM_TY_CM_INVALID_DEPOSIT = 106, ITEM_TY_CM_INVALID_FLOAT = 107, ITEM_TY_SURVEY_DETAILS = 108, ITEM_TY_CM_TILL_COUNT_CANCEL = 109, ITEM_TY_CM_PAY_IN_CANCEL = 110, ITEM_TY_CM_PAY_OUT_CANCEL = 111, ITEM_TY_CM_PICKUP_CANCEL = 112, ITEM_TY_CM_ADD_CURRENCY_CANCEL = 113, ITEM_TY_CM_FLOAT_CANCEL = 114, ITEM_TY_CM_END_OF_DAY_SAFE_CANCEL = 115, ITEM_TY_CM_END_OF_DAY_TILL_CANCEL = 116, ITEM_TY_CM_TILL_SPOT_CHECK_CANCEL = 117, ITEM_TY_CM_STORE_SPOT_CHECK_CANCEL = 118, ITEM_TY_CM_SAFE_SPOT_CHECK_CANCEL = 119, ITEM_TY_LAYAWAY_SALE= 121, ITEM_TY_LAYAWAY_PAY= 122, ITEM_TY_LAYAWAY_FINALIZE= 124, ITEM_TY_LAYAWAY_RESUME= 125, ITEM_TY_LAYAWAY_REFUND = 126, ITEM_TY_SCHEDULE_APPOINTMENT= 130, ITEM_TY_SPECIALORDER_ITEM= 132, ITEM_TY_SPECIALORDER_SUSPEND_ITEM= 133, ITEM_TY_SPECIALORDER_RESUME_ITEM= 134, ITEM_TY_CM_DEPOSIT_CANCEL = 140, ITEM_TY_CHALLENGE_SCHEME = 190, ITEM_TY_SALES_PERSON= 191, ITEM_TY_PENNY_ROUNDING_TENDER = 9998, ITEM_TY_UNKNOWN_TENDER = 9999, ITEM_TY_CM_TRACER_BAG_CONFIRM = 141, ITEM_TY_CM_TRACER_BAG_CANCEL = 142",
+					"enum": [
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						22,
+						25,
+						26,
+						30,
+						31,
+						32,
+						35,
+						36,
+						37,
+						38,
+						39,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						55,
+						56,
+						57,
+						58,
+						59,
+						60,
+						70,
+						71,
+						72,
+						73,
+						74,
+						75,
+						77,
+						78,
+						80,
+						81,
+						82,
+						83,
+						84,
+						91,
+						92,
+						93,
+						94,
+						95,
+						97,
+						98,
+						99,
+						100,
+						101,
+						102,
+						103,
+						104,
+						105,
+						106,
+						107,
+						108,
+						109,
+						110,
+						111,
+						112,
+						113,
+						114,
+						115,
+						116,
+						117,
+						118,
+						119,
+						121,
+						122,
+						124,
+						125,
+						126,
+						130,
+						132,
+						133,
+						134,
+						140,
+						141,
+						142,
+						190,
+						191,
+						9998,
+						9999
+					]
+				},
+				"alertId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Associated Appointment Id/Pickup Id or Any alert that will be part of sale in future"
+				},
+				"isHoldInventory": {
+					"type": "number",
+					"description": "if Hold Inventory is selected for this item. 0 - no and 1 -yes.",
+					"enum": [
+						0,
+						1
+					]
+				},
+				"alertObject": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Associated Appointment /Pickup object or Any alert object that will be part of sale in future"
+				},
+				"productId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Product Id of the Product"
+				},
+				"sku": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "SKU of the Product"
+				},
+				"promoDescription": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Promo description of the promo applied"
+				},
+				"taxExempt": {
+					"type": "boolean",
+					"description": "if the Transaction item is tax-exempt or not"
+				},
+				"specialOrderItem": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Special order object contains the purchase order info",
+					"$ref": "#/definitions/specialOrderItem"
+				},
+				"paidFlag": {
+					"type": "boolean",
+					"description": "if an item added to transaction from pickup/appointment is paid or not"
+				},
+				"itemIdx": {
+					"type": "integer",
+					"description": "Line item identifier",
+					"minimum": 0
+				},
+				"itemDate": {
+					"type": "string",
+					"description": "Timestamp when the item was added to the basket, in ISO8601 format:[yyyy-MM-dd'T'HH:mm:ss.SSSZZ] example:[2016-01-11T22:46:56.402Z]"
+				},
+				"tenderId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Indicator of the tender used in the transaction : 20-cash,22-change,23-debit,,24-Personal check,66-Business Check, ,32-giftCert,3rdPartyCheck-3rdPartyCheck,51-storeCredit,666-mailCheck,70-specialPayment,9999-Unknown,diners-Diners Club,giftCard-giftCard,ismp-iSMP,jcb-JCB Card,manualCardEntry-manualCardEntry,moneyOrder-moneyOrder,travelers-travelersCheck,101-ChinaUnion,102-Alipay",
+					"enum": [
+						null,
+						"20",
+						"22",
+						"23",
+						"24",
+						"32",
+						"66",
+						"3rdPartyCheck",
+						"51",
+						"666",
+						"81",
+						"9999",
+						"diners",
+						"giftCard",
+						"ismp",
+						"jcb",
+						"manualCardEntry",
+						"callforAuthorization",
+						"moneyOrder",
+						"travelers",
+						"offlineCardPayment",
+						"101",
+						"102"
+					]
+				},
+				"newPrice": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"description": "The unit price before promotions"
+				},
+				"rrpPrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "RRP Price"
+				},
+				"totalPriceChange": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total Price Change value"
+				},
+				"refTranId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "ID of the original transaction; for refunds"
+				},
+				"refTranStoreId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Store ID of the original transaction; for refunds"
+				},
+				"refTranTillId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Till ID of the original transaction; for refunds"
+				},
+				"refTranItemIdx": {
+					"type": "integer",
+					"description": "The itemIdx of the orig tran's tranitem referenced due to an action on that item of the orig tran (return), otherwise refTranItemIdx=-1 because it is referencing itself"
+				},
+				"tenderDetails": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Tender Details",
+					"$ref": "#/definitions/tenderDetails"
+				},
+				"refItemIdx": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"description": "The itemIdx referenced due to a change to that line item (item discount, item void, etc), otherwise refItemIdx=-1 because it is referencing itself"
+				},
+				"authorisingManager": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "User id of Authorized user"
+				},
+				"voidFlag": {
+					"type": "boolean",
+					"description": "if item is void it will be true else false"
+				},
+				"salesPersonId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Sales Person associasted with the item"
+				},
+				"salesPersonName": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Sales Person associasted with the item"
+				},
+				"backGroundColor": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Background color used for the sales person icon"
+				},
+				"refTranBarcode": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "reference barcode of the return item"
+				},
+				"discType": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "1=amount, 2=percent, 3=either, 4=fixedPrice",
+					"enum": [
+						"1",
+						"2",
+						"3",
+						"4",
+						null
+					]
+				},
+				"loyaltyUser": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Loyalty User",
+					"$ref": "#/definitions/loyaltyUser"
+				},
+				"reasonCodeDesc": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Reason Code provided by user"
+				},
+				"reasonCodeId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Reason Code provided by user"
+				},
+				"isCertificateAttached": {
+					"type": "number",
+					"description": "Is Certificate attached to this TranItem - 1 or 0"
+				},
+				"totalValue": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "The totalValue is the sum of the values in the calcAmount array"
+				},
+				"amount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "The product price before discounts; or if tranItem is the tender line item, then amount is the transaction balance owed"
+				},
+				"newStoreCreditBalance": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "New Store credit balance for the customer after adding manual store credit"
+				},
+				"originalStoreCreditBalance": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Original Store credit balance for the customer before adding manual store credit"
+				},
+				"product": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Product",
+					"$ref": "#/definitions/product"
+				},
+				"promoSavings": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": "array",
+						"items": {
+							"type": [
+								"object",
+								"null"
+							],
+							"$ref": "#/definitions/promoSaving"
+						}
+					},
+					"description": "Promotional savings for this product weighted based on the product price as a proportion of the total, each item can have more than 1 promotion so it needs to be an array"
+				},
+				"basketSavings": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": "array",
+						"items": {
+							"type": [
+								"object",
+								"null"
+							],
+							"$ref": "#/definitions/promoSaving"
+						}
+					},
+					"description": "Basket level savings for this product weighted based on the product price as a proportion of the total, we may want to allow multiple basketSavings so this is an array"
+				},
+				"giftCert": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/giftCert"
+					},
+					"description": "Gift Certificate"
+				},
+				"calcAmount": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"description": "The final value of the transaction item"
+				},
+				"qty": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"description": "Quantity of the product"
+				},
+				"stan": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Not used currently, future use"
+				},
+				"salesPerson": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Id of the salesperson selected for the line item"
+				},
+				"isScanned": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"description": "0=manually entered, 1=scanned"
+				},
+				"isCharity": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"description": "0=manually entered, 1=charity product"
+				},
+				"promotion": {
+					"type": [
+						"object",
+						"null"
+					],
+					"$ref": "#/definitions/promotion",
+					"description": "Promotion fields"
+				},
+				"productsData": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"object",
+							"null"
+						]
+					},
+					"description": "Product details involved in delivery option"
+				},
+				"extIntegration": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "External integration fields",
+					"$ref": "#/definitions/tranItemIntegration"
+				},
+				"cashMgmt": {
+					"type": [
+						"object",
+						"null"
+					],
+					"$ref": "#/definitions/cashMgmtItem",
+					"description": "Cash management Items"
+				},
+				"appointmentObj": {
+					"type": [
+						"object",
+						"null"
+					],
+					"$ref": "#/definitions/appointmentObj",
+					"description": "Appointment Object"
+				},
+				"reservationId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Reservation Id that is generated based on special conditions - a) if transaction is Layaway (Sale or Payment) or Suspended and has non-zero balance and if it is added to CSL.b) Appointment or Pickup Items added to the receipt from the Alerts.c) Suspended and Hold Inventory selected."
+				},
+				"discounts": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"object",
+							"null"
+						]
+					},
+					"description": "discount Object Array"
+				},
+				"hasStoreCollectOrDelivery": {
+					"type": "boolean",
+					"description": "true if it has store collect or delivery, else false"
+				},
+				"history": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"object",
+							"null"
+						]
+					},
+					"description": "discount Object Array"
+				},
+				"priceMatches": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"object",
+							"array",
+							"null"
+						]
+					},
+					"description": "Price Match Array"
+				},
+				"priceOverrides": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"array",
+							"null"
+						],
+						"items": {
+							"type": "object",
+							"$ref": "#/definitions/priceOverrideObj"
+						}
+					},
+					"description": "Price Overrides Array"
+				},
+				"quoteId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Quote Id for a Create Quote Item"
+				},
+				"type": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Discount Item Type - ITEM_DISCOUNT for item discount, PRICE_MATCH for price match, etc.,"
+				},
+				"selectedPricePoint": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Discount Item Price Point RRp/RSP"
+				},
+				"surveyDetails": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Open Typed Survey Details Object which is usually a object with Question and answers captured."
+				},
+				"layawayJSON": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Layaway Object which has the details of Layaway",
+					"$ref": "#/definitions/layawayObj"
+				},
+				"preBulkUnit": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "pre BBAS unit price"
+				},
+				"preBulkAmount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "pre BBAS price amount"
+				}
+			},
+			"required": [
+				"itemType",
+				"itemIdx"
+			]
+		},
+		"cashMgmtItem": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Cash Management Item JSON Object",
+			"additionalProperties": false,
+			"properties": {
+				"payAmount": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Pay In/Pay Out and Add Currency amounts by tender types",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalObj"
+					}
+				},
+				"trackTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Track Tenders by tender types",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalObj"
+					}
+				},
+				"cardTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Card Tenders by card types",
+					"items": {
+						"type": "object"
+					}
+				},
+				"tillCalcTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Till Calc Tenders by tender types",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalObj"
+					}
+				},
+				"safeCalcTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Safe Calc Tenders by tender types",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalObj"
+					}
+				},
+				"countTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Count Tenders JSON Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalDiscrepancyObj"
+					}
+				},
+				"comment": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Pay In/Pay Out comment"
+				},
+				"reasonCodeId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Reason code Id"
+				},
+				"reasonCodeDesc": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Reason code Description"
+				},
+				"discrepancyAmount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Discrepancy amount for Till Count"
+				},
+				"totalCountAndTrack": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total counted and tracked tenders amount"
+				},
+				"floatAmount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Float amount for Till Count"
+				},
+				"countedAmount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Counted Amount for Till Confirmation"
+				},
+				"expectedAmount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Expected Amount for Till Confirmation"
+				},
+				"tendersMoved": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tenders moved for Till Count"
+				},
+				"tracerBag": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tracer Bag number"
+				},
+				"tillData": {
+					"type": [
+						"array",
+						"null"
+					],
+					"description": "List of Till data for Store Spot Check",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/tillDataObj"
+					}
+				},
+				"safeTotal": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total Safe Amount"
+				},
+				"customData": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Custom data"
+				},
+				"history": {
+					"type": "array",
+					"description": "List of History Tran Items which is used for Suspend/Resume scenarios",
+					"items": {
+						"type": "object"
+					}
+				},
+				"recountAmountArray": {
+					"type": "array",
+					"description": "List Of Recount Amounts if applicable (for Till confirmation it will have the list of amounts retried)",
+					"items": {
+						"type": "string"
+					}
+				},
+				"status": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Status"
+				},
+				"tracerBagConfirmedDate": {
+					"type": "string",
+					"description": "Date of the transaction in ISO8601 format:[yyyy-MM-dd'T'HH:mm:ss.SSSZZ] example:[2016-01-11T22:46:56.402Z]"
+				},
+				"confirmedTracerBagAmount": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Confirmed Tracer Bag Amount data"
+				}
+			}
+		},
+		"CMCountTendersObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Count Tenders",
+			"properties": {
+				"discrepancyAmount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Discrepancy Amount"
+				},
+				"expected": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Expected Amount"
+				},
+				"counted": {
+					"type": [
+						"string",
+						"object",
+						"null"
+					],
+					"description": "Counted Amount"
+				}
+			}
+		},
+		"CMTendersAndTotalDiscrepancyObj":{
+			"description": "Discrepancy of Expected Vs Counted by Tender",
+			"additionalProperties": false,
+			"properties": {
+				"cash": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"debit": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"check": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"3rdPartyCheck": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"moneyOrder": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"travelersCheck": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"Offline Debit/Credit": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"giftCard": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"manualCardEntry": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"giftCert": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"Call for Authorization": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"Alipay": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"ChinaUnion": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender Count Tenders Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				},
+				"total": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Count Tenders total Object",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMCountTendersObj"
+					}
+				}
+			}
+		},
+		"CMTendersAndTotalObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "CM Pay amount Object",
+			"properties": {
+				"cash": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"debit": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"check": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"3rdPartyCheck": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"moneyOrder": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"travelersCheck": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"Offline Debit/Credit": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"giftCard": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"manualCardEntry": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"giftCert": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"Call for Authorization": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"Alipay": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"ChinaUnion": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tender currency value"
+				},
+				"total": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total currency value"
+				}
+			}
+		},
+		"tillDataObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Till data for Store Spot Check",
+			"properties": {
+				"tillId": {
+					"type": "string",
+					"description": "Till Id"
+				},
+				"countTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Count Tenders",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalDiscrepancyObj"
+					}
+				},
+				"trackTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Tracked tenders",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/CMTendersAndTotalObj"
+					}
+				},
+				"cardTenders": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Card Tenders by card types",
+					"items": {
+						"type": "object"
+					}
+				},
+				"totalCountAndTrack": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total counted and tracked tenders amount"
+				}
+			}
+		},
+		"product": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Product JSON Object",
+			"properties": {
+				"itemIdx": {
+					"type": "number",
+					"description": "Item index of the transaction the product is associated with"
+				},
+				"tranType" :{
+					"type": "number",
+					"description":"Tran Type"
+				},
+				"mmGroupId": {
+					"type": "string",
+					"description": "Merchandising group id"
+				},
+				"pickupTotalPrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total price of the cross channel pickup order"
+				},
+				"description": {
+					"type": "string",
+					"description": "Longer product description"
+				},
+				"pickupId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Unique DUUID for the pickup row in the OVC database"
+				},
+				"allowDiscounts": {
+					"type": "integer",
+					"description": "0=no, 1=yes the product can be discounted"
+				},
+				"pickupOrderId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Ecomm ID of the pickup order this item belongs to"
+				},
+				"taxRates": {
+					"type": "array",
+					"description": "Tax Rate Array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/taxRate"
+					}
+				},
+				"sku": {
+					"type": "string",
+					"description": "Product SKU"
+				},
+				"taxRateId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Tax rate Id of the product if any"
+				},
+				"barcode": {
+					"type": "string",
+					"description": "Product barcode associated with the SKU"
+				},
+				"productType": {
+					"type": "string",
+					"description": "Merchandise, Non-Merchandise, etc…"
+				},
+				"isTaxExemptible": {
+					"type": "integer",
+					"description": "Can taxes for this product be exempted from the sale. 0=no, 1=yes"
+				},
+				"productId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "The product SKU"
+				},
+				"initialPrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Starting price before any discounts, promotions, price override"
+				},
+				"rrpPrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "RRP Price"
+				},
+				"costPrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Cost price of the product to the company"
+				},
+				"mainImageId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Image file"
+				},
+				"retailerId": {
+					"type": "string",
+					"description": "ID or name of the retailer"
+				},
+				"productCode": {
+					"type": "string",
+					"description": "Base product id where the skus are nested under, if applicable"
+				},
+				"pickupQuantity": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Quantity of this product in the pickup order"
+				},
+				"brandId": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "*Not used currently, future functionality"
+				},
+				"name": {
+					"type": "string",
+					"description": "Product name"
+				},
+				"productURL": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Ecommerce location of the product detail page"
+				},
+				"pickupBasePrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Price of the pickup item before any discounts, promotions"
+				},
+				"propertiesJson": {
+					"type": "object",
+					"description": "Properties of the product being sold"
+				},
+				"warranty": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Warranty information of the product if any"
+				}
+			},
+			"required": [
+				"productCode",
+				"sku",
+				"name",
+				"initialPrice"
+			]
+		},
+		"taxRate": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Tax Rate JSON Object",
+			"additionalProperties": false,
+			"properties": {
+				"tranId": {
+					"type": "string",
+					"description": "Tran ID"
+				},
+				"percentage": {
+					"type": "number",
+					"description": "The actual tax rate"
+				},
+				"itemIdx": {
+					"type": "integer",
+					"description": "Line item identifier"
+				},
+				"taxExempt": {
+					"type": "boolean",
+					"description": "if the taxRate item is tax-exempt or not"
+				},
+				"displayCode": {
+					"type": "string",
+					"description": "Code that displays in the virtual and printed receipt; generally defined by government regulations"
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the tax rate"
+				},
+				"taxRateId": {
+					"type": "string",
+					"description": "Id of the tax rate"
+				},
+				"indicator": {
+					"type": "string",
+					"description": "tax rate indicator for receipts"
+				},
+				"taxAmount": {
+					"type": "string",
+					"description": "Tax Amount"
+				},
+				"totalAddOnVAT": {
+					"type": "string",
+					"description": "Total Addon VAT"
+				},
+				"totalVAT": {
+					"type": "string",
+					"description": "Total VAT"
+				},
+				"isVAT": {
+					"type": "number",
+					"description": "Identifier to check if the VAT is applicable for this tax rate or not",
+					"enum": [
+						0,
+						1,
+						2
+					]
+				},
+				"startDate": {
+					"type": "string",
+					"description": "Date of the tax rate effective Date in ISO8601 format:[yyyy-MM-dd'T'HH:mm:ss.SSSZZ] example:[2016-01-11T22:46:56.402Z]"
+				}
+			},
+			"required": [
+				"taxRateId",
+				"percentage"
+			]
+		},
+		"specialOrderItem": {
+			"type": "object",
+			"description": "Special Order Item JSON Object",
+			"properties": {
+				"comments": {
+					"type": "string",
+					"description": "comments"
+				},
+				"contactNo": {
+					"type": "string",
+					"description": "contactNo"
+				},
+				"purchaseOrderNo": {
+					"type": "string",
+					"description": "purchaseOrderNo"
+				},
+				"siteId": {
+					"type": "string",
+					"description": "siteId"
+				},
+				"qty": {
+					"type": [
+						"number",
+						"null"
+					],
+					"description": "qty"
+				}
+			}
+		},
+		"tenderDetails": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Tender Details JSON Object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "ID of the tender used"
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the tender used"
+				},
+				"tenderType": {
+					"type": "string",
+					"description": "The underlying Type as coded by OVC that drives the tender configurable functionality"
+				},
+				"reasonCodeType": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "If a Reason was required during tendering, the type of Reason Code"
+				},
+				"origTranDate": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Original Tran Date"
+				},
+				"customerDetails": {
+					"type": "object",
+					"$ref": "#/definitions/customerDetails",
+					"description": "Customer attributes captured during tendering"
+				},
+				"tenderDetails": {
+					"type": [
+						"object",
+						"null"
+					],
+					"$ref": "#/definitions/accountDetails",
+					"description": "Bank Account details of the tender - for example check will have account no., routing no. and check no."
+				},
+				"propertiesJson": {
+					"type": "object",
+					"description": "Properties of the tender"
+				},
+				"bbasPrice": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Buy Bulk and Save Price of the tender"
+				},
+				"isBBAS": {
+					"type": "number",
+					"description": "if Buy Bulk and Save is enabled or not (1-enabled, 0-not enabled)",
+					"enum": [
+						0,
+						1
+					]
+				},
+				"isPendingSale": {
+					"type": "boolean",
+					"description": "is the Sale still Pending?"
+				},
+				"cardNumber": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Card Number used during card payment"
+				},
+				"amountApproved": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Amount Approved during card payment"
+				},
+				"amount": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Amount requested during card payment"
+				},
+				"refund": {
+					"type": "boolean",
+					"description": "is Refund"
+				},
+				"engagementType": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"description": "Engagement type during card payment"
+				},
+				"originalTenderDetails": {
+					"type": [
+						"array",
+						"null"
+					],
+					"description": "Original Purchase Tender details - this will be populated for return transactions Only"
+				},
+				"isVATIncluded": {
+					"type": "boolean",
+					"description": "is VAT included"
+				},
+				"competitorName": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Name of competitor"
+				},
+				"originalRefItemIdx": {
+					"type": "integer",
+					"description": "Reference item index for the tender in the same transaction"
+				},
+				"accountNumber": {
+					"type": "string",
+					"description": "masked account Number for card payment"
+				},
+				"authToken": {
+					"type": "string",
+					"description": "reference number for card payment"
+				},
+				"payload": {
+					"type": "object",
+					"description": "Payload returned by SPQR implementation for card payment",
+					"$ref": "#/definitions/payload"
+				},
+				"authCode": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Card authorization code used for the non integrated electronic tender"
+				},
+				"Card Type": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Card Type used for the tender if electronic tender is chosen"
+				},
+				"priceChangeApplied": {
+					"type": "string",
+					"description": "How much did price override change the price of the item"
+				},
+				"newUnitPrice": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"description": "The unit price before promotions"
+				},
+				"giftCertificateNumber": {
+					"type": [
+						"array",
+						"null"
+					],
+					"items": {
+						"type": [
+							"string"
+						]
+					},
+					"description": "Array of gift certificate barcodes purchased"
+				},
+				"expiryDate": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Expiry date for the tender in ISO8601 format:[yyyy-MM-dd'T'HH:mm:ss.SSSZZ] example:[2016-01-11T22:46:56.402Z] if any - applies to Gift Certificates"
+				},
+				"giftCertNum": {
+					"type": [
+						"string",
+						"number"
+					],
+					"description": "Gift certificate number/barcode used as a tender for purchase"
+				},
+				"gcbalance": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Gift certificate balance before the purchase (does not include the current sale)"
+				},
+				"answerText": {
+					"type": "string",
+					"description": "answerText of the challenge scheme"
+				},
+				"authorisingManager": {
+					"type": "string",
+					"description": "authorisingManager (if any) of the challenge scheme"
+				},
+				"isPass": {
+					"type": "boolean",
+					"description": "challenge scheme pass or fail"
+				},
+				"questionText": {
+					"type": "string",
+					"description": "questionText of the challenge scheme"
+				},
+				"reasonText": {
+					"type": "string",
+					"description": "reasonText responsible for pass/fail of the challenge scheme"
+				},
+				"sku": {
+					"type": "string",
+					"description": "sku that triggered the challenge scheme"
+				},
+				"isPromptAtItemAdd": {
+					"type": "number",
+					"description": "is challenge scheme prompted once during item add"
+				},
+				"isRepetitive": {
+					"type": "number",
+					"description": "is challenge scheme repetitive through the tran"
+				},
+				"schemeName": {
+					"type": "string",
+					"description": "challenge scheme name"
+				},
+				"userId": {
+					"type": "string",
+					"description": "userId that validated the challenge scheme"
+				}
+			}
+		},
+		"payload": {
+			"type": "object",
+			"additionalProperties": true,
+			"description": "Payload returned by SPQR implementation for card payment",
+			"properties": {
+				"merchantID": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Merchant ID number"
+				},
+				"terminalID": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Terminal ID number"
+				},
+				"maskedCardNumber": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Masked Card Number"
+				},
+				"hashedCardNumber": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Hashed Card Number"
+				},
+				"cardType": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Card type used for the card payment"
+				},
+				"cardDescription": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Card Description used for card payment"
+				},
+				"cardEntryMode": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Card Entry Mode used for the card payment"
+				},
+				"totalAmountTransacted": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Total Amount used for the card payment"
+				},
+				"authCode": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Auth Code returned by payment gateway for the card payment"
+				},
+				"transactionID": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "transaction id returned by payment gateway for the card payment"
+				},
+				"expiryDate": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Expiry date for the card payment"
+				},
+				"eftSerialNumber": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "eftSerialNumber for the card payment"
+				},
+				"cardToken": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "cardToken for the card payment"
+				},
+				"issueNumber": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "issueNumber for the card payment"
+				}
+			}
+		},
+		"accountDetails": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Bank Account details of the customer captured for Tender",
+			"properties": {
+				"Business Name": {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Business Name of the customer captured for the tender"
+				},
+				"First Name": {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "First Name of the customer captured for the tender"
+				},
+				"Last Name": {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Last Name of the customer captured for the tender"
+				},
+
+				"approvalNumber"	: {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Check validation Approval number"
+				},
+
+				"Address 1": {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Address of the customer captured for the tender"
+				},
+
+				"Address 2": {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Address of the customer captured for the tender"
+				},
+				"City" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "City of the customer captured for the tender"
+				},
+				"State" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "State of the customer captured for the tender"
+				},
+				"Zip" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Zip of the customer captured for the tender"
+				},
+				"Phone Number" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Phone number of the customer captured for the tender"
+				},
+				"License Number" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "License of the customer captured for the tender"
+				},
+				"License State" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "License state of the customer captured for the tender"
+				},
+				"License Expiration" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "License Expiration of the customer captured for the tender"
+				},
+
+				"Routing Number" : {
+					"type": [
+								"string",
+								"null"
+							],
+					"description": "Routing number of the customer captured for the tender"
+				},
+
+				"Account Number": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Bank Account number"
+				},
+				"Check Number": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Check number"
+				},
+				"Serial Number": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Serial Number for Travelers Check if applicable for this tender"
+				},
+				"ID Number": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Id Number for Check, Money Order & Travelers check, if applicable for this tender"
+				},
+				"Issuing Institution": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Issuing Institution for Money Order & Travelers check, if applicable for this tender"
+				},
+				"Check Address": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Check Address for Check if applicable for this tender"
+				},
+				"ID Type": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "ID Type for Check, Money Order, Traveler’s Check, if applicable for this tender"
+				},
+				"ID Expiration": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "ID Expiration of Check, Money Order & Travelers check, if applicable for this tender"
+				}
+			}
+		},
+		"customerDetails": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Customer details of the customer captured for Tender",
+			"properties": {
+				"Name": {
+					"type": "string",
+					"description": "Name of the customer captured for the tender"
+				},
+				"Address": {
+					"type": "string",
+					"description": "Address of the customer captured for the tender"
+				},
+				"Email": {
+					"type": "string",
+					"description": "Email of the customer captured for the tender"
+				},
+				"ID Type": {
+					"type": "string",
+					"description": "Id Type of the customer captured for the tender"
+				},
+				"Notes": {
+					"type": "string",
+					"description": "Notes of the customer captured for the tender"
+				}
+			}
+		},
+		"promotion": {
+			"type": [
+				"object",
+				"null"
+			],
+			"additionalProperties": false,
+			"description": "Promotion JSON Object",
+			"properties": {
+				"skus": {
+					"type": "array",
+					"description": "Product SKUS that were part of the promotion basket"
+				},
+				"itemIdx": {
+					"type": "integer",
+					"description": "Line item identifier"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the promotion"
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the promotion"
+				},
+				"couponCode": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "Numeric value of the savings applied"
+				},
+				"privateName": {
+					"type": "string",
+					"description": "Numeric value of the savings applied"
+				},
+				"amountValue": {
+					"type": "string",
+					"description": "Numeric value of the savings applied"
+				},
+				"promoId": {
+					"type": "string",
+					"description": "Unique ID for the promotion"
+				},
+				"promoType": {
+					"type": "string",
+					"description": "Promotion type (reducedPrice, xyDiscount, basketTotal)"
+				}
+			},
+			"required": [
+				"skus",
+				"itemIdx",
+				"promoId",
+				"amountValue",
+				"privateName",
+				"description",
+				"promoType"
+			]
+		},
+		"giftCert": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Gift Cert JSON Object",
+			"additionalProperties": false,
+			"properties": {
+				"giftCertNum": {
+					"type": "string",
+					"description": "ID of the gift certificate, from the OVC coupon_tbl"
+				},
+				"newBalance": {
+					"type": "string",
+					"description": "Updated balance from this transaction"
+				},
+				"oldBalance": {
+					"type": "string",
+					"description": "Previous balance before this transaction"
+				},
+				"tranAmount": {
+					"type": "string",
+					"description": "Amount added to or removed from gift certificate"
+				}
+			},
+			"required": [
+				"giftCertNum",
+				"newBalance"
+			]
+		},
+		"appointmentObj": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Schedule Appointment JSON Object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "appointment id"
+				},
+				"retailerId": {
+					"type": "string",
+					"description": "retailerId"
+				},
+				"description": {
+					"type": "string",
+					"description": "description"
+				},
+				"locationId": {
+					"type": "string",
+					"description": "locationId"
+				},
+				"alertType": {
+					"type": "string",
+					"description": "alertType"
+				},
+				"source": {
+					"type": "string",
+					"description": "source"
+				},
+				"status": {
+					"type": "string",
+					"description": "status"
+				},
+				"createdBy": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "createdBy"
+				},
+				"created": {
+					"type": "string",
+					"description": "created"
+				},
+				"lastModified": {
+					"type": "string",
+					"description": "lastModified"
+				},
+				"alertObject": {
+					"type": [
+						"object",
+						"null"
+					],
+					"description": "alertObject"
+				}
+			}
+		},
+		"tranItemIntegration": {
+			"type": [
+				"object",
+				"null"
+			],
+			"description": "Tran Item JSON Object",
+			"properties": {
+				"orderId": {
+					"type": "string",
+					"description": "external order id"
+				},
+				"itemStatus": {
+					"type": "string",
+					"description": "external order item status"
+				},
+				"itemStatusCode": {
+					"type": "string",
+					"description": "external order item status code"
+				},
+				"itemIndex": {
+					"type": "integer",
+					"description": "external order item index"
+				},
+				"isItemCanceled": {
+					"type": "boolean",
+					"description": "Is this item cancelled"
+				}
+			},
+			"required": [
+				"orderId"
+			]
+		}
+	},
+	"required": [
+		"id",
+		"barcode",
+		"training",
+		"tranNo",
+		"userId",
+		"retailerId",
+		"storeId",
+		"deviceId",
+		"tillId",
+		"tranTypeId",
+		"tranDate"
+	]
+}

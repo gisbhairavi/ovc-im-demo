@@ -1,0 +1,510 @@
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+        <h3 class="page-header" ng-show="{{titleadd}}">{{ovcLabel.transactionType.list.addNewTransactionType}} </h3>
+		<h3 class="page-header" ng-show="{{titleedit}}"> {{ovcLabel.transactionType.list.editTransactionType}}: {{transation_nam}} </h3>
+		
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+  <div class="col-lg-12">
+		<section ng-controller="TranstabCntrl as tab">
+		<div class="pro_menu  clearfix">
+			<ul class="nav nav-pills">
+				<li ng-class="{active:tab.isSet(1)}"><a href id="desc_detail" ng-click="tab.setTab(1)">{{ovcLabel.transactionType.list.description}}</a></li>
+				<li ng-class="{active:tab.isSet(2)}"><a href id="rule_detail" ng-click="tab.setTab(2)">{{ovcLabel.transactionType.list.ruleDefinition}}</a></li>
+			</ul>
+			</div>
+			
+			<form role="form" name="form" >
+			<div class="ven_tblk clearfix">
+				<div class="row r_margin ng-scope">
+				<div class="col-md-12">
+				<div class="add_vendorb clearfix">
+			<div ng-show="tab.isSet(1)">
+					<div class="col-lg-6 panleft" >
+						<div class="panel-default">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="checkbox">
+											<div class="balanceoh">
+												<div class="balradio"> 
+													<label for="rvsOfExst">
+														<input type="checkbox" id="rvsOfExst" ng-model="t_add.rvs_of_exst" name="resOfExst"  ng-disabled="t_add.allow_rvs == true"/>
+														<img class="mar_r"  ng-if='t_add.allow_rvs==false || t_add.allow_rvs == null'/><img class="c_disabled" ng-if='t_add.allow_rvs == true' />
+														{{ovcLabel.transactionType.list.rvs_of_exst}}
+													</label>
+												</div>
+											</div>
+										</div>
+
+										<div class  =  "form-group" style  =  "padding-left:0px;margin-bottom: 10px;" ng-if="t_add.rvs_of_exst == true">
+											<select id="tranid" class="form-control"  ng-options="tranTypeId as tranName for (tranTypeId,tranName) in check.tranTypeLs" name="tranType" ng-model="t_add.revTranType" required ng-disabled  =  "moluom"  >
+											
+												<option value="">{{ovcLabel.transactionType.placeholder.selectTrans}}</option>
+											</select>
+											
+											<span  ng-show  =  "form.tranType.$error.required  && submitted" class  =  "alert alert-danger">{{ovcLabel.transactionType.error.errTranType}}
+											</span>
+							
+										</div>
+										<div class="form-group">
+												<input type="hidden" ng-if="title == 'Edit'" name="id" ng-model="t_add.id" >			
+												<label class="control-label"> {{ovcLabel.transactionType.labels.transaction_code}} </label>
+												<select id="trcode" class="form-control"  data-ng-options="trtypes.code as trtypes.label for trtypes in transtypes" name="transactioncode" data-ng-model="t_add.transactioncode" 
+												ng-change="change_trancode(t_add.transactioncode)"  ng-disabled="moltrantyp">
+												</select>
+										</div>
+
+										<div class="form-group">
+											  <label class="control-label">{{ovcLabel.transactionType.labels.transaction_id}}</label>
+													<input class="form-control" name="transid" ng-model="t_add.transid" required  ng-disabled="moltrantyp" />
+												<span  ng-show="check.checkUnique  && submitted" class="alert alert-danger" >{{ovcLabel.transactionType.error.tranIdUniqueErr}}</span>
+											   <span  ng-show="form.transid.$error.required  && submitted" class="alert alert-danger" >{{ovcLabel.transactionType.error.err_transactid}}</span>
+										</div>
+										
+										<div class="form-group">
+										   <label class="control-label">{{ovcLabel.transactionType.labels.transaction_name}}</label>
+													<input class="form-control" name="trname" ng-model="t_add.trname" ng-disabled="moltrantyp" />
+										</div>
+										
+										<div class="form-group">
+											<label class="control-label">{{ovcLabel.transactionType.labels.description}}</label>
+												<input class="form-control" name="trdesc" ng-model="t_add.trdesc" ng-disabled="moltrantyp" />		
+										</div>
+										<div class="form-group">
+											<label>{{ovcLabel.transactionType.labels.status}}</label>
+											<br>
+										   <div class="btn-group ng-scope"   ng-if='moltrantyp==true' >
+												<label class="rdio_btn radio_disabled" >
+													<input type="radio" value = "1" ng-model="t_add.status" name = "status" class = "required" ng-checked="{{status}}" />
+													<p class="{{newclass1}}">{{ovcLabel.transactionType.labels.active}}</p>
+												</label>
+												<label class ="rdio_btn radio_disabled"  >
+													<input type="radio" value = "0" ng-model="t_add.status" name = "status" class = "required"/>
+													<p class="{{newclass2}}">{{ovcLabel.transactionType.labels.inactive}}</p>
+												</label>
+											</div>
+											 <div class="btn-group ng-scope"   ng-if='moltrantyp==false' >
+												<label class="rdio_btn" ng-click="changeclass1()">
+													<input id="active_TT" type="radio" value = "1" ng-model="t_add.status" name = "status" class = "required" ng-checked="{{status}}" />
+													<p class="{{newclass1}}">{{ovcLabel.transactionType.labels.active}}</p>
+												</label>
+												<label class ="rdio_btn" ng-click="changeclass2()" >
+													<input id="inactive_TT" type="radio" value = "0" ng-model="t_add.status" name = "status" class = "required"/>
+													<p class="{{newclass2}}">{{ovcLabel.transactionType.labels.inactive}}</p>
+												</label>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="panel-default">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+											<div class="checkbox">
+												<div class="balanceoh">
+													<div class="balradio"> 
+														<label for="allowRes" ng-disabled="t_add.rvs_of_exst">
+															<input type="checkbox" id="allowRes" ng-model="t_add.allow_rvs" name="allowRev"  ng-disabled="t_add.rvs_of_exst"/>
+															<img class="mar_r"  ng-if='t_add.rvs_of_exst==false || t_add.rvs_of_exst == null'/><img class="c_disabled" ng-if='t_add.rvs_of_exst==true' />
+															{{ovcLabel.transactionType.labels.allow_rvs}}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="checkbox">
+												<div class="balanceoh">
+													<div class="balradio"> 
+														<label for="manual_tran" >
+															<input type="checkbox" id="manual_tran" ng-model="t_add.man_tran" name="manual_transat" />
+															<img class="mar_r" />
+															{{ovcLabel.transactionType.labels.manualTransaction}}
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>			
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+			
+			<div ng-show="tab.isSet(2)">
+			<div class="trans_blk">
+				<div class="col-md-12" ng-if="title=='Add'">
+					
+							<div class="col-md-6">
+					<div class="trans_sublk clearfix">	
+							
+							<fieldset>
+								
+								<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.transactionType.labels.physical_balances}}</label></legend>
+								<div class="col-md-12 col-xs-12">
+									
+									<div class="form-group">
+										<label class="trans_tit">{{ovcLabel.transactionType.labels.balance_fields}}</label>
+									</div>
+									
+									<div class="form-group col-md-12 col-xs-12" >
+									
+										<div class="col-md-6 col-sm-3 col-xs-12">
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label trans_tit">{{ovcLabel.transactionType.labels.no_action}}</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label trans_tit">{{ovcLabel.transactionType.labels.add}} </label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label trans_tit">{{ovcLabel.transactionType.labels.subtract}}</label>
+										</div>
+									</div>
+									<div class="option_fst clearfix">
+									<div class="form-group col-md-12  col-xs-12 balanceoh clearfix" ng-repeat="data in translist['BALFIELDS']">
+										<div class="col-md-6 col-sm-3 col-xs-12">
+											<i class="fa fa-exclamation-circle"></i>&nbsp;
+											<label class="control-label">{{data.rulename}} </label>
+										</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input id="common_noAction{{data.rulelabel}}" type="radio" ng-model="balanlist[data.rulelabel]"name="{{data.rulelabel}}"    value="Noaction" ng-disabled="{{data.rulenostatus}}" />
+											<!--  <img /> -->
+											 <img  ng-if ="data.rulenostatus != true "/>
+											 	 <img  ng-if ="data.rulenostatus==true "  class="c_disabled"/>
+										</label>
+									</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input id="common_add{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}"  ng-model="balanlist[data.rulelabel]"   value="Add"  ng-disabled="{{data.ruleaddstatus}}" />
+											<!--  <img /> -->
+											<img  ng-if ="data.ruleaddstatus != true "/>
+											 	 <img  ng-if ="data.ruleaddstatus==true "  class="c_disabled"/>
+										</label>
+									</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input id="common_subtract{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"   value="Subtract"  ng-disabled="{{data.rulesubstatus}}"/>
+											 <img  ng-if ="data.rulesubstatus != true "/>
+											 	 <img  ng-if ="data.rulesubstatus==true "  class="c_disabled"/>
+										</label>
+									</div>
+									
+									</div> 
+									</div>
+									<hr width="100%">
+									
+									<div class="form-group">
+											<label class="trans_tit">{{ovcLabel.transactionType.labels.held_stock}}</label>
+									</div>
+									<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in translist['HELDSTOCK']">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+												<i class="fa fa-exclamation-circle"></i>&nbsp;
+												<label class="control-label">{{data.rulename}} </label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_noAction{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Noaction"  ng-disabled="{{data.rulenostatus}}" />
+													 <!-- <img /> -->
+													 <img  ng-if ="data.rulenostatus != true "/>
+											 	 <img  ng-if ="data.rulenostatus==true "  class="c_disabled"/>
+												</label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_add{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Add"   ng-disabled="{{data.ruleaddstatus}}" />
+													<!--  <img /> -->
+													<img  ng-if ="data.ruleaddstatus != true "/>
+											 	 <img  ng-if ="data.ruleaddstatus==true "  class="c_disabled"/>
+												</label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_subtract{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Subtract"  ng-disabled="{{data.rulesubstatus}}" />
+													<!--  <img /> -->
+													 <img  ng-if ="data.rulesubstatus != true "/>
+											 	 <img  ng-if ="data.rulesubstatus==true "  class="c_disabled"/>
+												</label>
+										</div>
+									</div>
+									
+								</div>
+							</fieldset>
+						</div>	
+					</div>
+					<div class="col-md-6">
+					<div class="trans_sublk clearfix">	
+						
+									
+							<fieldset>
+											
+											<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth trans_tit">{{ovcLabel.transactionType.labels.calculated_fields}}</label></legend>
+									
+								<div class="form-group col-md-12 col-xs-12 clearfix">
+									
+									<div class="col-md-6 col-sm-3 col-xs-12">
+									</div>
+												
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.transactionType.labels.no_action}}</label>
+									</div>
+									
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label trans_tit">{{ovcLabel.transactionType.labels.recalc}} </label>
+									</div>
+									
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<!-- <label class="control-label">Subtract: </label> -->
+									</div>
+								</div>
+											
+								 <div class="form-group col-md-12 balanceoh clearfix"  ng-repeat="data in translist['CALCFIELDS']">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+													<i class="fa fa-exclamation-circle"></i>&nbsp;
+													<label class="control-label">{{data.rulename}} </label>
+										</div>
+												
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input id="common_noAction{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Noaction"   ng-disabled="{{data.rulenostatus}}"/>
+												<!--  <img /> -->
+												 <img  ng-if ="data.rulenostatus != true "/>
+											 	 <img  ng-if ="data.rulenostatus==true "  class="c_disabled"/>
+											</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_recalculate{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Recalculate"   ng-disabled="{{data.rulerecalstatus}}"/>
+													<!--  <img /> -->
+													 <img  ng-if ="data.rulerecalstatus != true "/>
+											 	 <img  ng-if ="data.rulerecalstatus==true "  class="c_disabled"/>
+												</label>
+										</div>				
+								</div>
+											
+							</fieldset>			
+							
+						</div>
+						</div>
+					
+					</div>
+					
+				</div>
+				
+				<!----add completed---->
+				<div class="trans_blk">
+				<div class="col-md-12" ng-if="title=='Edit'">
+					
+					<div class="col-md-6">
+					<div class="trans_sublk clearfix">	
+						
+							<fieldset>
+								
+								<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.transactionType.labels.physical_balances}}</label></legend>
+								<div class="col-md-12">
+									
+									<div class="form-group">
+										<label>{{ovcLabel.transactionType.labels.balance_fields}}</label>
+									</div>
+									
+									<div class="form-group col-md-12">
+									
+										<div class="col-md-6 col-sm-3 col-xs-12" >
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label">{{ovcLabel.transactionType.labels.no_action}}</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label">{{ovcLabel.transactionType.labels.add}} </label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4">
+											<label class="control-label">{{ovcLabel.transactionType.labels.subtract}}</label>
+										</div>
+									</div>
+									<div class="option_fst clearfix">
+									<div class="form-group col-md-12 balanceoh clearfix" ng-repeat="data in translist['BALFIELDS'] ">
+										<div class="col-md-6 col-sm-3 col-xs-12">
+											<i class="fa fa-exclamation-circle"></i>&nbsp;
+											<label class="control-label">{{data.rulename}} </label>
+										</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input id="common_noAction{{data.rulelabel}}" type="radio" ng-model="balanlist[data.rulelabel]"name="{{data.rulelabel}}"    value="Noaction"  ng-disabled="{{data.rulenostatus || moltrantyp}}" />
+											<!--  <img /> -->
+											 <img  ng-if ="data.rulenostatus != true  &&  moltrantyp ==false "/>
+											 	 <img  ng-if ="data.rulenostatus==true ||  moltrantyp ==true "  class="c_disabled"/>
+										</label>
+									</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input id="common_add{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}"  ng-model="balanlist[data.rulelabel]"   value="Add"   ng-disabled="{{data.ruleaddstatus || moltrantyp}}" />
+											<!--  <img /> -->
+												<img  ng-if ="data.ruleaddstatus != true  &&  moltrantyp ==false"/>
+											 	 <img  ng-if ="data.ruleaddstatus==true ||  moltrantyp ==true "  class="c_disabled"/>
+										</label>
+									</div>
+										
+									<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+										<label>
+											<input id="common_subtract{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]"   value="Subtract"   ng-disabled="{{data.rulesubstatus || moltrantyp }}" />
+											<!--  <img /> -->
+											 <img  ng-if ="data.rulesubstatus != true &&  moltrantyp ==false "/>
+											 	 <img  ng-if ="data.rulesubstatus==true  ||  moltrantyp ==true  "  class="c_disabled"/>
+										</label>
+									</div>
+									
+									</div> 
+									</div>
+									<hr width="100%">
+									
+									<div class="form-group">
+											<label>{{ovcLabel.transactionType.labels.held_stock}}</label>
+									</div>
+									<div class="form-group clearfix col-md-12 clearfix balanceoh" ng-repeat="data in translist['HELDSTOCK'] ">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+												<i class="fa fa-exclamation-circle"></i>&nbsp;
+												<label class="control-label">{{data.rulename}} </label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_noAction{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Noaction"  ng-disabled="{{data.rulenostatus || moltrantyp}}"/>
+													<!--  <img /> -->
+													 <img  ng-if ="data.rulenostatus != true &&  moltrantyp ==false  "/>
+											 	 <img  ng-if ="data.rulenostatus==true ||  moltrantyp ==true "  class="c_disabled"/>
+												</label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_add{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Add"  ng-disabled="{{data.ruleaddstatus || moltrantyp}}"  />
+													<!--  <img /> -->
+														<img  ng-if ="data.ruleaddstatus != true &&  moltrantyp ==false  "/>
+											 	 <img  ng-if ="data.ruleaddstatus==true ||  moltrantyp ==true"  class="c_disabled"/>
+												</label>
+										</div>
+											
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_subtract{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Subtract"   ng-disabled="{{data.rulesubstatus || moltrantyp}}" />
+													 <!-- <img /> -->
+													  <img  ng-if ="data.rulesubstatus != true &&  moltrantyp ==false "/>
+											 	 <img  ng-if ="data.rulesubstatus==true ||  moltrantyp ==true"  class="c_disabled"/>
+												</label>
+										</div>
+									</div>
+									
+								</div>
+							</fieldset>
+						</div>	
+					</div>
+					<div class="col-md-6">
+					<div class="trans_sublk clearfix">	
+						
+									
+							<fieldset>
+											
+											<legend><!--<i class="fa fa-angle-up"></i>&nbsp;&nbsp;--><label class="balwidth">{{ovcLabel.transactionType.labels.calculated_fields}}</label></legend>
+									
+								<div class="form-group clearfix col-md-12">
+									
+									<div class="col-md-6 col-sm-3 col-xs-12">
+									</div>
+												
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label">{{ovcLabel.transactionType.labels.no_action}}</label>
+									</div>
+									
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<label class="control-label">{{ovcLabel.transactionType.labels.recalc}} </label>
+									</div>
+									
+									<div class="col-md-2 col-sm-3 col-xs-4">
+										<!-- <label class="control-label">Subtract: </label> -->
+									</div>
+								</div>
+											
+								 <div class="form-group clearfix col-md-12 balanceoh"  ng-repeat="data in translist['CALCFIELDS'] ">
+										
+										<div class="col-md-6 col-sm-3 col-xs-12">
+													<i class="fa fa-exclamation-circle"></i>&nbsp;
+													<label class="control-label">{{data.rulename}} </label>
+										</div>
+												
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+											<label>
+												<input id="common_noAction{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Noaction"  ng-disabled="{{data.rulenostatus || moltrantyp}}" />
+												<!--  <img /> -->
+												 <img  ng-if ="data.rulenostatus != true  &&  moltrantyp ==false "/>
+											 	 <img  ng-if ="data.rulenostatus==true ||  moltrantyp ==true "  class="c_disabled"/>
+											</label>
+										</div>
+										
+										<div class="col-md-2 col-sm-3 col-xs-4 balradio">
+												<label>
+													<input id="common_recalculate{{data.rulelabel}}" type="radio" name="{{data.rulelabel}}" ng-model="balanlist[data.rulelabel]" value="Recalculate"   ng-disabled="{{data.rulerecalstatus || moltrantyp}}" />
+												<!-- 	 <img /> -->
+												 <img  ng-if ="data.rulerecalstatus != true  &&  moltrantyp ==false "/>
+											 	 <img  ng-if ="data.rulerecalstatus==true ||  moltrantyp ==true"  class="c_disabled"/>
+												</label>
+										</div>				
+								</div>
+											
+							</fieldset>			
+							
+						</div>
+						</div>
+					
+				</div>
+			</div>
+			</div>
+			</div>
+			<div class="save_can acc_det clearfix">
+			<div class="col-md-12">
+				<div class="pull-right">
+				<a ng-click="add_error()">
+				<button id="ovcSave" class="btn btn-primary ng-binding" ng-click="transaction_add(t_add,balanlist)"   ng-disabled="moltrantyp" type="submit">{{ovcLabel.transactionType.buttons.save}}</button>
+				</a>
+				<a href  name="commonCancel" ng-click="transaction_cancel()"><button class="btn btn-primary ng-binding" >{{ovcLabel.transactionType.buttons.cancel}}</button></a>
+
+				</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			</form>
+		</section>
+	</div>
+</div>
+		
+		

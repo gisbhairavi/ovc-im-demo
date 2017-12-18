@@ -1,0 +1,76 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.rolePermissions.rolepermissions}}</h3>
+    </div>
+</div>
+
+<div class="ven_tblk clearfix">
+	<div class="col-lg-12">
+	    <div class="panel-default">
+	        <div class="panel-body search_box">
+	        	<form>
+		        	<div class="col-sm-6 col-md-4  col-xs-12">
+						<label class="control-label">{{ovcLabel.rolePermissions.role}}</label>
+						<select id="select_Role" ng-options="key as value for (key , value) in data.roles" class="form-control" ng-model="formData.roleId" ng-change = "getRolesPermissions()"><option value="">-- {{translation.rolePermissions[0].selectRole}} --</option></select>
+					</div>
+
+					<br /><br clear = "all" /><br clear = "all" />
+
+					<div class="col-sm-6 col-md-4 col-xs-12 ">
+						<label class="control-label">{{ovcLabel.rolePermissions.module}}</label>
+						<select id="select_module" ng-options="moduleIds._id as moduleIds.label for moduleIds in data.moduleIds" class="form-control" ng-model="formData.moduleId"  ng-change = "getRolesPermissions()"><option value="">-- {{translation.rolePermissions[0].selectModuleId}} --</option></select>
+					</div>
+
+					<br />
+
+					<div class="col-sm-12" ng-show = "settings.showPermissions">
+						<label class="control-label">{{ovcLabel.rolePermissions.permissions}}</label>
+						<br />
+
+						<div class="col-sm-12">
+							<span class = "col-sm-8">
+								<span class = "col-sm-8 col-md-6 col-xs-8">
+									<label style = "cursor:pointer;margin-top:10px;">
+										<input id="common_select" type="checkbox" ng-model="action.selectedAll" ng-click="checkAll()" class = "pull-left" style = "margin-right:5px;"/> 
+										<h5 class = "pull-left" style = "font-size:17px;margin:0;"> {{action.label}}</h5>
+									</label>
+								</span>
+								<span class = "col-sm-4 col-xs-4">
+									<button id="collapseAll" class = "btn btn-primary" ng-click = "expandCollapseAll()">{{action.expandCollapseAllLabel}}</button>
+								</span>
+							<br /><br clear = "all" />
+
+							<div ng-repeat = "(permGroup,permData) in data.permissions">
+								<ul>
+									<h5 style = "font-size:17px;font-weight:bold;cursor:pointer;" ng-click="showChildElements(permGroup)"><i name="expand_{{translation.rolePermissionsPermGroups[0][permGroup]}}" ng-class = "isShowing(permGroup) ? 'fa fa-minus-square-o' : 'fa fa-plus-square-o' " style = "font-size: 14px;margin: 0 5px 0 0;"></i>
+									{{translation.rolePermissionsPermGroups[0][permGroup]}}</h5>
+
+									<ul ng-show="isShowing(permGroup)">
+										<li ng-repeat = "permDataValues in permData" style = "list-style:none;">
+											<label style = "font-weight:normal;margin:0 0 10px 0;font-size:15px;cursor:pointer;">
+												<input name="check_{{permDataValues.permDescription}}" type = "checkbox" ng-model = "formData.permissions[permGroup][permDataValues.permId]" style = "margin-right:5px;" ng-change="isLabelChecked(); checkPermission(permDataValues,formData.permissions[permGroup][permDataValues.permId]);" ng-checked = "isExist(permDataValues.permId)" />
+												{{permDataValues.permDescription}}
+											</label> 
+										</li>
+									</ul>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="ven_tblk clearfix">
+				<div class="save_can clearfix">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button id="ovcSave" type="submit"  class="btn btn-primary" ng-disabled="!formData.roleId || !formData.moduleId"  ng-click="savePermissions()">{{ovcLabel.rolePermissions.buttons.save}}</button>
+
+							<button name="commonCancel" class="btn btn-primary" ng-click="cancelPermissions()">{{ovcLabel.rolePermissions.buttons.cancel}}</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

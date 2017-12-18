@@ -1,0 +1,103 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - echo "CIRCLE_NODE_TOTAL" + $CIRCLE_NODE_TOTAL
+    - echo "CIRCLE_NODE_INDEX" + $CIRCLE_NODE_INDEX
+
+test:
+  override:
+     - case $CIRCLE_NODE_INDEX in 0) docker build --rm=false -t oneviewcommerce/sar-apigateway:$CIRCLE_BRANCH Services/api_gateway/ ;; 1) docker build --rm=false -t oneviewcommerce/sar-client:$CIRCLE_BRANCH client/ ;; 2) docker build --rm=false -t oneviewcommerce/sar-oauth2:$CIRCLE_BRANCH Services/oauth2 ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker build --rm=false -t oneviewcommerce/sar-location:$CIRCLE_BRANCH Services/location ;; 1) docker build --rm=false -t oneviewcommerce/sar-vendor:$CIRCLE_BRANCH Services/vendor ;; 2) docker build --rm=false -t oneviewcommerce/sar-transaction:$CIRCLE_BRANCH Services/transaction ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker build --rm=false -t oneviewcommerce/sar-order:$CIRCLE_BRANCH Services/order ;; 1) docker build --rm=false -t oneviewcommerce/sar-product:$CIRCLE_BRANCH Services/product ;; 2) docker build --rm=false -t oneviewcommerce/sar-dashboard:$CIRCLE_BRANCH Services/dashboard ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker build --rm=false -t oneviewcommerce/sar-loadjson:$CIRCLE_BRANCH Services/loadjson ;;  esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0|1|2) docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker push oneviewcommerce/sar-apigateway:$CIRCLE_BRANCH ;; 1) docker push oneviewcommerce/sar-client:$CIRCLE_BRANCH ;; 2) docker push oneviewcommerce/sar-oauth2:$CIRCLE_BRANCH ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker push oneviewcommerce/sar-location:$CIRCLE_BRANCH ;; 1) docker push oneviewcommerce/sar-vendor:$CIRCLE_BRANCH ;; 2) docker push oneviewcommerce/sar-transaction:$CIRCLE_BRANCH ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker push oneviewcommerce/sar-order:$CIRCLE_BRANCH ;; 1) docker push oneviewcommerce/sar-product:$CIRCLE_BRANCH ;; 2) docker push oneviewcommerce/sar-dashboard:$CIRCLE_BRANCH ;; esac:
+        parallel: true
+     - case $CIRCLE_NODE_INDEX in 0) docker push oneviewcommerce/sar-loadjson:$CIRCLE_BRANCH ;;  esac:
+        parallel: true
+
+deployment:
+  develop:
+    branch: develop
+    commands:
+      - echo "Deploying..."
+      - ./deploy.sh $CIRCLE_SHA1 $CIRCLE_BRANCH
+  deploy:
+    branch: /deploy-.*/
+    commands:
+      - echo "Deploying..."
+      - ./deploy.sh $CIRCLE_SHA1 ${CIRCLE_BRANCH#*-}
+#      - ./deploy.sh $CIRCLE_SHA1 $CIRCLE_BRANCH
+  release:
+    branch: /release-.*/
+    commands:
+      - echo "Deploying..."
+      - ./createPackage.sh $CIRCLE_SHA1 ${CIRCLE_BRANCH#*-}
+  master:
+    branch: master
+    commands:
+        - echo "Creating version package..."
+        - ./createPackage.sh `git describe --abbrev=0 --tags`
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker tag oneviewcommerce/sar-apigateway:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-apigateway:{master,latest}
+        - docker push oneviewcommerce/sar-apigateway:`git describe`
+        - docker push oneviewcommerce/sar-apigateway:latest
+
+        - docker tag oneviewcommerce/sar-client:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-client:{master,latest}
+        - docker push oneviewcommerce/sar-client:`git describe`
+        - docker push oneviewcommerce/sar-client:latest
+
+        - docker tag oneviewcommerce/sar-oauth2:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-oauth2:{master,latest}
+        - docker push oneviewcommerce/sar-oauth2:`git describe`
+        - docker push oneviewcommerce/sar-oauth2:latest
+
+        - docker tag oneviewcommerce/sar-location:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-location:{master,latest}
+        - docker push oneviewcommerce/sar-location:`git describe`
+        - docker push oneviewcommerce/sar-location:latest
+
+        - docker tag oneviewcommerce/sar-vendor:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-vendor:{master,latest}
+        - docker push oneviewcommerce/sar-vendor:`git describe`
+        - docker push oneviewcommerce/sar-vendor:latest
+
+        - docker tag oneviewcommerce/sar-transaction:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-transaction:{master,latest}
+        - docker push oneviewcommerce/sar-transaction:`git describe`
+        - docker push oneviewcommerce/sar-transaction:latest
+
+        - docker tag oneviewcommerce/sar-order:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-order:{master,latest}
+        - docker push oneviewcommerce/sar-order:`git describe`
+        - docker push oneviewcommerce/sar-order:latest
+
+        - docker tag oneviewcommerce/sar-product:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-product:{master,latest}
+        - docker push oneviewcommerce/sar-product:`git describe`
+        - docker push oneviewcommerce/sar-product:latest
+
+        - docker tag oneviewcommerce/sar-dashboard:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-dashboard:{master,latest}
+        - docker push oneviewcommerce/sar-dashboard:`git describe`
+        - docker push oneviewcommerce/sar-dashboard:latest
+
+        - docker tag oneviewcommerce/sar-loadjson:{master,`git describe`}
+        - docker tag oneviewcommerce/sar-loadjson:{master,latest}
+        - docker push oneviewcommerce/sar-loadjson:`git describe`
+        - docker push oneviewcommerce/sar-loadjson:latest

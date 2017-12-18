@@ -1,0 +1,88 @@
+<transaction-history></transaction-history>
+<div class="row add_tit ng-scope" style="border-bottom : none !important;">
+	<div class="col-lg-12" >
+        <h3 class="page-header">{{ovcLabel.adjustments.list.adjustmentsummary}}
+        	<div class  =  "pull-right add_ven clearfix">  
+				<ovcdata-export pdf-id="order_summary_export" heading="{{ovcLabel.adjustments.list.adjustmentsummary}}" type="summary"></ovcdata-export>  
+				<div class="col-md-3 view_num pull-left"></div>
+		  		<div class="col-md-3 v_progress pull-left" >
+		  			<div class="pull-right">
+		  				<span class="label status" ng-class="{'alert-adjusted':form.adjustStatus == 'Adjusted', 
+		  				'alert-adjusted-reversal':form.adjustStatus == ovcLabel.adjustments.list.adjusted_reversal,'alert-reversed':form.adjustStatus == ovcLabel.adjustments.list.draft_reversed || form.adjustStatus == ovcLabel.adjustments.list.reversed }">{{form.adjustStatus}}</span>
+		  			</div>
+		  		</div>
+		  	</div>
+		</h3>
+    </div>
+</div>
+<div>
+	<div class="row r_margin ng-scope">
+		<div class="panel-default">
+			<div class="panel-body search_box">
+				<div class="col-lg-12">
+					<div class="col-sm-12 col-md-4 export_pre_header clearfix"> 
+
+							<p class="clearfix"> <label class="mar_al view_p">{{ovcLabel.adjustments.labels.store}}</label>  <span class="view_ot">: {{action.tostore}}</span></p> 
+
+							<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.adjustmentCode}}</label> <span class="view_ot">: {{action.adjustCode}}</span></p>  
+							<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.adjustmentName}}</label> <span class="view_ot">: {{action.adjustName}}</span></p> 
+							
+							<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.reasonCode}}</label>  <span class="view_ot">: {{action.reasonCode}}</span></p>
+							
+							<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.createdBy}}</label><span class="view_ot">: {{action.createdby}}</span></p> 
+					</div>
+					<div class="col-sm-12 col-md-4 export_pre_header clearfix"> 
+							<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.order_ref}}</label><span class="view_ot">: {{form.orderNumber}} </span></p>
+							<p class="clearfix"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.adjustmentNumber}}</label><span class="view_ot">: {{adjustment_no}} </span></p> 
+							<p class="clearfix" ng-if="form.adjustStatus == ovcLabel.adjustments.labels.reversed "><label class="mar_al view_p">{{ovcLabel.adjustments.list.adjusted_reversal}}</label><span class="view_ot">
+							<a   ui-sref="ovc.adjustment-edit({adjust_id:form.reversedetail._id})" ng-if="((form.reversedetail.adjustmentStatus=='draft') || (form.reversedetail.adjustmentStatus =='Draft')
+							|| (form.reversedetail.adjustmentStatus =='rvs_draft'))">{{form.reversedetail.adjustmentNumber}}</a>
+								<a   ui-sref="ovc.adjustment-summary({adjust_id:form.reversedetail._id})" ng-if="((form.reversedetail.adjustmentStatus =='adjusted') || (form.reversedetail.adjustmentStatus =='Adjusted' ) || (form.reversedetail.adjustmentStatus =='adjusted_rvs' ))">{{form.reversedetail.adjustmentNumber}}</a> </span></p>
+							<p class="clearfix"  ng-if="form.adjustStatus == ovcLabel.adjustments.labels.reversed"><label class="mar_al view_p">{{ovcLabel.adjustments.list.reversedBy}}</label><span class="view_ot">: {{form.reversedby}} </span></p>
+							<p class="clearfix" ng-if="form.originaladjust  &&  form.originaldetail.adjustmentStatus"><label class="mar_al view_p">{{ovcLabel.adjustments.list.original_adjust}}</label><span class="view_ot">: 
+							<a   ui-sref="ovc.adjustment-edit({adjust_id:form.originaldetail._id})" ng-if="((form.originaldetail.adjustmentStatus=='draft') || (form.originaldetail.adjustmentStatus =='Draft')
+							|| (form.originaldetail.adjustmentStatus =='reversed_draft'))">{{form.originaldetail.adjustmentNumber}}</a>
+								<a   ui-sref="ovc.adjustment-summary({adjust_id:form.originaldetail._id})" ng-if="((form.originaldetail.adjustmentStatus =='adjusted') || (form.originaldetail.adjustmentStatus =='Adjusted' ) || (form.originaldetail.adjustmentStatus =='reversed' ))">{{form.originaldetail.adjustmentNumber}}</a> </span></p>
+					 
+							<p><label class="mar_al view_p">{{ovcLabel.adjustments.labels.comments}}</label>
+							 <span class="view_ot">: {{form.comment}}</span></p>
+						 			
+					</div>
+					<div class="col-sm-12 col-md-4 export_pre_header clearfix">
+						 
+					 		<p  class="ven_tblk clearfix" ><label class="mar_al view_p">{{ovcLabel.adjustments.labels.totalSku}}</label><span class="view_ot">: {{form.numberOfPackages}}</span></p>
+						 	<p class="ven_tblk clearfix" ><label class="mar_al view_p">{{ovcLabel.adjustments.labels.totalQty}}</label> <span class="view_ot">: {{form.numberOfSKU}}</span></p>
+						 	<p class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label class="mar_al view_p">{{ovcLabel.adjustments.labels.totalPurchasePrice}}</label> <span class="view_ot">: {{currency}}  {{form.totalPurchaseCost |number : 2}}</span></p>
+						 	 
+					</div>
+				</div>
+			</div>
+			<div class= "col-md-12">
+			<div class="ven_tbody ">
+				<div class="ven_tbody">
+					<div ng-if="!withPagination">
+						<grouped-style  skuitems="skuslist" ></grouped-style>
+					</div>
+					<div ng-if="withPagination">
+						<grouped-style  template-url="modules/styleGroup/SKU_GroupAdjustment.html" skuitems="skuslist" ></grouped-style>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	<div class="ven_tblk clearfix">
+		<div class="row r_margin ng-scope">
+			<div class="save_bg">
+				<div class="save_can clearfix">
+					<div class="col-md-12">
+						<div class="pull-right" ng-if="!isReversed">
+
+							<button id="copyAdjustBtn" type="submit"  class="btn btn-primary" ng-click="adjustmentCopy(ship.copyid , adjustment_no)" ng-if = "!isReversed && userRolePermissions.copyAdjustment">{{ovcLabel.adjustments.buttons.copy}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

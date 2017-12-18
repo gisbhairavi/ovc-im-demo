@@ -1,0 +1,762 @@
+/*************responsive*************/
+@media only screen and (max-width: 1200px) {
+
+  .hide_pdf .btn.btn-link.pull-right{
+    float: none!important;
+  }
+
+  .chart_box .nav-pills li a{
+    padding: 10px 0;
+  }
+  .search_box .btn{
+    font-size: 12px;
+    padding: 6px 5px;
+  }
+  .ven_tblk .stk_sear .adv_srbox {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+  }
+  .ven_tblk .stk_sear .adv_srbox .col-md-2.dropdown{
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+    width:100%!important;
+    max-width: 200px;
+  }
+  .ven_tblk .stk_sear{
+    text-align: center;
+  }
+  .p_total {
+    text-align: left;
+  }
+  .ven_tblk .advsearch .stk_sear, .ven_tblk .stk_sear label, .ven_tblk .stk_sear .panleft, .ven_tblk .stk_sear .panright, .ven_tblk .stk_sear .search_box{
+    text-align: left;
+  }
+  .ven_tblk .stk_sear .adv_srbox .col-md-2.dropdown .btn-default{
+    width:168px;
+  }
+  .expertDropSelectedListClose{
+    margin-top:-7px;
+  }
+  .adv_srbox .expertDropList.dropdown-menu{
+    max-height: 150px!important;
+  }
+
+  .dropdown-menu .pull-left {
+      display: block;
+      float: none !important;
+  }
+  .trans_sublk  .form-group .col-md-2{
+    padding:0;
+  }
+  .add_vendorb .btn-primary{
+    margin-top: 10px;
+  }
+  .allconfigs .form-group .configlabel .control-label{
+    width:90%;
+    vertical-align: top;
+  }
+  .trans_blk label.control-label{
+    width:75%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  #common_Filter_Delete{
+    margin-bottom: 10px;
+  }
+  
+  .pm_box .btn{
+    margin:0;
+    padding:6px 10px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .pack_head .package_input {
+    padding: 0 15px;
+    text-align: left;
+  }
+  .view_tot{
+    text-align: left;
+  }
+  .chck_align .balanceoh{
+    width:105px;
+  }
+}
+
+
+@media only screen and (max-width: 980px) {
+  .add_vendorb .form-group .zip_box{
+    padding:0!important;
+  }
+  .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > td, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > thead > tr > th{
+    white-space: normal!important;
+  }
+  .search_box .purchase_sech .dropdown, .dropdown{
+    padding: 0;
+  }
+  .pull-right.add_ven {
+    display: block;
+    float: none !important;
+    margin: 10px 0;
+  }
+  .padding_L0.col-sm-6, .padding_R0.col-sm-6 {
+    width: 85%;
+    float: none;
+    display: block;
+    margin:0 auto 15px;
+  }
+ .padding_L0.col-sm-12, .padding_R0.col-sm-12 {
+    float: none;
+    display: block;
+    margin:0 auto 15px;
+  }
+
+  .search_ff{
+    right: 126px;
+    top:-49px;
+  }
+  .search_t{
+    width:180px;
+  }
+  .search_box .form-control{
+    margin-bottom: 10px;
+  }
+  .pg_limit.b_margin{
+    width:35%;
+  }
+  .treeViewDrop {
+    left: 0;
+  }
+  .search_box .dropdown .btn{
+    display: block;
+    text-align: left;
+  }
+  
+  .search_box .pad_box{
+    padding: 0!important;
+  }
+  .view_ot{
+    width:67%;
+  }
+  .view_num, .v_progress{
+    padding:0;
+  }
+  .search_t{
+    margin-top:6px;
+  }
+  .s_icon{
+    top:12px;
+  }
+  .rst_btn{
+    float: right;
+    margin-right: 15px;
+  }
+  .balanceoh .balradio > label > input[type="checkbox"], .balanceoh .balradio > label > input[type="radio"]{
+    margin:0;
+  }
+  #selectStock{
+    margin-right: 0;
+  }
+  .product_padd.stk_sear, .replenishmentSrchActions{
+    padding:0 15px!important;
+    margin-bottom:15px;
+  }
+  .replenishmentSrchActions button{
+    margin:0;
+  }
+  .inline_box{
+    max-width: 100%;
+  }
+  #selectStock{
+    margin-right: 0!important;
+  }
+  #searchboxstklook .stk_sear{
+    padding:0!important;
+  }
+  #searchboxstklook .inline_box{
+    padding:0 15px;
+  }
+  .trans_blk label.control-label{
+    width:70%;
+  }
+  .tooltip-pro.inline_box{
+    padding:0 15px;
+  }
+  .tooltip-pro.inline_box a{
+    display: block;
+  }
+  .stk_sear.padd_box{
+    padding-right: 0;
+  }
+  .trans_det {
+    padding: 0 15px;
+  }
+  .v_edit .col-md-10, .v_edit .col-md-12, .v_edit .col-md-6{
+    padding-right:0;
+  }
+  .panleft{
+    border-right: 0;
+  }
+  .view_amt {
+    width: 150px;
+  }
+  .view_tot{
+    text-align: left;
+  }
+  .nav_icon .navbar-nav a{
+    padding:7px 0 7px 10px;
+  }
+  .search_scroll {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .package_arrw .btn-link{
+    padding:13px;
+    float: none!important;
+  }
+  .trans_det .spl_inst{
+    margin:10px 0!important;
+  }
+  .stk_sear autocomplete .autocomplete input{
+    margin-bottom:15px;
+  }
+  .v_edit.padd_box{
+    padding:0 15px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .allconfigs .configlabel{
+    width:100%!important;
+  }
+
+  .trans_sublk .col-xs-12{
+    padding:0;
+  }
+
+  .ven_tblk .view_p, .ven_tblk .view_ot{
+    float: none;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .sidebar-nav.navbar-collapse.collapse{
+    display: block;
+  }
+  .purchase_sech .dropdown{
+    width:100%;
+    margin:0 auto;
+    padding: 0;
+
+  }
+  .dropdown  .tooltip-pro.width_padd{
+    max-width: 100%;
+  }
+  .dropdown .tooltip-pro {
+      margin: 0 auto;
+      max-width: 95%;
+      width: 100%;
+  }
+  .purchase_sech .dropdown .btn{
+    width:100%;
+    text-align: left;
+    display: block;
+  }
+  .purchase_sech .dropdown .btn.expertDropSelectedListClose{
+    width:15%;
+    text-align: right;
+    display: inline-block;
+    margin:0;
+    padding:0;
+  }
+  .treeViewDrop {
+    left: 0;
+    margin: 0 auto;
+    max-width: 280px;
+    width: 100% !important;
+  }
+  .alert-li .fa-caret-up{
+    width: 100%;
+    left:13px;
+    text-align: center;
+  }
+  .head_menu{
+    display: inline-block;
+    float: none;
+    vertical-align:top;
+    max-width: 175px;
+    position: absolute;
+    top:58px;
+    right:10px;
+  }
+  .head_menu li.user-footer{
+    display: block;
+  }
+  .head_menu li{
+    display: inline-block;
+    float: none;
+    vertical-align:top;
+  }
+  .head_logo {
+    display: block;
+  }
+  #wrapper .navbar-header{
+    display:block;
+  }
+  .ovcnav-brand{
+    float: none;
+    display: block;
+    margin:0 auto;
+  }
+  .nav_icon {
+    display: inline-block;
+    float: none;
+    margin-left: 35px;
+  }
+  .nav_menu{
+    left:0;
+    top:58px;
+  }
+  .search_t {
+      width: 140px;
+      margin-top: 5px;
+  }
+  .nav > li > a{
+    padding: 10px 5px;
+  }
+  .s_icon {
+    top:11px;
+  }
+  .navbar-nav .open .dropdown-menu{
+    position: absolute;
+  }
+  .nav_icon ul li a{
+    line-height: 45px;
+  }
+  .nav_icon .navbar-nav{
+    margin:0 -15px;
+  }
+  .header_blk .page-header{
+    text-align: center;
+  }
+  .add_ven a{
+    float: left;
+  }
+  .export_pre_header {
+    padding:0;
+  }
+  .view_p {
+      display: inline-block;
+      float: none;
+      overflow-wrap: break-word;
+      vertical-align: top;
+      width: 35%;
+  }
+  .view_ot {
+      display: inline-block;
+      float: none;
+      vertical-align: top;
+      width: 60%;
+  }
+  .trans_blk .balanceoh .balradio > label{
+    position: unset;
+  }
+   /*footer*/
+  #footer{
+    position: unset;!important;
+    display: block;
+    text-align: right;
+    width:100%;
+    margin:0 auto;
+  }
+  .search_btns{
+    float: none;
+  }
+  #selectStock{
+    float: none;
+    display: block;
+    width:100%;
+  }
+  .btn-group{
+    display: block;
+  }
+  .dropdown.inline_box .tooltip-pro {
+    max-width: 100%;
+  }
+
+  #exclude_orderNo_add{
+    margin:0 10px;
+  }
+  #exclude_order_TypeAdd .dropdown{
+    text-align: center;
+  }
+  .tanhs_btn.search_btns{
+    padding:0 30px;
+  }
+  .view_amt {
+    width: 35%;
+  }
+  .package_wrapper .package_table{
+    width:88%!important;
+  }
+  .pro_menu ul li a{
+    padding:10px;
+    font-size: 14px;
+  }
+  .export_pre_header{
+    padding:0 15px;
+  }
+  label.export_pre_header{
+    padding:0 ;
+  }
+  .left_colon{
+    float: none;
+    padding-right:3px;
+  }
+  .p_total span > label{
+    width:34.5%;
+  }
+  #searchboxstklook .stk_sear.find_btn{
+      padding:0 15px!important;
+      margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 599px) {
+
+  /*header*/
+  .header, .header .logo, .header .navbar{
+      position: unset;
+      z-index: 0;
+    }
+    
+    .nav_icon{
+      display: block;
+      width:100%
+    }
+
+    .head_menu{
+      text-align: center;
+      position: unset;
+      display: block;
+      max-width:160px;
+      margin:7% auto 0 ;
+      padding: 0;
+    }
+   
+    .search_t{
+      width:100%;
+    }
+    .header_se{
+      position: unset;
+    }
+    .search_ff {
+        display: block;
+        float: none;
+        margin: 0 auto !important;
+        position: relative;
+        right: 0;
+        width: 270px;
+        top:-80px;
+    }
+    .nav_icon{
+      display: block;
+    }
+    .nav_icon{
+      display: block;
+      float: none;
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+    }
+    .nav_icon ul li a{
+      text-align: center;
+    }
+    .nav_icon ul li{
+      float: none;
+    }
+    .pull-right > .dropdown-menu {
+        left: -108px;
+        right: auto;
+    }
+    .navbar-nav > .user-menu > .dropdown-menu::after, .navbar-nav > .minipop_menu .dropdown-menu::after{
+      right:0;
+      left:134px;
+    }
+   /*pagination*/
+    .pg_limit {
+    float: none;
+    text-align: center;
+    }
+    .pagination > li {
+      display: inline-block;
+      margin-left: -2px;
+    }
+    .pagination{
+      display: block;
+      margin:0 auto;
+      text-align: center;
+    }
+   .pagination > li > a, .pagination > li > span{
+      padding:6px;
+      font-size:11px;
+    }
+    .pglimit{
+      float: none;
+    }
+    .btn{
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .btn-file{
+      margin-top: 10px !important;
+    }
+    }
+    .result_content .paddingL_0{
+      padding:0;
+    }
+    .thumbnail.result_content .input-group{
+      margin-bottom:15px;
+    }
+    .thumbnail .result_content label{
+      font-size: 13px;
+    }
+    #advanced{
+      margin:0;
+      margin-top: 8px;
+    }
+    .search_b input{
+      margin-left: 0;
+    }
+    .purchase_m .nav-pills > li.purchase_place a{
+      padding-left: 33px;
+    }
+    .padd_btn .btn.btn-primary {
+      float: none !important;
+      padding: 6px 7px;
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 0!important;
+      margin-right: 0!important;
+      margin-bottom: 0
+    }
+
+}
+
+@media only screen and (max-width: 499px) {
+  
+  .page-header{
+    text-align: center;
+  }
+  .page-header .orderst.pull-right{
+    float: none!important;
+    width:100%;
+    margin:0 auto;
+    text-align: center;
+  }
+  .page-header .orderst.pull-right .pull-right{ 
+    float: none!important;
+  }
+  .add_ven a {
+    float: none;
+    margin: 0 auto 10px;
+  }
+  .add_ven .dropdown.pull-right{
+    float: none!important;
+  }
+  .header, .header .logo, .header .navbar{
+    position: unset;
+    z-index: 0;
+  }
+   .footer #log {
+    margin: 0 auto!important;
+    width: 100%;
+  }
+
+  .appVersCls {
+    color: #fff;
+    padding-right: 0;
+    text-align: center;
+    font-size: 15px;
+    margin: 0;
+  }
+  .header .navbar .navbar-right{
+    float: none;
+  }
+  .header .navbar{
+    min-height: 35px;
+  }
+  .header .logo img{
+    float: none;
+  }
+  .header .logo {
+    float: none;
+    display: block;
+    text-align: center;
+  }
+  .alert-box{
+    right:-145px;
+  }
+  .alert-li .fa-caret-up {
+    left: -14px;
+  }
+  .v_progress, .v_progress .pull-right{
+    float: none!important;
+  }
+  .p_total label.view_tot.ng-binding {
+    text-align: left;
+    width: 64px;
+  }
+  .pro_menu ul li a{
+    padding:10px 7px;
+    font-size:11px;
+  }
+  .header_blk .page-header .nav-tabs a{
+    font-size: 15px;
+  }
+  .pg_limit.b_margin.stl_bal{
+    width:100%;
+  }
+}
+
+@media only screen and (max-width: 399px) {
+  .multiselect-container.dropdown-menu{
+    left:-39px;
+  }
+  .balanceoh .balradio > label > img{
+    position: absolute;
+    top:5px;
+  }
+  .balanceoh .balradio > label > img.squ_box, .balanceoh .balradio > label > img.mar_r{
+    position: relative;
+    top:0;
+  }
+  .allconfigs .form-group .configlabel .control-label{
+    width:84%;
+    vertical-align: top;
+  }
+  .allconfigs .form-group .col-xs-6.balradio{
+    width:100%;
+    padding:0;
+  }
+  .allconfigs .form-group .balanceoh.check_left .btn-group{
+    display: block;
+    margin-top: 10px;
+  }
+  .allconfigs .form-group .balanceoh.check_left .multiselect.dropdown-toggle{
+    display: block;
+    float: none;
+    max-width: 120px;
+    padding: 6px 0;
+    text-align: center;
+    width: 100%;
+  }
+  .balanceoh {
+    margin-bottom: 30px;
+  }
+  .search_ff {
+    width:175px;
+  }
+  .ven_tblk .search_box .search_btns button{
+    float: none;
+    margin-bottom: 5px;
+  }
+  .pagination > li > a, .pagination > li > span{
+    padding:6px;
+    font-size:11px;
+  }
+  .save_can .btn{
+    margin:0 auto 10px;
+  }
+  .save_can .pull-right{
+    float: none!important;
+  }
+ /**
+  .save_can .btn{
+    display: block;
+    margin:0 auto 10px;
+  }**/
+  .save_can .pull-right{
+    float: none!important;
+  }
+  .save_can{
+    text-align: center;
+  }
+  .dropdown .tooltip-pro{
+    max-width: 85%;
+  }
+  #page-wrapper{
+    margin: 0!important;
+  }
+  .pull-right.add_ven{
+    text-align: center;
+  }
+  .pull-right.add_ven .dropdown.pull-right{
+    float: none!important;
+    margin-top: 10px;
+  }
+  .alert-box{
+      left: -64px;
+      right: 0;
+  }
+  .alert-li .fa-caret-up{
+    left:3px;
+    text-align: left;
+  }
+  .trans_blk fieldset .col-md-12{
+    padding:0;
+  }
+  .trans_sublk .trans_tit, .trans_blk .trans_tit{
+    font-size: 11px;
+  }
+
+  /*For SmallDevice Table Changes in Whole Module*/
+  table.iPhoneViewTable  caption { background-image: none; }
+  table.iPhoneViewTable thead { display: none; }
+  table.iPhoneViewTable tbody td { 
+    display: block; padding: .6rem; 
+  }
+  /*table .iPhoneViewTable iPhoneViewTabledata .pull-right{ 
+    float: none !important;
+  }*/
+  table .iPhoneViewTabledata{
+    text-align: left !important;
+  }
+  table .iPhoneViewTabledata:before { 
+    content: attr(data-th); 
+    font-weight: bold;
+    display: inline-block;
+    width: auto;  
+  }
+  table .iPhoneViewTable1 tbody td{
+    padding-right: 10px;
+  }
+  .allconfigs .exclamicon{
+    float: none;
+    margin:5px -8px 0;
+  }
+  .thumbnail.media.padding {
+    padding: 10px 0;
+  }
+  h5.pull-left {
+    display: inline-block;
+    float: none !important;
+    vertical-align: top;
+    width: 55%;
+  }
+  .add_tit h3 {
+    line-height: 26px;
+  }
+  .search_btns{
+    padding:0 15px;
+  }
+  .pdf-qty button {
+    margin-top: 4px;
+  }
+  .currentzone-handcount {
+    width: 100%;
+  }
+  .btn_box{
+    width: 100%;
+  }
+}

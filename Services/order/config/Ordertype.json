@@ -1,0 +1,119 @@
+ {
+     "MAN": {
+         "submitted": "SUBMITTED_IN",
+         "unconfirmed": "UNCONFIRMED_IN",
+         "confirmed": "CONFIRMED_IN",
+         "shipped": "ASN_IN",
+         "received": "RECEIVED_IN",
+         "confirmed_rvs": "CONFIRMED_IN_RVS",
+         "unconfirmed_rvs": "UNCONFIRMED_IN_RVS",
+         "rejected_rvs": "REJECTED_IN_RVS",
+         "forceClosed": "FORCE_CLOSED_IN",
+         "rejected": "REJECTED_IN",
+         "closed": "ASN_CLOSE",
+         "shippedReversed": "PO_RECEIPT_RV",
+         "draftOrder": "PO_DRAFT_CREATE",
+         "deleted": "PO_DRAFT_DELETE"
+     },
+     "RPL": {
+        "submitted": "SUBMITTED_IN",
+         "unconfirmed": "UNCONFIRMED_IN",
+         "confirmed": "CONFIRMED_IN",
+         "shipped": "ASN_IN",
+         "received": "RECEIVED_IN",
+         "confirmed_rvs": "CONFIRMED_IN_RVS",
+         "unconfirmed_rvs": "UNCONFIRMED_IN_RVS",
+         "rejected_rvs": "REJECTED_IN_RVS",
+         "forceClosed": "FORCE_CLOSED_IN",
+         "rejected": "REJECTED_IN",
+         "closed": "ASN_CLOSE",
+         "shippedReversed": "PO_RECEIPT_RV",
+         "draftOrder": "PO_DRAFT_CREATE",
+         "deleted": "PO_DRAFT_DELETE"
+     },
+     "IBT_M": {
+         "toStore": {
+             "submitted": "IBT_SUBMITTED_IN",
+             "unconfirmed": "UNCONFIRMED_IN",
+             "unconfirmed_rvs": "UNCONFIRMED_IN_RVS",
+             "confirmed": "IBT_CONFIRMED_IN",
+             "confirmed_rvs": "CONFIRMED_IN_RVS",
+             "shipped": "IN_TRANSIT_IN",
+             "received": "IBT_RECEIPT_IN",
+             "forceClosed": "FORCE_CLOSED_IN",
+             "rejected": "IBT_REJECTED_IN",
+             "rejected_rvs": "REJECTED_IN_RVS",
+             "closed": "ASN_CLOSE",
+             "shippedReversed": "IBT_RECEIPT_IN_RV",
+             "submitted_rvs":"IBT_SUBMITTED_RVS",
+             "draftOrder": "IBT_DRAFT_CREATE",
+             "deleted": "IBT_DRAFT_DELETE"
+         },
+         "fromStore": {
+             "submitted": "IBT_SUBMITTED_OUT",
+             "unconfirmed": "UNCONFIRMED_OUT",
+             "confirmed": "IBT_CONFIRMED_OUT",
+             "shipped": "IN_TRANSIT_OUT",
+             "received": "IBT_RECEIPT_OUT",
+             "forceClosed": "FORCE_CLOSED_OUT",
+             "rejected": "IBT_REJECTED_OUT",
+             "closed": "ASN_CLOSE",
+             "shippedReversed": "IBT_RECEIPT_OUT_RV",
+             "confirmed_rvs":"IBT_CONFIRMED_RVS",
+             "rejected_rvs":"IBT_REJECTED_RVS",
+             "draftOrder":""
+         }
+     },
+    "FC_STATUS": {
+        "submitted": "FC_SUBMITTED_IN",
+        "unconfirmed": "FC_UNCONFIRMED_IN",
+        "confirmed": "FC_CONFIRMED_IN"
+    },
+     "RTN": {
+         "returned": "RETURN_VENDOR",
+         "draft": "RTN_DRAFT_CREATE",
+         "deleted": "RTN_DRAFT_DELETE"
+     },
+     "PUSH": {
+        "fromStore": {
+            "shipped": "MAN_SHIP_OUT",
+            "received":"PUSH_RECEIPT_OUT",
+            "shippedReversed":"PUSH_RECEIPT_OUT_RV",
+            "draftOrder": "PUSH_DRAFT_CREATE",
+            "deleted": "PUSH_DRAFT_DELETE"
+        },
+        "toStore":{
+            "shipped": "MAN_SHIP_IN",
+            "received":"PUSH_RECEIPT_IN",
+            "shippedReversed":"PUSH_RECEIPT_IN_RV",
+            "draftOrder": "",
+            "deleted": ""
+        }
+     },
+     "MR_MAN": {
+        "receiveInProgress": "MAN_RECEIPT_DRAFT_CREATE",
+        "received": "MANUAL_RECEIPT_PO",
+        "deleted":"MAN_RECEIPT_DRAFT_DELETE",
+        "receiveInProgress_rvs": "MANUAL_RECEIPT_PO_RV"
+     },
+     "MR_IBT_M": {
+        "toStore": {
+            "receiveInProgress": "",
+            "received": "MANUAL_RECEIPT_IBT_IN",
+            "deleted":"MAN_RECEIPT_DRAFT_DELETE",
+            "receiveInProgress_rvs": "MANUAL_RECEIPT_IBT_IN_RV"
+            },
+        "fromStore": {
+            "receiveInProgress": "MAN_RECEIPT_DRAFT_CREATE",
+            "received": "MANUAL_RECEIPT_IBT_OUT",
+            "deleted":"MAN_RECEIPT_DRAFT_DELETE",
+            "receiveInProgress_rvs": "MANUAL_RECEIPT_IBT_OUT_RV" 
+        },
+        "deleted":"MAN_RECEIPT_DRAFT_DELETE"    
+     },
+     "DROP_SHIP": {
+        "submitted": "DROP_SHIP_SUBMITTED",
+        "draftOrder": "DROP_SHIP_DRAFT_CREATE",
+        "deleted": "DROP_SHIP_DRAFT_DELETE"
+     }
+}

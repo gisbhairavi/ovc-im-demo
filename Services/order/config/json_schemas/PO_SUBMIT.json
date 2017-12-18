@@ -1,0 +1,125 @@
+{  
+   "$schema":"http://json-schema.org/draft-04/schema#",
+   "type":"object",
+   "title":"Root schema.",
+   "description":"PurchaseOrder submission object.",
+   "properties":{  
+      "purchaseOrder":{  
+         "type":"object",
+         "title":"PurchaseOrder schema.",
+         "description":"Main Order object.",
+         "properties":{  
+            "purchaseOrderNumber":{  
+               "type":"string",
+               "title":"PurchaseOrderNumber schema.",
+               "description":"Order Number for the particular Purchase Order."
+            },
+            "purchaseOrderDate":{  
+               "type":"number",
+               "title":"PurchaseOrderDate schema.",
+               "description":"Purchase Order submission Date"
+            },
+            "poType":{  
+               "type":"string",
+               "title":"PoType schema.",
+               "description":"Purchase Order type.",
+               "enum":[  
+                  "MAN",
+                  "RPL"
+               ]
+            },
+            "vendorId":{  
+               "type":"string",
+               "title":"vendorId schema.",
+               "description":"unique Id of vendor."
+            },
+            "afs":{  
+               "type":"string",
+               "title":"Afs schema.",
+               "description":"asf Store name."
+            },
+            "needByDate":{  
+               "type":"number",
+               "title":"Need by Date schema.",
+               "description":"The date when the order needs to be fulfilled by the Vendor"
+            },
+            "orderStatus":{  
+               "type":"string",
+               "title":"OrderStatus schema.",
+               "description":"Status of the PurchaseOrder.",
+               "enum":[  
+                  "submitted"
+               ]
+            },
+            "specialInstructions":{  
+               "type":"string",
+               "title":"SpecialInstructions schema.",
+               "description":"Special Instructions for the order."
+            },
+            "shipToLocation":{  
+               "type":"string",
+               "title":"ShipToLocation schema.",
+               "description":"shipping Location of the Order."
+            },
+            "markForLocation":{  
+               "type":"string",
+               "title":"MarkForLocation schema.",
+               "description":"Mark for location for the purchase order."
+            },
+            "purchaseOrderItem":{  
+               "type":"array",
+               "title":"PurchaseOrderItem schema.",
+               "description":"Array that contains the Order item in the Purchase Order",
+               "items":{  
+                  "type":"object",
+                  "title":"items schema.",
+                  "description":"Order item in the Purchase Order.",
+                  "properties":{  
+                     "lineNumber":{  
+                        "type":"number",
+                        "multipleOf":1,
+                        "title":"LineNumber schema.",
+                        "description":"LineNumber for the particular SKU"
+                     },
+                     "sku":{  
+                        "type":"string",
+                        "title":"Sku schema.",
+                        "description":"Stock keeping Unit of the product."
+                     },
+                     "qtyStatus":{  
+                        "type":"string",
+                        "title":"QtyStatus schema.",
+                        "description":"Status of the SKU quenty.",
+                        "enum":[  
+                           "submitted"
+                        ]
+                     },
+                     "qty":{  
+                        "type":"number",
+                        "title":"Qty schema.",
+                        "description":"quenty of the particular SKU."
+                     }
+                  },
+                  "required":[  
+                     "lineNumber",
+                     "sku",
+                     "qtyStatus",
+                     "qty"
+                  ]
+               }
+            }
+         },
+         "required":[  
+            "purchaseOrderNumber",
+            "purchaseOrderDate",
+            "poType",
+            "afs",
+            "shipToLocation",
+            "purchaseOrderItem"
+         ]
+      }
+   },
+   "required":[  
+      "purchaseOrder"
+   ]
+}

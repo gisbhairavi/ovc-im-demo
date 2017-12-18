@@ -1,0 +1,122 @@
+<div class="row">
+	<form role="form" name="form" class="form-horizontal">
+		<div class="col-lg-12  col-xs-12 col-sm-12">
+			<div class="col-lg-4 col-sm-12 col-xs-12">
+				<span class="form-group col-sm-12"> <label
+					class="control-label">{{ovcLabel.replenishmentFilters.considerInventoryBalances}}:</label><br /></span>
+				<br clear="all" />
+				<div class="form-group col-sm-12">
+					<div class="balanceoh">
+						<div class="balradio col-sm-12">
+							<label style="margin: 0% 0% 25px 25px"> <span
+								class="fa fa-lg"
+								ng-class="{'fa-check-square-o' : rfp.currentOnHold, 'fa-square-o' : !rfp.currentOnHold }"></span>
+								<input style="width: 0" type="checkbox" name="currentOnHold"
+								ng-model="rfp.currentOnHold">
+								{{ovcLabel.replenishmentFilters.checkbox.currentOnHand}}
+							</label> <label style="margin: 0% 0% 25px 25px"> <span
+								class="fa fa-lg"
+								ng-class="{'fa-check-square-o' : rfp.openOnOrder, 'fa-square-o' : !rfp.openOnOrder }"></span>
+								<input style="width: 0" type="checkbox" name="openOnOrder"
+								ng-model="rfp.openOnOrder">
+								{{ovcLabel.replenishmentFilters.checkbox.openOnOrder}}
+							</label> <label style="margin: 0% 0% 25px 25px"> <span
+								class="fa fa-lg"
+								ng-class="{'fa-check-square-o' : rfp.inTransitIn, 'fa-square-o' : !rfp.inTransitIn }"></span>
+								<input style="width: 0" type="checkbox" name="inTransitIn"
+								ng-model="rfp.inTransitIn">{{ovcLabel.replenishmentFilters.checkbox.inTransitIn}}
+							</label> <label style="margin: 0% 0% 25px 25px"><span
+								class="fa fa-lg"
+								ng-class="{'fa-check-square-o' : rfp.inTransferOut, 'fa-square-o' : !rfp.inTransferOut }"></span>
+								<input style="width: 0" type="checkbox" name="inTransferOut"
+								ng-model="rfp.inTransferOut">{{ovcLabel.replenishmentFilters.checkbox.inTransferOut}}</label>
+							<label style="margin: 0% 0% 25px 25px"><span class="fa fa-lg"
+								ng-class="{'fa-check-square-o' : rfp.allocated, 'fa-square-o' : !rfp.allocated }"></span>
+								<input style="width: 0" type="checkbox" name="allocated"
+								ng-model="rfp.allocated">{{ovcLabel.replenishmentFilters.checkbox.allocated}}</label>
+							<label style="margin: 0% 0% 25px 25px"><span class="fa fa-lg"
+								ng-class="{'fa-check-square-o' : rfp.reserverd, 'fa-square-o' : !rfp.reserverd }"></span>
+								<input style="width: 0" type="checkbox" name="reserverd"
+								ng-model="rfp.reserverd">{{ovcLabel.replenishmentFilters.checkbox.reserved}}</label>
+
+						</div>
+					</div>
+				</div>
+				<br clear="all" />
+			</div>
+			<div class="col-lg-6 col-sm-12 col-xs-12">
+				<div class="col-sm-4 col-xs-12" style="padding: 0">
+					<label class="control-label">{{ovcLabel.replenishmentFilters.excludeOrderNumbers}}:</label>
+				</div>
+				<div class="col-sm-5 col-xs-8">
+					<autocomplete attr-input-class="form-control"
+						attr-input-id="excludeOrderNumbersearch" id="slpsearch"
+						ng-model="data.selectedOrderId"
+						attr-placeholder="{{ovcLabel.replenishmentFilters.placeholder.search}}"
+						click-activation="false" data="excludeOrderNumber"></autocomplete>
+						 
+					<div
+						ng-show="data.orderNumberErrorMessage"
+						 style="margin: 3px 0px 0px 0px"
+						class="alert alert-danger">{{data.orderNumberErrorMessage}}</div>	
+					<div class="col-lg-12"
+						style="float: left; padding: 5px 5px 0px 5px; margin-right: 2px;"
+						ng-repeat="firstItem in selectedExcludeOrderNumber track by $index">
+						<label> {{firstItem}}</label> <a
+							ng-click="removeExcludeOrderNumber($index)" ng-hide="moluom"> X</a> <a
+							ng-click="" ng-show="moluom"> X</a>
+					</div>
+					 
+				</div>
+				<div class="col-sm-3 col-xs-4">
+					<button type="button" id="exclude_orderNo_add" class="btn btn-primary rst_btn ng-binding"
+						ng-click="addOrderNumber(data.selectedOrderId)">
+						{{ovcLabel.replenishmentFilters.buttons.add}}</button>
+				</div>
+			</div>		
+
+		</div>
+		<div class="col-lg-12 col-xs-12 col-sm-12">
+			<div class="col-lg-12">
+				<label class="control-label">{{ovcLabel.replenishmentFilters.excludeOrderType}}:</label>
+				<a href id="carr_detail" ng-hide="true" ng-click="select_allcar()"
+					class="btn btn-primary">{{ovcLabel.replenishmentFilters.carrierAlphaCode}}</a>
+				<table style="width: 480px">
+					<tbody>
+						<tr>
+							<td id="exclude_order_TypeAdd">
+								<div checkbox-dropdown-multiselect="" items="data.excludeOrderType"
+									selected-items="excludeTypeSelectedItems"></div>
+							</td>
+							<td>
+								<div>
+									<div
+										style="float: left; padding: 5px 5px 0px 5px; border: 2px solid #efefef; margin-right: 2px;"
+										ng-repeat="firstItem in excludeTypeSelectedItems">
+										<label> {{firstItem.Name}}</label> <a
+											ng-click="removeExcludeType($index)" ng-hide="moluom"> X</a>
+										<a ng-click="" ng-show="moluom"> X</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-5 col-sm-7 search_btns porder_srch"
+			style="margin-top: 3%;">
+			<button id="common_RPL_cancel" type="reset" class="btn btn-primary rst_btn ng-binding"
+				ui-sref="ovc.ReplenishmentFilter">
+				{{ovcLabel.replenishmentFilters.buttons.cancel}}</button>
+			<button id="common_RPL_previous"  type="reset" class="btn btn-primary rst_btn ng-binding" ng-click="filterCancelAndNextBtn('products');"
+				>
+				{{ovcLabel.replenishmentFilters.buttons.previous}}</button>
+			<button id="common_RPL_next"  type="submit" class="btn btn-primary ng-binding" ng-click="filterCancelAndNextBtn('advance_criteria');"
+				style="margin-right: 10px;">
+				{{ovcLabel.replenishmentFilters.buttons.next}}</button>
+			<!-- 	ng-click="asnSearch()"  -->
+
+		</div>
+	</form>
+</div>

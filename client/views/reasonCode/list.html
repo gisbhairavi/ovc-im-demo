@@ -1,0 +1,94 @@
+<div class  =  "row header_blk">
+    <div class  =  "col-lg-12">
+        <h3 class  =  "page-header">{{ovcLabel.reasoncodes.heading.list}}
+			<div class  =  "pull-right add_ven clearfix">
+				<a class = "btn btn-primary" ng-hide  =  "moluom"   ui-sref = "ovc.reasoncode-add"  title = "{{ovcLabel.reasoncodes.heading.add}}" id="ovcAddBtn"><i class = "fa fa-plus-circle"></i>{{ovcLabel.reasoncodes.heading.add}}</a>
+				<a href = "" class = "btn btn-primary" ng-show = "moluom"  ng-disabled = "moluom"  title = "{{ovcLabel.reasoncodes.heading.add}}" id="ovcAddBtn"><i class = "fa fa-plus-circle"></i>{{ovcLabel.reasoncodes.heading.add}}</a>
+			</div>
+		</h3>
+	</div>
+</div>
+<!-- /.row -->
+<div class  =  "row r_margin">
+<div class  =  "ven_tblk clearfix">
+    <div class  =  "col-lg-12">
+        <div class  =  "panel-default">
+            <!-- /.panel-heading -->
+            <div class  =  "panel-body search_box">
+                <div class  =  "row">					
+			  <form>
+				  <div class  =  "col-md-6 col-sm-6">
+				    <input type  =  "text"  name  =  "search"  id  =  "search" placeholder  =  "{{ovcLabel.reasoncodes.searchplaceholder}}" class  =  "form-control" ng-model = "search"/>
+				  </div>
+						
+						
+				<div class = "col-md-5 col-sm-6 search_btns">
+					<button type = "reset" class = "btn btn-primary rst_btn ng-binding" ng-click = "search_reset()" id="ovcResetBtn" ><i class = "fa fa-refresh" style = "margin-right:3px;"></i>{{ovcLabel.reasoncodes.buttons.Reset}}</button>
+					<button type = "submit" class = "btn btn-primary ng-binding" ng-click = "reason_search()"  id="ovcSearchBtn" style = "margin-right:10px;"><i class = "fa fa-search" style = "margin-right:3px;"></i>{{ovcLabel.reasoncodes.buttons.Search}}</button>
+				</div>
+			 </form>
+	 	  </div>
+               </div>
+ <!-- /.table-responsive -->
+                    <div class = "ven_tbody">
+			<div class = "row">
+			<div class = "col-md-12" ng-show = "filteredItems  >  0">
+				<div class = "col-md-12 table-responsive" >
+				    <table class = "table table-striped table-bordered">
+					  <thead>
+					  	  <th>{{ovcLabel.reasoncodes.reasoncodetype}}&nbsp;<a ng-click = "sort_by('codeType');"><i class = "fa fa-sort"></i></a></th>
+					      <th>{{ovcLabel.reasoncodes.reasoncodeid}}&nbsp;<a ng-click = "sort_by('id');"><i class = "fa fa-sort"></i></a></th>
+					      <th>{{ovcLabel.reasoncodes.description}}&nbsp;<a ng-click = "sort_by('id');"><i class = "fa fa-sort"></i></a></th>
+					      <th>{{ovcLabel.reasoncodes.action}}&nbsp;</th>
+					      
+					</thead>
+					<tbody>
+					<tr ng-repeat = "reasonData in list   =  (list  | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+						<td>{{reasonData.rescodeType}}</td>
+						<td>{{reasonData.res_id}}</td>
+						<td class  =  "name_li" id="reasoncode_details"><a  ui-sref = "ovc.reasoncode-edit({res_id:reasonData.res_id})"  ng-click = "reason_edt(reasonData.res_id)">{{reasonData.description}}</a></td>
+						<td class  =  "action_f" id="del_box" style = "width:150px;">
+						<a href  =  "" ng-click = "reason_delete(reasonData.res_id)"  ng-hide = "moluom" class = "btn btn-primary del_i"><i class = "fa fa-trash"></i></a>
+						<a href  =  "" ng-click = ""   ng-show  =  "moluom" ng-disabled = "moluom" class = "btn btn-primary del_i"><i class = "fa fa-trash"></i></a>
+						</td>
+					</tr>
+					</tbody>
+				   </table>
+		               </div>
+					   </div>
+		       
+			
+			<div id="ovcError" class = "col-md-12" ng-if = "filteredItems  ==  0">
+				<div class = "col-md-12">
+					<h4>{{ovcLabel.reasoncodes.noreasoncodefound}}</h4>
+				</div>
+			</div>
+			<div class = "col-md-12" ng-show = "filteredItems > 0">    
+			<div class = "panel-body fliter_i">	
+				
+				<uib-pagination total-items = "filteredItems"  items-per-page  = "entryLimit"  ng-model = "currentPage"  max-size  =  "5"  boundary-links = "true" ng-change = "" ></uib-pagination>	
+					<div class = "col-md-3 pglimit">
+					<div class = "pg_limit page_size_drdn">
+							<label>{{ovcLabel.reasoncodes.pagesize}}:</label>
+							<select  convert-to-number ng-model = "entryLimit" class = "pgsizes">
+								<option>10</option>
+								<option>20</option>
+								<option>50</option>
+								<option>100</option>
+							</select>
+					</div>
+					</div>
+				</div>
+				</div>
+			</div>
+
+ </div>
+
+
+
+		</div>
+      	</div>
+   </div>
+</div>
+
+	

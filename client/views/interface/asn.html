@@ -1,0 +1,335 @@
+
+<div class="col-sm-12" style="background-color: white;">
+	<div class="col-sm-6 paddingL_0">
+		<autocomplete attr-input-class="form-control" attr-input-id="asnSearch"  id="slpsearch" ng-model="asnForm.selectedOrderId" attr-placeholder="{{ovcLabel.updateOrder.searchOrderLabel}}" click-activation="false" data="purchaseOrders" attr-input-autocomplete="off" ></autocomplete>
+	</div>
+
+	<div class="col-sm-6 paddingL_0">
+		<button id="ovcSearchBtn" class="btn btn-primary" ng-click="getSkus('asn', asnForm.selectedOrderId);">{{ovcLabel.updateOrder.search}}</button>
+	</div>
+
+	<div ng-show="asnSkusResults">
+		<!-- <div class="result_content col-sm-10" style="display:none;">
+			<div class="thumbnail media padding">
+				<div class="col-sm-6">
+					<label>{{ovcLabel.updateOrder.asn_number}}</label>
+					<input type="text" class="form-control" ng-model="asn.asnNumebr" disabled />
+				</div>
+			</div>
+		</div> -->
+
+		<div class="thumbnail media padding col-sm-12">
+			<div class="col-sm-12 paddingL_0">
+				<div class="paddingL_0">
+					<h4>Order Details</h4>
+						<div class="col-md-12 paddingL_0 purchase_sech">
+							<div class="col-md-4 col-sm-12 col-xs-12">
+								<select class="form-control" id="orderType"  data-ng-options="orderType.code as orderType.label for orderType in asnForm.orderTypeData" data-ng-model="asnForm.orderType">
+								<option value="" >-- Select Order Type --</option>
+								</select>
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12">
+					            <select id="AFS" ng-options="afs.AfsId as afs.AfsName for afs in confirmForm.AFSData" class="form-control"  ng-model="asnForm.AFS">
+					            	<option value="">--AFS--</option>
+					            </select>
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12" style="top: -7px;">
+								<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+								<input type="text" id="ERPorderNumber" ng-model='asnForm.ERPorderNumber'   class="form-control"  placeholder="ERP Order Number" ng-change="errorMessageCheck('ERPorderNumber')" />
+									<div class="erroralert">
+										<span ng-show ="error.ERPorderNumber" class="alert alert-danger">{{errormsg.ERPorderNumber}}</span>
+									</div>
+							</div>
+						</div>
+						<div class="col-md-12 paddingL_0 purchase_sech">
+							<div class="col-md-4 col-sm-12 col-xs-12 padding_asterisk">
+								<select class="form-control shipstoreval" id="shipToLocation" ng-model="asnForm.shipToLocation" ng-change="shiptoStoreChange(asnForm.shipToLocation, 'ASN')">
+					             <option value="">-- Ship To Location --</option>
+					             <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">{{ item.indent }} {{ item.displayName }}</option>
+					            </select>
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12 padding_asterisk">
+								<select class="form-control shipstoreval" id="markForLocation" ng-model="asnForm.markForLocation" ng-change="markForLocationChange(asnForm.markForLocation,'shiptostore')">
+					             <option value="">-- Mark For Location --</option>
+					             <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">{{ item.indent }} {{ item.displayName }}</option>
+					            </select>
+							</div>
+						</div>
+						<h4>ASN Details</h4>
+						<div class="col-md-12 paddingL_0 purchase_sech">
+							<div class="col-md-4 col-sm-12 col-xs-12">
+							<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+								<input type="text" id="ASNid" ng-model='asnForm.ASNid'   class="form-control"  placeholder="ASN ID" ng-change="errorMessageCheck('ASNId')" />
+								<div class="erroralert">
+									<span ng-show ="error.ASNId" class="alert alert-danger">{{errormsg.ASNId}}</span>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12 padding_asterisk">
+								<input type="text" id="billOfLadingId" ng-model='asnForm.billOfLadingId'   class="form-control"  placeholder="Bill of Lading ID" />
+							</div>
+						</div>
+						<div class="col-md-12 paddingL_0 purchase_sech">
+							<div class="col-md-4 col-sm-12 col-xs-12">
+							<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+								<input calendar  id="ASNDate" ng-model='asnForm.ASNDate'  class="form-control hidcal"  placeholder="ASN Date" ng-change="errorMessageCheck('ASNDate')" />
+								<div class="erroralert">
+									<span ng-show ="error.ASNDate" class="alert alert-danger">{{errormsg.ASNDate}}</span>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12">
+							<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+								<input type="text" id="numberOfPackages" ng-model='asnForm.numberOfPackages'   class="form-control"  placeholder="Number of Packages" ng-change="errorMessageCheck('noPackage')" />
+								<div class="erroralert">
+									<span ng-show ="error.noPackage" class="alert alert-danger">{{errormsg.noPackage}}</span>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-xs-12">
+				<div id="package_content"></div>
+				<div class="col-sm-2 col-xs-2 pull-right createPackageBtn" ng-show="asnForm[packageId].showPackageDetail">
+					<button create-package-button class="btn btn-primary" id="createP" ng-click="addPackage()">Add Package</button>
+				</div>
+			</div>	
+		</div>
+		<div class="col-sm-12 col-xs-12">
+			<button class="btn btn-primary pull-right" id="ovcResetBtn" ng-click="resetUpdateOrder();">Reset</button>
+			<button class="btn btn-primary pull-right" id="ovcUpdate" ng-click="saveAsnJson();" style="margin-right: 10px;">{{ovcLabel.updateOrder.update}}</button>
+		</div>
+		<div class="col-md-6 col-sm-12 col-xs-12" ng-if="asnForm.JsonForm">
+			<h3>JSON Message</h3>
+			<textarea readonly rows="20" cols="80">{{ asnForm.JsonForm| json:4}}</textarea>
+		</div>
+	</div>
+	<div class="alert alert-warning" ng-show="asnNoResults">
+		{{ovcLabel.updateOrder.no_results}}
+	</div>
+</div>
+
+<script type="text/ng-template" id="package.html">
+	<div class="result_content col-sm-10 col-xs-10 sample-show-hide" ng-show="asn[packageId].show">
+		<div class="col-sm-12" ng-if="asnForm[packageId].showPackageDetail">
+			<div class="col-sm-6">
+				<label>{{ovcLabel.updateOrder.package}} {{packageId}}</label>
+			</div>
+
+			<!-- ****{{asnForm}} -->
+			<!-- <div class="col-sm-9" style="display:none;">
+				<label>{{translation.interface.tracking_number}}:</label>
+				<input type="text" class="form-control" ng-model="asnTmpObj[packageId].trackingNumber" disabled title="{{translation.interface.tracking_number}}" />
+			</div> -->
+		<!-- </div> -->
+		<div class="col-sm-12  thumbnail media padding result_content">
+			<div class="col-sm-12">
+				<div class="col-sm-12 paddingL_0">
+					<div class="paddingL_0">
+						<h4>Package Details</h4>
+						<div class="col-md-12 paddingL_0 purchase_sech">
+							<div class="col-md-4 col-sm-12 col-xs-12">
+								<input type="text" id="packageId" ng-model='asnForm[packageId].packageId'   class="form-control"  placeholder="Package ID" />
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12">
+								<input calendar  id="shipDate" ng-model='asnForm[packageId].shipDate'  class="form-control hidcal" ng-change='change_todate()' placeholder="Ship Date"/>
+							</div>
+						</div>
+						<div class="col-md-12 paddingL_0 purchase_sech">
+							<div class="col-md-4 col-sm-12 col-xs-12">
+							<i class="fa fa-asterisk asterisk_symbol" aria-hidden="true"></i>
+								<input type="text" id="trackingNumber" ng-model='asnForm[packageId].trackingNumber'   class="form-control"  placeholder="Tracking Number" ng-change="checkTrackingNo(packageId)"/>
+								<div class="erroralert">
+									<span ng-show ="asnForm[packageId].trackingNumberError " class="alert alert-danger">Enter Tracking Number</span>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12 padding_asterisk">
+								<input calendar  id="expectedDeliveryDate" ng-model='asnForm[packageId].expectedDeliveryDate'  class="form-control hidcal" ng-change='change_todate()' placeholder="Expected Delivery Date"/>
+							</div>
+						</div>
+					</div>
+					<!-- <span  ng-if = "!asnForm[packageId].showPackageDetail" ng-click="asnForm[packageId].showPackageDetail = ! asnForm[packageId].showPackageDetail; setUndoData(tempPackageId , packageId)">UNDO</span> -->
+					
+					<!-- <div class="col-md-6 col-sm-12 col-xs-12">
+						<label class="control-label">{{translation.interface.ship_date}}: </label>
+						<div class="input-group date">
+							
+							<input id="{{packageId}}ShipDate" calendar1  ng-model='asn[packageId].shipDate'  class="form-control"  ng-change='change_frdate(ncount.fromdate)' min-date="{{getDatetime | dateForm}}" required />
+							
+						    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-12 col-xs-12">
+						<label class="control-label">{{ovcLabel.updateOrder.delivery_date}}: </label>
+						<div class="input-group date">
+							
+							<input id="{{packageId}}DeliveryDate" calendar1  ng-model='asn[packageId].expectedDeliveryDate'  class="form-control"  ng-change='change_todate(ncount.enddate)' min-date="{{newDate | dateForm}}" required />
+							
+						    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+					</div> -->
+				</div>
+				<h4>Products</h4>
+				<div class="col-sm-12 col-xs-12 result_content paddingL_0">
+					<div class="col-sm-6">
+						<select class="form-control"  id="{{packageId}}SelectedSKU" ng-options="item.SKU for item in orderSkus" ng-model="selctedSku">
+
+							<option value="">{{ovcLabel.updateOrder.select_sku}}</option>
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<button id="{{packageId}}AddCommon" class="btn btn-primary col-sm-4 col-xs-6" ng-click="addPackageSkus(packageId, selctedSku);">{{ovcLabel.updateOrder.add}}</button>
+						<button id="{{packageId}}DeleteCommon"  class="btn btn-link pull-right padding_0" ng-click="removePackage(packageId);"><span class="fa fa-trash-o"></button>
+					</div>
+				</div>
+			</div>
+			<div class = "col-sm-12 col-xs-12 result_content">
+			<div class = "table-responsive">
+
+				<table>	
+					<tbody>	
+						<tr ng-repeat="(key,product) in packageOrderSkus[packageId]" class="update_order">
+							
+							<td ng-if = "config.showskugroup">
+								<table class="table table-bordered updateor_table">
+									<thead  class="style_head">
+										<tr class="updateorder_bor">
+											<th>{{ovcLabel.updateOrder.style}}</th>
+											<th>{{ovcLabel.updateOrder.description}}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td  style= "width:180px;">{{key}}</td>
+											<td>{{product.styleDescription}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class	=	"table table-bordered updateor_table">
+									<tr>
+										<th>{{ovcLabel.updateOrder.linenumber}}</th>
+										<th>{{ovcLabel.updateOrder.skus}}</th>
+										<th>{{ovcLabel.updateOrder.description}}</th>
+										<th>{{ovcLabel.updateOrder.order_qty}}</th>
+										<th>{{ovcLabel.updateOrder.confirmed_qty}}</th>
+										<th>{{ovcLabel.updateOrder.confirmed_price}}</th>
+										<th style="width: 100px;">{{ovcLabel.updateOrder.asnprice}}</th>
+										<th>{{ovcLabel.updateOrder.shipped}}</th>
+									    <th>{{ovcLabel.updateOrder.action}}</th>
+									</tr>
+
+									<tr ng-repeat="(key2,skuItem) in packageOrderSkus[packageId][key]" ng-if="key2 != 'styleDescription' ">
+										<td > {{skuItem.lineNumber}}</td>
+										<td>{{tmpOrderSkus[skuItem.sku].SKU}}</td>
+										<td>{{tmpOrderSkus[skuItem.sku].productName}}</td>
+										<td>{{tmpOrderSkus[skuItem.sku].qty}}</td>
+										<td>{{shipmentData[skuItem.sku].qtyStatus.confirmed || 0}}</td>
+										<td>{{shipmentData[skuItem.sku].skuCost || 0}}</td>
+										<td>
+											<input type="number" id="{{tmpOrderSkus[skuItem.sku].SKU}}{{packageId}}ASNPrice" class="form-control" ng-model="packageOrderSkus[packageId][key][skuItem.sku].skuCostAsn" />
+										</td>
+										<td style="width: 150px;">
+											<button class="btn btn-primary btn-sm" ng-click="packageOrderSkus[packageId][key][skuItem.sku].qty = packageOrderSkus[packageId][key][skuItem.sku].qty - 1" ng-init="packageOrderSkus[packageId][key][skuItem.sku].qty=1">
+											<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+											<input type="text" min = "1" class="qty-center form-control shipped" ng-model="packageOrderSkus[packageId][key][skuItem.sku].qty" only-digits/>
+											<button class="btn btn-primary btn-sm" ng-click="packageOrderSkus[packageId][key][skuItem.sku].qty = packageOrderSkus[packageId][key][skuItem.sku].qty+1">
+											<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</td>
+										<td>
+											<button class="btn btn-link pull-right padding_0" id="{{tmpOrderSkus[skuItem.sku].SKU}}{{packageId}}SKUDelete" ng-click="removePackageSkus(packageId,key, skuItem.sku);"><span class="fa fa-trash-o"></button>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<!-- <tr>
+							<td ng-if = "!config.showskugroup">
+								<table class = "table table-bordered" ng-if ="packageOrderSkus[packageId] != undefined">
+									<thead>
+										<tr>
+											<th>{{translation.returnreceipt.line_no}}----</th>
+											<th>{{translation.interface.skus}}</th>
+											<th>{{translation.interface.description}}</th>
+											<th>{{translation.interface.order_qty}}</th>
+											<th>{{translation.interface.confirmed_qty}}</th>
+											<th>{{translation.interface.confirmed_price}}</th>
+											<th style="width: 100px;">{{translation.interface.asnprice}}</th>
+											<th>{{translation.interface.shipped}}</th>
+										    <th>{{translation.interface.action}}</th>
+										</tr>
+
+										<tr ng-repeat="(key2,skuItem) in packageOrderSkus[packageId][key]" ng-if="key2 != 'styleDescription'  ">
+											<td > {{skuItem.lineNumber}}</td>
+											<td>{{tmpOrderSkus[skuItem.sku].SKU}}</td>
+											<td>{{tmpOrderSkus[skuItem.sku].productName}}</td>
+											<td>{{tmpOrderSkus[skuItem.sku].qty}}</td>
+											<td>{{shipmentData[skuItem.sku].qtyStatus.confirmed || 0}}</td>
+											<td>{{shipmentData[skuItem.sku].skuCostConfirm || 0}}</td>
+											<td>
+												<input type="number" id="{{tmpOrderSkus[skuItem.sku].SKU}}{{packageId}}ASNPrice" class="form-control" ng-model="packageOrderSkus[packageId][key][skuItem.sku].skuCostAsn" />
+											</td>
+											<td>
+												<input type="number"  id="{{tmpOrderSkus[skuItem.sku].SKU}}{{packageId}}Qty" class="form-control" ng-model="packageOrderSkus[packageId][key][skuItem.sku].qty" />
+											</td>
+											<td>
+												<button class="btn btn-link pull-right padding_0" id="{{tmpOrderSkus[skuItem.sku].SKU}}{{packageId}}SKUDelete ng-click="removePackageSkus(packageId,key, skuItem.sku);"><span class="fa fa-trash-o"></button>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr> -->
+							<tr>
+								<td ng-if = "!config.showskugroup">
+									<table class = "table table-bordered" ng-if ="packageOrderSkus[packageId] != undefined">
+										<thead>
+											<tr>
+												<th>{{ovcLabel.updateOrder.linenumber}}</th>
+												<th>{{ovcLabel.updateOrder.skus}}</th>
+												<th>{{ovcLabel.updateOrder.description}}</th>
+												<th>{{ovcLabel.updateOrder.order_qty}}</th>
+												<th>{{ovcLabel.updateOrder.confirmed_qty}}</th>
+												<th>{{ovcLabel.updateOrder.confirmed_price}}</th>
+												<th style="width: 100px;">{{ovcLabel.updateOrder.asnprice}}</th>
+												<th>{{ovcLabel.updateOrder.shipped}}</th>
+											    <th>{{ovcLabel.updateOrder.action}}</th>
+											</tr>
+										</thead>
+										<tbody ng-repeat="(key,product) in packageOrderSkus[packageId]">
+											<tr ng-repeat="(key2,skuItem) in packageOrderSkus[packageId][key]" ng-if="key2 != 'styleDescription'  ">
+												<td>{{skuItem.lineNumber}}</td>
+												<td>{{tmpOrderSkus[skuItem.sku].SKU}}</td>
+												<td>{{tmpOrderSkus[skuItem.sku].productName}}</td>
+												<td>{{tmpOrderSkus[skuItem.sku].qty}}</td>
+												<td>{{shipmentData[skuItem.sku].qtyStatus.confirmed || 0}}</td>
+												<td>{{shipmentData[skuItem.sku].skuCostConfirm || 0}}</td>
+												<td>
+													<input type="number" class="form-control" ng-model="packageOrderSkus[packageId][key][skuItem.sku].skuCostAsn" />
+												</td>
+												<td>
+													<input type="number" class="form-control" ng-model="packageOrderSkus[packageId][key][skuItem.sku].qty" />
+												</td>
+												<td>
+													<button class="btn btn-link pull-right padding_0" ng-click="removePackageSkus(packageId,key, skuItem.sku);"><span class="fa fa-trash-o"></button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<style>
+	.shipped{
+		width: 50px;
+		display: inherit;
+	}
+</style>

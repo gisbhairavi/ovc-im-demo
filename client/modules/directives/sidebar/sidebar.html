@@ -1,0 +1,240 @@
+ <div ng-controller="sidebarctrl" class="sidebar_layout"  >
+ 
+<div class="menu_search header_se"> 
+ <span class="search_ff" style="margin-right: 5%;"><input type="search" ng-model="search" placeholder="Search" class="search_t" /><span class="s_icon"><i class="fa fa-search"></i></span> </span>
+ 
+</div>
+ 
+ <a class="nav_menu" ng-click="menu_toggle1()" ><i class="fa fa-bars"></i>
+            
+        </a>
+		<div ng-show="hover_po" class="list_view"><!-- 
+<div class="navbar-default sidebar" role="navigation" ng-scrollbars  ng-scrollbars-config="imSideScrollbarConfig" > -->
+<div class="navbar-default sidebar" role="navigation" >
+    <div class="sidebar-nav navbar-collapse">
+		<ul id="side-menu" filter-list="search" class="nav in"  filter-list="search">
+			<li id="sidebar_dashboard" ui-sref-active="active" ng-if = "userRolePermissions.dashboardPermissions.viewDashboardReports">
+				<a ui-sref="ovc.dashboard-report">{{ovcLabel.menus.dashboard}}</a>
+			</li>
+			
+			<li id="sidebar_stocklookup" class="chck_f"  ng-class="{active: collapseVarset==10}">{{dropDown}}
+				<a ng-click="check_settings(10)"> {{ovcLabel.menus.stocklookup}}<span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level"  uib-collapse="collapseVarset!=10">
+					<li id="sidebar_balanceInquiry" ui-sref-active="active" ng-if = "userRolePermissions.stockLookupPermissions.viewBalanceInquiry">
+						<a  ui-sref="ovc.stocklookup-list({fullList:true})">{{ovcLabel.menus.balanceinquiry}}</a>
+					</li>
+					<li id="sidebar_performance" ui-sref-active="active" ng-if = "userRolePermissions.stockLookupPermissions.viewProductPerformance">
+						<a  class="document_link" ui-sref="ovc.product-perform({fullList:true})">{{ovcLabel.menus.productperformance}}</a>
+					</li>
+					<li id="sidebar_findit" ui-sref-active="active" ng-if="sidebardata.Config.config_arr.FindIt.featureValue===true">
+						<a  class="document_link" ui-sref="ovc.stocklookup-findit({fullList:true})">{{ovcLabel.menus.findit}}</a>
+					</li>
+
+				</ul>
+			</li>
+
+			<li   id="sidebar_order" class=" chck_f"  ng-class="{active: collapseVarset==9}">{{dropDown}}
+                <a href="" ng-click="check_settings(9)">{{ovcLabel.menus.orders}}<span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level"  uib-collapse="collapseVarset!=9">
+					<li id="sidebar_intransit" ui-sref-active="active" ng-if = "userRolePermissions.orderPermissions.inTransit">
+						<a  ui-sref="ovc.intransit({fullList:true})">{{ovcLabel.menus.deliveries}}</a>
+					</li>
+					<li id="sidebar_purchaseorder" ui-sref-active="active"  ng-if="userRolePermissions.orderPermissions.viewOrder">
+						<a class="document_link" ui-sref="ovc.purchaseorder-list({fullList:true})">{{ovcLabel.menus.purchaseorders}}</a>
+					</li>
+					<li id="sidebar_customerorder" ui-sref-active="active"  ng-if="sidebardata.Config.action.shdropship">
+						<a class="document_link" ui-sref="ovc.customerorders-list({fullList:true})">{{ovcLabel.menus.customerorder}}</a>
+					</li>
+					<li id="sidebar_returns" ui-sref-active="active"  ng-if = "userRolePermissions.orderPermissions.returns">
+						<a class="document_link" ui-sref="ovc.returns-list({fullList:true})">{{ovcLabel.menus.returns}}</a>
+					</li>
+					<li id="sidebar_transfer" ui-sref-active="active" ng-if = "userRolePermissions.orderPermissions.transfer">
+						<a ui-sref="ovc.ibt({fullList:true})">{{ovcLabel.menus.transfers}}</a>
+					</li>
+					<li id="sidebar_manualShipment" ui-sref-active="active" ng-if="userRolePermissions.orderPermissions.viewManualShipment">
+						<a ui-sref="ovc.manualShipment-list({fullList:true})">{{ovcLabel.menus.manualshipments}}</a>
+					</li>
+					<li id="sidebar_manualReceipt" ui-sref-active="active" ng-if = "userRolePermissions.orderPermissions.viewmanualReceipt">
+						<a ui-sref="ovc.manualReceipt-list({fullList:true})">{{ovcLabel.menus.manualreceipts}}</a>
+					</li>	
+				</ul>
+
+			</li>	
+
+			<li id="sidebar_adjustment" ui-sref-active="active" ng-if="userRolePermissions.viewAdjust">
+				<a ui-sref="ovc.adjustment-list({fullList:true})">{{ovcLabel.menus.adjustments}}</a>
+			</li>
+
+			<!-- <li ui-sref-active="active" ng-if="userRolePermissions.vcrtrans">
+				<a ui-sref="ovc.shipments">{{translation.sidebar[0].move_sim}}</a>
+			</li> -->
+			<li id="sidebar_transaction" ui-sref-active="active"  ng-if="userRolePermissions.vlitranhist">
+				<a  ui-sref="ovc.transaction-history({fullList:true})">  {{ovcLabel.menus.transactionhistory}}</a>
+			</li>
+			<li id="sidebar_count" ui-sref-active="active"  ng-if="userRolePermissions.vcount">
+				<a class="document_link" ui-sref="ovc.Counts-list({fullList:true})"> {{ovcLabel.menus.counts}}</a>
+			</li>
+
+			<li  id="sidebar_reports" class=" chck_f"  ng-class="{active: collapseVarset==11}" ng-if="userRolePermissions.reportPermission.viewBalanceReport || userRolePermissions.reportPermission.viewStockStatusReport">
+                <a href="" ng-click="check_settings(11)">{{ovcLabel.menus.reports}}<span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level"  uib-collapse="collapseVarset!=11">
+					<!-- <li id="sidebar_reportPerform" ui-sref-active="active">
+						<a  ui-sref="ovc.productPerform-report({fullList:true})">{{translation.sidebar[0].productPerform}}</a>
+					</li>
+					<li id="sidebar_reportAnalytics" ui-sref-active="active">
+						<a class="document_link" ui-sref="ovc.analytics-report({fullList:true})">{{translation.sidebar[0].analytics}}</a>
+					</li> -->
+					<li id="sidebar_reportBalance" ui-sref-active="active" ng-if="userRolePermissions.reportPermission.viewBalanceReport">
+						<a class="document_link" ui-sref="ovc.balance-report({fullList:true})">{{ovcLabel.menus.balanceReport}}</a>
+					</li>
+					<li id="sidebar_reportStatus" ng-if="userRolePermissions.reportPermission.viewStockStatusReport" ui-sref-active="active">
+						<a class="document_link" ui-sref="ovc.status-report({fullList:true,reportType:'status'})">{{ovcLabel.menus.statusReport}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li id="analytics" ui-sref-active="active" ng-if="sidebardata.Config.action.showanalytics">
+				<a class="document_link" ui-sref="ovc.Analytics({type:'view'})" > {{ovcLabel.menus.analytics}}</a>
+			</li>
+			
+			<li   id="sidebar_repleinshment" class=" chck_f"  ng-if = "userRolePermissions.viewReplenishmentRules || userRolePermissions.viewReplenishmentFilters"  ng-class="{active: collapseVarset==7}">{{dropDown}}
+                <a href="" ng-click="check_settings(7)">{{ovcLabel.menus.replenishment}}<span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level"  uib-collapse="collapseVarset!=7">
+					<li id="sidebar_repleinshmentFilter" ui-sref-active="active" ng-if = "userRolePermissions.viewReplenishmentFilters">
+						<a  ui-sref="ovc.ReplenishmentFilter">{{ovcLabel.menus.filters}}</a>
+					</li>
+					<li id="sidebar_repleinshmentRules" ui-sref-active="active" ng-if = "userRolePermissions.viewReplenishmentRules">
+						<a class="document_link" ui-sref="ovc.replenishmentRulesUpload"> {{ovcLabel.menus.replenishmentrules}}</a>
+					</li>
+					<!--<li ui-sref-active="active" ng-if="userRolePermissions.vreplish">
+						<a class="document_link" ui-sref="ovc.Replenishment"> {{translation.sidebar[0].runReplenishment}} </a>
+					</li>-->
+					 
+				</ul>
+
+			</li>
+			
+
+					<!--<li ui-sref-active="active" ng-show="vreplish">
+						<a class="document_link" ui-sref="ovc.findit"> {{translation.sidebar[0].findit}}</a>
+					</li>-->
+
+			
+			<li  id="sidebar_settings" class=" chck_f"  ng-class="{active: collapseVarset==8}">{{dropDown}}
+                <a href="" ng-click="check_settings(8)">{{ovcLabel.menus.settings}}<span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level"  uib-collapse="collapseVarset!=8">
+					<li id="sidebar_stockingLocations" ui-sref-active="active"  ng-if="userRolePermissions.settings.viewStockingLocations" >
+						<a  ui-sref="ovc.location-list({fullList:true})">{{ovcLabel.menus.stockinglocations}}</a>
+					</li>
+					<li id="sidebar_tranTypes" ui-sref-active="active"  ng-if="userRolePermissions.settings.viewTransactionTypes" >
+						<a ui-sref="ovc.transaction-type({fullList:true})">{{ovcLabel.menus.transactiontypes}}</a>
+					</li>
+					<li id="sidebar_directiveType" ui-sref-active="active"  ng-if="userRolePermissions.settings.viewDirectiveTypes">
+						<a class="document_link" ui-sref="ovc.document-list({fullList:true})">  {{ovcLabel.menus.directivetypes}}</a>
+					</li>
+					<li id="sidebar_vendor" ui-sref-active="active" ng-if="userRolePermissions.settings.viewVendors">
+						<a class="vendor_link" ui-sref="ovc.vendor-list({fullList:true})">{{ovcLabel.menus.vendors}}</a>
+					</li>
+					<li id="sidebar_uom" ui-sref-active="active" ng-if="userRolePermissions.settings.viewUOM">
+						<a ui-sref="ovc.uom-list({fullList:true})">{{ovcLabel.menus.unitofmeasure}}</a>
+					</li>
+					<!-- <li id="sidebar_configuration" ui-sref-active="active" ng-if = "userRolePermissions.settings.viewConfigurations">
+						<a ui-sref="ovc.config-list" > {{ovcLabel.menus.configurations}}</a>
+					</li> -->
+					<li id="sidebar_configuration" ng-if = "userRolePermissions.settings.viewConfigurations" class="chck_f" ng-class="{active: collapseVar1==15}">{{dropDown}}
+						<a href="" ng-click="check1(15)">{{ovcLabel.menus.configurations}}<span class="fa arrow"></span></a>
+						<ul class="nav nav-third-level" uib-collapse="collapseVar1!=15">
+							<li id="config_global" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'globals,admin,stockUpdates'})">{{ovcLabel.menus.global}}</a>	
+							</li>
+					
+							<li id="config_balanceInquiry" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'stockLookUpProductAttribute,stockLookUpProductProperty,stockingLocationsWidget'})">{{ovcLabel.menus.balanceinquiry}}</a>
+							</li>
+							
+							<li id="config_PO" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'purchaseOrder'})"> {{ovcLabel.menus.purchaseorders}}</a>
+							</li>
+
+							<li id="config_manualShipment" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'manualShipment'})"> {{ovcLabel.menus.manualshipments}}</a>
+							</li>
+
+							<li id="config_replenishment" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'replenishment'})"> {{ovcLabel.menus.replenishment}}</a>
+							</li>
+
+							<li id="config_returns" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'returns'})"> {{ovcLabel.menus.returns}}</a>
+							</li>
+
+							<li id="config_transfer" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'adjustments'})"> {{ovcLabel.menus.adjustments}}</a>
+							</li>
+
+							<li id="config_dropShip" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'dropShip'})">{{ovcLabel.menus.dropship}}</a>
+							</li>
+
+							<li id="config_manualShipment" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'manualReceipts'})"> {{ovcLabel.menus.manualreceipts}}</a>
+							</li>
+
+							<li id="config_counts" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'counts'})"> {{ovcLabel.menus.counts}}</a>
+							</li>
+
+							<li id="config_reports" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.config-list({group:'stockBalanceReport,analytics'})"> {{ovcLabel.menus.reports}}</a>
+							</li>
+						</ul>
+					</li>
+					<li id="sidebar_reasonCode" ui-sref-active="active" ng-if = "userRolePermissions.settings.viewReasonCode">
+						<a ui-sref="ovc.reasoncode-list({fullList:true})"> {{ovcLabel.menus.reasoncodes}}</a>
+					</li>
+					<li id="sidebar_fileupload" ng-class="{active: collapseVar1==2}">{{dropDown}}
+						<a href="" ng-click="check1(2)">{{ovcLabel.menus.fileupload}}<span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level" 	uib-collapse="collapseVar1!=2">
+								<li id="sidebar_filelevelUpload" ui-sref-active="active">
+									<a class="document_link" ui-sref="ovc.fileupload"> {{ovcLabel.menus.stocklevelupload}}</a>	
+								</li>
+					
+							<li id="sidebar_fileorderupload" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.purchaseorderjson"> {{ovcLabel.menus.orderupload}}</a>
+							</li>
+							
+							<li id="sidebar_filecountupload" ui-sref-active="active">
+								<a class="document_link" ui-sref="ovc.countsjson"> {{ovcLabel.menus.countsjsonupload}}</a>
+							</li>
+						</ul>
+		
+					</li>
+					
+					<li id="sidebar_updateOrder" ui-sref-active="active"  ng-if="userRolePermissions.orderPermissions.viewOrder">
+						<a class="document_link" ui-sref="ovc.interface-demo">{{ovcLabel.menus.updateorder}}</a>
+					</li>
+
+					<li id="sidebar_exportInventry" ui-sref-active="active">
+						<a class="document_link" ui-sref="ovc.stockbalances-export">{{ovcLabel.menus.exportinventorybalances}}</a>
+					</li>
+					<!--  Role Permissions -->
+					<li id="sidebar_rolePermission" ui-sref-active="active"  ng-if = "userRolePermissions.settings.viewRolePermissions">
+						<a class="document_link" ui-sref="ovc.rolePermissions">{{ovcLabel.menus.rolepermissions}}</a>
+					</li>
+					<!--<li ui-sref-active="active"  ng-if = "userRolePermissions.settings.modifyReplenishmentRules">
+						<a class="document_link" ui-sref="ovc.replenishmentRules">{{translation.sidebar[0].replenishmentRules}}</a>
+					</li>-->
+				</ul>
+
+			</li>	
+
+		</ul>
+          
+	</div>
+</div>
+    <!-- /.sidebar-collapse -->
+</div> 
+</div>
+	 
+
+

@@ -1,0 +1,64 @@
+<style>
+    .popup_align h4,h6{
+      text-align: center;
+    }
+    .popup_sold{
+        color:  #1da363;
+        font-weight: bold;
+    }
+    .popup_received{
+        color:  #4b8bf5;
+        font-weight: bold;
+    }
+    .popup_returned{
+        color:   #dc4933;
+        font-weight: bold;
+    }
+    .custom-popover + .popover {
+        top: -27px !important;
+    }
+    .popover-title {
+        background: #369;
+        color: #fff;*/
+        height: 35px;
+        font-size: 20px;
+    }
+    .popover-title + .text-center {
+        font-size: 20px;
+    }
+    .popover {
+      min-width: 100px;
+    }
+    .popup_d3{
+      margin-top: 35px;
+      padding-left: 0;
+    }
+    .jstree-anchor:active .plus_btn_ic, .jstree-anchor:active .edit_btn_ic, .jstree-anchor:focus .plus_btn_ic, .jstree-anchor:focus .edit_btn_ic, .jstree-anchor:target .plus_btn_ic, .jstree-anchor:target .edit_btn_ic,.jstree-anchor:active .plus_btn_ic, .jstree-anchor:active .edit_btn_ic, .jstree-anchor:focus .plus_btn_ic, .jstree-anchor:focus .edit_btn_ic, .jstree-anchor:target .plus_btn_ic, .jstree-anchor:target .edit_btn_ic{
+      display: none;
+    }
+</style>
+<div class="col-xs-12 hideExport stockinglocationspopover" style="min-height: 200px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-md-2 top_menu tree_btns">
+                <span class="btn btn-info treecolap" id="collapse" ng-click="toggle_status(false)">
+                    <i class="fa fa-minus-circle" style="margin: 5px 5px 0;  float: left; font-size: 13px;">
+                    </i>
+                    {{ovcLabel.customerOrder.collapse_all}}
+                </span>
+                <span class="btn btn-info treeexpnd" id="expand" ng-click="toggle_status(true)">
+                    <i class="fa fa-plus-circle" style="margin: 5px 5px 0;float: left;font-size: 13px;">
+                    </i>
+                    {{ovcLabel.customerOrder.expand_all}}
+                </span>
+            </div>
+            <br clear="all">
+                <br/>
+                <div class="popup_align">
+                    <div js-tree="treeConfig" ng-model="stockingLocationsWidgetData" class="jstree jstree-6 jstree-default" should-apply="true" tree="treeInstance" >
+                    </div>
+                </div>
+            </br>
+        </div>
+    </div>
+</div>

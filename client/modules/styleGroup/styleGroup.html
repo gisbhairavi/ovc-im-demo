@@ -1,0 +1,19 @@
+<div>
+	<div class="col-md-4 search_b" ng-show="transferView||summaryView || adjsummary">
+		<span >{{ovcLabel.styleGroup.search}}:</span>
+		<input id="search" class="form-control" type="text" placeholder="" ng-model="search" name="search" >
+	</div>
+<br clear='all'>
+	<div ng-if="!adjuststyleGroup && config.showskugroup">
+		<div ng-include="'/modules/styleGroup/styleGroupCommon.html'"></div>	
+	</div> 
+	<div ng-if="adjuststyleGroup && config.showskugroup">
+		<div ng-include="'/modules/styleGroup/styleGroupadjustment.html'"></div>
+	</div>
+	<div ng-if = "!config.showskugroup && !adjuststyleGroup">
+		<div ng-include="'/modules/styleGroup/skuGroupCommon.html'"></div>
+	</div>
+	<div ng-if = "!config.showskugroup && adjuststyleGroup">
+		<div ng-include="'/modules/styleGroup/SKU_GroupAdjustment.html'"></div>
+	</div>
+</div>

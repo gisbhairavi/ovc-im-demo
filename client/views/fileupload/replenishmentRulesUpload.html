@@ -1,0 +1,397 @@
+<style>
+	.table-bordered > thead > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+		border: 1px solid #ddd;
+		text-align: center;
+	}
+</style>
+<div ng-show="!showHisory">
+	<div class="row header_blk ">
+		<div class="col-lg-12">
+	        <h3 class="page-header">{{ovcLabel.replenishmentRules.heading}} 
+		        <div ng-if="userRolePermissions.importReplenishmentRules || 						userRolePermissions.restoreRuleDefaultAtStore" class="dropdown 					custom-remove-open pull-right" style="margin-left: 0.5%;">
+				    <button  class="btn btn-primary dropdown-toggl" title="Actions" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+				    <ul class="dropdown-menu">
+				      <li  ng-if="userRolePermissions.importReplenishmentRules"><span class="file-input btn-file custom-import-drop">{{ovcLabel.replenishmentRules.buttons.import}}<input id="common_import_RPLrules" type="file" on-read-file="action.showContent($fileContent)" file-model="myFile" accept=".csv"/></span></li>
+				      <li ng-if="userRolePermissions.restoreRuleDefaultAtStore"><a ng-click="action.checkconfirm()">{{ovcLabel.replenishmentRules.buttons.resetToDefault}}</a></li>
+				    </ul>
+				</div>
+				<span ng-if="!config.showskugroup && !isEmpty(data.skuData)">
+					<ovcdata-export pdf-id="orderlist_export" heading="{{ovcLabel.replenishmentRules.heading}}"></ovcdata-export>
+				</span>
+			</h3>
+	    </div>
+	</div>
+	<br /><br clear = "all" />
+
+	<div class = "col-md-12">
+		<div class="panel-default">
+		    <div class="panel-body search_box">
+		    	<div class = "col-md-12 col-sm-12 col-xs-12 pull-left noPadding">
+			    	<!-- <div class="col-md-3">
+						<select ng-options="col.id as col.displayName for col in data.store_datas"  class="form-control"  ng-model="formData.locationId" required-message="'{{translation.messages[0].store_select}}'">
+							<option value=""> {{translation.locations[0].store}} </option>
+						</select>
+					</div> -->
+					<div class="col-md-3 col-sm-12">
+						<div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+							<div style="position:relative;">
+								<input id="common_heirarchy_check" type="text" class="form-control" ng-model="locationDisplayName" ng-focus="showLoc = true" ng-blur = "action.checklocation()" placeholder="{{ovcLabel.replenishmentRules.placeholder.store}}" style="padding:6px 18px 6px 10px;" ng-change="action.paginationDefault 	=	true;searchLocation(locationDisplayName);" />
+										
+								<span class="fa" ng-click="showLoc = !showLoc" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;cursor: pointer;"></span>
+							</div>
+							<div tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" stock-lookup = "true" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"></div>
+						</div>
+					</div>
+					<div class="col-md-5 col-sm-12 stk_sear product_padd" style="padding-left:0px;margin:0;">
+						<ovcautocomplete    class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="looksearch"  id="skusearch" ng-model="formData.skuresult" attr-placeholder="{{ovcLabel.replenishmentRules.placeholder.search}}..." click-activation="false" data="formData.productsku" on-type="dosrchproduct" on-select="doSelectproduct"></ovcautocomplete>
+					</div>
+					<div class = "col-md-4 col-sm-12 pull-right noPadding replenishmentSrchActions">
+					<button type="submit"  id="ovcSearchBtn" class="btn btn-primary ng-binding" ng-click = "action.filterReplenishmentRules()"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.replenishmentRules.buttons.search}}</button>
+					<button type="reset" id="ovcResetBtn" class="btn btn-primary rst_btn ng-binding" ng-init = "formData.withReplenish = formData.withoutReplenish = true" ng-click = "action.resetRplFilter()"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.replenishmentRules.buttons.reset}}</button>
+					<a class='btn' id="ovcAdvancedBtn" ng-click="basicproduct = !basicproduct">{{basicproduct?ovcLabel.replenishmentRules.buttons.basic:ovcLabel.replenishmentRules.buttons.advanced}}</a>
+					</div>
+				</div>
+				<span  ng-show="formData.fieldsrequired && formData.showtable" class="alert alert-danger ng-binding datevalid" >{{ovcLabel.replenishmentRules.error.from_todate}}</span> 
+				<div class="col-md-12 col-sm-12 product_padd stk_sear" ng-show="basicproduct">
+				  	<div class="inline_box" ng-repeat = "(key,value) in  dropdownDashCall.productProperty">
+						 <div  id="product_propertyRPL" class= "col-md-12" multiselect-common="" items="" selected-items="" naming="{{value.propertyName}}" dynamic="'replenish'+value.propertyName" prodata="value" style="margin-bottom: 10px;"></div>
+					</div>
+					<!--Replenishment Data Config For search-->
+					<div class="col-md-12" >
+					<span class = "col-md-3 col-sm-12 col-xs-12" style="padding-left: 0;">	
+						<div>
+							<label style="float: left;">{{ovcLabel.replenishmentRules.reorder_point_between}}</label>
+							<input id="reorderPoint_from" type = "number" ng-model = "formData.minReorder" class = "form-control" ng-change="action.paginationDefault 	=	true;"/>
+						</div>
+					</span>
+					<span class = "col-md-3 col-sm-12 col-xs-12">	
+						<div class="">
+							<input  id="reorderPoint_to" type = "number" ng-model = "formData.maxReorder" class = "form-control" style = "margin:24px 0 0 0;" min = "formData.minReorder" ng-change="action.paginationDefault 	=	true;"/>
+						</div>
+					</span>
+					<span class="col-md-6 col-sm-12 col-xs-12">
+						<div style="margin-top: 20px;">
+							<div class="col-md-12">
+								<label style="float: left;font-weight: normal;"><span class="fa fa-lg" style="margin-right: 10px;" ng-class="{'fa-check-square-o' : formData.withReplenish, 'fa-square-o' : !formData.withReplenish }"></span><input style="display:none" type="checkbox" name="withReplenish" ng-model="formData.withReplenish">{{ovcLabel.replenishmentRules.productsWithReplenish}}</label>
+							</div>
+							<div class="col-md-12">
+								<label style="float: left;font-weight: normal;"> <span class="fa fa-lg" style="margin-right: 10px;" ng-class="{'fa-check-square-o' : formData.withoutReplenish, 'fa-square-o' : !formData.withoutReplenish }"></span><input style="display: none;" type="checkbox" name="withoutReplenish" ng-model="formData.withoutReplenish">{{ovcLabel.replenishmentRules.productsWithoutReplenish}}</label>
+							</div>
+						</div>
+					</span>
+					</div>
+					
+				</div>
+					<br /><br clear = "all" />
+					<!-- <span class = "col-md-3 col-sm-12 col-xs-12">	
+						<div>
+							<label>{{translation.replenishmentRules[0].reorder_point_between}}</label>
+							<input id="reorderPoint_from" type = "number" ng-model = "formData.minReorder" class = "form-control" ng-change="action.paginationDefault 	=	true;"/>
+						</div>
+					</span>
+					<span class = "col-md-3 col-sm-12 col-xs-12">	
+						<div class="">
+							<input  id="reorderPoint_to" type = "number" ng-model = "formData.maxReorder" class = "form-control" style = "margin:24px 0 0 0;" min = "formData.minReorder" ng-change="action.paginationDefault 	=	true;"/>
+						</div>
+					</span> -->
+					<p class = "col-md-12 text-danger text-center" ng-show = "data.error.locationId">{{ovcLabel.replenishmentRules.error.please_select_the_store}}</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class = "col-md-12 replenishmentStyleMatrix" ng-controller="stylematrixctrl" ng-show = "data.showStryleMatrix">
+		<div class = "col-md-12 replenishmentStyleMatrixContainer"> -->
+			<!-- <div id = "stlkpmatrix"></div> -->
+			<!-- <span id = "stlkpmatrix"></span> -->
+		<!-- </div>
+	</div> -->
+
+
+	<br clear = "all" /><br clear = "all"/>
+	<h3 class = "text-danger text-center" ng-show = "! data.error.results">{{data.error.resultError}}</h3>
+	<div class = "col-md-12 replenishmentRulesTable"  ng-if="config.showskugroup" >
+	<div  ng-show = "data.error.resultError == '' " class= "col-md-12 table-responsive" >
+		<table class="table">
+		    	<thead>
+		      		<tr>
+		      			<th ng-repeat = "item in header track by $index" >{{item}}</th>
+		      			<th ng-if = "action.permissionsData.restoreRuleDefault===1" style="border-bottom:0px solid #ddd;float: right;">{{"Select"}}</th>
+		      		</tr>
+		    	</thead>
+		    	<tbody   ng-repeat = "(key,value) in styleArray track by $index" ng-if="value.showStyle" style="border-bottom: 5px solid #fff" >
+		      		<tr id="common_click"  >
+		      			<th style = "background:#ccc;cursor:pointer;" class="thead-2" ng-repeat= "item in header track by $index" ng-click="callstyle(value);">{{(value[item])? value[item] : ''}}  </th>
+		      			<th ng-if="ship.resetDefault && (action.permissionsData.restoreRuleDefault===1)" class="thead-2" style="border-top:1px solid rgba(51, 40, 40, 0);height: 20px; width: 20px;">
+		      				<label style="float: right;font-weight: normal;">
+		      					<span ng-if="value.showReset" class="fa fa-lg" ng-class="{'fa-check-square-o' : value.toRest, 'fa-square-o' : !value.toRest }"></span>
+		      					<input style="display:none" type="checkbox" name="withReplenish" ng-model="value.toRest">
+		      				</label>
+		      			</th>
+					</tr>
+			      	<tr ng-show="value.showDetails">
+			      	
+			      		<!-- <td colspan="12" ng-repeat = "(style,skuValue) in data.skuData" > -->
+			      		<td colspan="12" style="border-top:1px solid rgba(51, 40, 40, 0)">
+				      		<div class= "col-md-12" ng-transculde>
+				  				<span id ="stlkpmatrix{{value.Style}}"></span>
+				  			</div>
+				      		<table ng-if="data.skuData[value.Style].sku.length > 0" class="table table-bordered skuDetailsDiv">
+						    	<thead style = "background:#ccc;">
+						      		<tr>
+						        		<th class = "col-md-2">{{ovcLabel.replenishmentRules.sku}}</th>
+										<th class = "col-md-3">{{ovcLabel.replenishmentRules.description}}</th>
+										<th class = "col-md-2" >{{ovcLabel.replenishmentRules.price}}</th>
+										<!-- <th class = "col-md-1">{{translation.replenishmentRules[0].length}}</th>
+										<th class = "col-md-1">{{translation.replenishmentRules[0].waist}}</th>
+										<th class = "col-md-1">{{translation.replenishmentRules[0].size}}</th> -->
+										<th class = "col-md-2" ng-if = "config.config_arr.selectedProductVariants">{{ovcLabel.replenishmentRules.productVariants}}</th>
+										<th class = "col-md-2" ng-if = "userRolePermissions.viewReorderPoint">{{ovcLabel.replenishmentRules.reorderTriggerQty}}</th>
+										<th class = "col-md-2" ng-if = "!config.showmaxAmount" >{{ovcLabel.replenishmentRules.maxStockQty}}</th>
+										<th class = "col-md-2">{{ovcLabel.replenishmentRules.roundingValue}}</th>
+										<th class = "col-md-1">{{ovcLabel.replenishmentRules.replinishable}}</th>
+										<th class = "col-md-1">{{ovcLabel.replenishmentRules.history}}</th>
+						      		</tr>
+						    	</thead>
+						    	<tbody>
+							      	<tr ng-repeat = "(key,skuDetails) in data.skuData[value.Style].sku">
+							        	<td id="RPL_rules_skuValue">{{skuDetails.sku}}</td>
+										<td>{{skuDetails.description}}</td>
+										<td class="pricetbl"><p ng-if="userRolePermissions.permissions.viewPurchasePrice" class="clearfix"><span>{{ovcLabel.replenishmentRules.purchasePrice}}<b>:</b> </span><span>{{currency}} {{skuDetails.price.purchasePrice |number :2}}</span></p>
+										<p class="clearfix"><span>{{ovcLabel.replenishmentRules.retailPrice}}<b>:</b> </span><span>{{currency}} {{skuDetails.price.retailPrice |number : 2}}</span></p>
+										<p class="clearfix"><span>{{ovcLabel.replenishmentRules.storePrice}}<b>:</b> </span><span>{{currency}} {{skuDetails.price.storePrice |number : 2}}</span></p>
+										<p ng-if="userRolePermissions.permissions.viewPurchasePrice" class="clearfix"><span>{{ovcLabel.replenishmentRules.margin}}<b> : </b></span><span>{{skuDetails.price.margin}}</span></p></td>
+										<td ng-if="config.config_arr.selectedProductVariants">
+											<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute] ? translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{skuDetails.variants[attribute] ? skuDetails.variants[attribute]:'-'}}</span><br></div>
+										</td>
+										<!-- <td>{{skuDetails.length}}</td>
+										<td>{{skuDetails.waist}}</td>
+										<td>{{skuDetails.size}}</td> -->
+										<td ng-if = "userRolePermissions.viewReorderPoint && !userRolePermissions.changeReplenishmentRules">{{data.rulesData[skuDetails.sku].reorder}}</td>
+										<td ng-if = "userRolePermissions.changeReplenishmentRules" class="rpl_history">
+											<span>
+												<!-- <i class="fa fa-exclamation-triangle exclamicon" data-toggle="modal" data-target="#rplCorparateHistory" ng-click ="corparateModelHistory(skuDetails.sku)" title="View History"></i> -->
+												<input id="reorder_pointQty" type = "number" class = "form-control rpl_rule_triger" min = "0" ng-model = "data.rulesData[skuDetails.sku].reorder" ng-readonly = "data.skuData[style].setDefaultReorder"/>
+											</span>
+										</td>
+										<td ng-if = "!config.showmaxAmount">
+											<span ng-if = "!userRolePermissions.changeReplenishmentRules">{{data.rulesData[skuDetails.sku].maxOrder}}</span>
+											<input ng-if = "userRolePermissions.changeReplenishmentRules" type = "number" class = "form-control" min = "0" ng-model = "data.rulesData[skuDetails.sku].maxOrder" ng-readonly = "data.skuData[style].setDefaultReorder"/>
+										</td>
+										<td >
+											<span ng-if = "!userRolePermissions.changeReplenishmentRules">{{data.rulesData[skuDetails.sku].roundingValue}}</span>
+											<input ng-if = "userRolePermissions.changeReplenishmentRules" type = "number" class = "form-control" min = "1" ng-model = "data.rulesData[skuDetails.sku].roundingValue"/>
+										</td>
+										<td>{{skuDetails.replenishable}}</td>
+										<td ng-if="!skuDetails.history" id="{{skuDetails.sku}}"><a name="common_history_{{skuDetails.sku}}"  class='btn' ng-click="history(skuDetails.sku, ship.locationId)">History</a></td>
+										<td ng-if="skuDetails.history"></td>
+							      	</tr>
+							      	<!-- <tr ng-if = "userRolePermissions.changeReplenishmentRules">
+							      		<td colspan = "6" style = "text-align:right;" ng-if="!config.showmaxAmount">
+							      			<label style = "margin: 10px 0; cursor: pointer;"><input id="setDefault_RO" type = "checkbox" style = "float: left;margin: 4px 5px 0 0;" ng-model = "data.skuData[style].setDefaultReorder" ng-change  = "action.setDefaultReorder(style)" /> {{translation.replenishmentRules[0].set_default_reorder_point}} </label>
+							      		</td>	
+							      		<td colspan = "5" style = "text-align:right;" ng-if="config.showmaxAmount">
+							      			<label style = "margin: 10px 0; cursor: pointer;"><input type = "checkbox" style = "float: left;margin: 4px 5px 0 0;" ng-model = "data.skuData[style].setDefaultReorder" ng-change  = "action.setDefaultReorder(style)" /> {{translation.replenishmentRules[0].set_default_reorder_point}} </label>
+							      		</td>
+							      		<td><input type = "number" class = "form-control" min = "0" ng-model = "data.skuData[style].DefaultReOrder" ng-change  = "action.setDefaultReorder(style)" ng-readonly = "! data.skuData[style].setDefaultReorder"/></td>
+							      	</tr> -->
+
+						    		</tbody>
+			  						</table>
+		  						</td>
+			      			</tr>
+		    	</tbody>
+		</table>
+	 </div>
+	  <!-- 	<span class = "col-md-1 actionButtons">
+	  		<i class = "fa" ng-class = "{'fa-angle-down':showDetails, 'fa-angle-up':!showDetails}" style = "font-size: 20px;" ng-click="showDetails = ! showDetails"></i>
+	  		<br clear = "all"/>
+			<i class = "fa fa-th" style = "margin-top: 10px;" ng-click = "action.getStyleMatrix(style)" ng-if = "userRolePermissions.modifyReorderPoint"></i>
+		</span> -->
+	</div>
+
+	<!--Sku Group Configration-->
+	<div class = "col-md-12 replenishmentRulesTable" ng-if="!config.showskugroup">
+		<div class = "col-md-11 headerAlignment" style = "padding:0;" ng-show="!isEmpty(data.skuData)">
+		  	<table class="table table-bordered skuDetailsDiv" id="orderlist_export">
+		    	<thead style = "background:#ccc;">
+		      		<tr>
+		        		<th>{{ovcLabel.replenishmentRules.sku}}</th>
+						<th>{{ovcLabel.replenishmentRules.description}}</th>
+						<th>{{ovcLabel.replenishmentRules.price}}</th>
+						<th class = "hideExport variantAlignment" ng-if = "config.config_arr.selectedProductVariants">{{ovcLabel.replenishmentRules.productVariants}}</th>
+						<th class="qtyAlignment" ng-if = "userRolePermissions.viewReorderPoint">{{ovcLabel.replenishmentRules.reorderTriggerQty}}</th>
+						<th ng-if = "!config.showmaxAmount">{{ovcLabel.replenishmentRules.maxStockQty}}</th>
+						<th>{{ovcLabel.replenishmentRules.roundingValue}}</th>
+						<th>{{ovcLabel.replenishmentRules.replinishable}}</th>
+						<th class = "hideExport" data-hidePdf="true">{{ovcLabel.replenishmentRules.history}}</th>
+						<th class = "hideExport" data-hidePdf="true">{{ovcLabel.replenishmentRules.select || "Select"}}</th>
+		      		</tr>
+		    	</thead>
+		    	<tbody ng-repeat = "(style,skuValue) in data.skuData">
+			      	<tr ng-repeat = "(key,skuDetails) in skuValue.sku track by $index"  ng-if="skuDetails.showSKU">
+			        	<td>{{skuDetails.sku}}</td>
+						<td>{{skuDetails.description}}</td>
+						<td class="pricetbl hideExport"><p ng-if="userRolePermissions.permissions.viewPurchasePrice"><span>{{ovcLabel.replenishmentRules.purchasePrice}}<b>:</b> </span><span>{{currency}} {{skuDetails.price.purchasePrice |number :2}}</span></p>
+						<p><span>{{ovcLabel.replenishmentRules.retailPrice}}<b>:</b> </span><span>{{currency}} {{skuDetails.price.retailPrice |number :2}}</span></p>
+						<p><span>{{ovcLabel.replenishmentRules.storePrice}}<b>:</b> </span><span>{{currency}} {{skuDetails.price.storePrice |number :2}}</span></p>
+						<p ng-if="userRolePermissions.permissions.viewPurchasePrice"><span>{{ovcLabel.replenishmentRules.margin}}<b> : </b></span><span>{{skuDetails.price.margin}}</span></p></td>
+						<td class = "hideExport" ng-if="config.config_arr.selectedProductVariants">
+							<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute] ? translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{skuDetails.variants[attribute] ? skuDetails.variants[attribute]:'-'}}</span><br></div>
+						</td>
+						<!-- <td>{{skuDetails.length}}</td>
+						<td>{{skuDetails.waist}}</td>
+						<td>{{skuDetails.size}}</td> -->
+						<td ng-if = "userRolePermissions.viewReorderPoint && !userRolePermissions.changeReplenishmentRules">{{data.rulesData[skuDetails.sku].reorder}}</td>
+						<td ng-if = "userRolePermissions.changeReplenishmentRules">
+							<input type = "number" class = "form-control" min = "0" ng-model = "data.rulesData[skuDetails.sku].reorder" ng-change="updateRulesSku(skuDetails.sku)" ng-readonly = "data.skuData[style].setDefaultReorder"/><span class="hiddenData" ng-show="false">{{data.rulesData[skuDetails.sku].reorder}}</span>
+						</td>
+						<td ng-if = "!config.showmaxAmount">
+							<span ng-if = "!userRolePermissions.changeReplenishmentRules">{{data.rulesData[skuDetails.sku].maxOrder}}</span>
+							<input ng-if = "userRolePermissions.changeReplenishmentRules" type = "number" class = "form-control" min = "0" ng-model = "data.rulesData[skuDetails.sku].maxOrder" ng-change="updateRulesSku(skuDetails.sku)" ng-readonly = "data.skuData[style].setDefaultReorder"/><span class="hiddenData" ng-show="false">{{data.rulesData[skuDetails.sku].maxOrder}}</span>
+						</td>
+						<td >
+							<span ng-if = "!userRolePermissions.changeReplenishmentRules">{{data.rulesData[skuDetails.sku].roundingValue}}</span>
+							<input ng-if = "userRolePermissions.changeReplenishmentRules" type = "number" class = "form-control" min = "1" ng-model = "data.rulesData[skuDetails.sku].roundingValue"/><span class="hiddenData" ng-show="false">{{data.rulesData[skuDetails.sku].roundingValue}}</span>
+						</td>
+						<td>{{skuDetails.replenishable}}</td>
+						<td class="hideExport" data-hidePdf="true"><a ng-if="!skuDetails.history" class='btn ' ng-click="history(skuDetails.sku, ship.locationId)">{{ovcLabel.replenishmentRules.history || "History"}}</a></td>
+						<td ng-if="ship.resetDefault && (action.permissionsData.restoreRuleDefault===1)" class="thead-2" style="border-top:1px solid rgba(51, 40, 40, 0);height: 20px; width: 20px;">
+		      				<label style="float: right;font-weight: normal;">
+		      					<span ng-if="skuDetails.showReset" class="fa fa-lg" ng-class="{'fa-check-square-o' : skuDetails.toReset, 'fa-square-o' : !skuDetails.toReset }"></span>
+		      					<input style="display:none" type="checkbox" name="withReplenish" ng-model="skuDetails.toReset">
+		      				</label>
+		      			</td>
+			      	</tr>
+			    	<!-- <tr ng-if = "userRolePermissions.changeReplenishmentRules">
+			      		
+			      		<td colspan = "5" style = "text-align:right;" ng-if="config.showmaxAmount">
+			      			<label style = "margin: 10px 0; cursor: pointer;"><input type = "checkbox" style = "float: left;margin: 4px 5px 0 0;" ng-model = "data.skuData[style].setDefaultReorder" ng-change  = "action.setDefaultReorder(style)" /> {{translation.replenishmentRules[0].set_default_reorder_point}}</label>
+			      		</td>
+			      		<td colspan = "6" style = "text-align:right;" ng-if="!config.showmaxAmount">
+			      		<label style = "margin: 10px 0; cursor: pointer;"><input type = "checkbox" style = "float: left;margin: 4px 5px 0 0;" ng-model = "data.skuData[style].setDefaultReorder" ng-change  = "action.setDefaultReorder(style)" /> {{translation.replenishmentRules[0].set_default_reorder_point}}</label>
+			      		</td>
+			      		<td><input type = "number" class = "form-control" min = "0" ng-model = "data.skuData[style].DefaultReOrder" ng-change  = "action.setDefaultReorder(style)" ng-readonly = "! data.skuData[style].setDefaultReorder"/></td>
+				    </tr> -->
+			    </tbody>
+		  	</table>
+	  	</div>
+	</div>
+
+	<br clear = "all" /><br clear = "all" />
+
+
+	<div class = "col-md-12" ng-show = "data.error.resultError == '' ">
+		<div class="save_can acc_det clearfix">
+			<div class="col-md-12">
+				<div class="pull-right">
+				<button id="rpl_rulesSaveBtn" class="btn btn-primary ng-binding" ng-click="action.saveUpdatedRules()" type="submit" ng-if = "userRolePermissions.changeReplenishmentRules">{{ovcLabel.replenishmentRules.buttons.save}}</button>
+				<button id="rpl_rulesCancelBtn" class="btn btn-primary ng-binding" ng-click="action.replenishmentCancel()">{{ovcLabel.replenishmentRules.buttons.cancel}}</button>
+				<button id="rpl_resetDefault" ng-if="ship.resetDefault && (action.permissionsData.restoreRuleDefault===1)" class="btn btn-primary ng-binding" ng-click="action.saveUpdatedRules('productReset')">{{ovcLabel.replenishmentRules.buttons.resetToDefault}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-12 panel-body" ng-show="action.filteredItems == 0">
+		<div class="col-md-12">
+			<h4>{{ovcLabel.replenishmentRules.no_poorder}}</h4>
+		</div>
+	</div>
+	<div class="col-md-12" ng-show="action.filteredItems > 0 && action.hidePagination">     
+		<div class="panel-body fliter_i">
+
+			<uib-pagination total-items="action.filteredItems"  items-per-page ="action.entryLimit"  ng-model="action.currentPage"  max-size = "5"  boundary-links="true" ng-change="action.paginationDefault = false;action.filterReplenishmentRules();" ></uib-pagination>
+			
+			<div class="col-md-3 pglimit">
+				<div class="pg_limit page_size_drdn">
+					<label>{{ovcLabel.replenishmentRules.pagesize}}:</label>
+					<select  convert-to-number	ng-model="action.entryLimit" class="pgsizes" ng-change="action.paginationDefault = true;action.filterReplenishmentRules();" ng-disabled="action.filteredItems == 1">
+						<option>10</option>
+						<option>20</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Talble For Showing a Replinishment Hisory-->
+<div ng-show="showHisory">
+	<button id="rpl_rulesBackBtn" class="col-md-12 text-left btn btn-default"  ng-click="backButton()"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</button>
+	
+	<div class="row header_blk ">
+		<div class="col-lg-12">
+	        <h3 class="page-header">{{ovcLabel.replenishmentRules.replinshment_history}}</h3>
+	    </div>
+	</div>
+	<div class="col-lg-12">
+		<div>
+			<p>{{ovcLabel.replenishmentRules.sku}} : {{data.sku}}</p>
+			<p>{{ovcLabel.replenishmentRules.location}}  : {{data.location}}</p>
+		</div>
+		<h3 class = "text-danger text-center" ng-if = "showError">{{ovcLabel.replenishmentRules.noHistory}}</h3>
+	<table class="table table-bordered" style="margin: 10px 0px;" ng-if ="(historyData.length > 0) || showError">
+		<thead style="background: #ededed;">
+			<th>{{ovcLabel.replenishmentRules.table.user}}</th>
+			<th>{{ovcLabel.replenishmentRules.table.event}}</th>
+			<th>{{ovcLabel.replenishmentRules.table.date}}</th>
+			<th>{{ovcLabel.replenishmentRules.table.time}}</th>
+			<th>{{ovcLabel.replenishmentRules.table.reorderTriggerQty}}</th>
+			<!-- <th>{{translation.replenishmentRules[0].minimumOrderQuantity}}</th> -->
+			<th ng-if = "!config.showmaxAmount" >{{ovcLabel.replenishmentRules.table.maxOrderQty}}</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "(key,value) in  historyData">
+				<td>{{value.modifiedBy}}</td>
+				<td>{{key == 0 ? translation.replinshmentHisory['create'] : translation.replinshmentHisory['update']}}</td>
+				<td>{{value.modifiedAt | dateForm}}</td>
+				<td>{{value.modifiedAt | date:'HH:mm:ss'}}</td>
+				<td>{{value.reorder}}</td>
+				<!-- <td>{{value.minOrder}}</td> -->
+				<td ng-if = "!config.showmaxAmount" >{{value.maxOrder}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+
+<!--Model Popup Window-->
+<div id="rplCorparateHistory" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background: #369;color: white;">
+        <button type="button" class="close" data-dismiss="modal"  style="background: #369;color: white;" >X</button>
+        <h3 class="modal-title" style="text-align: center;">Changes at Location Level</h3>
+      </div>
+      <div class="modal-body">
+        <p><b>SKU</b> : <span>{{ship.corparateSKU}}</span><span ng-if="ship.corparateHistory" class="pull-right"><a  class='btn' ng-click="backButtoncorparate()">Back</a></span></p>
+        	<div ng-if="ship.showmodel">
+				<table class="table table-bordered" style="margin: 10px 0px;">
+
+					<thead style="background: #ededed;">
+						<th>Location</th>
+						<th>Reorder Trigger Qty</th>
+						<th>History</th>
+					</thead>
+					<tbody>
+					
+						<tr ng-repeat = "(key,value) in ship.locGrouphistoryData">
+							<td>{{value.store}}</td>
+							<td>{{value.triggerQty}}</td>
+							<td><a  class='btn' ng-click="corparateHistory()">History</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div ng-if="ship.corparateHistory">
+				<h3 class = "text-danger text-center">{{ovcLabel.replenishmentRules.noHistory}}</h3>
+			</div>
+        <!--Body CLose-->
+      </div>
+    </div>
+
+  </div>
+</div>

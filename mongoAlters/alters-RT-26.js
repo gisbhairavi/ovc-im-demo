@@ -1,0 +1,5 @@
+
+//STOCK-3076
+db.getCollection('config_tbl').remove({'$or':[{"featureId":"adjustmentExportStatuses"},{"featureId":"exportAdjustments"}]});
+db.getCollection("config_tbl").insert([{"featureGroup":"adjustments","featureName":"Adjustment Statuses to Export","applicationId":"SAR","defaultValue":"","featureType":"dropdown","moduleId":"stockModule","isPublic":1,"parentFeatureId":"exportAdjustments","fileName":"posMClient/sar.ovccfg","visibilityExpression":"","displaySeqNumber":"","featureDescription":"","featureId":"adjustmentExportStatuses","locationOrGroupId":"posMClient-grp-all","featureValue":"","isDeleted":false,"__v":0,"created":new Date(),"lastModified":new Date()},{"featureGroup":"adjustments","featureName":"Export Adjustments to third-party systems","applicationId":"SAR","defaultValue":"0","featureType":"boolean","moduleId":"stockModule","isPublic":1,"parentFeatureId":"","fileName":"posMClient/sar.ovccfg","visibilityExpression":"","displaySeqNumber":"","featureDescription":"","featureId":"exportAdjustments","locationOrGroupId":"posMClient-grp-all","featureValue":"","isDeleted":false,"__v":0,"created":new Date(),"lastModified":new Date()}]);
+

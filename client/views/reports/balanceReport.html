@@ -1,0 +1,172 @@
+<!--Style for This Page-->
+<style>
+	.table-bordered>thead>tr>th, .table-bordered>tbody>tr>td {
+	    border: 1px solid #ddd !important;
+	    text-align: center;
+	}
+	.link{
+		color: blue;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+</style>
+
+<!--Page Header-->
+<div class="row header_blk">
+	<div class="col-lg-12">
+		<h3 class="page-header" >{{ovcLabel.balanceReport.list.heading}}
+			<div class="pull-right add_ven clearfix" ng-if="report.dataSet.balanceData.length > 0">
+				<button class="btn btn-default dropdown-toggle pull-right" type="button" id="exportBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Export
+					<span class="fa fa-clone"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" id= "exportExcelBtn" aria-labelledby="exportBtn">
+						<li><a href="javascript:void(0);" ng-click="exportExcelData1();"><span class="fa fa-file-excel-o"> </span> Excel</a></li>
+					</ul>
+				<span>
+					<ovcdata-export pdf-id="balanceExport" hide-excel = "true" type="BalanceReport" style = "margin-top:-5px;" heading="{{ovcLabel.balanceReport.list.heading}}"></ovcdata-export>
+
+				</span>
+			</div>	
+		</h3>
+	</div>
+</div>
+
+<!--Page Whole Div-->
+<div class="ven_tblk clearfix">
+	<div class="col-lg-12">
+		<div class="clearfix">
+			<form  angular-validator-submit="report.action.searchReport()">
+			<!--Panel search Widget-->
+				<div class="panel-body search_box">
+					<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
+						<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+								<div style="position: relative;" class="tooltip-pro">
+									<input type="text" id="common_heirarchy_check" class="form-control"
+										ng-model="location.displayName" ng-focus="showLoc = true"
+										placeholder="{{ovcLabel.poOrder.list.location}}"
+										style="padding: 6px 18px 6px 10px;"
+										ng-change="report.action.searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+										class="fa"
+										ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+										style="position: absolute; right: 7px; top: 10px;"></span>
+								</div>
+								<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+									node-label="name" ng-show="showLoc"
+									class="dropdown-menu treeViewDrop"
+									style="display: block; width: 300px;" mode="listlocation"></div>
+							</div>
+							<div class="erroralert">
+								<span ng-show="report.error['store']" class="alert alert-danger">{{report.errorMsg['store']}}</span>
+							</div>
+					</div>
+
+					<div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+						<ovcautocomplete  class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="looksearch"  id="slpsearch" ng-model="report.form.product" attr-placeholder="{{ovcLabel.balanceReport.placeholder.skuSearch}}" click-activation="false" data="report.dataSet.autoCompleted" on-type="report.action.typedData" ng-model-options ="{ updateOn: 'default', debounce: {'default': 300} }" ng-click="report.action.onclick()" ></ovcautocomplete>
+						<div class="erroralert">
+							<span ng-show="report.error['product']" class="alert alert-danger">{{report.errorMsg['product']}}</span>
+						</div>
+
+					</div>
+					<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 tooltip-pro" ng-init="Status = 'balanceReport'">
+						<div  class= "col-md-12" multiselect-common="" items="report.dataSet.balanceType" selected-items="report.form.selectedBalance" content="'productProperty'" naming="{{ovcLabel.balanceReport.list.balanceType}}" dynamic="Status" style="margin-bottom: 10px;" tooltip-placement="top" uib-tooltip="{{report.action.getSelecteditem(report.form.selectedBalance)}}" ></div>
+						<div class="erroralert">
+							<span ng-show="report.error['balamcetype']" class="alert alert-danger">{{report.errorMsg['balamcetype']}}</span>
+						</div>
+					</div>
+
+					<br clear="all"/><br clear="all"/>
+					<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3" >
+						<select id="dateRange" class="form-control"  data-ng-options="key as value for (key , value) in report.dataSet.date" name="dateRange" data-ng-model="report.form.dateRange" ng-change="report.action.changedDateRange(report.form.dateRange)"><option value="" >{{ovcLabel.balanceReport.list.dateRange}}</option></select>
+						<div class="erroralert">
+							<span ng-show="report.error['DateRange']" class="alert alert-danger">{{report.errorMsg['DateRange']}}</span>
+						</div>
+					</div>
+
+					<div class="col-sm-12 col-xs-12 col-md-6 col-lg-6" style="padding: 0;" ng-if="report.form.dateRange == 'custom'">
+					 	<div class="col-md-6">
+					 		<input calendar  ng-model='report.form.startDate'  class="form-control hidcal" ng-change='report.action.ChangeData()' placeholder="{{ovcLabel.balanceReport.placeholder.start_date}}" />
+					 	</div>
+					 	<div class="col-md-6">
+					 		<input calendar  ng-model='report.form.endDate'  class="form-control hidcal"  ng-change='report.action.ChangeData()' placeholder="{{ovcLabel.balanceReport.placeholder.end_date}}" />
+					 	</div>
+					 	<div class="erroralert">
+							<span ng-show="report.error['DateCheck']" class="alert alert-danger">{{report.errorMsg['DateCheck']}}</span>
+						</div>
+						<div class="erroralert">
+							<span ng-show="report.error['DateFilter']" class="alert alert-danger">{{report.errorMsg['DateFilter']}}</span>
+						</div>
+					</div>
+					<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
+						<label style="float: left;font-weight: normal;"><span class="fa fa-lg" style="margin-right: 10px;" ng-class="{'fa-check-square-o' : report.form.affectedBalance, 'fa-square-o' : !report.form.affectedBalance }"></span><input style="display:none" type="checkbox" name="affectedBalance" ng-model="report.form.affectedBalance">Only Affected Balances</label>
+					</div>
+
+					<div class="col-sm-6 col-xs-12 col-md-3 col-lg-3 pull-right">
+						<button id="ovcSearchBtn" type="submit" class="btn btn-primary pull-right" ng-click="report.action.searchReport(report.form);" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.balanceReport.buttons.search}}</button>
+						<button id="ovcResetBtn" type="submit" class="btn btn-primary pull-right" ng-click="report.action.reset()" style="margin-right:10px;"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.balanceReport.buttons.reset}}</button>
+					</div>
+				</div>
+				<!--Panel search Widget-->
+			</form>
+		</div>
+		<!--under panel widget-->
+	    <div class="panel-body search_box" style="border:none;" ng-if="report.dataSet.showtable">
+	    	<!-- <div> -->
+				<!-- <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12" style="margin-bottom: 2%;">
+					<span class="col-md-8">
+						<span ng-repeat = "(key,value) in report.dataSet.skuData" class="col-md-6"><span class="col-md-5"><b>{{key}}</b></span>: <span>{{value}}</span></span>
+					</span>
+				</div> -->
+				<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+					<div class="table-responsive" ng-if="report.dataSet.showError">
+						<table class="table table-striped table-bordered" id="balanceExport">
+							<thead>
+								<tr style="background-color: #f8f8f8;">
+									<th>{{ovcLabel.balanceReport.location}}</th>
+									<th>{{ovcLabel.balanceReport.sku}}</th>
+									<th>{{ovcLabel.balanceReport.description}}</th>
+									<th>{{ovcLabel.balanceReport.balanceType}}</th>
+									<th>{{ovcLabel.balanceReport.beginbalance}}</th>
+									<th>{{ovcLabel.balanceReport.endbalance}}</th>
+									<th>{{ovcLabel.balanceReport.transcationName}}</th>
+									<th>{{ovcLabel.balanceReport.documentNo}}</th>
+									<th>{{ovcLabel.balanceReport.dateTime}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in report.dataSet.balanceData">
+									<td>{{report.dataSet.locNameObj[item.fromLocationId]}}</td>
+									<td>{{item.sku}}</td>
+									<td>{{item.description}}</td>
+									<td>{{report.dataSet.balanceTable[item.balanceType]}}</td>
+									<td>{{item.prevValue}}</td>
+									<td>{{item.newValue}}</td>
+									<td>{{item.tranTypeId ? report.dataSet.tranNameArray[item.tranTypeId] : report.dataSet.tranNameArray[item.directiveTypeId]}}</td>
+									<td class="link" ng-click="report.action.redirect(report.form, item.tranId)">{{item.purchaseOrderNumber || item.adjustmentNumber || item.postranNo || item.countNumber}}</td>
+									<td>{{item.createdDate | datetimeForm}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			<!-- </div> -->
+			<h3 id="ovcError" class="text-danger text-center" ng-if="!report.dataSet.showError">The selected balance type(s) were not changed during the selected time frame</h3>
+        </div>
+        <div class="panel-body fliter_i" ng-if="report.dataSet.showError">
+
+			<uib-pagination total-items="report.dataSet.totalItems"  items-per-page ="report.dataSet.entryLimit"  ng-model="report.dataSet.currentPage"  max-size = "5"  boundary-links="true" ng-change="report.action.pageChanged();" ></uib-pagination>
+						
+			<div class="col-md-3 pglimit">
+				<div class="pg_limit page_size_drdn">
+					<label>{{ovcLabel.balanceReport.list.pagesize}}:</label>
+					<select  convert-to-number	ng-model="report.dataSet.entryLimit" class="pgsizes" ng-change="report.action.searchReport(report.form)">
+						<option>10</option>
+						<option>20</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

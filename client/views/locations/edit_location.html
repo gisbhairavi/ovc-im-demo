@@ -1,0 +1,57 @@
+	<form role="form" name="form" angular-validator-submit="editLocNode(loc)" novalidate angular-validator>
+		<!--	<div class="ven_tblk clearfix">
+<div class="row r_margin ng-scope"> -->
+				<div class="col-lg-12">
+					<!-- ng-if="locadd == '1'" -->
+					<div class="add_vendorb clearfix">
+					<div class="col-lg-6">
+						<div class="form-group">
+							<input type="hidden" name="_id" class="_id" ng-model="loc._id" >
+							<input type="hidden" name="loc_id" class="loc_id" ng-model="loc.id" >
+							<label class="control-label">{{ovcLabel.stockLocation.parent_location_id}}: </label>
+							<input id="editParentlocation" class="form-control parentStockingLocationId" ng-hide="molstklcn" placeholder="{{ovcLabel.stockLocation.placeholder.ent_parlocid}}" ng-model="loc.parentStockingLocationName" name="parentStockingLocationId" readonly="readonly"  >
+							<input id="editParentlocation" class="form-control parentStockingLocationId" ng-show="molstklcn" placeholder="{{ovcLabel.stockLocation.placeholder.ent_parlocid}}" ng-model="loc.parentStockingLocationName" name="parentStockingLocationId" ng-disabled="molstklcn">
+							<input id="editParentlocation" type="text" ng-model="loc.parentStockingLocationId" class="form-control ng-hide" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">{{ovcLabel.stockLocation.stock_location_id}}: </label>
+							<input id="editStockinglocation" class="form-control stockingLocationId"  ng-hide="molstklcn"  ng-trim="false" ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="{{ovcLabel.stockLocation.placeholder.ent_stklocid}}" ng-model="loc.stockingLocationId" 
+							name="stockingLocationId" validator = "myCustomValidator(loc.stockingLocationId)" required-message="'{{ovcLabel.stockLocation.error.stock_locn}}'" invalid-message="'{{ovcLabel.stockLocation.stock_white_space_error}}'"  readonly="readonly" required  >
+							<input id="editStockinglocation" class="form-control stockingLocationId" ng-show="molstklcn" ng-trim="false" ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="{{ovcLabel.stockLocation.placeholder.ent_stklocid}}" ng-model="loc.stockingLocationId"
+							name="stockingLocationId" validator = "myCustomValidator(loc.stockingLocationId)" required-message="'{{ovcLabel.stockLocation.error.stock_locn}}'" invalid-message="'{{ovcLabel.stockLocation.stock_white_space_error}}'"  required  ng-disabled="molstklcn">
+						</div>
+						<div class="form-group">
+							<label class="control-label">{{ovcLabel.stockLocation.location_name}}: </label>
+							<input id="editLocationName" class="form-control locationName" placeholder="{{ovcLabel.stockLocation.ent_location_name}}" ng-model="loc.locationName" name="locationName" validator = "myCustomValidator(loc.locationName)" required-message="'{{ovcLabel.stockLocation.error.stock_locn}}'" required ng-disabled="molstklcn">
+						</div>
+						<div class="form-group">
+							<label class="control-label">{{ovcLabel.stockLocation.description}}: </label>
+							<textarea id= "editDescription" class="form-control stockingLocationDescription" rows="3" name="stockingLocationDescription" ng-model="loc.stockingLocationDescription" ng-disabled="molstklcn"></textarea>
+						</div>
+						<div class="form-group">
+							<div class="balanceoh "><div class="balradio"><label>
+							<input id="editCheckBox" type="checkbox" name="isActive" ng-model="loc.isActive" ng-disabled="molstklcn" ng-checked="{{isactive}}" > 
+							<img class="mar_r" ng-if ="molstklcn != true "/> <img  ng-if ="molstklcn==true "  class="c_disabled"/>{{ovcLabel.stockLocation.active}}</label> 
+							</div></div>
+						</div>
+						</div>
+						
+					</div>
+					<!-- /.panel -->			
+				
+				<div class="save_can acc_det clearfix">
+				<div class="col-md-12">
+					<div class="pull-right">
+						<button id="editSave" type="submit" class="btn btn-primary" ng-click="submitted=true" ng-disabled="molstklcn">{{ovcLabel.stockLocation.button.save}}</button>
+						<a  id="editcancel" ui-sref="ovc.location-list" class="btn btn-primary">{{ovcLabel.stockLocation.button.cancel}}</a>
+					</div>
+					</div>
+				</div>
+				</div>
+				<!-- </div>
+				</div>	
+			
+			</form>
+		</section>	 -->
+		<div id="output"></div>
+		</form>

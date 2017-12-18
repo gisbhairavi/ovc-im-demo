@@ -1,0 +1,732 @@
+<transaction-history></transaction-history>
+<div class="row header_blk ng-scope">
+	<div class="col-lg-12">
+		<h3 class="page-header ng-binding">{{ovcLabel.count.edit_count}} : {{ncount.countname}}</h3>
+	</div>
+</div>
+	<section  ng-controller="TabController as tab">
+			<div class="pro_menu clearfix">
+				<div class="col-md-12">
+					<ul class="nav nav-pills">
+						<li ng-class="{active:tab.isSet(1)}"  ng-click="count_details()" ><a href   id="c_detail" ng-click="tab.setTab(1)">{{ovcLabel.count.count_details}}</a></li>
+						<li ng-class="{active:tab.isSet(2)}"  ng-click="transaction_itemcancel()"><a href   id="z_detail" ng-click="tab.setTab(2)">{{ovcLabel.count.zones}}</a></li>
+						<li ng-class="{active:tab.isSet(3),'disabled':creatingSnapshot==true}" ng-click="review_details()"><a href  id="r_detail" ng-click="tab.setTab(3)">{{ovcLabel.count.review_place}}</a></li>
+					</ul>
+				</div>
+			</div>
+				<!--{{ovcLabel.count.bannerMsg.cycleCreated}}-->
+			<div ng-show="tab.isSet(1)">
+				<div class="ven_tblk stock_loc clearfix">
+					<div class="row r_margin ng-scope">
+						<div class="col-lg-12">
+						<div ng-show="rolePerm.validateZones" ng-if="!ncount.countCreated" class="banner_msg">
+								<div class=banner_det ng-show= "(ncount.countType === 'Physical') && beCreate === 1 && (creatingSnapshot !== true)">{{ovcLabel.count.bannerMsg.beingCreated}}</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgEmp)">Define products that need to be counted</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgAll) && (creatingSnapshot !== true)">This Count has not started yet. Click 'Start Count' to take a snapshot of current inventory balances for products added to the count
+								<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+								margin-left: 10px;">Start Count</button>
+								</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgNotAll) && (creatingSnapshot !== true)">Define products in other Zones and start the Count from the Zone list view</div>
+								<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType !== 'Cycle') && (creatingSnapshot !== true) && (ncount.countType !== 'Physical')" class=banner_det>{{ovcLabel.count.bannerMsg.not_yet_start}}  <button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+								margin-left: 10px;">Start Count</button>
+								</div>
+								<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType == 'Physical') && (creatingSnapshot !== true)" class=banner_det>This Count has not been started yet. A snapshot of the entire store inventory will be taken when the count is started<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="margin-left: 10px;">Start Count</button></div>
+								<div ng-show="creatingSnapshot === true" class=banner_det>
+									{{ovcLabel.count.bannerMsg.creatingSnapshot}}
+								</div>
+							</div>
+							<div ng-hide="rolePerm.validateZones" ng-if="!ncount.countCreated" class="banner_msg && (creatingSnapshot !== true)">
+								<div class=banner_det>{{ovcLabel.count.bannerMsg.contact_manager_detail}}
+								</div>
+							</div>
+							<form  role="form" name="form">
+							
+								<div class="add_vendorb clearfix">
+								<div class="col-lg-6 addlocation panleft" style="padding: 0px;">
+										<div class=" panel-default">
+										<div class="panel-body">
+											<div class="row">
+											<div class="col-lg-12">												
+													<div class="form-group col-md-10" style="padding: 0px;">
+														<label class="control-label">{{ovcLabel.count.labels.store_name}}: </label><br />
+														
+														<select id="storelocation" ng-change="commonErrorChange('store')" class="form-control storelocation" name="shiptostore" ng-model="ncount.locationId"  disabled="disabled">
+							                                <option value="">-- {{ovcLabel.count.placeholder.selectstore}} --</option>
+							                                <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+							                                {{ item.indent }} {{ item.displayName }}
+							                                </option>
+							                            </select>
+							                            <div class="erroralert">
+															<span ng-if="customtab.error['storelocation']" class="alert alert-danger">{{customtab.errormsg['storelocation']}}</span>
+														</div>
+													</div>
+													<div  class="form-group col-md-10" 			style="padding: 0px;">
+													  	<label class="control-label">Count Type:</label>
+							                            <select id="countType" class="form-control countType" name="countType" ng-model="ncount.countType" ng-change="commonErrorChange('countType')" disabled="disabled">
+														<option value="">--Select Count Type--</option>
+						                                <option ng-repeat="item in countType" value="{{item.code}}">{{item.label}}</option>
+						                           		 </select>
+														<div class="erroralert">
+															<span ng-show="customtab.error['countType']" class="alert alert-danger">{{customtab.errormsg['countType']}}</span>
+														</div>
+													</div>
+													<div class="form-group col-md-10" style="padding: 0px;">
+														<label class="control-label">{{ovcLabel.count.labels.created_by}}: </label>
+														<input class="form-control stockingLocationId"  placeholder="{{ovcLabel.count.placeholder.created_by}}" ng-model="ncount.createdby" name="createdby"  ng-disabled="true" >
+													</div>
+													<div  class="form-group col-md-10" style="padding: 0px;">
+													   <label class="control-label">{{ovcLabel.count.labels.countName}}:</label>
+														<input class="form-control" name="countname" ng-model="ncount.countname"  ng-disabled="molcount"  ng-change="commonErrorChange('countname',ncount.countname)"/>
+														<div class="erroralert">
+															<span ng-show="customtab.error['countname']" class="alert alert-danger">{{customtab.errormsg['countname']}}</span>
+															<span ng-show="checkcountname" class="alert alert-danger">{{checkcounterror}}</span>
+														</div>
+													</div>
+															
+													<div class="form-group col-md-10" style="padding: 0px;">
+														<label class="control-label">{{ovcLabel.count.labels.description}}:</label>
+														<input class="form-control" name="description" ng-model="ncount.description" ng-disabled="molcount" />
+																
+													</div>
+													
+													<div class="form-group col-md-10" style="padding:0">
+														<label class="control-label">{{ovcLabel.count.labels.number_of_zones}}: </label>
+														<input   type="number"  class="form-control stockingLocationId" ng-model="ncount.numberOfZones"  name="numberOfZones" disabled="disabled">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 addlocation" style="padding: 0px;">
+									<div class=" panel-default">
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-group col-md-10" style="padding:0">
+														<label class="control-label">{{ovcLabel.count.labels.comments}}: </label>
+														<textarea class="form-control stockingLocationDescription" rows="3" name="comment" ng-model="ncount.comment" ng-disabled="molcount"  placeholder="{{ovcLabel.count.placeholder.text}}"></textarea>
+													</div>
+													<div class="form-group col-md-10" style="padding:0" ng-if="ncount.countCreated">
+													<label class="control-label">{{ovcLabel.count.count_created}}: </label><span  class="alert alert- ng-binding" >{{ncount.countCreated | datetimeForm}}</span> 
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="save_can acc_det clearfix">
+									<div class="col-md-12">
+										<div class="pull-right">
+										<button id="ovcSave" name="count_save" class="btn btn-primary ng-binding" ng-click="newcount_add(ncount)"  ng-disabled="molcount"  type="submit">{{ovcLabel.count.buttons.save}}</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+			<div ng-show="tab.isSet(2)">
+			<!--Zone Page-->
+			<div class="row r_margin ng-scope"  ng-show="enableZoneDetailView">
+					 <div class="col-md-12">
+					 <div ng-show="rolePerm.validateZones" ng-if="!ncount.countCreated" class="banner_msg">
+								<div class=banner_det ng-show= "(ncount.countType === 'Physical') && beCreate === 1 && (creatingSnapshot !== true)">{{ovcLabel.count.bannerMsg.beingCreated}}</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgEmp) && (creatingSnapshot !== true)">Define products that need to be counted</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgAll) && (creatingSnapshot !== true)">This Count has not started yet. Click 'Start Count' to take a snapshot of current inventory balances for products added to the count
+								<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+								margin-left: 10px;">Start Count</button>
+								</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgNotAll) && (creatingSnapshot !== true)">Define products in other Zones and start the Count from the Zone list view</div>
+								<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType !== 'Cycle') && (creatingSnapshot !== true) && (ncount.countType !== 'Physical')" class=banner_det>{{ovcLabel.count.bannerMsg.not_yet_start}}  <button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+								margin-left: 10px;">Start Count</button>
+								</div>
+								<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType == 'Physical') && (creatingSnapshot !== true)" class=banner_det>This Count has not been started yet. A snapshot of the entire store inventory will be taken when the count is started<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="margin-left: 10px;">Start Count</button>
+								</div>
+								<div ng-show="creatingSnapshot === true" class=banner_det>
+									{{ovcLabel.count.bannerMsg.creatingSnapshot}}
+								</div>
+							</div>
+							<div ng-hide="rolePerm.validateZones" ng-if="(!ncount.countCreated) && (creatingSnapshot !== true)" class="banner_msg">
+								<div class=banner_det>{{ovcLabel.count.bannerMsg.contact_manager_detail}}
+								</div>
+							</div>
+						<div class="panel-default">
+						    <div class="panel-body search_box">
+									<div class="row">
+										<div class="col-lg-12 purs_order">										 
+											<div class="col-md-12 trans_det">
+											<div class="col-md-3 trans_det">
+											<p><label class="mar_al">{{ovcLabel.count.labels.location}}: </label>{{ncount.locationname}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.creator}}: </label>{{ncount.createdby}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.zone_created}}: </label>{{ncount.numberOfZones || '0'}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.status}}: </label>{{ncount.cstatus}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.zones_validated}}: </label>{{validateTotal}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.created}}: </label>{{created  | datetimeForm}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.started}}: </label>{{ncount.countCreated | datetimeForm}}</p>
+											<p><label class="mar_al">{{ovcLabel.count.labels.approved}}: </label>{{approvedDate  | datetimeForm}}</p>
+											</div>
+											<div class="col-md-4">
+											</div>
+											<div class="c_validatebt col-md-5">
+												<span  ng-if="ncount.countCreated" class="file-input btn btn-primary btn-file pull-right" ng-hide="list.length && list.length<=validateTotal" ng-if="ncount.cstatus != 'Approved'">{{ovcLabel.count.buttons.importFile}}
+											    	<input id="ovcFileUpload" name="count_import" type="file" on-read-file="uploadZones($fileContent,$file)" file-model="zoneFile" accept=".dat"/>
+											    </span>
+											    </br></br>
+												<div class="zone_btns" ng-if = "rolePerm.validateZones">
+													<button ng-if="startRecount && ncount.countCreated && (ncount.countStatus != 'approve')" name="count_zoneRecount" ng-show="list.length && list.length<=validatedCount" ng-hide="list.length<=recountTotal" class="btn btn-primary pull-right del_i"  ng-click="ZonechangeStatus('recount')"  ng-disabled="molcount" href=""><i class="fa fa-share"></i>{{ovcLabel.count.buttons.recount}}</button>
+													<button name="count_zoneValidate" class="btn btn-primary pull-right del_i" ng-click="ZonechangeStatus('validate')"  ng-disabled="molcount"  ng-hide="list.length<=validateTotal" href="" ng-if="(ncount.countStatus != 'validate' && ncount.countStatus != 'approve' && ncount.countCreated  && ncount.noSkuData)" style="margin-right: 10px;"><i class="fa fa-check"></i>{{ovcLabel.count.buttons.validates}}</button>
+												</div>
+												<div><span  ng-if="selchk" class=" datevalid alert alert-danger ng-binding" >{{ovcLabel.count.error.select_zone}}</span></div>
+											</div>
+											</div>
+										</div>
+									</div><!-- /.row (nested)--> 
+								</div><!-- /.panel-body -->
+							
+					<form role="forms"  >
+						<a  class="btn btn-primary"   id="newzones" ng-hide="true"  href=""   ng-click="addRow()">add</a>
+						<div class="ven_tbody ">
+							<div class="ven_tbody">
+								<div class="row">
+									<div class="col-md-12 table-responsive z_countli" >
+										<div class="z_counth">
+										<div class="minh"> 
+										<table class="table table-striped table-bordered edit_ct" iphone-view  >
+
+											<thead>
+											<tr class="count_head">
+												<th>{{ovcLabel.count.labels.zone}}</div></th>&nbsp;&nbsp;&nbsp;&nbsp;
+												<th>{{ovcLabel.count.labels.operator}}</div></th>
+												<th>{{ovcLabel.count.labels.hand_count}}</div></th>
+												<th>{{ovcLabel.count.labels.total_skus}}</div></th>
+												<th>{{ovcLabel.count.labels.total_scans}}</div></th>
+												<th>{{ovcLabel.count.labels.status}}</div></th>
+												<th ng-if="(ncount.countType !== 'Cycle' && ncount.countStatus !== 'approve') || (!ncount.countCreated && ncount.countType === 'Cycle')">{{ovcLabel.count.labels.action}}</div></th>
+												<th ng-if = "rolePerm.validateZones && ncount.countStatus != 'approve' && selectallChkBox">
+												<div class="chck_align">
+												<div class="balanceoh">
+												<div class="balradio"><label>{{checksel}}<input  ng-model="areAllSelected" id='checkall' type="checkbox"  ng-checked="selectedcheck" ng-change="selectAll()" ng-disabled="molcount"/>
+												<img class="squ_box" style="margin-left: 5px;margin-top: 5px;"  ng-if='molcount==false' /><img class="c_disabled" style="margin-left: 12px;margin-top: 5px;" ng-if='molcount==true' ></label></div>
+												</div><p><label id="selectall" for='checkall'><!--{{translation.select[0].select_all}}--></label></p></div></th>
+												<!-- <th></th> -->
+											</tr>
+											</thead>
+											<tbody class="count_head">
+												<tr ng-repeat="(productIndex,data) in list" ng-class="{'class-tr-bg':((data.scanQty != data.handCountQty) &&  data.scanQty > 0 ), 'class-sku-tr-bg':(data.noApproval)}">
+													<td>
+													<div style="position:relative;">
+													<p class="btn_box">
+														<input type="text" id="{{data.checkId}}error" class="form-control" ng-model="data.id" ng-change ="checkZonenames(data.id,data,data.checkId)" ng-blur="checkempty(data,data.checkId)" ng-class="(data.errorcheck == '+Q-red0(id)') ? 'error_red' : 'no-class' "/>
+														<span class="fa fa-external-link-square" ng-click="getZoneDetail(null,data)" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" title="Click to View" style="position:absolute;right:3%;top:30%;cursor: pointer; color: #369;"></span>
+													</p><i class="fa fa-exclamation-triangle exclamicons ng-scope notplannedzone" ng-if="data.noApproval" ng-click="data.showPopover=true;" ng-mouseleave="data.showPopover=false;"><div class="popover" ng-show="data.showPopover"> <b>{{ovcLabel.count.labels.noApproveZones}}</div></i>
+													</div>
+													<div class="isa_error form-control" style="height: auto;" ng-if="data.errorcheck == '+Q-red0(id)'">This Zone already exists</div></td>
+
+													<td style="width:15%"><input type="text"  class="form-control" data-ng-model="data.operatorId" data-ng-required  ng-disabled="data.czstatus == 'Approved'" /></td>
+													<td>
+													<p class="btn_box">
+													<button name="zoneHC_qtyDecrease" class="btn btn-primary btn-sm" ng-disabled="molcount" ng-if="data.czstatus != 'Approved' " ng-click="decreasehcq(productIndex); minmaxhcq(data.handCountQty, 0, productIndex);">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+													</button>
+													<input name="zoneHC_qty" type="text" class="manual-input qty-center" ng-class="(data.czstatus == 'Approved')?'changeDis':'no-class'" data-ng-model="data.handCountQty" data-ng-required  ng-disabled="data.czstatus == 'Approved'" only-digits style="width : 50%;"/>
+													<button name="zoneHC_qtyIncrease" class="btn btn-primary btn-sm" ng-disabled="molcount" ng-if="data.czstatus != 'Approved' " ng-click="increasehcq(productIndex)">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+													</button>
+													</p>
+													</td>
+													<td>{{data.skuQty}}</td>
+													<td style="position:relative;">{{data.scanQty || '0'}}</td>
+													<td>{{data.czstatus}}</td>
+													<td id="zone_deleteBtn" class="d_trash" ng-if="(ncount.countType !== 'Cycle' && ncount.countStatus != 'approve' )|| (!ncount.countCreated && ncount.countType === 'Cycle')"><button type="button" value="" class="btn btn-primary" ng-click="removeRow($index,data._id)" ng-disabled=" data.countStatus == 'validate' || (ncount.countStatus == 'approve') || molcount" ><i class="fa fa-trash"></i></button></td>
+													
+													<td ng-if="selall=='false' && rolePerm.validateZones && ncount.countStatus != 'approve' && data.skuQty" class="chck_center"> <div class="balanceoh"><div class="balradio"><label><input id="{{data.id}}" type="checkbox" value="{{data.id}}" ng-model="data.selected" ng-checked="{{data.selected}}" ng-click="toggleSelection(data)" ng-disabled="molcount"/>
+													<img  class="squ_box" ng-if='molcount==false'/> <img class="c_disabled" ng-if='molcount==true' ></label></div>
+													</div></td>
+													<td  ng-if="selall=='true'  && rolePerm.validateZones && ncount.countStatus != 'approve' && data.skuQty" class="chck_center"><div class="balanceoh check_left"><div class="balradio"><label><input id="{{data.id}}" type="checkbox" value="{{data.id}}" ng-model="data.selected" ng-checked="{{data.selected}}" ng-click="toggleSelection(data)" ng-disabled="molcount"/>
+													<img class="squ_box" ng-if='molcount==false'/><img class="c_disabled" ng-if='molcount==true' ></label></div>
+													</div></td>
+													<td ng-if="!data.skuQty"></td>
+												</tr>
+											</tbody>
+										</table>
+									 </div>
+												<div class="col-md-12 panel-body" ng-show="action1.filteredItems == 0">
+													<div class="col-md-12">
+														<h4>{{ovcLabel.count.nocountzone}}</h4>
+													</div>
+												</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+			</div><!-- /.panel -->
+						<div class="save_can acc_det clearfix" ng-if="(ncount.countStatus != 'approve')">
+							<div class="col-md-12">
+								<div class="pull-right">
+								<button ng-hide="(ncount.countType == 'Cycle' && ncount.countCreated)" id="ovcAddBtn" class="btn btn-primary ng-binding" ng-click="add_zone()" ng-disabled="molcount" >{{ovcLabel.count.add_new_zone}}</button>
+								<button id="ovcSave" class="btn btn-primary ng-binding" ng-click="addzones(ncount,list)" ng-disabled="molcount"  type="submit" ng-if="(ncount.countStatus != 'approve')" ng-hide="action1.filteredItems == 0">{{ovcLabel.count.buttons.save}}</button>
+								</div>
+							</div>
+						</div>
+				
+					</form>	
+
+					<!--Count Zone Page Pagination-->
+					<div class="col-md-12" ng-show="action1.filteredItems > 0">    
+					<div class="panel-body fliter_i">
+
+						<uib-pagination total-items="action1.filteredItems"  items-per-page ="action1.zoneEntryLimit"  ng-model="action1.currentPage"  max-size = "5"  boundary-links="true" ng-change="pageChanged(ncount,list,'pageChanged',action1.currentPage);" ></uib-pagination>
+						
+						<div class="col-md-3 pglimit">
+							<div class="pg_limit page_size_drdn">
+								<label>{{ovcLabel.count.list.pagesize}}:</label>
+								<select  convert-to-number	ng-model="action1.zoneEntryLimit" class="pgsizes" ng-change="pageChanged(ncount,list,'pageChanged',action1.currentPage)">
+									<option>10</option>
+									<option>20</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+							</div>
+						</div>
+						</div>
+					</div>
+		</div>
+	</div>
+
+	<!--Count Detail Screen-->
+	<div class="row r_margin ng-scope" ng-hide="enableZoneDetailView">
+				<div class="ven_tblk clearfix">
+					<div class="col-md-12">
+						<div ng-show="rolePerm.validateZones" ng-if="!ncount.countCreated" class="banner_msg">
+							<div class=banner_det ng-show= "(ncount.countType === 'Physical') && beCreate === 1 && (creatingSnapshot !== true)">{{ovcLabel.count.bannerMsg.beingCreated}}</div>
+							<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgEmp) && (creatingSnapshot !== true)">Define products that need to be counted</div>
+							<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgAll) && (creatingSnapshot !== true)">This Count has not started yet. Click 'Start Count' to take a snapshot of current inventory balances for products added to the count
+							<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+							margin-left: 10px;">Start Count</button>
+							</div>
+							<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgNotAll) && (creatingSnapshot !== true)">Define products in other Zones and start the Count from the Zone list view</div>
+							<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType !== 'Cycle') && (creatingSnapshot !== true) && (ncount.countType !== 'Physical')" class=banner_det>{{ovcLabel.count.bannerMsg.not_yet_start}}  <button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="margin-left: 10px;">Start Count</button>
+							</div>
+							<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType == 'Physical') && (creatingSnapshot !== true)" class=banner_det>This Count has not been started yet. A snapshot of the entire store inventory will be taken when the count is started<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="margin-left: 10px;">Start Count</button>
+							</div>
+							<div ng-show="creatingSnapshot === true" class=banner_det>
+								{{ovcLabel.count.bannerMsg.creatingSnapshot}}
+							</div>
+						</div>
+					</div>
+					<div ng-hide="rolePerm.validateZones" ng-if="!ncount.countCreated" class="banner_msg">
+						<div class="banner_det">{{ovcLabel.count.bannerMsg.contact_manager_detail}}
+						</div>
+					</div>
+			           <div class="panel-body search_box">
+							<div class="row">
+								<div class="col-lg-12 purs_order">
+								  <div class="page-header counts_tit  clearfix ">
+									<!--zoneprint -->
+									<h3 class=" ng-binding counts_val pull-left">{{ovcLabel.count.zone_details}}:{{zoneTitle}}</h3>
+									<!-- <div ng-if="prodlist.length > 0">
+										<ovcdata-export pdf-id="countListExport" heading="Zone  {{zonetitle}}" type="ZoneDetails"></ovcdata-export>
+									</div> -->
+									<span ng-if="ncount.countStatus !== 'approve'">
+ 										<ovcdata-export  pdf-id="" type ="ZoneTag" label-data= "{{ovcLabel.count.buttontypes.printZoneTag}}" zone-tag="true" heading="" >
+ 										</ovcdata-export>
+ 									</span>
+									</div>
+									<div class="col-md-12 trans_det">
+										<div class="col-md-4 trans_det">
+											<p class="export_DATA" ><label> <span class="export_head_label">{{ovcLabel.count.zone_status}}</span>: </label><span class="export_head_value">{{curentZone.countStatus == 'recount'?ovcLabel.count.labels.inprogress:curentZone.czstatus}}</span></p>
+											<p ng-class="((curentZone.handCountQty != scanitems[1]) && scanitems[1] > 0)? 'class-tr-bg' : 'no-class'"><label>{{ovcLabel.count.zone_hand_countqty}}: </label>
+												<button name="count_handQty_decrease" class="btn btn-primary btn-sm" ng-disabled="molcount" ng-if="curentZone.czstatus != 'Approved' " ng-click="decreasehq(); idminmaxhq(curentZone.handCountQty, 0);">
+												<i class="fa fa-minus" aria-hidden="true"></i></button>
+
+												<input name="count_handQty" type="text" class="qty-center manual-input currentzone-handcountQty" ng-class="(curentZone.czstatus == 'Approved')?'changeDis':'no-class'" ng-model="curentZone.handCountQty" ng-disabled="curentZone.czstatus == 'Approved'" only-digits>
+												<button name="count_handQty_increase" class="btn btn-primary btn-sm" ng-disabled="molcount" ng-if="curentZone.czstatus != 'Approved' " ng-click="increasehq()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+											</p>
+
+											<!--For only Print its not displayed In UI-->
+											<p class="export_DATA" style="display:none;"><label> <span class="export_head_label">{{ovcLabel.count.zone_hand_countqty}}</span>: </label><span class="export_head_value">{{curentZone.handCountQty}}</span></p>
+
+											<p class="export_DATA"><label> <span class="export_head_label">{{ovcLabel.count.zone_scan_qty}}</span>: </label><span class="export_head_value">{{originalScanQty || '0'}}</span></p>
+											<p class="export_DATA"><label><span class="export_head_label">{{ovcLabel.count.zone_sku_qty}} </span>: </label><span class="export_head_value">{{originalSkuQty}}</span></p>
+											<p><label>{{ovcLabel.count.operator}}: </label><input name="countZone_operator" type="text" class="z_count1 form-control" ng-model="curentZone.operatorId"  ng-disabled="curentZone.czstatus == 'Approved'"></p>
+
+											<!--For only Print its not displayed In UI-->
+											<p class="export_DATA" style="display:none;"><label> <span class="export_head_label">{{ovcLabel.count.operator}}</span>: </label><span class="export_head_value">{{curentZone.operatorId}}</span></p>
+										</div>
+										<div class="col-md-3">
+											<label class="control-label">{{ovcLabel.count.order_comments}}:</label>
+											<textarea class="spl_inst form-control add_or" rows="4" placeholder="{{ovcLabel.count.placeholder.comments}}" ng-model="curentZone.comment"  ng-disabled="curentZone.czstatus == 'Approved'"> </textarea>
+
+											<!--For only Print its not displayed In UI-->
+											<p class="export_DATA" style="display:none;"><label> <span class="export_head_label">{{ovcLabel.count.order_comments}}</span>: </label><span class="export_head_value">{{curentZone.comment}}</span></p>
+										</div>
+										<div class="c_validatebt col-md-5">
+											<img ng-show="false" id="barcode"/>
+											<span ng-hide= "((ncount.countType == 'Physical') && beCreate==1) || (curentZone.countStatus == 'validate') || (curentZone.countStatus == 'approve')" class="file-input btn btn-primary btn-file pull-right" ng-if="curentZone.czstatus != 'Approved' && ncount.countCreated">{{ovcLabel.count.buttons.importFile}}
+										    	<input id="ovcFileUpload" name="zoneDetail_import" type="file" on-read-file="uploadZones($fileContent,$file)" file-model="myFile" />
+										    </span>
+										    <br /><br clear = "all" />
+											<div class="zone_btns">
+												<button ng-if="ncount.countCreated && (curentZone.countStatus == 'validate') && (curentZone.countStatus != 'approve')" name="zoneDetail_recount" class="btn btn-primary del_i" id="ReElement"  ng-click="zonestatus_api('recount',curentZone._id)"   ng-hide="(recountNumber>4) || molcount"  href=""><i class="fa fa-share"></i>{{ovcLabel.count.buttons.recount}}</button>
+												<button name="zoneDetail_validate"  class="btn btn-primary del_i" ng-click="zonestatus_api('validate',curentZone._id)" ng-hide="(curentZone.countStatus == 'validate')  || (curentZone.countStatus == 'approve') && molcount"  href="" ng-if="(curentZone.countStatus != 'approve' && ncount.countCreated && prodlist.length)" ><i class="fa fa-check"></i>{{ovcLabel.count.buttons.validates}}</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div><!-- /.row (nested) -->
+						</div><!-- /.panel-body -->	
+							<uib-tabset>
+								<uib-tab ng-repeat="workspace in workSpaces"
+									heading="Count {{workspace.id+1}}"
+									active="workspace.active" ng-click="tabSelected(workspace.id+1)">
+								<div ng-controller="TabsChildController" 
+												ng-init="workspace=workspace" style="margin-top: 3px;">
+
+									<div class="panel-default">
+										<div>
+											<div>
+												<div class="panel-default" ng-if="workspace.id == (maxRecount-1)">
+													<div ng-hide="(ncount.countType == 'Physical') || (ncount.countType == 'Cycle' && ncount.countCreated)"  class="panel-body search_box">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-12 " style="padding:0;">
+																		<ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="countprod.result" attr-placeholder="{{ovcLabel.count.placeholder.search_procode}}..." click-activation="false" data="transactions" on-type="doSomething" on-select="doSomethingElse" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+																	</div> 
+																	<div ng-if="loadval == 1">
+																		<img src="images/loading.gif" />
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-2 search_btns">
+																<div class="pg_limit b_margin">
+																	<button ng-hide="showStyle===false" type="submit" class="btn btn-primary" id="moveship" ng-click="addZoneitems(countprod)"  ng-disabled="molcount"><i class="fa fa-plus" ng-show="curentZone.countStatus!='approve'"></i> {{ovcLabel.count.buttons.add}}</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row" ng-show="showStyle"  id="lkpmatrix"></div> 
+												<form role="forms"  >
+													<a  class="btn btn-primary" id="newzones" ng-hide="true"  href=""   ng-click="addRow()">{{ovcLabel.count.button.add}}</a>
+													<div class="ven_tbody ">
+															<div class="row">
+																<div class="col-md-12 table-responsive" >
+																	<table class="table table-striped table-bordered" iphone-view   >
+																		<thead>
+																			<th>{{ovcLabel.count.labels.lineNumber}}</th>
+																			<th>{{ovcLabel.count.labels.sku}}&nbsp;<a class="sort_align" ng-click="sort_by('productCode')"><i class="fa " ng-class="{'fa-sort': predicate!='productCode','fa-sort-asc': predicate=='productCode' && reverse===false,'fa-sort-desc': predicate=='productCode' && reverse===true}"></i></a></th>
+																			<th>{{ovcLabel.count.labels.description}}&nbsp;<a class="sort_align" ng-click="sort_by('description')"><i class="fa " ng-class="{'fa-sort': predicate!='description','fa-sort-asc': predicate=='description' && reverse===false,'fa-sort-desc': predicate=='description' && reverse===true}"></i></a></th>
+																			<th>{{ovcLabel.count.labels.total_scan_qty}}</th>
+																			<th>{{ovcLabel.count.labels.comments}}</th>
+																			<th ng-if="ncount.countType === 'Z-Count'">{{ovcLabel.count.labels.action}}</th>
+																		</thead>
+																		<tbody>
+																			
+																			<tr ng-repeat="(productIndex,data) in prodlist | orderBy:'lineNumber'| orderBy : predicate :reverse " ng-class="(data.changedColor) ? 'class-sku-tr-bg' : 'no-class'">
+																			<td>{{data.lineNumber}}<i class="fa fa-exclamation-triangle exclamicons ng-scope" ng-if="data.changedColor" ng-click="data.showPopover=true;" ng-mouseleave="data.showPopover=false;"><div class="popover" ng-show="data.showPopover">Sku <b>{{data.productCode}} </b> was not defined in the Cycle Count - it will be ignored during count approval</div></i></td>
+																			<td>{{data.productCode}} <input type="text" ng-model="data._id" class="form-control ng-hide" value="{{data._id}}" /><input type="text" ng-model="data.productCode" class="form-control ng-hide" value="{{data.productCode}}" /><input type="text" ng-model="data.locationid" class="form-control ng-hide" value="{{data.locationid}}" />
+																			</td>
+																			<td>{{data.description}} <input type="text" ng-model="data.name" class="form-control ng-hide" value="{{data.name}}" /><input type="text" ng-model="data.description" class="form-control ng-hide" value="{{data.description}}" />
+																			</td>
+																			<td>
+																			<button ng-hide="(ncount.countType == 'Physical' || ncount.countType == 'Cycle')" class="btn btn-primary btn-sm" ng-disabled="(workspace.id != (maxRecount-1) || molcount)"  ng-click="decrease(productIndex); 
+																			idminmax(data.qty, 0, productIndex);
+																			calcScans(productIndex,data.qty);">
+																			<i class="fa fa-minus" aria-hidden="true"></i>
+																			</button>
+																			<input ng-disabled="(ncount.countType == 'Physical' || ncount.countType == 'Cycle' || curentZone.czstatus == 'Approved')" type="text" min="0"  ng-model="data.qty" class="qty-center manual-input" ng-change="calcScans(productIndex,data.qty)" ng-disabled="(workspace.id != (maxRecount-1) || molcount)" only-digits/>
+																			<button ng-hide="(ncount.countType == 'Physical' || ncount.countType == 'Cycle')" class="btn btn-primary btn-sm" ng-disabled="(workspace.id != (maxRecount-1) || molcount)" ng-click="increase(productIndex);
+																			idminmax(data.qty, 0, productIndex);
+																			calcScans(productIndex,data.qty); ">
+																			<i class="fa fa-plus" aria-hidden="true"></i>
+																			</button>
+																			</td>
+																			<td><div class="col-md-5 trans_det"><textarea class="form-control"  ng-model="data.comments" style="height: 30px;"  ng-disabled="(workspace.id != (maxRecount-1) || molcount)" ></textarea></div>
+																			</td>
+																			<td ng-if="ncount.countType ==='Z-Count'"><button class="btn btn-primary del_i" href="" ng-click="removeprRow(productIndex,data._id)" ng-disabled="(workspace.id != (maxRecount-1) || curentZone.countStatus == 'validate' || curentZone.countStatus == 'approve' || molcount )" >
+																			<i class="fa fa-trash"></i></button>
+																			</td>
+																			</tr>
+																			
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+													</div>
+								
+												</form>	
+											</div><!-- /.panel -->
+										
+										</div>
+									</div>
+								</div>									
+								</uib-tab>
+							</uib-tabset>
+							
+							<div class="panel-default" ng-if="workSpaces==''">
+								<div >
+									<div>
+									<form ng-submit="addZoneitems(countprod)">
+										<div class="panel-default" ng-show="curentZone.countStatus!='approve'" >
+											<div  ng-hide="(ncount.countType == 'Physical') || (ncount.countType == 'Cycle' && ncount.countCreated)" class="panel-body search_box">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<div class="col-md-12 scroll_ht" style="padding:0;">
+																<ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="countprod.result" attr-placeholder="{{ovcLabel.count.placeholder.search_procode}}..." click-activation="false" data="transactions" on-type="doSomething" on-select="doSomethingElse" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+															</div> 
+															<div class="erroralert">
+																<span ng-if="selectedskus" class="alert alert-danger">{{ovcLabel.count.error.selectOneSku}}</span>
+															</div>
+															
+														</div>
+													</div>
+													<div class="col-md-2 search_btns">
+														<div class="pg_limit b_margin">
+															<button ng-hide="showStyle===false" type="submit" class="btn btn-primary" id="ovcSkuAdd"  ng-disabled="molcount"><i class="fa fa-plus"></i> {{ovcLabel.count.buttons.add}}</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+									<div class="row" ng-show="showStyle"  id="lkpmatrix"></div>
+										<form role="forms"  >
+											<a  class="btn btn-primary" id="newzones" ng-hide="true"  href=""   ng-click="addRow()">add</a>
+											<div class="ven_tbody " ng-if="prodlist.length">
+													<div class="row">
+														<div class="col-md-12 table-responsive" >
+															<table class="table table-striped table-bordered" iphone-view   id="countListExport">
+																<thead>
+																	<th>{{ovcLabel.count.labels.lineNumber}}&nbsp;<a class="sort_align" ng-click="sort_by('lineNumber')"><i class="fa " ng-class="{'fa-sort': predicate!='lineNumber','fa-sort-asc': predicate=='lineNumber' && reverse===false,'fa-sort-desc': predicate=='lineNumber' && reverse===true}"></i></a></th>
+																	<th>{{ovcLabel.count.labels.sku}}&nbsp;<a class="sort_align" ng-click="sort_by('productCode')"><i class="fa " ng-class="{'fa-sort': predicate!='productCode','fa-sort-asc': predicate=='productCode' && reverse===false,'fa-sort-desc': predicate=='productCode' && reverse===true}"></i></a></th>
+																	<th>{{ovcLabel.count.labels.description}}&nbsp;<a class="sort_align" ng-click="sort_by('description')"><i class="fa " ng-class="{'fa-sort': predicate!='description','fa-sort-asc': predicate=='description' && reverse===false,'fa-sort-desc': predicate=='description' && reverse===true}"></i></a></th>
+																	<th>{{ovcLabel.count.labels.total_scan_qty}}&nbsp;<a class="sort_align" ng-click="sort_by('qty')"><i class="fa " ng-class="{'fa-sort': predicate!='qty','fa-sort-asc': predicate=='qty' && reverse===false,'fa-sort-desc': predicate=='qty' && reverse===true}"></i></a></th>
+																	<th>{{ovcLabel.count.labels.comments}}&nbsp;<a class="sort_align" ng-click="sort_by('comments')"><i class="fa " ng-class="{'fa-sort': predicate!='comments','fa-sort-asc': predicate=='comments' && reverse===false,'fa-sort-desc': predicate=='comments' && reverse===true}"></i></a></th>
+																	<th data-hidePdf="true" ng-if="(ncount.countType !== 'Cycle' && curentZone.countStatus !== 'approve' )|| (!ncount.countCreated && ncount.countType === 'Cycle')" ng-hide="(ncount.countType == 'Physical')">{{ovcLabel.count.labels.action}}</th>
+																</thead>
+																<tbody>
+																	<tr ng-repeat="(productIndex,data) in prodlist | orderBy:'lineNumber'| orderBy : predicate :reverse " ng-class="(data.changedColor) ? 'class-sku-tr-bg' : 'no-class'">
+																	<td>{{data.lineNumber}}<i class="fa fa-exclamation-triangle exclamicons ng-scope" ng-if="data.changedColor" ng-click="showPopover=true;" ng-mouseleave="showPopover=false;"><div class="popover" ng-show="showPopover">Sku <b>{{data.productCode}} </b> was not defined in the Cycle Count - it will be ignored during count approval</div></i></td>
+																	<td>{{data.productCode}}<input type="text" ng-model="data._id" class="form-control ng-hide" value="{{data._id}}" /><input type="text" ng-model="data.productCode" class="form-control ng-hide" value="{{data.productCode}}" /><input type="text" ng-model="data.locationid" class="form-control ng-hide" value="{{data.locationid}}" /></td>
+																	<td>{{data.description}} <input type="text" ng-model="data.name" class="form-control ng-hide" value="{{data.name}}" /><input type="text" ng-model="data.description" class="form-control ng-hide" value="{{data.description}}" /></td>
+																	<td>
+																	<button ng-hide="(ncount.countType == 'Physical' || ncount.countType == 'Cycle')" class="btn btn-primary btn-sm" ng-disabled="molcount" 
+																	ng-if="curentZone.czstatus != 'Approved' "
+																	ng-click="decrease(productIndex); 
+																	idminmax(data.qty, 0, productIndex);
+																	calcScans(productIndex,data.qty);">
+																	<i class="fa fa-minus" aria-hidden="true"></i>
+																	</button><span class="hiddenData" style="visibility:hidden;display: none;">{{data.qty}}</span>
+																	<input ng-disabled="(ncount.countType == 'Physical' || ncount.countType == 'Cycle'  || curentZone.czstatus == 'Approved')" ng-class ="{border:data.qty=='' && ncount.validated}"  type="text" min="0" ng-model="data.qty" class="qty-center manual-input dataqty-input" ng-disabled="curentZone.czstatus == 'Approved' "" ng-init="oldValue=0"
+       																ng-focus="oldValue=data.qty" ng-blur="totalSkuQtyCalculation()" ng-change="calcScans(productIndex,data.qty, oldValue , data.qty)" only-digits/>
+																	<button ng-hide="(ncount.countType == 'Physical' || ncount.countType == 'Cycle')" class="btn btn-primary btn-sm" ng-disabled="molcount" ng-if="curentZone.czstatus != 'Approved' "
+																	ng-click="increase(productIndex); 
+																	idminmax(data.qty, 0, productIndex);
+																	calcScans(productIndex,data.qty); ">
+																	<i class="fa fa-plus" aria-hidden="true"></i>
+																	</button>
+																	</td>
+																	<td>
+																	<span class="hiddenData" style="visibility:hidden;display: none;">{{data.comments}}</span>
+																	<textarea class="spl_inst form-control add_or"  ng-model="data.comments"  ng-disabled="curentZone.czstatus == 'Approved' "" style="height: 30px;"></textarea>
+																	</td>
+																	<td ng-if="(ncount.countType !== 'Cycle' && curentZone.countStatus !== 'approve' )|| (!ncount.countCreated && ncount.countType === 'Cycle')">
+																		<button class="btn btn-primary del_i" href="" ng-click="!molcount ? removeprRow(productIndex,data._id) : angular.noop"><i class="fa fa-trash" ng-disabled="curentZone.countStatus == 'validate' || molcount ? true : false" ></i></button>
+
+																	</td>
+																	</tr>
+																	
+																</tbody>
+															</table>
+														</div>
+													</div>
+											</div>
+						
+										</form>
+									</div><!-- /.panel -->
+						
+							</div>
+						</div>
+						<div  class="save_can acc_det clearfix">
+							<div class="col-md-12">
+								<div class="pull-right">
+								
+								<button id="ovcSave" class="btn btn-primary ng-binding" ng-click="zoneProducts(ncount,prodlist,zoneTitle)"  ng-disabled="molcount" type="submit" ng-if="(ncount.countStatus != 'approve')">{{ovcLabel.count.buttons.save}} </button>
+								</div>
+							</div>
+						</div>
+
+						<!--Count Detail Screen Pagination-->
+						<div class="save_can acc_det clearfix" ng-if="prodlist.length">
+							<div class="col-md-12">
+								<uib-pagination total-items="count.totalItems"  items-per-page ="count.entryLimit"  ng-model="count.currentPage"  max-size = "5"  boundary-links="true" ng-change="count.pagechanged();"></uib-pagination>
+								<div class="col-md-3 pglimit">
+									<div class="pg_limit page_size_drdn">
+										<label>{{ovcLabel.count.list.pagesize}}:</label>
+										<select  convert-to-number	ng-model="count.entryLimit" class="pgsizes" ng-change="getZoneDetail(recountNumber,curentZone)">
+											<option>10</option>
+											<option>20</option>
+											<option>50</option>
+											<option>100</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> 
+		</div>
+	
+		<div ng-show="tab.isSet(3)">
+		  <div class="row r_margin ng-scope">
+						  <div class="ven_tblk clearfix">
+							 <div class="col-md-12">
+								<div class="panel-default">
+								<div ng-show="rolePerm.validateZones" ng-if="!ncount.countCreated" class="banner_msg">
+								<div class=banner_det ng-show= "(ncount.countType === 'Physical') && beCreate === 1 && (creatingSnapshot !== true)">{{ovcLabel.count.bannerMsg.beingCreated}}</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgEmp) && (creatingSnapshot !== true)">Define products that need to be counted</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgAll) && (creatingSnapshot !== true)">This Count has not started yet. Click 'Start Count' to take a snapshot of current inventory balances for products added to the count
+								<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+								margin-left: 10px;">Start Count</button>
+								</div>
+								<div class=banner_det ng-show= "(ncount.countType === 'Cycle') && (beCreate === 0) && (bannerMsgNotAll) && (creatingSnapshot !== true)">Define products in other Zones and start the Count from the Zone list view</div>
+								<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType !== 'Cycle') && (creatingSnapshot !== true) && (ncount.countType !== 'Physical')" class=banner_det>{{ovcLabel.count.bannerMsg.not_yet_start}}  <button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="
+								margin-left: 10px;">Start Count</button>
+								</div>
+								<div ng-show="(isOPen === 1) && (beCreate !== 1) && (ncount.countType == 'Physical') && (creatingSnapshot !== true)" class=banner_det>This Count has not been started yet. A snapshot of the entire store inventory will be taken when the count is started<button class="btn btn-primary ng-binding" ng-click="countSnapshot(ncount)" ng-disabled="ncount.countCreated" style="margin-left: 10px;">Start Count</button>
+								</div>
+								<div ng-show="creatingSnapshot === true" class=banner_det>
+									{{ovcLabel.count.bannerMsg.creatingSnapshot}}
+								</div>
+							</div>
+							<div ng-hide="rolePerm.validateZones" ng-if="!ncount.countCreated && (creatingSnapshot !== true)" class="banner_msg">
+								<div class="banner_det">{{ovcLabel.count.bannerMsg.contact_manager_detail}}
+								</div>
+							</div>
+								   <div class="panel-body search_box">
+									 <div class="row">
+										<div class="col-lg-12 purs_order">
+											<div class="col-md-12 trans_det">
+											<div class="col-md-4 trans_det">
+											<p class="export_head_data"><label><span class="export_head_label">{{ovcLabel.count.labels.location}}</span>: </label><span class="export_head_value">{{ncount.locationname}}</span></p>
+											<p class="export_head_data"><label><span class="export_head_label">{{ovcLabel.count.labels.creator}}</span>: </label><span class="export_head_value">{{ncount.createdby}}</span></p>
+											<p class="export_head_data"><label><span class="export_head_label">{{ovcLabel.count.labels.status}}</span>: </label><span class="export_head_value">{{ncount.cstatus}}</span></p>
+											<p class="export_head_data"><label><span class="export_head_label">{{ovcLabel.count.labels.created}}</span>: </label><span class="export_head_value">{{created  | datetimeForm}}</span></p>
+											<p class="export_head_data"><label><span class="export_head_label">{{ovcLabel.count.labels.started}}</span>: </label><span class="export_head_value">{{ncount.countCreated | datetimeForm}}</span></p>
+											<p class="export_head_data"><label><span class="export_head_label">{{ovcLabel.count.labels.approved}}<span>: </label><span class="export_head_value">{{approvedDate  | datetimeForm}}</span></p>
+											</div>
+											</div>
+										</div>
+									</div><!-- /.row (nested) -->
+								</div><!-- /.panel-body -->
+								<div class= "col-md-12">
+									<div class="col-md-3 search_disc">
+										<label class="control-label">{{ovcLabel.count.buttons.DiscrepancyFilter}}</label>
+										<div id="ovcStatusDrop" multiselect-common="" dynamic="'discFilter'" items="count.discrepancyFilter" selected-items="count.selectedDiscrepancyFilter" naming={{ovcLabel.count.labels.selectFilter}} function-call="review_details()"></div>
+									</div>
+								</div>
+					<form role="forms"  >
+							<a  class="btn btn-primary"  id="newzones" ng-hide="true"  href=""   ng-click="addRow()">add</a>
+				<div class="ven_tbody ">
+						<div class="row">
+							<div class="col-md-12 table-responsive" >
+								<table class="table table-striped table-bordered" iphone-view  id="countlist_export">
+									<thead>
+										<th>{{ovcLabel.count.labels.lineNumber}}</th>
+										<th>{{ovcLabel.count.labels.sku}}</th>
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice == true">{{ovcLabel.count.labels.cost}}</th>
+										<th>{{ovcLabel.count.labels.description}}</th>
+										<th>{{ovcLabel.count.labels.zone}}</th>
+										<th>{{ovcLabel.count.labels.count_qty}}</th>
+										<th>{{ovcLabel.count.labels.snapshot_oh}}</th>
+										<th>{{ovcLabel.count.labels.discrepancy}}</th>
+									</thead>
+									<tbody>
+										<tr ng-repeat="(index,datas) in reviewlist | filter:query  | orderBy:'lineNumber'| orderBy : predicate :reverse " ng-class="({{datas.discrepancy}} != 0 )? 'class-tr-bg' : 'no-class'">
+											<td>{{datas.lineNumber}}</td>
+											<td>{{datas.productCode}}<i class="fa fa-exclamation-triangle exclamicons ng-scope" ng-if="datas.noApproval && ncount.countType == 'Cycle' " ng-click="showPopover=true;" ng-mouseleave="showPopover=false;"><div class="popover" ng-show="showPopover">Sku <b>{{datas.productCode}} </b> was not defined in the Cycle Count - it will be ignored during count approval</div></i></td>
+											<td ng-if="userRolePermissions.permissions.viewPurchasePrice == true">{{ovcLabel.global.currency[datas.currency]}} {{datas.priceCost | number:2}}</td>
+											<td>{{datas.description}}</td>	
+											<td><label ng-class=" datas.zoneId ? 'zoneWidthFix' : ''" ng-click="datas.zoneId ? ZoneTable(datas.sku , datas.qty) : angular.noop()">{{datas.zoneId || '-'}}</label></td>
+											<td style="position:relative;">{{datas.qty ? datas.qty : 0}}</i></td>
+											<td>{{datas.OH}}</td>
+											<td>{{datas.discrepancy}}</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+				</div>
+			</div><!-- /.panel -->
+					
+				</form>	
+						<div class="save_can acc_det clearfix">
+							<div class="col-md-12">
+								<div class="pull-right" ng-if = "rolePerm.approveZcounts">
+									<a href ng-click="transaction_approve('approve')" ><button id="count_approveBtn" class="btn btn-primary ng-binding" ng-disabled="(!list.length || !ncount.countCreated || disValidate ||  molcount || list.length!=validateTotal)">{{ovcLabel.count.buttons.approves}}</button></a>
+									<a href id="count_cancelBtn"  ng-click="transaction_cancel()"><button class="btn btn-primary ng-binding" >{{ovcLabel.count.buttons.cancel}}</button></a>
+								</div>
+							</div>
+						</div>
+						<!--Count review Screen Pagination-->
+						<div class="save_can acc_det clearfix" ng-if="reviewlist.length > 0">
+							<div class="col-md-12">
+								<uib-pagination total-items="count.reviewtotalitems"  items-per-page ="count.reviewentryLimit"  ng-model="count.reviewcurrentPage"  max-size = "5"  boundary-links="true" ng-change="count.reviewpagechanged();"></uib-pagination>
+								<div class="col-md-3 pglimit">
+									<div class="pg_limit page_size_drdn">
+										<label>{{ovcLabel.count.list.pagesize}}:</label>
+										<select  convert-to-number	ng-model="count.reviewentryLimit" class="pgsizes" ng-change="review_details()">
+											<option>10</option>
+											<option>20</option>
+											<option>50</option>
+											<option>100</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				 </div>
+			</div>
+			<!-- Popup Modal content -->
+			<div id="myModal" class="count-modal">
+				<div class="count-modal-content">
+				  <div class="count-modal-header">
+				    <span class="count-close" ng-click="CloseModel()">&times;</span>
+				    <h3>{{ovcLabel.count.labels.zones}}</h3>
+				  </div>
+				  <div class="count-modal-body">
+				    <table class="table table-bordered" style="margin: 0;">
+				    	<h4>{{ovcLabel.count.labels.sku}} : {{count.Sku}}</h4>
+				    	<thead class="count-PopUpTablehead">
+							<th>{{ovcLabel.count.labels.zone}}</th>
+							<th>{{ovcLabel.count.labels.Qty}}</th>
+							<th>{{ovcLabel.count.zone_status}}</th>		
+						</thead>
+						<tbody class="count-PopUpTablehead">
+							<tr ng-repeat= "popUpSku in count.popupData">
+								<td>{{count.countZoneData[popUpSku.zoneId].id}}</td>
+								<td>{{popUpSku.qty || 0}}</td>
+								<td>{{popUpSku.countStatus ? ovcLabel.count.buttontypes[popUpSku.countStatus] : ovcLabel.count.buttontypes["open"]}}</td>
+							</tr>
+						</tbody>
+					</table>
+				  </div>
+				  <div class="count-modal-footer">
+				    <h4>{{ovcLabel.count.labels.totalQty}} : {{count.popupTotal || 0}}</h4>
+				  </div>
+				</div>
+			</div>
+		</div>
+
+	</section>

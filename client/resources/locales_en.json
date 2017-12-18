@@ -1,0 +1,2036 @@
+
+{
+    "vendors":[
+        {
+			"company_name" : "Company name",
+			"address1" : "Address1",
+			"address2" : "Address2",
+			"city" : "City",
+			"state" : "State",
+			"country" : "Country",
+			"zipcode" : "Zip Code",
+			"phone_number" : "Phone number",
+			"vendor_name" : "Vendor Name",
+			"address" : "Address",
+			"account" : "Account",
+			"company_code" : "Company Code",
+			"purchasing_department" : "Purchasing Department",
+			"action" : "Action",
+			"account_number" : "Account number",
+			"carrier_alpha_code" : "Carrier",
+			"company_details" : "Company Details",
+			"account_details" : "Account Details",
+			"products" : "Products",
+			"product_name" : "Product Name",
+			"sku" : "SKU",
+			"cost" : "Purchase Price",
+			"image" : "Image",
+			"image_url" : "Image URL",
+			"image_data" : "Image Data",
+			"list_of_vendors":"Vendors",
+			"status":"Status",
+			"page_size":"Page Size",
+			"no_vendors_found":"No Vendors found",
+			"active":"Active",
+			"in_active":"Inactive",
+			"product" : "Product",
+			"vendor_id":"Vendor Id",
+			"list_vendor_search":"Search for Vendor Name, Address, Account Number, Company Code, Purchasing Department..",
+			"product_search":"Search for SKU or BarCode, Product Name..",
+			"barcode":"BarCode",
+			"ent_cname":"Enter company name",
+			"ent_ad1":"Enter your Address1",
+			"ent_ad2":"Enter your Address2",
+			"ent_city":"Enter your City",
+			"ent_zipcode":"Enter your Zip Code",
+			"ent_phno":"Enter phone number",
+			"ent_ccode":"Enter company code",
+			"ent_accno":"Enter account number",
+			"ent_pudept":"Enter purchasing department",
+			"add_vendor":"Add Vendor",
+			"add_new_vendor":"Add New Vendor",
+			"edit_vendor":"Edit Vendor",
+			"vendor":"Vendor",			"add_product":"Add Products",
+			"add_allprod":"Add All Products",
+			"add_new_vendor_product":"Add New Vendor Product",
+			"select_vendor_for_skus":"Select Vendor for the SKUS",
+			"primary_supplier_for_all_products":"Primary Supplier for all Products",
+			"primary_vendor":"Primary Vendor",
+			"created":"Created",
+			"started":"Started",
+			"approved":"Approved"
+		
+        }
+    ],
+
+	"buttontypes":[
+		{
+			"edit":"Edit",
+			"add":"Add",
+			"delete":"Delete",
+			"submit":"Submit",
+			"reset":"Reset",
+			"save":"Save",
+			"search":"Search",
+			"cancel":"Cancel",
+			"add_new":"Add new",
+		    "add_all":"Add All",
+			"close":"Close",
+			"login":"Login",
+			"move":"Move",
+			"balances":"View Balances",
+			"back":"Back",
+			"validates":"Validate",
+			"validate":"Validated",
+			"recount":"Recount",
+			"inprogress":"In Progress",
+			"open":"Open",
+			"approves":"Approve",
+			"approve":"Approved",
+			"print":"Print",
+			"receive":"Receive",
+			"done":"Done",
+			"list_view":"List View",
+			"tree_view":"Tree View",
+			"browse":"Browse",
+			"uploadme":"Upload me",
+			"next":"Next",
+			"previous":"Previous",
+			"refine":"Refine",
+			"closeshipment":"Close Shipment",
+			"resettodefault":"Reset to Default",
+			"reverse":"Reverse",
+			"update":"Update",
+			"confirm":"Confirm",
+			"importFile":"Import File",
+			"import":"Import",
+			"ship":"Ship",
+			"adjust":"Adjust",
+			"copy":"Copy",
+			"resolve":"Resolve",
+			"ok":"Ok",
+			"savedraft" : "Save as Draft",
+			"backtoTransactionHistory"	:	"Back to Transaction History",
+			"print_tag":"Print Tag",
+			"placeholdersearch":"Search by ASN,PO,ASN Value,Order Type & SKU No",
+			"showChart" : "Show Chart",
+			"hideChart":"Hide Chart",
+			"backtodashboard" : "Back to Dashboard",
+			"backtostocklookup": "Back to Balance Inquiry",
+			"show_more":"Show More",
+			"show_less":"Show Less",
+			"no_data_avaliable":"No Data Available",
+			"loadmore":"Load More",
+			"collapse_all":"Collapse All",
+			"expand_all":"Expand All",
+			"basic":"Basic",
+			"advanced":"Advanced",
+			"showmore":"Show More",
+			"showless":"Show Less",
+			"find_it" : "Find It",
+			"backtofindit" : "Back to Find It",
+			"begin_count":"Begin Count",
+			"add_new_zone":"Add New Zone",
+			"copyreceipt" 	:	"Copy Receipt",
+			"copyreturn" 	:	"Copy Return"
+		}
+    ],
+	
+	"messages":[
+		{
+			"company_name":"Company Name is required",
+			"company_code":"Company Code is required",
+			"account_number":"Account Number is required",
+			"store_select":"Please select the store",
+			"parent_loc_select":"Please select the Parent Location ID",
+			"stock_locn":"This field is required",
+			"stock_white_space_error":"Special Characters and White Spaces are not allowed",
+			"search_product":"Search by Product Code...",
+			"start_enddate":"Start Date must be smaller than or equal to End Date",
+			"from_todate":"From Date must be smaller than or equal to To Date",
+			"search_style":"Search by Style...",
+			"search_by_sku":"Search by SKU or BarCode",
+			"enter_no":"Please Enter Number",
+			"select_zone":"Please Select Any Zone",
+			"current_oh":"Current OH",
+			"filter_name" : "Filter Name is required",
+			"location" : "Location is required",
+			"new_sku":"This Sku was added after Order Submission",
+			"select_any_sku":"Please Select Any SKU",
+			"fromToRange" : "From Range must be smaller than or equal to To Range"
+		}
+    ],
+	
+	"select":[
+		{
+			"country":"Select Country",
+			"state":"Select State",
+			"select_all":"Select All",
+			"store":"Select Store"
+		}
+    ],
+	
+	"search":[
+		{
+			"no_products":"No Products found",
+			"search_products":"Search Products",
+			"no_vendors":"No Vendors found",
+			"store":"Store",
+			"date_range":"Date Range",
+			"document_number":"Document NUmber",
+			"count_number":"Count Number",
+			"transaction_type":"Transaction Type",
+			"createdby":"Createdby",
+			"barcode":"Sku/Barcode",
+			"asn_number":"Asn Number",
+			"qty_range":"Qty Range",
+			"price_range":"Price Range",
+			"ponumber":"PO Number"
+		}
+    ],
+	
+	"carrier":[
+		{
+			"FDEN":"Fedex Ground",
+			"USIT":"Usit",
+			"FOUR":"Four",
+			"TEST":"Test",
+			"VEND":"Vendor",
+			
+			"PRDT":"Product",
+			"STCK":"Stock",
+			"LOCN":"Location",
+			"MAPP":"Mapp",
+			"STRE":"Store",
+			
+			"ACCT":"Account",
+			"OVCJ":"Ovcj",
+			"ACLD":"Acld",
+			"CCOD":"Carriercode"
+		}
+    ],
+	
+	"locations":[
+		{
+			 "stock_locations_hirerchy":"Stocking Locations Hierarchical View",
+			 "add_stockln":"Add Stocking Location",
+			 "store":"Store",
+			 "select_store":"Select Store",
+			 "location_name":"Location Name",
+			 "location_id":"Location Id",
+			 "description":"Description",
+			 "parent_location":"Parent Location",
+			 "products":"Products",
+			 "last_updated":"Last Updated",
+			 "action":"Action",
+			 "no_locations":"No Locations found",
+			 "parent_location_id":"Parent Location ID",
+			 "stock_location_id":"Stocking Location ID",
+			 "location_name":"Location Name",
+			 "edit_stock_locn":"Edit Stocking Locations",
+			 "ent_parlocid":"Enter Parent Location ID",
+			 "sel_parlocid":"Select Parent Location ID",
+			 "ent_stklocid":"Enter Stocking Location ID",
+			 "ent_location_name":"Enter Location Name",
+			 "search_placeholder":"Search for Location id, Location Name, Description...",
+			 "sel_locid":"Select Stocking Location ID",
+			 "add_location":"Add Location",
+			 "edit_location":"Edit Stocking Locations",
+			 "status":"Status",
+			 "select_status" : "Select Status",
+			 "location_details":"Stocking Location Details",
+			 "minimum_locquantity":"Minimum Location Quantity",
+			 "restock_location":"Restock from Location",
+			 "select_stockingloc":"Select Stocking Locations"
+
+		}
+	],
+	
+	"countries":[
+		{
+			
+			"IND":"India",
+			"USA":"USA",
+			"AUS":"Australia",
+			"FRA":"France"
+			
+		}
+	],
+	
+	"states":[
+		{
+			"maha":"Maharashtra",
+			"mady":"Madhya Pradesh",
+			"raja":"Rajasthan",
+			"tndu":"Tamil Nadu",
+			"krla":"Kerala",
+			"alab":"Alabama",
+			"cali":"California",
+			"illi":"Illinois",
+			"nesw":"New South Wales",
+			"vict":"Victoria"
+	
+		}
+	],
+	
+	"labels":[
+		{
+		
+			"username":"Username",
+			"password":"Password",
+			"productVariants" 	 : 	"Product Variants"
+		}
+	],
+
+	"transaction":[
+       {
+            
+			"transaction_type":"Transaction Type",
+			"cost_required":"Cost Required",
+			"two_sided transaction":"Two sided Transaction",
+			"is_system defined":"Is system defined",
+			"update_cross":"Update Cross Channel",
+			"transaction_id":"Transaction ID",
+			"transaction_name":"Transaction Name",
+			"list_transaction":"List Of Transaction Types",
+			"transaction_code":"Transaction code",
+			"type":"Type",
+			"sel_transcode":"Select Transaction Code",
+			"sel_type":"Select Type",
+			"sel_status":"Select Status",
+			"no_trans":"No Transactions found",
+			"search_trans":"Search for Transaction ID,  Transaction Name..",
+			"rule_defn":"Rule Definition",
+			"err_transactid":"Please enter Transaction ID",
+			"add_transaction":"Add Transaction Type",
+			"req_fields":"Required Fields",
+			"update_gl":"Update GL",
+			"add_new_transaction":"Add New Transaction Type",
+			"edit_transaction":"Edit Transaction Type",
+			"document":"Document Number",
+			"trannumbers":"Document Number",
+			"allow_rvs" : "Allow Reverse",
+			"rvs_of_exst" : "Reversal of Existing Transaction",
+			"sel_tran" : "Select Transaction",
+			"err_tranType" : "Please Select Transaction Type",
+			"tranIdUniqueErr" : "Transaction ID must be Unique"
+
+			
+       }
+   ],
+   
+   "manualshipmenttype":[
+		{
+			"PUSH" 	:	"Push"
+		}
+	],
+
+    "translist":[
+		{
+			"POS":"Positive",
+			"NEG":"Negative",
+			"TWO":"Two-sided"
+		}
+   ],
+   "transtatus":[
+		{
+			"ONE":"Active",
+			"ZERO":"Inactive"
+		}
+   ],
+   "transtype":[
+		{
+			"USER":"UserDefined",
+			"SYS":"SystemDefined"
+		}
+   ],
+   "balances":[
+        {
+			"physical_balances":"Physical Inventory Balances",
+			"calculated_fields":"Calculated Inventory Fields",
+			"status_balances":"Directive Status Balances",
+			"goods_in":"Goods In",
+			"balance_fields":"Balance Fields",
+			"held_stock":"Held Stock",
+			"goods_out":"Goods Out",
+			"old_cost":"Old Cost",
+			"new_cast":"New Cast",
+			"old":"Old",
+			"new":"New",
+			"on_hand":"On Hand",
+			"reserved":"Reserved",
+			"allocated":"Allocated",
+			"held":"Held",
+			"return_to_vendor":"Return to vendor",
+			"ats":"ATS",
+			"atp":"ATP",
+			"wac":"WAC",
+			"open_on_orderin":"Open On-Order In",
+			"conformed_in":"Confirmed In",
+			"asn_in":"ASN In",
+			"in_transitin":"In-Transit In",
+			"open_onorder_out":"Open On-Order Out",
+			"confirmed_out":"Confirmed Out",
+			"asn_out":"ASN Out",
+			"in_transitout":"In-Transit Out"
+       }
+   ],
+	"balancefields":[
+	    {
+		   "no_action":"No Action",
+		   "add":"Add",
+		   "subtract":"Subtract",
+		   "recalc":"Recalculate",
+		   "oh":"On Hand",
+		   "allocated":"Allocated",
+		   "reserved":"Reserved",
+		   "held":"Held",
+		   "return_vendor":"Return to Vendor",
+		   "atp":"Available-to-promise",
+		   "ats":"Available-to-sell",
+		   "wac":"Weighted average cost",
+		   "open_order":"Open On-Order In",
+		   "conformed_in":"Confirmed In",
+		   "asn_in":"ASN In",
+		   "in_transist":"In-Transit In"
+		}
+	],
+	"balanceflds":[
+		{
+			"OH":"OH",
+			"ALLOC":"Allocated",
+			"RESER":"Reserved"
+		}
+	],
+	
+	"heldstk":[
+		{
+			"HEL":"Held Stock",
+			"RTV":"Return to Vendor"
+		}
+	],
+	
+	"calcflds":[
+		{
+			"ATS":"ATS",
+			"ATP":"ATP",
+			"WAC":"WAC"
+		}
+	],
+	
+	"goodsin":[
+		{
+			"ORDER":"Open On-Order In",
+			"UNCONFOR":"Un Confirmed In",
+			"CONFOR":"Confirmed In",
+			"REJ":"Rejected In",   			
+			"ASN":"ASN In",
+			"TRANS":"In-Transit In"
+		}	
+	
+	],
+	"goodout":[
+	    {
+			"OPEN":"Open On-Order Out",
+			"UNCONFO":"Un ConfirmedOut",   
+			"CON":"Confirmed Out",
+			"REJO":"Rejected Out", 
+			"ASNIN":"ASN Out",
+			"TRANSIT":"In-Transit Out"
+		}
+	],
+	"transrules":[
+		{
+			"OH":"On Hand",
+			"ALLOC":"Allocated",
+			"RESER":"Reserved",
+			"HEL":"Held",
+			"RTV":"Return to Vendor",
+			"ATS":"ATS",
+			"ATP":"ATP",
+			"WAC":"WAC",
+			"ORDER":"Open On Order In",
+			"UNCONFOR":" Unconfirmed In",
+			"CONFOR":"Confirmed In",
+			"REJ":"Rejected In",   			
+			"ASN":"ASN In",
+			"TRANS":"In Transit In",
+			"OPEN":"Open On Order Out",
+			"UNCONFO":"Unconfirmed Out",
+			"CON":"Confirmed Out",
+			"REJO":"Rejected Out",
+			"ASNIN":"ASN Out",
+			"TRANSIT":"In Transit Out",
+			"PURPRICE":"Purchase Price",
+			"RETPRICE":"Retail Price",
+			"MARGIN":"Margin",
+			"STOREPRICE":"Store Price",
+			"REORDER":"Reorder Trigger Point",
+			"MAXORDER":"Maximum Order Amount"
+		}
+	],
+
+	"balanceinquiryinfo":[
+		{
+			"OH"     	:"Actual physical inventory quantity present in this retail enterprise or Location Group Hierarchy structure",
+			"ALLOC" 	:"Stock allocated to Orders, i.e. Customer Pickups, Store Transfers reserved Stock reserved for Orders",
+			"RESER"		:"Reserved",
+			"HEL"		:"'Held' (stock held for various reasons, i.e. investigation of product condition)",
+			"RTV"		:"Stock being sent back to vendor",
+			"ATS"		:"Available to Sell - Quantity available for sale, which considers current On Hand, Inventory Transfer Out, Allocated and Reserved",
+			"ATP"		:"Available to Promise - Quantity that can be promised to the Customer based on current On Hand, Open On-Order In, Transfer In, Inventory Transfer Out, Allocated and Reserved quantities",
+			"WAC"		:"Weighted Average Cost - Cost of goods available for SALE divided by the Number of Units available for SALE",
+			"ORDER"		:"Stock On Order incoming for the receiving store",
+			"UNCONFOR"	:"Inbound orders, stock with temporary rejection",
+			"CONFOR"	:"Confirmed incoming amount promised to the order",
+			"REJ"		:"Inbound orders, stock with hard rejection",
+			"ASN"		:"Advanced Shipment Notification, actual incoming delivery amount being expected in for this order",
+			"TRANS"		:"In-transit inbound amount expected for this transfer",
+			"OPEN"		:"Stock on Orders from the sending store",
+			"UNCONFO"	:"Outbound orders, stock with temporary rejection",
+			"CON"		:"Confirmed outbound amount promised to the order",
+			"REJO"		:"Outbound orders, stock with hard rejection",
+			"ASNIN"		:"Advanced Shipment Notification, actual outbound amount being sent for this order",
+			"TRANSIT"	:"In-transit outbound amount being sent for this transfer"
+		}
+	],
+
+	"shipments":[
+		{
+			"shipments":"Create Manual Movement",
+			"empty_tran_type":"Select Transaction Type",
+			"prod_req":"Search Product name",
+			"line":"Line #",
+			"product_id":"Product ID",
+			"name":"Name",
+			"UOM":"UOM",
+			"qty":"Qty",
+			"move_to":"Move to",
+			"sel_reqfields":"Please Select Transaction Type or DirectiveType"
+		}
+	],
+	"lookupstyles":[
+		{
+		"STY":"Style"
+		}
+	],
+	"lookupsize":[
+		{
+		"SYZ":"Size"
+		}
+	],
+	"lookupcolour":[
+		{
+		"CLR":"Colour"
+		}
+	],
+	"stocklookup":[
+		{
+			"calculated_field":"Calculated Fields",
+			"SKU":"SKU",
+			"Names":"Name",
+			"OH":"On Hand",
+			"Alloc":"Allocated",
+			"Reser":"Reserved",
+			"held":"Held",
+			"Rtv":"Return to vendor",
+			"ATS":"Available-to-sell",
+			"ATP":"Available-to-promise",
+			"WAC":"Weighted average cost",
+			"stocklkup":"Stock Lookup",
+			"stklp_search":"Search by SKU or Product Name..",
+			"sel_style":"Select Style",
+			"sel_size":"Select Size",
+			"sel_color":"Select Color",
+			"search":"Search",
+			"style":"Style",
+			"size":"Size",
+			"colour":"Colour",
+			"doc_balancefields":"Directive Balance Fields",
+			"orderin":"Open On-Order In",
+			"unConfirmedIn":"Un Confirmed In",   	
+			"confirmin":"Confirmed In",
+			"rejectedIn":"Rejected In",
+			"asnin":"ASN In",
+			"transitin":"In-Transit In",
+			"orderout":"Open On-Order Out",
+			"unConfirmedOut":"Un Confirmed Out",   	
+			"confirmout":"Confirmed Out",
+			"rejectedOut":"Rejected Out",
+			"asnout":"ASN Out",
+			"transitout":"In-Transit Out",
+			"pricing":"Pricing",
+			"barcode":"Barcode",
+			"replenishment":"Replenishment",
+			"nostylesku":"No Style/SKU Available"
+			
+		}
+	],
+	
+	"unitofmeasure":[
+		{
+			"uom_new":"Add Unit Of Measure",
+			"edit_uom":"Edit Unit Of Measure",
+			"uom_id":"UOM ID",
+			"baseqty":"Base Quantity",
+			"Reserve":"Reserved",
+			"req":"The UOM-ID is required",
+			"descript":"The description is required",
+			"quantbase":"Enter valid Base Quantity",
+			"no_uom_found":"No UOM Found",
+			"search_uomlist":"Search for UOM Id...",
+			"uom_list":"List of UOM",
+			"en_uomid":"Enter UOM ID",
+			"en_baseqty":"Enter Base Quantity",
+			"add_uom":"Add UOM"
+				
+		}
+	],
+	"document":[
+		{
+
+		"trantype":"New Directive Type",
+		"doc_name":"Directive Name",
+		"endoc_id":"Enter Directive Type",
+		"endoc_name":"Enter Directive Name",
+		"endesc":"Enter Description",
+		"receipt":"Receipt ASN",
+		"lnktrtype":"Link Transaction Type",
+		"ent_docid":"Please enter Directive Id",
+		"ent_docname":"Please enter Directive Name",
+		"sel_reqfields":"Please Select Required fields",
+		"sel_linktrans":"Please Select TransactionType",
+		"add_doc":"Add Directive Type",
+		"list_doc":"List of Directive Types",
+		"no_docs":"No Directive found",
+		"search_docs":"Search for Directive Type, Directive Name..",
+		"add_new_documents":"Add New Directive Type",
+		"edit_documents":"Edit Directive Type",
+		"sel_direct":"Select Directive type",
+		"direct_types":"Directive Types"
+		}
+	],
+	"sidebar":[
+		{
+			"vendors":"Vendors",
+			"stock_locn":"Stocking Locations",
+			"trans_types":"Transaction Types",
+			"move_sim":"Movement Transaction",
+			"stklp":"Stock Lookup",
+			"uom":"Unit Of Measure",
+			"document":"Directive Type",
+			"direct_types":"Directive Types",
+			"counts":"Counts",
+			"replenishment":"Replenishment",
+			"orders":"Orders",
+			"upload":"Upload",
+			"file_upload" : "Stock Level Upload",
+			"file_upload1" : "Order Upload",
+			"counts_upload":"Counts Json Upload",
+			"settings":"Settings",
+			"po":"Purchase Orders",
+			"fupload":"File Upload",
+			"tran_history":"Transaction History",
+			"findit":"Find It",
+			"inTransit" : "Deliveries",
+			"returns":"Returns",
+			"configuration":"Configurations",
+			"rolePermissions" : "Role Permissions",
+			"replenishmentRules" : "Replenishment Rules",
+			"balanceinquiry":" Balance Inquiry", 	
+			"replenishmentRulesUpload": "Replenishment Rules Upload",
+			"reason_code":"Reason Codes",
+			"filters":"Filters",
+			"runReplenishment": "Run Replenishment",
+			"stockbalances_export":"Export Inventory balances",
+			"adjustments"	:	"Adjustments",
+			"customerorders":"Customer Orders",
+			"manual_receipt":"Manual Receipts",
+			"analytics":"Analytics",
+			"reports":"Reports",
+			"productPerform":"Product Performance",
+			"balanceReport":"Balance Report"
+		}
+	],
+	"header":[
+		{
+			"stock_management":"Inventory Management",
+			"logout":"Logout",
+			"Negative_inventory":"Negative Inventory"
+		}
+	],
+	
+	"docreqfields":[
+		{
+			"ORNO":"Order Number",
+			"ORDT":"Order Date",
+			"EXDT":"Execution Date",
+			"PRID":"Product ID",
+			"QNTY":"Quantity"
+		}
+	],
+	
+	"tranreqfields":[
+		{
+			"ORNO":"Order Number",
+			"DATE":"Date",
+			"QNTY":"Quantity",
+			"COST":"Purchase Price"
+		}
+	],
+	"tranhistory":[
+		{
+			"tran_name":"Transaction Name",
+			"tran_reason":"Transaction Reason",
+			"tran_date":"Transaction Date",
+			"tran_code":"Transaction Code",
+			"tran_number":"Transaction Number",
+			"direct_name":"Directive Name",
+			"effect_date":"Effective Date",
+			"expire_date":"Expiration Date",
+			"from_loc":"From Location",
+			"to_loc":"To Location",
+			"bill_lad":"Bill of Lading",
+			"comment":"Comments",
+			"vendor_num":"VendorNumber",
+			"tran_detail":"Transaction Detail",
+			"productid":"Product Id",
+			"prodpartnerid":"Product Partner Id",
+			"prodclasscode":"Product Class Code",
+			"stylecode":"Style Code",
+			"sizecode":"Size Code",
+			"colorcode":"Color Code",
+			"xd":"xD",
+			"yd":"yD",
+			"zd":"zD",
+			"transferqty":"Transaction Quantity",
+			"oldprice":"Old Price",
+			"newprice":"New Price",
+			"fromuom":"From UOM",
+			"touom":"To UOM",
+			"convfactor":"Conversion Factor For UOM",
+			"fromstockloc":"From Stock Location",
+			"tostockloc":"To Stock Location",
+			"tran_balances":"Transaction Balance Types",
+			"product_details":"Product Details",
+			"name":"Name",
+			"price_old":"Price Old",
+			"price_new":"Price New",
+			"old_oh":"OH Old",
+			"old_alloc":"Allocated Old",
+			"old_reser":"Reserved Old",
+			"old_held":"Held Old",
+			"old_rtv":"Return to vendor Old",
+			"old_ats":"ATS Old",
+			"old_atp":"ATP Old",
+			"old_wac":"WAC Old",
+			"old_orderin":"Open On-Order In Old",
+			"old_confirmin":"Confirmed In Old",
+			"old_asnin":"ASN In Old",
+			"old_transitin":"In-Transit In Old",
+			"old_orderout":"Open On-Order Out Old",
+			"old_confirmout":"Confirmed Out Old",
+			"old_asnout":"ASN Out Old",
+			"old_transitout":"In-Transit Out Old",
+			"new_oh":"OH New",
+			"new_alloc":"Allocated New",
+			"new_reser":"Reserved New",
+			"new_held":"Held New",
+			"new_rtv":"Return to vendor New",
+			"new_ats":"ATS New",
+			"new_atp":"ATP New",
+			"new_wac":"WAC New",
+			"new_orderin":"Open On-Order In New",
+			"new_confirmin":"Confirmed In New",
+			"new_asnin":"ASN In New",
+			"new_transitin":"In-Transit In New",
+			"new_orderout":"Open On-Order Out New",
+			"new_confirmout":"Confirmed Out New",
+			"new_asnout":"ASN Out New",
+			"new_transitout":"In-Transit Out New",
+			"from_date":"From Date",
+			"to_date":"To Date",
+			"no_tran":"No transaction found",
+			"po_ordertran":"Order Transaction",
+			"count_tran":"Count Transaction",
+			"manual_tran":"Manual Transaction",
+			"POS_tran":"POS Transaction",
+			"receipt_tran":"Manual Receipt Transaction",
+			"asn_no":"ASN Number",
+			"postranNo":"POS Number",
+			"old":"Old",
+			"new":"New",
+			"skuorbarcode":"SKU or Barcode",
+			"tranQtyRange":"Quantity Range",
+			"invalidQtyRange":"Invalid quantity range",
+			"purPriceRange":"Purchase Price Range",
+			"invalidPriceRange":"Invalid price range",
+			"exportInventoryOH": "Export Inventory OH"
+
+		}
+	],
+	
+	"purchaseorders":[
+		{
+		"new_replenishment":"Add New Replenishment Order",
+		"edit_replenishment":"Edit Replenishment Order",
+		"new_purchase":"Add New Order",
+		"edit_purchase":"Edit Order",
+		"copy_purchase":"Copy Order",
+		"purchase_order_details":"Order Details",
+		"purchase_shipping":"Shipping",
+		"purchase_Payment":"Payment",
+		"purchase_review_ship_place":"Review and Ship",
+		"purchase_review_place":"Review and Place",
+		"shipping_method":"Shipping Method",
+		"shipping_tostore":"Ship to Store",
+		"shipping_contact":"Contact Name",
+		"email_add":"Email Address",
+		"street_name":"Street Name",
+		"street_number":"Street Number",
+		"entstreet_number":"Street Number",
+		"special_instructions":"Special Instructions",
+		"enter_msg":"Enter Message",
+		"select_method":"select shipping method",
+		"select_store":"select shipping store",
+		"bill_to":"Bill To",
+		"payment_code":"Payment Code",
+		"currency_code":"Currency Code",
+		"remit_attend":"Remit To Attention",
+		"total_cost":"Total Purchase Price",
+		"product_description":"Product Description",
+		"ship_from_store":"Ship From Store",
+		"p_style":"Style",
+		"p_color":"Color",
+		"p_size":"Size",
+		"p_vat":"Vat",
+		"VAT":"VAT",
+		"order_summary":"Order Summary",
+		"p_items":"Items",
+		"total":"Total",
+		"select_ordertype":"Select Order Type",
+		"select_vendor":"Select Vendor",
+		"order_from_store":"Order From Store",
+		"order_comments":"Comments",
+		"review_purchase_order":"Review Order",
+		"summary":"Summary",
+		"shipments":"Shipments",
+		"history":"History",
+		"order_type":"Order Type",
+		"order_form":"Order From",
+		"order_date":"Order Date",
+		"ship_to_store":"Ship To Store",
+		"subtotal":"Subtotal",
+		"tax":"Tax",
+		"preview":"Preview",
+		"copy_order":"Copy Order",
+		"force_close":"Force Close",
+		"in_transit":"IN TRANSIT",
+		"received":"RECEIVED",
+		"asn":"ASN",
+		"package":"Package",
+		"tracking_no":"Tracking No",
+		"shipped_date":"Shipped Date",
+		"received_date":"Received Date",
+		"estimated_delivery":"Estimated Delivery", 
+		"tot_qty":"Total Quantity",
+		"shipments_dataemptymsg" :"There are no shipments yet",
+		"pprice":"Purchase Price",
+		"erporder":"ERP Order Number",
+		"erporderno":"ERP Order No",
+		"erpNotes":"ERP Notes",
+		"orderno":"Order Number",
+		"porderno":"Order Number",
+		"porderno1":"Order No",
+		"listpo":"List of Orders",
+		"addpo":"Add Order",
+		"no_of_item":"No. of Items",
+		"recipient":"Recipient",
+		"created":"Created",
+		"no_poorder":"No Orders Found",
+		"sel_order":"Select Order",
+		"search_product":"search for Product Code",
+		"select_uom":"select UOM",
+		"mark_for_store":"Mark For Store",
+		"mark_for":"Mark For",
+		"expected":"Expected",
+		"length":"Length",
+		"waist":"Waist",
+		"size":"Size",
+		"color":"color",
+		"createdby":"Created By",
+		"review_transfer":"Review Transfer",
+		"total_price":"Total Price",
+		"from_store" : "From Store",
+		"to_store" 	 : 	"To Store",
+		"need_by_date": "Need By Date"
+		}
+	],
+	"counts":[
+		{
+			"new_count":"New Count",
+			"edit_count":"Edit Count",
+			"created_by":"Created by",
+			"number_of_zones":"Number of Zones",
+			"comments":"Comment",
+			"text":"Text",
+			"creator":"Creator",
+			"zones_validated":"Zones Validated",
+			"zone":"Zone",
+			"res_can":"Rescan",
+			"operator":"Operator",
+			"hand_count":"Hand Count",
+			"good_scans":"Good Scans",
+			"bad_scans":"Bad Scans",
+			"total_scans":"Total Scans",
+			"print_labels":"Print Labels",
+			"physical_location":"Physical Location",
+			"count_qty":"Count Quantity",
+			"total_count":"Total Count",
+			"last_modified":"Last Modified",
+			"oh":"OH",
+			"snapshot_oh":"Snapshot OH",
+			"var":"Var",
+			"validate_zones":"Validate Zones",
+			"approve_counts":"Approve Counts",
+			"total_count_qty":"Total Count Quantity",
+			"zone_status":"Zone Status",
+			"zone_hand_countqty":"Zone Hand Count Quantity",
+			"zone_scan_qty":"Zone Scan Quantity",
+			"zone_sku_qty":"Zone SKU Quantity",
+			"operator_id":"Operator ID",
+			"start_date":"Start Date",
+			"end_date":"End Date",
+			"count_name":"Count Name",
+			"count_type":"Count Type",
+			"counts_details":"Counts Details",
+			"zone_details":"Zone Details",
+			"review_place":"Review and Approve",
+			"total_scan_qty":"Total Scan Quantity",
+			"discrepancy":"Discrepancy",
+			"zone_created":"Zones Created",
+			"total_skus":"Total SKUs",
+			"zones":"Zones",
+			"list_counts":"List of Counts",
+			"add_count":"Add Count",
+			"search_placeholder":"Search all values...",
+			"counts":"counts",
+			"no_count":"No Counts Found",
+			"search_procode":"Search for SKU or Bar Code",
+			"count_number" : "Count Number",
+			"store_name"   : "Store",
+			"search_countname" : "Search by Count Name",
+			"search_countnum"  : "Search by Count Number",
+			"lineNumber":"Number",
+			"nocountzone":"No Count Zone Found",
+			"count_created":"Count Created",
+			"snapshot_created":"Snapshot Created",
+			"begin_count":"Begin Count"
+		}
+	],
+	"orderstypelist":[
+		{
+			"RPL":"Replenishment Order",
+			"IBT_M":"IBT-Store",
+			"MAN":"Purchase Order",
+			"ZFUT":"Z-Future",
+			"PUSH":"Push",
+			"MR_IBT_M":	"MR-IBT",
+			"MR_MAN"  :	"MR-PO"
+		}
+	],
+	"statuslist":[
+		{
+		"received":"Received In Full",
+		"shipped":"In Transit",
+		"shippedReversed":"Shipped Reversed",
+		"receiveInProgress":"Receiving In Progress",
+		"closed":"Closed",
+		"shipInProgress":"Partially Received"
+		}
+	],
+
+	"ordertypedeliverieslist":[
+		{
+		"MAN":"Purchase Order",
+		"IBT_M":"Store Transfer",
+		"PUSH":"Manual Shipment",
+		"RECEIPT":"Manual Receipt"
+		}
+	],
+
+	"analyticsdatelist":[
+		{
+		"yesterday":"Yesterday",
+		"lastweek":"Last Week",
+		"lastmonth":"Last Month",
+		"custom":"Custom"
+		}
+	],
+
+	"reasonlist":[
+		{
+		"FSL":"For Stock Level",
+		"FZL":"For Zero Level",
+		"FND":"For No Data"
+		}
+	],
+	"orderstatuslist":[
+		{
+			"draft":"Draft",
+			"forceclosed":"Force Closed",
+			"onhold":"On Hold",
+			"inprogress":"In Progress",
+			"inProgress":"In Progress",
+			"received":"Received",
+			"returned":"Returned",
+			"Completed":"Completed",
+			"submitted":"Submitted",
+			"partiallyShipped":"Partially Shipped",
+			"confirmed":"Confirmed",
+			"shipped":"Shipped",
+			"cancelled": "Cancelled",
+			"forceClosed": "Force Closed"
+		}
+  	 ],
+	"countstatuslist":[
+		{
+			"approve"	:	"Approved",
+			"validate"	:	"Validate",
+			"open"	  	:	"Open",
+			"recount"	:	"In Progress"
+		}
+	],
+  	 "ibtstatuslist":[
+  	 	{
+  	 		"draft"				:	"Draft",
+  	 		"submitted"			:	"Submitted",
+  	 		"confirmed"			:	"Confirmed",
+  	 		"partiallyShipped"	: 	"Partially Shipped",
+  	 		"shippedFull"		:	"Shipped Full",
+  	 		"receivedFull"		:	"Received Full",
+  	 		"receivedWithDescrepancies"	:	"Received With Discrepancies",
+  	 		"rejected"          :   "Rejected",
+			"cancelled"			:  	"Cancelled"
+  	 	}
+  	 ],
+  	 "mshipstatuslist":[
+  	 	{
+  	 		"draft"				:	"Draft",
+  	 		"shipped"			:	"Shipped",
+  	 		"received"			:	"Received",
+  	 		"receivedWithDescrepancies"	:	"Received With Discrepancies"
+  	 	}
+  	 ],
+	 "currencylist":[
+		{
+			"EUR":"€",
+			"USD":"$",
+			"YEN":"¥",
+			"AUD":"$",
+			"GBP":"£",
+			"KR":"kr."
+		}
+	],
+	"trantypelist":[
+		{
+			"MAN"				:	"Purchase Order",
+			"RPL"				:	"Purchase Order",
+			"purchaseOrder" 	:	"Purchase Order",
+			"count"				:	"Count",
+			"adjustment"		:	"Adjustment",
+			"transfer"			:	"Transfer",
+			"manualShipment"	:	"Manual Shipment",
+			"return"			:	"Return",
+			"DROP_SHIP"			:	"DROP SHIP",
+			"posTransation" 	:	"POS Transaction",
+			"receipt" 			: 	"Manual Receipt",
+			"ZFUT"  			:	"Z-Future"
+		}
+	],
+	"qtystatuslist":[
+		{
+			"submitted":"Submitted",
+			"confirmed":"Confirmed",
+			"unconfirmed":"UnConfirmed",
+			"rejected":"Rejected",
+			"shipped":"Shipped",
+			"receiveInProgress":"Receiving In Progress",
+			"received":"Received",
+			"return":"Return",
+			"hold":"Hold"
+		}
+	],
+	"qtyStatusAtPoReviewScreen":{
+		"submitted":"Submitted",
+		"confirmed":"Confirmed",
+		"unconfirmed":"UnConfirmed",
+		"rejected":"Rejected",
+		"shipped":"Shipped",
+		"receiveInProgress":"Receiving In Progress",
+		"received":"Received",
+		"return":"Returned",
+		"hold":"Hold"
+	},
+	"exportBalanceTypes":{
+		"oh":"On Hand",
+		"ats":"Avaiable to Sell"
+	},
+	"fileupload":[
+		{
+			"upload_json":"Upload Only Json File",
+			"upload_csv":"Upload Only CSV File",
+			"upload_dat":"Unsupported File Format.Allowed file format: .dat"
+		}
+	],
+
+
+	"interface" : {
+		"sidebarLabel" : "Update Order",
+		"searchOrderLabel" : "Search by Order Number",
+		"confirmationLabel" : "PO Confirmation",
+		"asnLabel" : "PO ASN",
+		"search" : "Search",
+		"skus" : "SKUs",
+		"description" : "Description",
+		"qty" : "Qty",
+		"price" : "Price",
+		"confirmed" : "Confirmed",
+		"unconfirmed" : "Unconfirmed",
+		"rejected" : "Rejected",
+		"no_results" : "No Results Found",
+		"asn_number" : "ASN Number",
+		"update" : "Update",
+		"package" : "Package",
+		"add" : "Add",
+		"ship_date" : "Ship Date",
+		"delivery_date" : "Expected Delivery Date",
+		"order_qty" : "Order Qty",
+		"confirmed_qty" : "Confirmed Qty",
+		"shipped" : "Shipped",
+		"select_sku" : "Select SKU...",
+		"tracking_number" : "Tracking Number",
+		"action" : "Action",
+		"confirmed_price":"Confirmed Price",
+		"asnprice":"ASN Price"
+
+	},
+
+	"asn_service" : {
+		
+	"currency" : "$",
+	"inTransit" : "In Transit",
+	"shipped" : "In Transit",
+	"begin_receiving" : "Begin Receiving",
+	"received" : "Received",
+	"shippedReversed":"In Transit - Reversed",
+	"asn" : "ASN",
+	"package" : "Package",
+	"trackingNumber" : "Tracking Number",
+	"shipDate" : "Shipped Date",
+	"expectedDeliveryDate" : "Estimated Delivery",
+	"receivedDate" : "Received Date",
+	"asnValue" : "Package Value",
+	"lineNumber" : "Line Number",
+	"sku" : "SKU",
+	"description" : "Description",
+	"cost" : "Purchase Price",
+	"expectedQty" : "Expected Qty",
+	"receivedQty":"Received Qty",
+	"qty" : "Qty",
+	"productCode" : "Style",
+	"skuShipped" : "SKU Shipped",
+	"totalQuantityShipped" : "Total Quantity Shipped",
+	"totalQuantityReceived" : "Total Quantity Received",
+	"po" : "Order Number",
+	"erp" : "ERP",
+	"orderType" : "Order Type",
+	"totalPackages" : "Total Styles",
+	"noOfSkus" : "Number Of SKUs",
+	"totalAsnQuantity" : "Total ASN Quantity",
+	"searchOrderLabel" : "Order Number",
+	"asn_number" : "ASN Number",
+	"sku" : "SKU",
+	"no_records":"No Records Found",
+	"asn_value":"ASN Value",
+	"total_packages":"Total Packages",
+	"package_qty":"Total Package Qty",
+	"receiveInProgress":"Receiving In Progress",
+	"shipInProgress":"Shipping In Progress",
+	"closed":"Closed",
+	"reverse_receipt":"Reverse a Receipt",
+	"receivinginprogress":"Receiving In Progress",
+	"store":"Store"
+	},
+	"returns":{
+		"returnno":"Return Number",
+		"list_returns":"List of Returns",
+		"add_return":"Add Return",
+		"edit_return":"Edit Return",
+		"return_type":"Return Type",
+		"order_ref":"Order Reference",
+		"total_wac":"Total WAC",
+		"quantity":"Quantity",
+		"add_newreturn":"Add New Return",
+		"sel_return":"Select Return",
+		"rma_type":"RMA Type",
+		"ret_to":"Return To",
+		"ret_from":"Return From",
+		"no_of_packages":"Number of Packages",
+
+		"ret_detail":"Return Details",
+		"ret_summary":"Return Summary",
+		"return":"Return",
+		"lineno":"Line Number",
+		"receive":"Receive",
+		"no_returns":"No Returns Found",
+		"review_return":"Review Return"
+	
+
+	},
+	
+	"returnstypelist":{
+		"RA":"Return Arrangement",
+		"QLTY":"Quality",
+		"OTHER":"Other"
+	},
+
+	"manualReceipt":
+	{
+		"createBtn"		:	"Create Manual Receipt",
+		"side_heading"	: 	"Manual Receipt",
+		"receipt_number": 	"Manual Receipt Number",
+		"copy_manual" 	:	"Copy Manual Receipt",
+		"edit_manual" 	:	"Edit Manual Receipt",
+		"receipt_Det" 	:	"Receipt Details",
+		"receipt_summary": 	"Receipt Summary",
+		"review_receipt": 	"Review Manual Receipt"
+
+	},
+
+	"manual" : {
+		"labels"	:	{
+			"receiptType"		:	"Receipt Type",
+			"shipToLocation"    :       "Received In",
+			"FromLocation"		:	"Received From",
+			"vendorId"          :       "Received From",
+			"received_in"		:	"Received In",
+			"createdBy"         :	"Created By",
+			"order_number"		:	"Order Number",
+			"erpOrderNumber"    :       "ERP Order Number",
+			"specialInstructions":       "Comment",
+			"asn"				:	"Reference to ASN",
+			"no_packages"		:	"Number Of Packages",
+			"tot_style"			:	"Total Styles",
+			"tot_skus"			:	"Total Skus",
+			"transfer_valus"	:	"Transfer Values",
+			"create_receipt"	:	"Create Manual Receipt",
+			"receipt_detail"	:	"Receipt Detail",
+			"receipt_summary"	:	"Receipt Summary",
+			"asnId"				:	"Reference to ASN",
+			"order"				:	"Order Number",
+			"receivedDate"		:	"Received Date",
+			"ship_date" 		:	"Shipping Date",
+			"asnNumber" 		: 	"ASN Number"
+		},
+		"placeholder"	:	{
+			"receiptType"		:	"Receipt Type",
+			"shipToLocation"    :       "Received In",
+			"FromLocation"		:	"Received From",
+			"vendorId"          :       "Received From",
+			"received_in"		:	"Received In",
+			"createdBy"         :	"Created By",
+			"order_number"		:	"Order Number",
+			"erpOrderNumber"    :   "ERP Order Number",
+			"specialInstructions":  "Comment",
+			"asn"				:	"Reference to ASN",
+			"no_packages"		:	"Number Of Packages",
+			"tot_style"			:	"Total Styles",
+			"tot_skus"			:	"Total Skus",
+			"transfer_valus"	:	"Transfer Values",
+			"asnId"             :	"ASN"
+		},
+		"receipttype":{
+			"MR_IBT_M":"IBT Receipt",
+	      	"MR_MAN":"Manual Receipt",
+	      	"RECEIPT":"Receipt"
+		}
+	},
+
+	"receipt":{
+		"list_of_od":"List of Open Deliveries",
+		"add_manual":"Add Manual Receipt",
+		"create_receipt":"Create Manual Receipt",
+		"receipt_type":"Receipt Type",
+		"received_from":"Received From",
+		"received_in":"Received In",
+		"reference_to_asn":"Reference to ASN",
+		"total_styles":"Total Styles",
+		"total_skus":"Total SKUs",
+		"transfer_value":"Transfer Value",
+		"sel_receipt":"Select Receipt",
+		"total_rec_qty":"Total Received Qty",
+		"labels":{
+			"receipt_type":"Receipt Type",
+			"received_from":"Received From",
+			"received_in":"Received In",
+			"reference_to_asn":"Reference to ASN"
+
+		},
+		"placeholder":{
+			"receipt_type":"Receipt Type",
+			"received_from":"Received From",
+			"received_in":"Received In",
+			"reference_to_asn":"Reference to ASN"
+		},
+		"receipttype":{
+			"IBT_M":"IBT Receipt",
+			"MAN":"Manual Receipt"
+		}
+	},
+	
+	"return":{
+
+		"labels":{
+			"return_number":"Return Number",
+			"list_returns":"List of Returns",
+			"add_return":"Add Return",
+			"edit_return":"Edit Return",
+			"copy_return":"Copy Return",
+			"return_type":"Return Type",
+			"rmaNumber":"RMA Number",
+			"order_ref":"Order Reference",
+			"total_wac":"Total WAC",
+			"quantity":"Quantity",
+			"add_newreturn":"Add New Return",
+			"sel_return":"Select Return",
+			"rma_type":"RMA Type",
+			"return_to":"Return To",
+			"vendorId":"Return To",
+			"shipToLocation":"Return From",
+			"no_of_packages":"Number of Packages",
+			"ret_detail":"Return Details",
+			"ret_summary":"Return Summary",
+			"return":"Return",
+			"lineno":"Line Number",
+			"createdBy":"Created By",
+			"erpOrderNumber":"ERP Order Number",
+			"specialInstructions":"Comment",
+			"order":"Order Number",
+			"reasoncode":"Reason Code"
+		},
+		"placeholder"	:	{
+			"return_number":"Return Number",
+			"list_returns":"List of Returns",
+			"add_return":"Add Return",
+			"edit_return":"Edit Return",
+			"rmaNumber":"RMA Number",
+			"return_type":"Return Type",
+			"order_ref":"Order Reference",
+			"total_wac":"Total WAC",
+			"quantity":"Quantity",
+			"add_newreturn":"Add New Return",
+			"sel_return":"Select Return",
+			"rma_type":"RMA Type",
+			"return_to":"Return To",
+			"vendorId":"Return To",
+			"shipToLocation":"Return From",
+			"no_of_packages":"Number of Packages",
+			"ret_detail":"Return Details",
+			"ret_summary":"Return Summary",
+			"return":"Return",
+			"lineno":"Line Number",
+			"createdBy":"Created By",
+			"erpOrderNumber":"ERP Order Number",
+			"specialInstructions":"Comment",
+			"order":"Order Number"
+
+		},
+		
+		"returnstypelist":{
+			"RA":"Return Arrangement",
+			"QLTY":"Quality",
+			"OTHER":"Other"
+		}
+
+	},
+	"returnreceipt":{
+		"add_new_pack":"Add New Package",
+		"pack":"Package",
+		"tracking_no":"Tracking No",
+		"ship_date":"Shipping Date",
+		"style":"Style",
+		"description":"Description",
+		"total_qty":"Total Quantity",
+		"line_no":"Line Number",
+		"sku":"SKU",
+		"qty":"Qty",
+		"select":"Select",
+		"delete":"Delete"
+	},
+
+	"reversereceipt":{
+		"receipt_date"	:	"Receipt Date",
+		"received_by"	:	"Received By",
+		"reversal_date"	:	"Reversal Date",
+		"reversed_by"	:	"Reversed By",
+		"reason_code"	:	"Reason Code",
+		"select_reason"	:	"Select Reason"
+	},
+
+	"reports":{
+		"side_heading"		:	"Dashboard",
+		"heading"			:	"Dashboard Report",
+		"filter"			:	"Filter",
+		"sku"				:	"SKU",
+		"validated"			:	"Validated",
+		"in_progress"		:	"In Progress",
+		"count_name"		:	"Count Name",
+		"count_id"			:	"Count Id",
+		"discrepency"		:	"Discrepancy",
+		"order_status"		:	"Order Status",
+		"inventory_avail"	:	"Low Inventory Alert",
+		"count_item"		:	"Counts - SKU Discrepancy",
+		"approved"			:	"Approved",
+		"count_status"		:	"Counts Status",
+		"drop_ship"			:   "Dropship",
+		"balance_type"		:	"Balance Type",
+		"current_balance"	:   "Current Balance" 
+	},
+	"configurations":{
+		"returns"			:	"Returns",
+		"globals"			:	"Globals",
+		"manualReceipts"			:	"Manual Receipts",
+		"productPerformance"			:	"Product Performance",
+		"replenishment"					:	"Replenishment",
+		"hideBillingTab"		:	"Hide Billing Tab",
+		"hideShippingTab"		:	"Hide Shipping Tab",
+		"hidePurchasePrice"		:	"Hide Purchase Price",
+		"hideVendorColumn"		:	"Hide Vendor Column in the Purchase Order List View",
+		"autoForceClose"		:	"Number of days in which Purchase Order is automatically Force Closed",
+		"activityReport"		:	"Number of days in which Purchase Order is added to the  Activity Report",
+		"hideTax"				:	"Hide Tax",
+		"enableBlindReceiving"	:	"Enable Blind Receiving",
+		"purchaseOrder"			:	"Purchase Order",
+		"enableASNlevel"		:	"Enable ASN level",
+		"enableDROPSHIP"		:   "Enable Drop-Ship Order",
+		"matchReorderPointToMaximumOrderAmount" : "Match Reorder Point to Maximum Order Amount",
+		"allGroupingByStyle" 	: 	"Enable Grouping By Style",
+		"stockLookUpProductAttribute"	:	"Stock Lookup Product Attributes",
+		"stockLookUpProductProperty"	:	"Stock Lookup Product Properties",
+		"productSize"			:	"Size",
+		"productLength"			:	"Length",
+		"productWaist"			:	"Waist",
+		"productFirstSeason"	:	"First Season",
+		"productLastSeason"		:	"Last Season",
+		"productColor"			:	"Color",
+		"productFabric"			:	"Fabric",
+		"productSleave"			:	"Sleeve",
+		"productFit"			:	"Fit",
+		"FindIt" 				:	"Find It",
+		"showImageByDefault"	:	"Show Images by Default",
+		"manualReceipts"		:   "Manual Receipt",
+		"analytics"             :   "Analytics",
+		"admin"					:	"Admin",
+		"adjustments"			:	"Adjustments",
+		"counts"				:	"Counts",
+		"stockUpdates"			:	"Stock Updates"
+	},	
+	"rolePermissions":[
+		{
+			"rolePermissions"	:	"Role Permissions",
+			"role"				:	"Role",
+			"selectRole"		:	"Select Role",
+			"module"			:	"Module",
+			"permissions"		:	"Permissions",
+			"selectAll"			:	"Select All",
+			"unselectAll"		:	"Unselect All",
+			"collapseAll"		:	"Collapse All",
+			"expandAll"			:	"Expand All",
+			"selectModuleId"	:	"Select Module Id"
+		}		
+	],	
+	"rolePermissionsModules":[
+		{
+			"settings"						:	"Settings",
+			"counts"						:	"Counts",
+			"purchaseOrder"					:	"Orders",
+			"dashboard"						:	"Dashboard",
+			"inventory"						:	"Inventory",
+			"adjustments"					:	"Adjustment",
+			"global"						:	"Global",
+			"replenishment"					:	"Replenishments",
+			"reports" 						:	"Reports"
+		}
+	],
+	"rolePermissionsPermGroups":[
+		{
+			"stockingLocations"				:	"Stocking Locations",
+			"transactionTypes"				:	"Transaction Types",
+			"directiveTypes"				:	"Directive Types",
+			"vendors"						:	"Vendors",
+			"UOM"							:	"UOM",
+			"configurations"				:	"Configurations",
+			"replenishmentRules"			:	"Replenishment Rules",
+			"rolePermissions"				:	"Role Permissions",
+			"reasonCode"					:	"Reason Code",
+			"zCounts"						:	"Z Counts",
+			"order"							:	"Order",
+			"purchasePrice"					:	"Purchase Price",
+			"inTransit"						:	"In Transit",
+			"transfers"						:	"Transfers",
+			"returns"						:	"Returns",
+			"closeASN"						:	"Close ASN",
+			"reverseReceipt"				:	"Reverse Receipt",
+			"dashboardReports"				:	"Dashboard Reports",
+			"stockLookup"					:	"Stock Lookup",
+			"transactionHistory"			:	"Transaction History",
+			"createTransaction"				:	"Create Transaction",
+			"replenishment"					:	"Replenishment",
+			"manualAdjustments"				:	"Manual Adjustments",
+			"manualReceipt"					:	"Manual Receipts",
+			"customerOrder" 				:	"Customer Order",
+			"manualShipment" 				:	"Manual Shipment",
+			"replenishmentFilters"			:	"Replenishment Filters",
+			"stockStatusReport" 			:	"Stock Status Report",
+			"balanceReport" 				:	"Balance Report"
+
+		}
+	],
+	"replenishmentRules":[
+		{
+			"location"					:	"Location",
+			"selectLocation"			:	"Select Location",
+			"replenishmentRules"		:	"Replenishment Rules",
+			"backgroundReplenishment"	:	"Background Replenishment",
+			"reorderPoint"				:	"Reorder Point",
+			"minimumOrderQuantity"		:	"Minimum Order Quantity",
+			"maximumOrderQuantity"		:	"Maximum Order Quantity",
+			"orderQuantityRounding"		:	"Order Quantity Rounding",
+			"up"						:	"Up",
+			"down"						:	"Down",
+			"allowPush"					:	"Allow Push IBT Orders",
+			"managerApproval"			:	"Manager Approval Required",
+			"windowChange"				:	"Window Of Change",
+			"errorMsg"					:	"Please Select Location and Background Replenishment",
+			"basic"						:	"Basic",
+			"advanced"					:	"Advanced",
+			"reorder_point_between"		:	"Reorder Point (between)",
+			"please_select_the_store"	:	"Please select the store",
+			"sku"						:	"SKU",
+			"description"				:	"Description",
+			"length"					:	"Length",
+			"waist"						:	"Waist",
+			"size"						:	"Size",
+			"reorder_trigger_quantity"	:	"Reorder Trigger Quantity",
+			"maximum_stock_quantity"	:	"Maximum Stock Quantity",
+			"set_default_reorder_point"	:	"Set Default Reorder Point",
+			"price" 					:	"Price",
+			"purchaseprice"				:	"Purchase Price",
+			"retailprice"				:	"Retail Price",
+			"storeprice" 				:	"Store Price",
+			"margin"					:	"Margin",
+			"replinshment_history"		:	"History : Replenishment Rules",
+			"user"						:	"User",
+			"event"						:	"Event",
+			"date"						:	"Date",
+			"time"						:	"Time",
+			"productsWithReplenish" 	:	"Products with Replenishment Rules defined",
+			"productWithoutReplenish"	:	"Products without Replenishment Rules defined",
+			"history"					:	"History",
+			"replenishable"				:	"Replenishable"
+		}		
+	],	
+	"replenishmentFilters":[
+		{
+			"replenFilters"					:	"Replenishment Filters",
+			"addNewFilter"					:	"Add New Filter",
+			"editReplenishmentFilter"		:	"Edit Replenishment Filter",
+			"products"						:	"Products",
+			"filterName"					:   "Filter Name",
+			"location"						:	"Location",
+			"selectLocation"				:	"Select Location",
+			"merchandiseGroup"				:	"Merchandise Group",
+			"collection"					:	"Collection",
+			"season"						:	"Season",
+			"color"							:	"Color",
+			"size"							:	"Size",
+			"length"						:	"Length",
+			"waist"							:	"Waist",
+			"cancel"						:	"Cancel",
+			"next"							:	"Next",
+			"products"						:   "Products",
+			"protocol" 						:   "Protocol",
+			"advancedCriteria"				:	"Advanced Criteria",
+			"review"						:	"Review",
+			"considerInventoryBalances"		:	"Consider Inventory Balances",
+			"currentOnHand"					:	"Current On Hand",
+			"openOnOrder"					:	"Open On Order",
+			"inTransitIn"					:	"In Transit In",
+			"inTransferOut"					:	"In Transfer Out",
+			"allocated"						:	"Allocated",
+			"reserverd"						:	"Reserved",
+			"excludeOrderType"				:	"Exclude Order Type",
+			"search"						:	"Search",
+			"excludeOrderNumbers"			:	"Exclude Order Numbers",
+			"add"							:	"Add",
+			"storeQuantities"				:	"Store Quantities",
+			"reorderPoint"					:	"Reorder Point",
+			"currentOnHandQty"				:	"Current On Hand Qty",
+			"storeTransferInQty"			:	"Store Transfer In Qty",
+			"storeTransferOutQty"			:	"Store Transfer Out Qty",
+			"from"							:	"From",
+			"to"							:	"To",
+			"pricing"						:	"Pricing",
+			"purchasePrice"					:	"Purchase price",
+			"retailPrice"					:	"Retail Price",
+			"margin"						:	"Margin",
+			"image"							:	"Image",
+			"articleNumber"					:	"Article Number",
+			"description"					:	"Description",
+			"sku"							:	"SKU",
+			"sizex"							:	"Size X",
+			"sizey"							:	"Size Y",
+			"totalNumberOfSkus"				:	"Total Number Of SKUs",
+			"stores"						:	"Stores",
+			"numberOfskus"					:	"Number Of SKUs",
+			"lastRun"						:	"Last Run",
+			"created"						:	"Created",
+			"create"						:	"Create",
+			"run"							:	"Run",
+			"previous"						:	"Previous"
+		}		
+	],
+	"ibt":{
+		"side_heading"			:	"Transfers",
+		"heading"				:	"List Of Transfers",
+		"transfer_number"		:	"Transfer Number",
+		"status"				:	"Status",
+		"inbound"				:	"Inbound",
+		"outbound"				:	"Outbound",
+		"ship_from"				:	"Ship From",
+		"ship_to"				:	"Ship To",
+		"add_transfer"			:	"Add Transfer",
+		"add_newtransfer"		:	"Add New Transfer",
+		"shipment_type"			:	"Shipment Type",
+		"manualShipment"  		:	"Manual Shipment",
+		"add_new_manualShipment":	"Add New Manual Shipment",
+		"transfer_type"			:	"Transfer Type",
+		"transfer_details"		:	"Transfer Details",
+		"transfer_price"		:	"Transfer Price",
+		"transfer_summary"		:	"Transfer Summary",
+		"select_transfer"		:	"Select Transfer",
+		"total_transfer"		:	"Total Transfer Price",
+		"edit_transfer"			:	"Edit Transfer",
+		"copy_transfer"			:	"Copy Transfer",
+		"total_qty"				:	"Total Qty",
+		"shipment_summary" 		:	"Shipment Summary",
+		"add_manual_shipment"	:	"Add Manual Shipment",
+		"filter" 				:	"Fulfillment",
+		"resolve_transfer"		:	"Resolve Transfer",
+		"no_transfer"			:	"No Transfers found",
+		"availability"			:	"Availability"
+	},
+	"transferstypelist":{
+			"IBT_M":"IBT-Store"
+	},
+	"productPerformance":{
+		"side_heading"	:	"Product Performance",
+		"sku_details"	:	"SKU Details",
+		"style_details"	:	"Style Details",
+		"load_allskus"	:	"Load All SKUs"
+	},
+	"productperformlabel":{
+		"productCode"	:	"Style",
+		"Description"	:	"Description",
+		"description"	:	"Description",
+		"ImageURL"		:	"Image",
+		"FirstSeason"	:	"First Season",
+		"LastSeason"	:	"Last Season",
+		"Gender"		:	"Gender",
+		"Brand"			:	"Brand",
+		"Group"			:	"Group",
+		"Style"			:	"Style",
+		"Fabric"		:	"Fabric",
+		"Color"			:	"Color",
+		"ACTION"		:	"Action",
+		"sku"			:	"SKU",
+		"Length"		:	"Length",
+		"Waist"			:	"Waist",
+		"Size"			:	"Size",
+		"totalreceived"	:	"Total Received",
+		"totalsold"		:	"Total Sold",
+		"totalreturned"	:	"Total Returned",
+		"Replenishment"	:	"Repleinshable",
+		"firstrecvdate"	:	"First Date Received",
+		"lastrecvdate"	:	"Last Date Received",
+		"lastsolddate"	:	"Last Date Sold",
+		"lastupdatedate":	"Last Update",
+		"styleMatrix"	:	"Style Matrix",
+		"Fit"			:	"Fit",
+		"Sleeve"		:	"Sleeve",
+		"materialgroup"	:	"Material Group",
+		"variants" 		:	"Product Variants",
+		"properties" 	:	"Product Properties"
+	},
+
+	"reasonCode":[
+		{
+			"reason_code_add":"Add Reason Code",
+			"reason_code_edit":"Edit Reason Code",
+			"ent_reason_code":"Enter Reason Code ID",
+			"reason_code_list":"List of Reason Code",
+			"req":"The Reason Code ID is required",
+			"reason_code_loc" : "Location",
+			"req_id" : "The Reason Code Id is Required",
+			"req_des" : "The Description is Required",
+			"req_type" : "The Code Type is Required",
+			"req_loc" : "The Location is Required",
+			"sel_loc" : "Select the Location",
+			"sel_res_type" : "Select the Reason Code Type",
+			"search_reason_code":"Search for Reason Code Id, Description...",
+			"reason_code_type":"Reason Code Type",
+			"reason_code_id" : "Reason Code Id",
+			"reason_code_desc" : "Description",
+			"add_reason_code" : "Add Reason Code",
+			"no_res_code_found" : "No Reason Code Found"
+		}		
+	],
+
+	"export_Heading":
+		{
+		"purchaseorder"		:	"PURCHASE ORDER",
+		"listofreturn"		:	"LIST OF RETURNS",
+		"listintransit"		:	"LIST OF DELIVERIES",
+		"listtransfers"		:	"LIST OF TRANSFERS",
+		"transfer"			:	"TRANSFER ORDER",
+		"listmanualshipment":	"LIST OF MANUAL SHIPMENTS",
+		"manualshipment"	:	"MANUAL SHIPMENT",
+		"packingslip"		:	"PACKING SLIP",
+		"reviewReturn"		:	"REVIEW RETURN",
+		"customerorder"  	:	"CUSTOMER ORDER",
+		"customerorderlist" : 	"LIST OF CUSTOMER ORDER",
+		"reviewmanualreceipt": 	"REVIEW MANUAL RECEIPT",
+		"listmanualreceipt"  :  "LIST OF MANUAL RECEIPT" 
+		},
+
+	"hbr_data":
+		{
+			"Receive":" Load Receive"
+		}, 
+
+	"code_type":
+		{
+			"RTN":"Return",
+			"RCPT_RVS":"Receipt Reversal",
+			"RCV_DISPCY":"Receive Discrepancy",
+			"MAN_ADJS":"Manual Adjustment"
+		},	
+	"adjustments":
+		{
+			"addadjustment"		:	"Add Adjustment",
+			"createadjustment"	:	"Create Adjustment",
+			"copyadjustment" 	:	"Copy Adjustment",
+			"reverseadjustment" :	"Reverse Adjustment",
+			"editAdjustment"	:	"Edit Adjustment",		
+			"adjustments_list": "List of Adjustments",
+			"add_adjustment": "Add Adjustment",
+			"order_no":"Order Number",
+			"Sel_po_num" : "--Select Order Number--",
+			"adjust_num_lab": "Adjustment No",
+			"adjust_code_lab": "Adjustment Code",
+			"adjust_name_lab": "Adjustment Name",
+			"res_code_lab": "Reason Code",
+			"status_lab": "Status",
+			"order_ref_lab": "Order Reference",
+			"store_lab": "Store",
+			"num_of_sku_lab": "Total Quantity",
+			"created_lab": "Created",
+			"sel_adjs_name": "Select Adjustment Name",
+			"sel_adjs_code": "Select Adjustment Code",
+			"no_adjustment" : "No Adjustments Found",
+			"adjust_summery": "Adjustment Summary",
+			"total_cost":"Total Purchase Price",
+			"draft": "Draft",
+			"original_adjust":"Original Adjustment Number",
+			"reversal_adjust":"Reversal Adjustment Number",
+			"reversed_by":"Reversed By",
+			"adjustment_no":"Adjustment Number",
+			"adjustment_no_srch": "Search by Adjustment Number"
+
+		},	
+	"stockbalances":{ "stockbalances":"Export Inventory balances",
+			 "export":"Export",
+			 "add":"Add"
+ 		},
+	"ibt_asn":{
+			"add_asn":"Add New ASN"
+		},
+	"resolve":{
+			"select_reason":"Select Reason",
+			"mark_quantity":"Mark Missing Quantity as"
+	},
+	"qty_reasons":{
+			"shippedLess":"Shipped Less",
+			"shippedMore":"Shipped More",
+			"lost"	     :"Lost"
+	},
+	"manualshipment":{
+		"side_heading"				:	"Manual Shipments",
+		"ship_number"				:	"Shipment Number",
+		"resolve_shipment"			:	"Resolve Shipment",
+		"copy_shipment"				:	"Copy Shipment",
+		"no_shipment"				:	"No Shipments found",
+		"delete_shipment"			:"Manual Shipment Deleted Successfully",
+		"delete_shipment_fail"		:"Manual Shipment Delete Failed"
+	},
+	"asndiscrepancies":{
+		"intransit" 		:	"In Transit",
+		"receivedfull"		:	"Received in Full",
+		"partiallyreceived"	: 	"Partially Received",
+		"closed" 			:	"Closed",
+		"receivinginprogress" :	"Receiving In Progress",
+		"shippedReversed"     :  "In Transit - Reversed"
+	},
+	"title":{
+		"add"  	: "Add New",
+		"edit" 	:"Edit",
+		"copy" 	: "Copy",
+		"review":"Review"
+	},
+	"customerorder":{
+		"side_heading"		:	"Customer Order",
+		"subtotal"			:	"Sub-Total",
+		"originated_from"	:	"Originated From",
+		"addline1"			:	"Address Line 1",
+		"addline2"			:	"Address Line 2",
+		"customer_name"		:	"Customer Name",
+		"bcbg"				:	"BCBG",
+		"bbDakota"			:	"BB Dakota",
+		"add_corder"		:	"Add Customer Order",
+		"customername"      :	"Customer Name",
+		"orderno"			:   "Customer Order Number",
+		"noofvendororders"	:	"Number of Vendor Orders",
+		"noofskus"			:	"Number of SKUs",
+		"total_amount"		:	"Total Order Amount",
+		"dateplaced"		:	"Date Placed",
+		"progress"			:	"Progress",
+		"status"			:	"Status",
+		"list_order"        :   "List of Customer Orders",
+		"date_placed"		:	"Date Placed",
+		"review"			:	"Review Customer Order",
+		"create_date"		:	"Created Date",
+		"shipping_address"	:	"Shipping Address",
+		"vendor_name"		:   "Vendor Name",
+		"vendor_ordernum"	:	"Vendor OrderNumber",
+		"no_order"			:	"No Customer Orders Found",
+		"title_delete"		:   "Delete Customer Order",
+		"delete"			:   "Delete SKU from Customer Order",
+		"order_deleted"     :	"Customer Order Deleted Successfully",
+		"order_dfailed"     :   "Customer Order Delete Failed",
+		"order_saved"       :   "Customer Order Saved as Draft",
+		"order_created"     :   "Customer Order Created Successfully",
+		"order_updated"     :   "Customer Order Updated Successfully",
+		"sku_deleted"       :   "SKU  Deleted Successfully"
+	},
+	"dropship_statuses":{
+		"draft"		:"Draft",
+		"submitted"	:"Submitted",
+		"inProgress":"In Progress"
+	},
+	"customerorderslist":{
+		"DROP_SHIP":"Drop-Ship"
+	},
+	"alertOrder":{
+		"RA":"Return Arrangement",
+		"QLTY":"Quality",
+		"OTHER":"Other",
+		"RPL":"Replenishment Order",
+		"IBT_M":"Transfer",
+		"MAN":"Purchase Order",
+		"ZFUT":"Z-Future",
+		"PUSH":"Manual Shipment",
+		"MR_IBT_M":	"MR-IBT",
+		"MR_MAN"  :	"MR-PO"
+	},
+	"actions":{
+		"delete":"Confirm delete"
+	},
+	"findit":{
+		"find_it"			:	"Find It",
+		"requesting_store"	:	"Requesting Store",
+		"back"				:	"Back",
+		"size"				:	"Size",
+		"waist" 			:	"Waist",
+		"length"			:	"Length",
+		"quantity"			:	"Quantity",
+		"shiptostore"		:	"Ship to store",
+		"selectstore"		:	"Select Store",
+		"franchies"			:	"Near By Stores",
+		"vendor"			:	"Vendors",
+		"transfer"			:	"Transfer",
+		"purchase"			:	"Purchase",
+		"search"			:	"Search by Draft Order number",
+		"cancel"			:	"Cancel",
+		"saveasdraft"		:	"Save as Draft",
+		"addtoexist"		:	"Add to Existing Draft",
+		"available"     	:	"Available",
+		"not_available" 	:	"No More Stock Available",
+		"novendor" 			:	"The product is not carried by any Vendor",
+		"nofranchise" 		:	"No Franchise Stores Found",
+		"side_heading"		:	"Find It",
+		"sku" 				:	"SKU"
+	},
+	"inventorybalances":
+	{
+			
+			"oh"				:"On Hand",
+			"allocated"			:"Allocated",
+			"reserved"			:"Reserved",
+			"held"				:"Held",
+			"returnToVendor"	:"Return to vendor",
+			"ats"				:"Available-to-sell",
+			"atp"				:"Available-to-promise",
+			"wac"				:"Weighted average cost",
+			"openOnOrderIn"		:"Open On-Order In",
+			"unConfirmedIn"		:"Un Confirmed In",   	
+			"confirmedOrdersIn"	:"Confirmed In",
+			"rejectedIn"   		:"Rejected In",
+			"asnIn"				:"ASN In",
+			"transferIn"		:"In-Transit In",
+			"openOnOrderOut"	:"Open On-Order Out",
+			"unConfirmedOut"	:"Un Confirmed Out",   	
+			"confirmedOrdersOut":"Confirmed Out",
+			"rejectedOut"		:"Rejected Out",
+			"asnOut"			:"ASN Out",
+			"transferOut"		:"In-Transit Out"
+			
+ 	},
+ 	"adjstatuslist":[
+ 	{   
+ 		"Draft"				:"Draft",
+ 		"Adjusted"			:"Adjusted",
+ 		"reversed"  		:"Reversed",
+ 		"reversed_draft"  	:"Reversed Draft",
+ 		"rvs_draft"			:"Reversal Draft",
+ 		"adjusted_rvs" 		:"Adjusted-Reversal"
+
+ 	}],
+ 	"manualrcptstatuslist":[
+ 	{
+ 		"draft"		: "Draft",
+ 		"received"	: "Received"
+ 	}],
+ 	"returnstatuslist":[
+ 		{
+ 		"draft"		:"Draft",
+ 		"returned"	:"Returned"
+ 	}],
+ 	"dashboardStatus":[{
+ 	     "submitted"					:	"Submitted",
+ 		 "received"						: 	"Received",
+ 		 "draft"						:	"Draft",
+ 		 "inProgress"					:	"In Progress",
+ 		 "shipped"						:	"Shipped",
+ 		 "shippedFull"  				:	"Shipped Full",
+  	 	 "receivedFull"					:	"Received Full",
+  	 	 "partiallyShipped" 			:	"Partially Shipped",
+		 "confirmed"					:	"Confirmed",
+		 "returned"						:	"Returned",
+		 "receivedWithDescrepancies"	:	"Received With Discrepancies",
+		 "unconfirmed" 					: 	"Unconfirmed",
+		 "rejected" 					: 	"Rejected"
+ 	}],
+ 	 "zonecount":[{
+		"Z-Count":"Zone Count",
+		"Physical":"Physical Count",
+		"Cycle":"Cycle Count"
+	}],
+ 	"replinshmentHisory":{
+ 		"create"	:	"Create",
+ 		"update"	:	"Update"
+ 	},
+ 	"analytics":{
+ 		"color"			:	"Color",
+ 		"sold"			:	"Sold",
+ 		"received"		:	"Received",
+ 		"returned"		:	"Returned",
+ 		"analytics" 	:  "Analytics",
+ 		"inv_avail" 	:  "Inventory Availablity",
+ 		"price_promo"	:  "Prices and Promotions",
+ 		"physical"		:	"Physical Balances",
+ 		"directive"		:	"Directive Balances",
+ 		"sku_perform"	:   "SKU Performance",
+ 		"store"			:   "Store",
+ 		"from_date"		:   "From Date",
+ 		"to_date"		:   "To Date",
+ 		"price"			:   "Price",
+ 		"errormessages" :	{
+ 			"location"  :   "Please select the Store",
+ 			"product"   :   "Please select atleast one  Style or SKU or Barcode"
+
+ 		}
+ 	},
+ 	"balanceReport":{
+ 		"heading":"Balance Report",
+ 		"balanceType":"Balance Type",
+ 		"dateRange":"Select Date Range",
+ 		"placeHolder":{
+ 			"selectStore":"Select Store",
+ 			"skuSearch":"Search by SKU or Style",
+ 			"startDate":"Start Date",
+ 			"endDate":"End Date"
+ 		},
+ 		"buttons":{
+ 			"search":"Search",
+ 			"reset":"Reset",
+ 			"backtoBalance":"Back To Balance Report"
+ 		},
+ 		"dateSelection":{
+ 			"today":"Today", 
+ 			"yesterday":"Yesterday", 
+ 			"month":"Month Ago", 
+ 			"threemonth":"Three Months Ago",
+ 			"custom":"Custom"
+ 		},
+ 		"beginbalance":"Begining Balance",
+ 		"endbalance":"Ending Balance",
+ 		"transcationName":"Transcation Name",
+ 		"documentNo":"Document No",
+ 		"dateTime":"Date and Time",
+ 		"sku":"SKU",
+ 		"description":"Description",
+ 		"purchaseprice":"Purchase Price",
+ 		"storePrice":"Store Price",
+ 		"lastReceived":"Last Received",
+ 		"lastSold":"Last Sold",
+ 		"pageSize":"Page Size",
+ 		"balanceTypeDrop":{
+ 			"viewOnHand":"On Hand",
+ 			"viewAllocated":"Allocated",
+ 			"viewReserved":"Reversed",
+ 			"viewHeld":"Held",
+ 			"viewReturnToVendor":"Return To Vendor",
+ 			"viewAts":"Available To Sell",
+ 			"viewAtp":"Available To Promise",
+ 			"viewWac":"Wac",
+ 			"viewOpenOnOrderIn":"Open On Order In",
+ 			"viewOpenOnOrderOut":"Open On Order Out",
+ 			"viewConfirmedIn":"Confirmed In",
+ 			"viewConfirmedOut":"Confirmed Out",
+ 			"viewAsnIn":"Asn In",
+ 			"viewAsnOut":"Asn Out",
+ 			"viewInTransitIn":"In Transit In",
+ 			"viewInTransitOut":"In Tranasit Out"
+ 		},
+ 		"pdfLables":{
+ 			"search":"SKU / Style",
+ 			"balanceType":"Balance Type",
+ 			"dateRange":"Date Range",
+ 			"startDate":"Start Date",
+ 			"endDate":"End Date",
+ 			"store":"Store"
+ 		}
+ 	}
+}
+	

@@ -1,0 +1,74 @@
+/* AUTOCOMPLETE */
+
+.autocomplete{
+  width: 100%;
+  position: relative;
+}
+
+.autocomplete input{
+  font-size: 1.2em;
+  width: 100%;
+  padding:0.4em;
+}
+
+.autocomplete ul{
+  padding: 5px 0px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+  z-index: 1;
+}
+
+.autocomplete li{
+  text-align: left;
+  list-style:none;
+  width: 100%;
+  padding:0.6em;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.autocomplete li.active{
+  width: 100%;
+  background-color: #4bf;
+}
+
+.autocomplete .highlight {
+  background-color: #E2E2E2;
+}
+
+.autocomplete li.active .highlight {
+  background: #666;
+  color: #fff;
+}
+.autocomplete .search_product {
+cursor: pointer;
+    font-weight: 600;
+    margin-left: 15px;
+    text-align: left;
+    width: 68%;
+}
+.ovcautocomplete input {
+     font-size: initial; 
+}
+.ovcautocomplete ul{
+ height: auto;
+ max-height: 40%;
+}
+
+.label_batch{float: left;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 12px;
+    /*width: 25%;*/
+    width: 115px}
+
+    .search_scroll .ovcautocomplete ul {
+    max-height: 200px;
+}
+.ovcautocomplete li{
+ border-bottom:1px  solid grey;
+}

@@ -1,0 +1,93 @@
+<div class="row" ng-controller = "addReplenishmentFilter">
+	<form role="form" name="form"  class="form-horizontal">
+		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+			<div class="form-group ">
+				<div class="col-lg-4  col-sm-12 col-md-4 col-xs-12">
+					 <label class="control-label">
+						{{translation.replenishmentFilters[0].filterName}}: </label> <input
+						class="form-control"
+						placeholder="{{translation.replenishmentFilters[0].filterName}}"
+						ng-click="data.filterNameErrorMessage = false" 
+						ng-model="F_edit.FilterName" name="filterName"> <span
+						ng-show="data.filterNameErrorMessage"
+						 style="margin: 3px 0px 0px 0px"
+						class="alert alert-danger">{{translation.messages[0].filter_name}}</span>
+				</div>
+			</div> 
+		</div>
+		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+			<div class="form-group">
+				<span class="col-sm-12 col-xs-12 col-md-3"> <label class="control-label">{{translation.replenishmentFilters[0].location}}</label><br />
+					<!-- <dropdown-multiselect pre-selected="selectedpackageStatus"
+						model="asnSearchData.status" options="data.location_datas"></dropdown-multiselect> -->
+					<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;">
+						<div style="position: relative;" class="tooltip-pro width_padd">
+							<input id="common_heirarchy_check" type="text" class="form-control"
+								ng-model="location.displayName" ng-focus="showLoc = true"
+								ng-click="data.locationErrorMessage = false" 
+								placeholder="{{translation.replenishmentFilters[0].location}}"
+								style="padding: 6px 18px 6px 10px;"
+								ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}" /> 
+								<span class="fa" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+								style="position: absolute; right: 7px; top: 10px;"></span>
+						</div>
+						<div tree-view="data.location_datas" node-search="filterSearch()" check-box = "true" replinish = "true"
+							node-label="name" ng-show="showLoc"
+							class="dropdown-menu treeViewDrop"
+							style="display: block; width: 300px;" >
+						</div>
+							<span ng-show="data.locationErrorMessage" style="margin: 3px 0px 0px 0px"
+								class="alert alert-danger">{{translation.messages[0].location}}</span>
+					</div>
+				</span>
+				<span class="col-sm-12 col-xs-12 col-md-3"> <label class="control-label">{{translation.replenishmentFilters[0].merchandiseGroup}}</label><br />
+					<!-- <dropdown-checkBox-multiselect pre-selected="selectedpackageStatus" screen="{{screenValue}}" 
+						model="selectedMerchandise" place-holder = "translation.replenishmentFilters[0].merchandiseGroup" options="data.Merchandise_datas" ></dropdown-checkBox-multiselect> -->
+						
+						<!--  <div click-out="showLoc1=false" class="dropdown col-sm-12" style="padding-left: 0px;">
+						<div style="position: relative;" class="tooltip-pro width_padd">
+							<input id="common_heirarchy_check" type="text" class="form-control"
+								ng-model="location.storeName" ng-focus="showLoc1 = true"
+								ng-click="data.locationErrorMessage = false" 
+								placeholder="{{translation.replenishmentFilters[0].merchandiseGroup}}"
+								style="padding: 6px 18px 6px 10px;"
+								ng-change="searchSecondLocation(location.storeName);" /> 
+								<span
+								class="fa"
+								ng-class="{'fa-caret-up' : showLoc1, 'fa-caret-down' : ! showLoc1}"
+								style="position: absolute; right: 7px; top: 10px;"></span>
+						</div>
+						<div tree-view-merchandise="MerchandiseData" node-search="filterSearch()"
+							node-label="name" ng-show="showLoc1"
+							class="dropdown-menu treeViewDrop"
+							style="display: block; width: 300px; max-height: 300px;" ></div>
+							
+					</div> -->
+				</span>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="box" style="padding-top: 17px;padding-bottom: 10px;" ng-show="dropdownDashCall.productProperty">
+		<div  class="tooltip-pro inline_box" ng-repeat = "(key,value) in  dropdownDashCall.productProperty">
+				<div  class= "col-md-12" multiselect-common="" items="value.propertyValue" selected-items="value.selectedProperty" content="'productProperty'" naming="{{value.propertyName}}" dynamic="value.propertyName" style="margin-bottom: 10px;" tooltip-placement="top" uib-tooltip="{{getSelecteditem(value.selectedProperty)}}" >
+				</div>
+		</div>
+</div>
+<div class="box" style="padding-top: 17px;padding-bottom: 10px;" ng-show="dropdownDashCall.productAttribute">
+		<div  class="tooltip-pro inline_box" ng-repeat = "(key,value) in  dropdownDashCall.productAttribute">
+				<div  class= "col-md-12" multiselect-common="" items="value.variantValue" selected-items="value.selectedProperty"  content="'productAttribute'" naming="{{key}}" dynamic="key" style="margin-bottom: 10px;" tooltip-placement="top" uib-tooltip="{{getSelecteditem(value.selectedProperty)}}">
+				</div>
+		</div>
+</div>
+<div class="col-md-5 col-sm-5 search_btns porder_srch"
+	style="margin-top: 3%;">
+	<button id="common_RPL_cancel" type="reset" class="btn btn-primary rst_btn ng-binding"
+		ui-sref="ovc.ReplenishmentFilter">
+		{{translation.buttontypes[0].cancel}}</button>
+	<button id="common_RPL_next" type="submit" class="btn btn-primary ng-binding" id="addNewFilter" ng-click="productfilterNextBtn('protocol',filterName);"
+		style="margin-right: 10px;">
+		{{translation.buttontypes[0].next}}</button>
+	<!-- 	ng-click="asnSearch()"  -->
+
+</div>

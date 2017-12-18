@@ -1,0 +1,97 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.configurations.heading.configurations}}</h3>
+    </div>
+</div>
+<div class="row r_margin ">
+	<div class="ven_tblk clearfix">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-lg-12">
+						<div class="col-md-3 col-sm-12">
+							<label class="control-label">{{ovcLabel.configurations.label.store}}</label>
+								
+							<div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+								<div style="position:relative;">
+									<input type="text" id="common_heirarchy_check" class="form-control" ng-model="locationDisplayName" ng-focus="showLoc = true" placeholder="{{translation.select[0].store}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation();" />
+									
+									<span class="fa" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;"></span>
+								</div>
+								<div tree-view="storeLocData" stock-lookup = "true" node-search="filterSearch()" node-label="name" ng-show="showLoc" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"  mode="config"></div>
+							</div>
+						</div>
+
+						<div  class="col-md-12  allconfigs"  ng-repeat = "group  in configdata.feature_group ">
+							<fieldset>
+								<legend><label class="balwidth ng-binding">{{(ovcLabel.configurations.group[group]) ? ovcLabel.configurations.group[group]: group}}</label></legend>
+								<div  ng-repeat = "($index,detail)  in configdata.config_arr " ng-if = "detail.featureGroup == group">
+									<div class="col-lg-12  form-group clearfix">
+										<div class="col-md-6  col-sm-6  col-xs-12 configlabel">
+											<i class="fa fa-exclamation-circle"></i>&nbsp;
+											<label class="control-label">{{(ovcLabel.configurations[group][detail.featureId]) ? ovcLabel.configurations[group][detail.featureId]: detail.featureName}}</label>
+										</div>
+										<div class="col-md-1 col-sm-1 col-xs-6">
+											<i class="fa fa-exclamation-triangle exclamicon" ng-if="detail.featureValue"  title="Default Value is Changed"></i>
+										</div>
+										<div class="col-md-3 col-sm-3 col-xs-6 balradio">
+											<div class="balanceoh check_left">
+												<div class="balradio">
+													<label   ng-if="detail.featureType == 'boolean' ">
+
+														<input id="{{detail.featureId}}"  type="checkbox"   ng-true-value="'1'"  ng-false-value="'0'"  ng-init="detail.modifiedValue = (detail.featureValue) ? detail.featureValue : detail.defaultValue"  
+														ng-model="detail.modifiedValue"  ng-change="modifiedValueUpdate(detail)"/>
+														
+														<img />
+													</label>
+													<input id="{{detail.featureId}}" type="number"   class="form-control"   number-converter  ng-model="detail.modifiedValue"   ng-if="detail.featureType == 'numeric' "  ng-init="detail.modifiedValue = (detail.featureValue) ? detail.featureValue : detail.defaultValue" ng-change="modifiedValueUpdate(detail)" />
+													<input id="{{detail.featureId}}" type="text"   class="form-control"  ng-model="detail.modifiedValue"   ng-if="detail.featureType == 'text' "  ng-init="detail.modifiedValue = (detail.featureValue.length) ? detail.featureValue : detail.defaultValue" ng-change="modifiedValueUpdate(detail)" />
+
+													<select id="{{detail.featureId}}" ng-if="(detail.featureType == 'dropdown') && ((detail.featureId != 'qtyStatusAtPoReviewScreen') && (detail.featureId != 'publishCountAdjustment'))" class="example-getting-started" ng-model="detail.modifiedValue" ng-init="detail.modifiedValue = detail.featureValue;" multiple= "multiple" ng-change="modifiedValueUpdate(detail)">
+													    <option ng-repeat="(key,value) in configdata.dropData[detail.featureId]" ng-value="key"  ng-if="detail" >{{value}}</option>
+													    <!-- <option ng-repeat="(key,value) in configdata.dropData[detail.featureId]" ng-value="key"  ng-if="detail<=0" >{{value}}</option> -->
+													</select>
+
+													<select id="{{detail.featureId}}" ng-if="detail.featureType == 'dropDownPreSelect'" class="example-getting-started" ng-model="detail.modifiedValue" ng-init="detail.modifiedValue = detail.featureValue ? detail.featureValue : detail.defaultValue;" multiple= "multiple" ng-change="modifiedValueUpdate(detail)">
+													    <option ng-repeat="(key,value) in configdata.dropData[detail.featureId]" ng-value="key"  ng-if="detail" >{{value}}</option>
+													</select>
+
+													<select id="{{detail.featureId}}" ng-if="(detail.featureType == 'dropdown') && ((detail.featureId == 'qtyStatusAtPoReviewScreen') || (detail.featureId == 'publishCountAdjustment'))" class="example-getting-started" ng-model="detail.modifiedValue" ng-init="DataConstruct(detail)" multiple= "multiple" ng-change="modifiedValueUpdate(detail)">
+													    <option ng-repeat="qtyStatus in detail.defaultValue" ng-value="qtyStatus">{{translation[detail.featureId][qtyStatus] ? translation[detail.featureId][qtyStatus] : qtyStatus}}</option>
+													    <!-- <option ng-repeat="(key,value) in configdata.dropData[detail.featureId]" ng-value="key"  ng-if="detail<=0" >{{value}}</option> -->
+													</select>
+													
+													<select id="{{detail.featureId}}" ng-if="detail.featureType == 'OrganizationStructureDropDown'" ng-model="defaultValue"  ng-init="modifiedValue1 = (detail.featureValue) ? detail.featureValue : detail.defaultValue; initValue(modifiedValue1, '',$index);" ng-options="col.name as col.name for col in modifiedValue1" class="form-control orderstore" ng-change="initValue(modifiedValue1,defaultValue,$index); modifiedValueUpdate(detail)">
+													</select>
+													<select id="{{detail.featureId}}" ng-if="detail.featureType == 'singleselectdropdown'" ng-model="detail.modifiedValue"  ng-init="detail.modifiedValue = (detail.featureValue) ? detail.featureValue : detail.defaultValue" ng-options="key as value for (key,value) in configdata.dropData[detail.featureId]" class="form-control orderstore" ng-change="modifiedValueUpdate(detail)">
+													</select>
+												</div>
+											</div>				
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="col-md-12"><h3 id="ovcError" class="text-danger text-center ng-binding" ng-if="showError">No Configuration Found</h3></div>
+					</div>
+				<!-- {{configdata}} -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ven_tblk clearfix" ng-if="!showError">
+	<div class="row r_margin ng-scope">
+		<div class="save_bg">
+			<div class="save_can clearfix">
+				<div class="col-md-12">
+					<div class="pull-right">
+						<button id="ovcSave" ng-disabled = "rolePerm.permissionsData.configurations.modifyConfigurations == 0" class="btn btn-primary" ng-click="saveConfig();">{{ovcLabel.configurations.buttons.save}}</button>
+						<button name="commonCancel" class="btn btn-primary" ng-click="getconfig()">{{ovcLabel.configurations.buttons.cancel}}</button>
+						<button id="ovcResetBtn" class="btn btn-primary" ng-disabled = "rolePerm.permissionsData.configurations.modifyConfigurations == 0" ng-click="resetConfig();">{{ovcLabel.configurations.buttons.resetDefault}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

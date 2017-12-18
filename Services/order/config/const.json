@@ -1,0 +1,188 @@
+{
+    "status": {
+        "CONFIRMEDQTY": "confirmedQty",
+        "SHIPPEDQTY": "shippedQty",
+        "DRAFTQTY": "draft",
+        "DRAFT": "draft",
+        "DRAFTORDER": "draftOrder",
+        "RECEIVEDQTY": "receivedQty",
+        "RETURNQTY": "returned",
+        "RECEIVED": "received",
+        "MAN_RECEIPT_DRAFT": "receiveInProgress",
+        "CANCELLED": "cancelled",
+        "COMPLETED": "Completed",
+        "FORCECLOSED": "forceClosed"
+    },
+    "defaultDiscrepencyFilter":["discrepancy","noDiscrepancy"],
+    "COUNT_SNAPSHOT_LIMIT": 500,
+    "COUNT_REVIEW_PAGE_LIMIT": 100,
+    "countType": {
+        "zoneCount": "Z-Count",
+        "physicalCount": "Physical",
+        "cycleCount": "Cycle"
+    },
+    "maxRecountNumber":5,
+    "countStatus": {
+        "BEING_CREATED": "'Being Created'",
+        "OPEN": "open",
+        "RECOUNT": "recount",
+        "VALIDATED": "validate",
+        "INPROCESS": "inprocess",
+        "SUBMITTED": "submitted",
+        "APPROVED": "approve",
+        "MODIFIED": "modified",
+        "INPROGRESS": "inProgress",
+        "COUNT_ADJUSTMENT_STATUS": "Adjusted",
+        "CREATING_SNAPSHOT": "creatingSnapshot"
+    },
+    "countTranCode":{
+        "POSITIVECNTADJ": "POS", 
+        "NEGATIVECNTADJ" : "NEG"
+    },
+    "countConfigMap":{
+        "Z-Count": "Zone Count",
+        "Cycle": "Cycle Count",
+        "Physical": "Physical Count"
+    },
+    "tranStatus": {
+        "submitted": "submitted",
+        "draft": "draftOrder"
+    },
+    "vendor": "55f06828f0cd979f7b9eadf6",
+    "stockUOM": "Each",
+    "shippingMethod": "FDEN",
+    "apis": {
+        "GETLOCATION": "apis/ang_getlocations",
+        "GETPRODUCTS": "apis/ang_loc_micro_products/locid:",
+        "GETSTOCKJSON": "apis/ang_getstockjson?locid=",
+        "GETCONFIG": "/config?locationId=",
+        "GETPRODUCTCOST": "apis/ang_getproductprice",
+        "GETUSERHIERARCHYLOCATION": "apis/ang_hierarchy_locations?usid=",
+        "GETVENDOR": "/vendor",
+        "GETUOM": "/uom",
+        "GETSKUDETAIL": "apis/ang_loc_skuproducts?srch=",
+        "GETORDERBYPONUMBER": "/order?purchaseordernumber=",
+        "TRANSACTIONSERVICE": "/invtransactionservice",
+        "GETTRANSACTIONDATA": "/trantypeqtyData?tranTypeId=",
+        "INVENTORIESSERVICE": "/inventories?locationid=",
+        "GETPURCHASEDPRODUCTS": "apis/ang_product_service/locid:",
+        "GETPURCHASEDPRODUCTSNEW": "apis/ang_newproduct_service/locid:",
+        "GETLOCPRODUCTS": "apis/ang_getProductDatas/locationId:",
+        "GETALLPRODUCTS": "apis/ang_get_skudescription",
+        "GETSTYLEPRODUCT": "apis/ang_loc_allproducts?srch=",
+        "GETUSERLOCATION": "apis/ang_userlocations?usid=",
+        "SAVETRANSACTIONS": "/createqtystatus",
+        "GETPARENTLOC": "apis/ang_parent_location?locationId=",
+        "GETREPLENISHMENTRULESSKU": "/getReplenishmentRulesSku?srchData=",
+        "JMSPUBLISH": "/jmspublish/",
+        "GET_USER_CONFIG": "/configbyuser?featureId=",
+        "JMS_PUBLISH": "/jmspublish/",
+        "COUNTSNAPSHOT": "/countSnapshot/", 
+        "TRANSACTIONSCHEMAUPDATE":"/transcationschemaupdate",
+        "TRANSACTIONUPDATE":"/transaction/"
+    },
+    "pagination": {
+        "PAGE": "/page:"
+    },
+    "orderType": {
+        "RETURN": "RTN",
+        "RECEIPT": "RECEIPT",
+        "TRANSFER": "IBT_M",
+        "MANUAL_ORDER": "MAN",
+        "MANUAL_SHIP": "PUSH",
+        "REPLENISHMENT_ORDER": "RPL",
+        "QUALITY": "QLTY",
+        "OTHERS": "OTHER",
+        "RETURN_ARNGMT": "RA",
+        "DROPSHIP": "Drop-Ship",
+        "Z_FUT": "ZFUT"
+    },
+    "orderStatus": {
+        "SUBMITTED": "submitted",
+        "DRAFT": "draft",
+        "INPROGRESS": "inProgress",
+        "CONFIRMED": "confirmed",
+        "RECEIVED": "received",
+        "PART_SHIPPED": "partiallyShipped",
+        "RETURNED": "returned",
+        "SHIPPED": "shipped"
+    },
+    "boundType": {
+        "IBT_M": "IBT orders with bound values",
+        "PUSH": "PUSH orders with bound values"
+    },
+    "soldTran": "regularSale",
+    "replenishmentReorderType": "replenishmentReorderType",
+    "replenishmentRounding": "replenishmentRoundingQty",
+    "daysForNeedbydate": "daysForNeedbydate",
+    "replenishmentRoundingValues": {
+        "up": "up",
+        "down": "down"
+    },
+    "returnTran": "layawayReturn,regularReturn",
+    "receivedTran": "RECEIVED_IN,IBT_RECEIPT_IN,MAN_RECEIPT_IN,MANUAL_RECEIPT_PO,MANUAL_RECEIPT_IBT_IN,PUSH_RECEIPT_IN,MISCRECEIPT",
+    "label": {
+        "ERROR": "error",
+        "SUCCESS": "success",
+        "NO_SKUS": "no skus for this product",
+        "NO_POID": "PO Id missing",
+        "NO_DATA": "No Data",
+        "PACKAGE_UPDATE": "package updated",
+        "INPUT_MISSING": "no input data",
+        "NO_ORDER": "No Order found"
+    },
+    "DirectiveType": {
+        "CRON_PO_COMPLETE": "CRON_PO_COMPLETE",
+        "PO_COMPLETE_LESS_RECEIVED": "PO_NBD_UNDER_RCVD",
+        "PO_COMPLETE_MORE_RECEIVED": "PO_NBD_OVER_RCVD"
+    },
+    "scheduler": {
+        "CRON_PO_COMPLETE": "*/15 * * * * *",
+        "data": {
+            "clientId": "batchuser",
+            "clientName": "batchuser",
+            "clientSecret": "batchuser",
+            "firstName": "batchuser",
+            "lastName": "batchuser"
+        }
+    },
+    "checkNeedbydate": "checkNeedbydate",
+    "fulFillmentStatus": {
+        "IBT_M": {
+            "draft": "!submittedQty  && !confirmedQty && !shippedQty && !receivedQty",
+            "submitted": "submittedQty  && !confirmedQty && !shippedQty",
+            "confirmed": "((submittedQty  && confirmedQty) || rejectedQty) && !shippedQty",
+            "partiallyShipped": "(shippedQty < confirmedQty)",
+            "rejected": "(confirmedQty == 0) || (confirmedQty == '') && (rejectedQty == submittedQty)",
+            "shippedFull": "((shippedQty > 0) && (shippedQty == confirmedQty)) || ((shippedQty == confirmedQty) && (receivedQty < shippedQty))",
+            "receivedFull": "((confirmedQty == shippedQty == receivedQty) && (shippedQty > 0)) || ((confirmedQty == shippedQty) && (receivedQty >= shippedQty) && (shippedQty > 0)) || (!submittedQty  && !confirmedQty && !shippedQty && receivedQty) "
+        },
+        "PUSH": {
+            "draft": "!submittedQty  && !confirmedQty && !shippedQty",
+            "shipped": "shippedQty && !receivedQty",
+            "received": "receivedQty"
+        },
+        "receivedWithDescrepancies": {
+            "IBT_M": {
+                "shippedFull": "((shippedQty > 0) && (shippedQty == confirmedQty)) || ((shippedQty == confirmedQty) && (receivedQty < shippedQty))",
+                "receivedFull": "((confirmedQty == shippedQty == receivedQty) && (shippedQty > 0)) || ((confirmedQty == shippedQty) && (receivedQty >= shippedQty) && (shippedQty > 0)) || (!submittedQty  && !confirmedQty && !shippedQty && receivedQty) "
+            },
+            "PUSH": {
+                "shipped": "shippedQty && !receivedQty",
+                "received": "(receivedQty && shippedQty && (receivedQty != shippedQty))"
+            }
+        }
+    },
+    "discripencyQtyStatus": ["submitted", "shipped", "received", "shippedMore", "shippedLess", "lost"],
+    "CANCEL_ORDER_TYPES": ["MAN","RPL"],
+    "forceCloseStatus": {
+        "not_eligible": "((shippedQty && !receivedQty) || (receivedQty && receivedQty == con_uncon))",
+        "eligible": "(receivedQty && (receivedQty != con_uncon)) || (submittedQty && confirmedQty && !shippedQty && !receivedQty)"
+    },
+    "DIRECTIVETYPES" : {
+        "ZCOUNT": {
+            "POSITIVE": "POSITIVECNTADJ", 
+            "NEGATIVE" : "NEGATIVECNTADJ"
+        }
+    }
+}

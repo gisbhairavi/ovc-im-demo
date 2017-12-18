@@ -1,0 +1,6 @@
+{
+	"apis": 
+		{
+			"GETDASHLOGINPATH": "apis/ang_loginapi"
+		}
+}

@@ -1,0 +1,290 @@
+<div class= "col-md-12" style="padding: 0;" ng-transculde>
+	<!--Refine Button-->
+<!-- <div ng-if="loadmat == true">
+	<img src="images/loading.gif" />
+</div>
+<div> -->
+<span class="{{indexData}}style"></span>
+
+<div ng-if="!config.showskugroup">
+	<div ng-if="!config.showskugroup && action.showimage[indexData] && imageURl">
+		<img style="width: auto;margin: 0 auto;display: table;height: 220px;" ng-src="{{imageURl}}" alt="" />
+	</div>
+</div>
+<!-- <style-matrix></style-matrix> -->
+<!-- /.table-responsive -->
+<div style="padding: 0px 10px;">
+	<div class="pg_limit b_margin col-md-4" style="margin-bottom: 5px;" ng-if="((list != '')&&(list != undefined)&&(list.length > 0))">
+		<div class="dropdown pg_limit b_margin col-md-6">
+			<button class="btn btn-primary dropdown-toggle" type="button" id="stckaction_btn" data-toggle="dropdown" ng-click="closerefine(indexData)">{{ovcLabel.balanceInquiry.buttons.action}}</button>
+
+			<ul class="dropdown-menu" role="menu" aria-labelledby="stckaction_btn">
+			    <li id="redirect_{{Data}}" ng-repeat = "Data in actiondropdown"><a role="menuitem" ng-click = "actionopen(Data,list)">{{Data}}</a></li>
+			</ul>     	
+		</div>
+		<ul>
+			<li id="balance_pop-{{indexData}}" class="pull-right list_bx minipop_menu" style="list-style: none;" ><a class="btn btn-primary  admin_det  refinelookup" ng-click="refineopen(indexData)" id="cancel_btn-{{indexData}}">{{ovcLabel.balanceInquiry.buttons.refine}}</a>
+		
+				<ul  ng-click="refinechange(indexData) " class="dropdown-menu dropdown-messages hoveropup st_mar" style="max-height: 300px;overflow-y: auto;position: absolute;right: 30%;">
+					<li class="user-header bg-light-blue"  ng-class="{active: collapseVar==2}" ng-if="!refineBalanceFields">
+						<div class="stk_menu">
+							<div class="menu_blk1 pull-left">
+								<div class="balanceoh check_left">
+									<div class="balradio"><label>
+										<input id="slpbalance" type="checkbox"  value="slpbalance"  ng-click="selectAll(action.bal1checked,balancefields1,1)" ng-model="action.bal1checked" ng-init="action.bal1checked=true"/><img class="mar_r" /></label>
+										
+									</div>
+								</div>
+							</div>
+							<a id="stckbal_down" href="" ng-click="check(2)" class="chck_f"> {{ovcLabel.balanceInquiry.labels.balance_fields}}<span class="fa arrow"></span></a>
+						</div>
+						<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=2">
+							<li class="user-header bg-light-blue"  ng-repeat="balances1 in balancefields1">
+								<div class="menu_blk1" >
+									<div class="balanceoh check_left"><div class="balradio"><label>
+									<input id="{{balances1.id}}" type="checkbox" ng-model="balances1.selected" value="{{balances1.id}}"  ng-click="toggleSelection(balances1)" ng-init="balances1.selected=true"/><img class="mar_r"/>{{balances1.title}}</label></div></div>
+								</div>
+							</li> 
+						</ul>
+						<!-- /.nav-second-level -->
+					</li>
+					<li class="user-header bg-light-blue"  ng-class="{active: collapseVar==3}" ng-if="!refinecalcFields">
+						<div class="stk_menu">
+							<div class="menu_blk1 pull-left">
+								<div class="balanceoh check_left">
+									<div class="balradio">
+										<label><input id="slpcalc" type="checkbox"  value="slpcalc"  ng-click="selectAll(action.bal2checked,balancefields2,2)" ng-model="action.bal2checked" ng-init="action.bal2checked=true"/><img class="mar_r"/></label>
+									</div>
+								</div>
+							</div>
+							<a id="stckcal_down" href="" ng-click="check(3)" class="chck_f">{{ovcLabel.balanceInquiry.labels.calculated_fields}}<span class="fa arrow"></span></a>
+						</div>
+						
+						<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=3">
+							<li class="user-header bg-light-blue"  ng-repeat="balances2 in balancefields2">
+								<div class="menu_blk1" >
+								<div class="balanceoh check_left"><div class="balradio"><label>
+								<input id="{{balances2.id}}" type="checkbox" ng-model="balances2.selected" value="{{balances2.id}}"  ng-click="toggleSelection(balances2)" ng-init="balances2.selected=true"/><img class="mar_r"/>{{balances2.title}}</label></div></div>
+							</div>
+							</li> 
+						</ul>
+					</li> 
+					 
+				    <li class="user-header bg-light-blue" ng-class="{active: collapseVar==4}" ng-if="!refineDirBalFields">
+						<div class="stk_menu">
+						<div class="menu_blk1 pull-left">
+							<div class="balanceoh check_left">
+								<div class="balradio">
+									<label>
+										<input id="slpdocs" type="checkbox"  value="slpdocs"  ng-click="selectAll(action.bal3checked,balancefields3,3)" ng-model="action.bal3checked" ng-init="action.bal3checked=true"/><img class="mar_r"/>
+									</label>
+								</div>
+							</div>
+						</div>
+						<a id="stckdirec_down"href="" ng-click="check(4)" class="chck_f"> {{ovcLabel.balanceInquiry.labels.doc_balancefields}}<span class="fa arrow"></span></a>
+						</div>
+						
+						<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=4">
+							<li class="user-header bg-light-blue"  ng-repeat="balances3 in balancefields3">
+								<div class="menu_blk1" >
+									<div class="balanceoh check_left">
+										<div class="balradio">
+											<label>
+												<input id="{{balances3.id}}" type="checkbox" ng-model="balances3.selected" value="{{balances3.id}}"  ng-click="toggleSelection(balances3)" ng-init="balances3.selected=true"/><img class="mar_r"/>{{balances3.title}}
+											</label>
+										</div>
+									</div>
+								</div>
+							</li> 
+						</ul>
+			   		</li>
+				   	<li class="user-header bg-light-blue"  ng-class="{active: collapseVar==5}">
+						<div class="stk_menu">
+							<div class="menu_blk1 pull-left">
+								<div class="balanceoh check_left">
+									<div class="balradio"><label>
+										<input id="slpprice" type="checkbox"  value="slpprice"  ng-click="selectAll(action.bal4checked,balancefields4,4)" ng-model="action.bal4checked" ng-init="action.bal4checked=true"/><img class="mar_r" /></label>
+										
+									</div>
+								</div>
+							</div>
+							<a id="stckprice_down"href="" ng-click="check(5)" class="chck_f">{{ovcLabel.balanceInquiry.labels.pricing}}<span class="fa arrow"></span></a>
+						</div>
+
+						<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=5">
+							<li class="user-header bg-light-blue"  ng-repeat="balances4 in balancefields4">
+								<div class="menu_blk1" >
+									<div class="balanceoh check_left"><div class="balradio"><label>
+									<input id="{{balances4.id}}" type="checkbox" ng-model="balances4.selected" value="{{balances4.id}}"  ng-click="toggleSelection(balances4)" ng-init="balances4.selected=true"/><img class="mar_r"/>{{balances4.title}}</label></div></div>
+								</div>
+							</li> 
+						</ul>
+					</li>
+					<li ng-if="userRolePermissions.viewReorderPoint && ShowReplenishment" class="user-header bg-light-blue" ng-class="{active: collapseVar==6}">
+						<div class="stk_menu">
+							<div class="menu_blk1 pull-left">
+								<div class="balanceoh check_left">
+									<div class="balradio"><label>
+										<input id="slpreple" type="checkbox"  value="slpreple"  ng-click="selectAll(action.bal5checked,balancefields5,5)" ng-model="action.bal5checked" ng-init="action.bal5checked=true"/><img class="mar_r" /></label>
+									</div>
+								</div>
+							</div>
+							<a href="" ng-click="check(6)" class="chck_f">{{ovcLabel.balanceInquiry.labels.replenishment}}<span class="fa arrow"></span></a>
+						</div>
+						<ul class="nav nav-second-level cal_blkli"  uib-collapse="collapseVar!=6">
+							<li class="user-header bg-light-blue"  ng-repeat="balances5 in balancefields5">
+								<div class="menu_blk1" ng-class="{
+										'ng-hide':{{(balances5.id == 'maxorder')?((config.showmaxAmount)?true:false):false}}, 
+										'hidden':{{(balances5.id == 'reorder')?((userRolePermissions.viewReorderPoint)?false:true)  :false}}
+										}">
+										<div class="balanceoh check_left"><div class="balradio">
+											<label>
+												<input id="{{balances5.id}}" type="checkbox" ng-model="balances5.selected" value="{{balances5.id}}"  ng-click="toggleSelection(balances5)" ng-init="balances5.selected=true"/>
+												<img class="mar_r"/>{{balances5.title}}
+											</label>
+										</div>
+									</div>
+								</div>
+							</li> 
+						</ul>
+					</li>
+					<a id="refine_done_btn" class="btn btn-primary done_btn" ng-click="refineremove(indexData) ">{{ovcLabel.balanceInquiry.buttons.done}}</a>
+					<a id="refine_cancel_btn" class="btn btn-primary done_btn" ng-click="refinecancel(indexData)">{{ovcLabel.balanceInquiry.buttons.cancel}}</a>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+<br/><br/>
+	<!--Balance Table -->
+	<div class="ven_tbody stock_l printPad"  id="printableArea" style="width: 100%;">
+    <h4 class="hidePdflookup">{{ovcLabel.balanceInquiry.store_lab}} : {{locationDisplayName}}</h4>
+	<div class="" ng-if="((list != '')&&(list != undefined)&&(list.length > 0))">
+		<table id="table" class="table table-striped table-bordered stocklook_tb printPad table-fixed print-table-fixed" style="width: 100% !important;">
+			<tbody class="stk_height printTblHeight"> 
+				<tr ng-repeat="(productIndex,data) in list" class="height_scr" style="" >
+					<td colspan="4" class="height_scr printTblOutPad">
+						<table class="table table-striped table-bordered col-md-12" id="ExportTablesStocklookup">
+							<tr class="rowhighlight printTblHead">
+								<th></th>
+								<th ng-if="!balance5" ng-if="userRolePermissions.viewReorderPoint && ShowReplenishment">{{ovcLabel.balanceInquiry.labels.replenishment}}</th>
+								<th ng-if="!balance4">{{ovcLabel.balanceInquiry.labels.pricing}}</th>
+								<th ng-if="!balance1">{{ovcLabel.balanceInquiry.labels.balance_fields}}</th>
+								<th ng-if="!balance2">{{ovcLabel.balanceInquiry.labels.calculated_fields}}</th>
+								<th ng-if="!balance3" colspan = "2">{{ovcLabel.balanceInquiry.labels.doc_balancefields}}</th>
+							</tr>
+							<tr>
+								<td  style="border-top: medium none; width: 14.6667%;">
+									<div class="list_no_brk">
+										
+										<p><b>{{prData.description}} </b></p>
+										<p ng-show ="data.SKU && config.config_arr.enableInsights.featureValue"><span custom-popover class="label label-primary custom-popover"><b>{{ovcLabel.balanceInquiry.labels.SKU}}&nbsp;&nbsp;</b>:&nbsp;&nbsp;<span class="getSku">{{data.SKU}}</span></span>
+										</p>
+                                                <p ng-hide ="config.config_arr.enableInsights.featureValue" ><span class="label label-primary"><b>{{ovcLabel.balanceInquiry.labels.SKU}}&nbsp;&nbsp;</b>:&nbsp;&nbsp;<span class="getSku">{{data.SKU}}</span></span></p>
+										<p><b>{{ovcLabel.balanceInquiry.labels.barcode}}&nbsp;&nbsp;</b>:&nbsp;&nbsp;{{prData.barCode}}</p>
+										<p ng-repeat= "value in propertyArray track by $index">
+											<span><b>{{value}}</b></span> : <span>{{data[value] ? data[value] : ''}}</span>
+										</p>
+										<p ng-if="!config.showskugroup" class="hideExport" ><a ng-click="action.showimage[indexData]=!action.showimage[indexData]" class="btn">{{(action.showimage[indexData])?'Hide Image':'Show Image'}}</a></p>
+									</div>
+								</td>
+								<td ng-if="!balance5" ng-if="userRolePermissions.viewReorderPoint && ShowReplenishment" class="stock_pad  printPad printPad stock_pad1">
+									<table class="table table-striped table-bordered exportTable" id="table{{indexData}}">
+										<tr ng-repeat = "bdata in balancefields5" ng-if = "bdata.id == 'maxorder'?config.showmaxAmount?false:true:true" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+											
+											<td style="border-left: medium none; border-top: medium none;" class="td_wdth">{{bdata.title}}</td>
+											<td style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+												<center>{{data[bdata.Name]?data[bdata.Name]:'-';}}</center>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td  class="stock_pad printPad printPad stock_pad1" ng-if="!balance4">
+									<table class="table table-striped table-bordered exportTable1" id="table{{indexData}}">
+
+										<tr  ng-repeat = "bdata in balancefields4" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+											
+											<td  ng-if="bdata.type =='purchase' ? userRolePermissions.permissions.viewPurchasePrice : true"style="border-left: medium none; border-top: medium none;" class="td_wdth">{{bdata.title}}</td>
+											<td ng-if="bdata.type =='purchase' ? userRolePermissions.permissions.viewPurchasePrice : true" id="table_{{bdata.id}}" style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+
+												<center>{{data[bdata.Name]}}</center>
+												<div ng-if="SelectedInventory == bdata.label+productIndex && showhover==true && invavaillength > 0">
+													<invetory-details ></invetory-details>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td  class="stock_pad printPad stock_pad1" ng-if="!balance1">
+									<table class="table table-striped table-bordered exportTable2" id="table{{indexData}}">
+									
+										<tr  ng-repeat = "bdata in balancefields1" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+											<!-- <td style="border-left: medium none; border-top: medium none;" class="td_wdth">{{translation.stocklookup[0].OH}}</td> -->
+											<td class="trans-tooltip td_wdth "><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;">{{bdata.title}}</div></td>
+											<td id="table_{{bdata.id}}"  ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" ng-mouseleave="hoverOut()" id="{{bdata.id}}" style=" border-right: medium none; border-top: medium none;" class="td_wdthr stk-loc">
+												
+												<center ng-hide="showStockingLocationsWidget==true&&bdata.Name=='OH'">{{data[bdata.Name]}}</center>
+												<div ng-if="SelectedInventory == bdata.label+productIndex && showhover==true && invavaillength > 0">
+													<invetory-details tabid="{{bdata.Name}}"></invetory-details>
+												</div>
+												<div ng-click="addOnClick($event, bdata);" ng-if="showStockingLocationsWidget==true&&bdata.Name=='OH'" class="stockingLocationsWidget"><center><span stockinglocations-popover class="custom-popover"><a class="">{{data[bdata.Name]}}</a></span></center>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="stock_pad  printPad stock_pad2" ng-if="!balance2">
+									<table class="table table-striped table-bordered exportTable3" id="table{{indexData}}">
+									
+										<tr ng-repeat = "bdata in balancefields2" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+										<td class="trans-tooltip  td_wdth "><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;" >{{bdata.title}}</div></td>
+											<td  id="table_{{bdata.id}}"  ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" ng-mouseleave="hoverOut()" style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+												<center>{{data[bdata.Name]}}</center>
+												<div ng-if="SelectedInventory == bdata.label+productIndex && showhover==true && invavaillength > 0">
+													<invetory-details ></invetory-details>
+												</div>	
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="stock_pad  printPad stock_pad3" ng-if="!balance3">
+									<table  class="table table-striped table-bordered exportTable4" id="table{{indexData}}">
+										<tbody>
+											<tr ng-repeat = "bdata in balancefields31" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+												<td class="trans-tooltip  td_wdth "><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;" >{{bdata.title}}</div></td>
+												<td id="table_{{bdata.id}}" ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" ng-mouseleave="hoverOut()" style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+													<center>{{data[bdata.Name]}}</center>
+													<div ng-if="SelectedInventory == bdata.label+productIndex && showhover==true && invavaillength > 0">
+														<invetory-details ></invetory-details>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>	 
+								</td>
+								<td class="stock_pad  printPad stock_pad4" ng-if="!balance3">
+									<table  class="table table-striped table-bordered exportTable5" id="table{{indexData}}">
+									 	<tbody>
+											<tr ng-repeat = "bdata in balancefields32" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+												<td class="trans-tooltip  td_wdth "><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;">{{bdata.title}}</div></td>
+												
+												<td id="table_{{bdata.id}}" ng-mouseover="hoverIn(data.SKU,bdata.label,productIndex)" ng-mouseleave="hoverOut()" style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+													<center>{{data[bdata.Name]}}</center>
+													<div ng-if="SelectedInventory == bdata.label+productIndex && showhover==true && invavaillength > 0" class="scklokup_hover">
+														<invetory-details ></invetory-details>
+													</div>
+												</td>
+											</tr>
+									 	</tbody>
+									</table>
+								</td>
+						 	</tr>
+						</table>	
+					</td>
+				</tr>									
+			</tbody>
+		</table>
+		</div>						
+	</div>	
+</div>
+</div>

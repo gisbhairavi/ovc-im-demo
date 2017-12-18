@@ -1,0 +1,266 @@
+<div class="row">
+    <div class="col-lg-12">
+		<section  ng-controller="TabController as tab">
+			<div class="pro_menu clearfix">
+				<div class="col-md-12">
+					<ul class="nav nav-pills">
+						<li ng-class="{active:tab.isSet(1)}"><a href id="co_detail" ng-click="tab.setTab(1)">{{translation.counts[0].validate_zones}}</a></li>
+						<li ng-class="{active:tab.isSet(2)}"><a href  id="fr_detail" ng-click="tab.setTab(2)">{{translation.counts[0].approve_counts}}</a></li>
+					</ul>
+				</div>
+			</div>
+			<form role="form" name="form" >
+				<div ng-show="tab.isSet(1)">
+					<div class="ven_tblk clearfix">
+					  <div class="row r_margin ng-scope">
+						 <div class="col-md-12">
+							<div class="panel-default">
+					           <div class="panel-body search_box">
+								 <div class="row">
+									<div class="col-lg-12 purs_order">
+									  <div class="page-header counts_tit  clearfix ">
+										<h3 class=" ng-binding counts_val pull-left">Master Count #1782</h3>
+				                        <div class="pull-right add_ven">
+				                         <a class="btn btn-primary ng-binding" title="Add Product" ui-sref="ovc.product-add({vendorid:vendid})" href="#/ovc/vendorproducts/add/">				{{translation.buttontypes[0].edit}}</a>
+				                         </div>
+										</div>
+                                        <div class="col-md-4">
+										<p><label>{{translation.carrier[0].LOCN}}(35):</label>Boston Store</p>
+										<p><label>{{translation.counts[0].creator}}:</label>Jennia Willamson</p>
+										<p><label>{{translation.tranreqfields[0].DATE}}:</label>6/10/2015</p>
+										<p><label>{{translation.counts[0].zones_validated}}:</label>105</p>
+										<p><label>{{translation.vendors[0].status}}:</label>open</p>
+										<div class="pull-right add_ven print_label">
+				                         <a class="btn btn-primary" title="Add Product"  href="#">				{{translation.counts[0].print_labels}}</a>
+				                         </div>
+										</div>
+										
+									</div>
+								</div><!-- /.row (nested) -->
+							</div><!-- /.panel-body -->
+							
+				<form role="forms"  >
+						<a  class="btn btn-primary"   id="newzones" ng-hide="true"  href=""   ng-click="addRow()">add</a>
+			<div class="ven_tbody ">
+				<div class="ven_tbody">
+					<div class="row">
+						<div class="col-md-12 table-responsive" >
+							<table class="table table-striped table-bordered"  >
+								<thead>
+									<th>{{translation.counts[0].zone}}#</th>
+									<!--<th>{{translation.counts[0].res_can}}</th>-->
+									<th>{{translation.counts[0].operator}}</th>
+									<th>{{translation.counts[0].hand_count}}</th>
+									<!--<th>{{translation.counts[0].good_scans}}</th>
+									<th>{{translation.counts[0].bad_scans}}</th>-->
+									<th>{{translation.counts[0].total_skus}}</th>
+									<th>{{translation.counts[0].total_scans}}</th>
+									<th>{{translation.counts[0].c_status}}</th>
+									<th><div class="balanceoh"><div class="balradio"><label>{{translation.select[0].select_all}}<input  type="checkbox" ng-model="selectedAll" ng-click="checkAll()"  />
+									<img /></label></div>
+											</div></th>
+									<!-- <th>Delete</th> -->
+								</thead>
+								<tbody>
+									<tr ng-repeat="(productIndex,data) in list">
+									<td class="name_li"><input type="text" ng-model="data.zones" class="form-control ng-hide" value="{{data.zones}}" /><a ui-sref="ovc.Counts-detailview">{{data.zones}}</a></td>
+									<!--<td><input type="text" data-ng-model="entry.name" data-ng-required />{{data.rescan}}</td>-->
+									<td><input type="text" data-ng-show="editMode" data-ng-model="data.operatorId" data-ng-required />{{data.operatorId}} </td>	
+									<td style="width: 20%;"><input type="text" data-ng-model="data.handCountQty" data-ng-required /></td>
+									<!--<td><input type="text" data-ng-model="entry.name" data-ng-required />{{data.goodscans}}</td>
+									<td><input type="text" data-ng-model="entry.name" data-ng-required />{{data.badscans}}</td>-->
+									<td>{{data.skuQty}}</td>
+									<td><input type="text" data-ng-model="data.scanQty" data-ng-required /></td>
+									<td>{{data.status}}</td>
+									<td> <!-- <div class="balanceoh"><div class="balradio"><label><input  type="checkbox" id="{{employee.name}}" type="checkbox" value="{{employee.name}}" ng-checked="selection.indexOf(employee.name) > -1" ng-click="toggleSelection(employee.name)" />
+									<img /></label></div>
+											</div> -->
+									<div class="balanceoh"><div class="balradio"><label><input type="checkbox" value="{{data.zones}}" ng-model="data.Selected" ng-checked="selection.indexOf(data.zones) > -1" ng-click="toggleSelection(data.zones)" />
+									<img /></label></div>
+											</div></td>
+									<!-- <td> <button type="button" value="" class="btn btn-primary" ng-click="removeRow(zoneIndex)"><i class="fa fa-trash"></i></button></td> -->
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.panel -->
+				
+			</form>	
+		</div>
+	</div>
+ </div>
+ </div>   <!-- /.col-lg-12 -->
+	<div ng-show="tab.isSet(2)">
+		<div class="row r_margin ng-scope">
+			<div class="ven_tblk clearfix">
+				<div class="col-md-12">
+					<div class="panel-default">
+						<div class="panel-body search_box">
+							<div class="row">
+								<div class="col-lg-12 purs_order">
+									  <div class="page-header counts_tit  clearfix ">
+										<h3 class=" ng-binding counts_val pull-left">Master Count #1782</h3>
+
+										</div>
+                                        <div class="col-md-4">
+										<p><label>{{translation.carrier[0].LOCN}}(35):</label>Boston Store</p>
+										<p><label>{{translation.counts[0].creator}}:</label>Jennia Willamson</p>
+										<p><label>{{translation.tranreqfields[0].DATE}}:</label>6/10/2015</p>
+										<p><label>{{translation.counts[0].zones_validated}}:</label>105</p>
+										<p><label>{{translation.vendors[0].status}}:</label>open</p>
+										</div>
+										
+									</div>
+							</div>
+						</div>
+						<div class="col-md-3 count_sear"><span>{{translation.buttontypes[0].search}}:</span><input  class="form-control" type="text" placeholder="Search" name="search" ng-model="search" ></div>
+						<div class="ven_tbody ">
+							<div class="row">
+								<div class="col-md-12 table-responsive" >
+									<table class="table table-striped table-bordered"  >
+										<thead>
+											<th>{{translation.shipments[0].product_id}}</th>
+											<th> {{translation.locations[0].description}}</th>
+											<th>{{translation.purchaseorders[0].p_style}}</th>
+											<th>{{translation.purchaseorders[0].p_size}}</th>
+											<th>{{translation.purchaseorders[0].p_color}}</th>
+											<th>{{translation.counts[0].physical_location}}</th>
+											<th>{{translation.counts[0].count_qty}}</th>
+											<th>{{translation.counts[0].total_count}}</th>
+											<th>{{translation.counts[0].last_modified}}</th>
+											<th>{{translation.vendors[0].status}}</th>
+											<th>{{translation.counts[0].oh}}</th>
+											<th>{{translation.counts[0].var}}</th>
+											<th><div class="balanceoh"><div class="balradio"><label>{{translation.select[0].select_all}}<input  type="checkbox" />
+											<img /></label></div>
+											</div></th>
+										</thead>
+									    <tbody>	
+											<tr>
+											<td>12345</td>
+											<td>summer jeans</td>
+											<td>Button Up</td>	
+											<td>m</td>
+											<td>plain</td>
+											<td>DW1</td>
+											<td>10</td>
+											<td>15</td>
+											<td>294</td>
+											<td>validated</td>
+											<td>300</td>
+											<td>0</td>
+											<td> <div class="balanceoh"><div class="balradio"><label><input  type="checkbox" />
+											<img /></label></div>
+											</div></td>
+											</tr>
+											<tr>
+											<td>12345</td>
+											<td>summer jeans</td>
+											<td>Button Up</td>	
+											<td>m</td>
+											<td>plain</td>
+											<td>DW1</td>
+											<td>10</td>
+											<td>15</td>
+											<td>294</td>
+											<td>validated</td>
+											<td>300</td>
+											<td>0</td>
+											<td> <div class="balanceoh"><div class="balradio"><label><input  type="checkbox" />
+											<img /></label></div>
+											</div></td>
+											</tr>
+											<tr>
+											<td>12345</td>
+											<td>summer jeans</td>
+											<td>Button Up</td>	
+											<td>m</td>
+											<td>plain</td>
+											<td>DW1</td>
+											<td>10</td>
+											<td>15</td>
+											<td>294</td>
+											<td>validated</td>
+											<td>300</td>
+											<td>0</td>
+											<td> <div class="balanceoh"><div class="balradio"><label><input  type="checkbox" />
+											<img /></label></div>
+											</div></td>
+											</tr>
+											<tr>
+											<td>12345</td>
+											<td>summer jeans</td>
+											<td>Button Up</td>	
+											<td>m</td>
+											<td>plain</td>
+											<td>DW1</td>
+											<td>10</td>
+											<td>15</td>
+											<td>294</td>
+											<td>validated</td>
+											<td>300</td>
+											<td>0</td>
+											<td> <div class="balanceoh"><div class="balradio"><label><input  type="checkbox" />
+											<img /></label></div>
+											</div></td>
+											</tr>
+											<tr>
+											<td>12345</td>
+											<td>summer jeans</td>
+											<td>Button Up</td>	
+											<td>m</td>
+											<td>plain</td>
+											<td>DW1</td>
+											<td>10</td>
+											<td>15</td>
+											<td>294</td>
+											<td>validated</td>
+											<td>300</td>
+											<td>0</td>
+											<td> <div class="balanceoh"><div class="balradio"><label><input  type="checkbox" />
+											<img /></label></div>
+											</div></td>
+											</tr>
+															
+															</tbody>
+														</table>
+													</div>
+											</div>
+										</div>
+									<!-- /.panel -->
+										</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="ven_tblk clearfix">
+				<div class="row r_margin ng-scope">
+				<div class="save_bg">
+				<div class="save_can clearfix">
+				
+				 <div class="col-md-12">
+					<div class="pull-right">
+						
+						<a href="" > <button type="submit" ng-click=" " class="btn btn-primary">{{translation.buttontypes[0].save}}</button></a>
+						
+						<a  href="" class="btn btn-primary"  ng-click=" count_validate()">{{translation.buttontypes[0].cancel}}</a>
+					</div>
+
+				</div>
+				</div>
+				</div>
+				</div>
+				</div>
+				
+				
+		</form> 
+			
+		</section>	
+		</div>
+		</div>
+   
