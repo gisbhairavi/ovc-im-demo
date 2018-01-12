@@ -1,0 +1,94 @@
+@page { 
+        size: landscape;
+        margin-top: 0mm;
+    }
+
+    body {
+	  -webkit-print-color-adjust: exact;
+	}
+
+/*@media print {*/
+
+	h2{
+		text-align: center;
+	}
+
+	img{
+		margin-right:  20px;
+	}
+
+	tr > td >.stock_l .stocklook_tb .stock_pad {
+	    padding: 0;
+	    border-bottom: medium none!important;
+	}
+
+	.rowhighlight {
+		background-color:#dddddd;
+		text-align: center;
+	}
+
+	.printPad {
+	    padding: 0 !important;
+		border-bottom: medium none!important;
+	}
+
+	tr.printTblHead th {
+	    background-color: #dddddd !important;
+	    text-align: center;
+	}
+
+	.printPad table {
+	    border: none!important;
+	    box-shadow: none;
+	    margin: 0;
+	}
+
+	.printTblHeight {
+	    display: block;
+	    max-height: 280px;
+	    width: 100%;
+	    margin: 0;
+	}
+	.printTblOutPad {
+	    display: block;
+	    float: left;
+	    width: 100%;
+	    padding: 0!important;
+	}
+	.hideExport{
+		display: none !important;
+	}
+	.printPad {
+    border-bottom: medium none !important;
+    padding: 0 !important;
+	}
+	.ven_tbody table {
+	}
+	.table-bordered {
+		 border: medium none !important;
+	}
+	.table {
+	    margin-bottom: 20px;
+	    max-width: 100%;
+	    width: 100%;
+	}
+	table {
+	    background-color: transparent;
+	}
+	table {
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	     border: medium none !important;
+	}
+	.stk_height {
+	    display: block;
+	    margin: 0;
+	    max-height: 280px;
+	    width: 100%;
+	}
+	#printableArea{border: medium none !important;}
+	tbody.printTblHeight{border: medium none !important;}
+	.hidePdflookup{
+		display: block;
+	}
+/*}*/

@@ -1,0 +1,129 @@
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+        <h3 class="page-header" ng-show="vendoradd">{{ovcLabel.vendors.addnewvendorproduct}}</h3>
+        <h3 class="page-header" ng-hide="vendoradd">{{ovcLabel.vendors.editvendor}}: {{vendorname}}</h3>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+<div class="pro_menu clearfix">
+   <div class="col-lg-12">
+		<section  ng-controller="TabController as tab">
+			<ul  ng-if="vendoradd == 'false'" class="nav nav-pills" >
+				<li><a ui-sref="ovc.vendor-edit({vendorid:vendid})" ng-click="add_company()">
+				<!--<span class="build_i">
+					<i class="fa fa-building-o"></i>
+					<i class="fa fa-building-o"></i>
+					</span>-->{{ovcLabel.vendors.companydetails}}</a></li>
+				<li><a ui-sref="ovc.vendor-edit({vendorid:vendid})" ng-click="add_account()"><!--<span class="build_i dollar_i">
+					<i class="fa fa-usd"></i>
+					</span>-->{{ovcLabel.vendors.accountdetails}}</a></li>
+				<li class="active"><a ui-sref="ovc.vendor-edit({vendorid:vendid})" ng-click="add_venproduct()"><!--<span class="build_i">
+				<i class="fa fa-shopping-cart"></i>-->
+				</span>{{ovcLabel.vendors.products}}</a></li>
+			</ul>
+			<ul ng-if="vendoradd == 'true'" class="nav nav-pills" >
+				<li><a ui-sref="ovc.vendor-add" ng-click="add_company()">{{ovcLabel.vendors.companydetails}}</a></li>
+				<li><a ui-sref="ovc.vendor-add" ng-click="add_account()">{{ovcLabel.vendors.accountdetails}}</a></li>
+				<li class="active"><a ui-sref="ovc.vendor-add" ng-click="add_venproduct()">{{ovcLabel.vendors.products}}</a></li>
+			</ul>
+		</div>
+		</div>
+		</div>
+		<div class="row r_margin ng-scope">
+<div class="ven_tblk clearfix">
+			<!--- Product Search---->
+			<div class="col-lg-12" >
+				<form role="form" name="form" >
+						<div class="panel-default">
+							<div class="panel-body search_box">
+								<div class="row">
+									<input type="hidden" name="vendid" ng-model="vendid" >
+									<div class="col-md-12">
+										<label class="col-md-3" style="padding:0;"> {{ovcLabel.vendors.searchproducts}}:</label>
+										<div class="col-md-6" style="padding:0;">
+										<input type="text" id="addpro_srch" ng-model="search" name="search" placeholder="{{translation.vendors[0].product_search}}" class="form-control" ng-keyup="loadItems(search)" />
+										</div>
+										<div ng-if="loadval == 1">
+											<img src="images/loading.gif" />
+										</div>
+										<div  class="col-md-1">
+										<button id="addnew_reset" type="reset" class="btn btn-primary" ng-click="venproduct_reset()">{{ovcLabel.vendors.buttons.reset}}</button>
+										</div>
+										<div ng-show="showselect" class="pull-right col-md-2" style="padding:0;">
+											<div class="balanceoh" ><div class="balradio"><label><input  ng-model="areAllSelected" id='checkall' type="checkbox"  ng-change="selectAll()"/><img class="mar_r"/><label id="selectall" for='checkall'>{{ovcLabel.vendors.selectBox.select_all}}</label></label></div></div> 
+											
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="ven_tbody">
+								<div class="row">
+								<div class="col-md-12">
+									<table class="table table-striped table-bordered">
+										<thead>
+											<th>{{ovcLabel.vendors.sku}}</th>
+											<th>{{ovcLabel.vendors.productname}}&nbsp;</th>
+											<th>{{ovcLabel.vendors.barcode}}&nbsp;</th>
+											<th>{{ovcLabel.vendors.buttons.add}}</th> 
+											<!-- <th>{{title}}
+											</th> -->
+										</thead>
+										<tbody ng-show="filteredItemss > 0">
+											<tr ng-if="selall == 'false' " ng-repeat="Pdata in PRlist">
+												<td>{{Pdata.sku}}</td>
+												<td>{{Pdata.name}}</td>
+												<td>{{Pdata.barCode}}</td>
+												<td>
+													<div class="balanceoh"><div class="balradio"><label><input id="{{Pdata.sku}}" type="checkbox" value="{{Pdata.sku}}" ng-checked="{{Pdata.selected}}" ng-click="toggleSelection(Pdata.sku)" data-ng-disabled="{{Pdata.selected}}"/><img /></label></div>
+												</div></td>
+											</tr>
+											<tr ng-if="selall == 'true' " ng-repeat="Pdata in PRlist">
+												<td>{{Pdata.sku}}</td>
+												<td>{{Pdata.name}}</td>
+												<td>{{Pdata.barCode}}</td>
+												<td>
+												<div class="balanceoh check_left"><div class="balradio"><label>
+
+												<input ng-hide="{{Pdata.changed}}" id="{{Pdata.sku}}" type="checkbox" value="{{Pdata.sku}}" ng-checked="{{Pdata.selected}}" ng-click="toggleSelection(Pdata.sku)" data-ng-disabled="{{Pdata.selected}}" class="img_disable"/>
+
+												<input ng-show="{{Pdata.changed}}" id="{{Pdata.sku}}" type="checkbox" value="{{Pdata.sku}}" ng-checked="{{Pdata.selected}}" ng-click="toggleSelection(Pdata.sku)"/>
+												<img /></label>
+
+												</div></div> </td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								</div>
+								
+								<div class="col-md-12" ng-show="filteredItemss == 0">
+									<div class="col-md-12">
+										<h4>{{ovcLabel.vendors.errorMessage.noproductsfound}}</h4>
+									</div>
+								</div>
+								
+								<!-- /.row (nested) -->
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					<!-- /.panel -->
+					<div class="save_can clearfix">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button type="submit" class="btn btn-primary" ng-click="product_add(vendid)" data-ng-disabled="form.$invalid">{{ovcLabel.vendors.buttons.save}}</button>
+							<!--<a ui-sref="ovc.vendor-edit({vendorid:vendid})" ><button ng-if="title == '' || title == 'Add'" type="submit" class="btn btn-primary" ng-click="product_add(vendid)" data-ng-disabled="form.$invalid">{{translation.buttontypes[0].save}}</button></a>-->
+							<a ui-sref="ovc.vendor-edit({vendorid:vendid})" ng-click="add_venproduct()"><button  class="btn btn-primary">{{ovcLabel.vendors.buttons.cancel}}</button></a>
+						</div>
+						</div>
+					</div>
+				</form>
+			
+			</div>	
+		
+		</section>	
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<br clear="all" />

@@ -1,0 +1,11 @@
+{
+    "label": {
+        "ERROR": "error",
+        "SUCCESS": "success",
+        "NO_SKUS": "no skus for this product",
+        "NO_POID": "PO Id missing",
+        "NO_DATA": "No Data",
+        "PACKAGE_UPDATE": "package updated",
+        "INPUT_MISSING": "no input data"
+    }
+}

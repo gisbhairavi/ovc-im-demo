@@ -1,0 +1,89 @@
+<div class="styleContainer" >
+	<div ng-if="matrix.hidestyletable && !matrix.showimage" >
+		<div class="col-md-12 styleMatrixWrapper">
+				
+			<div class="col-md-12 zero_padd">	
+			   <ul class="nav nav-pills ulanalytics">
+			     <li ng-class="{in_process: matrix.cellValue == 'sold'}">
+			     	<a ng-click="matrix.cellValue='sold';gettopquantities('sold');">{{translation.analytics.sold}}</a>
+			     </li>
+			     <li ng-class="{in_process: matrix.cellValue == 'received',pills_list_border:true}">
+			     	<a ng-click="matrix.cellValue='received';gettopquantities('received');">{{translation.analytics.received}}</a>
+			     </li>
+			     <li ng-class="{in_process: matrix.cellValue == 'returned'}">
+			     	<a ng-click="matrix.cellValue='returned';gettopquantities('returned');">{{translation.analytics.returned}}</a>
+			     </li>
+			   </ul>
+			   <br>
+			</div>
+
+			<div class="table-responsive inner_table col-md-12 zero_padd" style="overflow: auto;">
+				<table class="table table-bordered text-center">
+
+					<thead>
+						<tr style = "background: #ddd;">
+							<th colspan="{{matrix.x_axis_length}}" class="text-center header_txt">
+								{{matrix.x_axis_name}}
+							</th>
+						</tr>
+						<tr style = "background: #f7f7f7;">
+							<td colspan="2" ng-if="matrix.y_axis_length > 0"> </td>
+							<td data-ng-repeat="x in matrix.x_axis_values">
+								<span ng-hide="{{matrix.x_is_color}}"><strong>{{x}}</strong></span>
+								<span ng-show="{{matrix.x_is_color}}" style="background:{{x}};background-color:red;width: 1em; height: 1em; display: inline-block; border-radius: 5px;"> </span>
+							</td>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-if="matrix.y_axis_length == 0">
+							<td data-ng-repeat="x in matrix.x_axis_values track by $index" ng-class="{ 'bg-info' : matrix.tmp[0][x][0].indexed_tmp === matrix.selected_values, 'greycell' : matrix.res.sku == '', 'locHover': true }" ng-mouseover="hoverIn(value.sku)" ng-mouseleave="hoverOut()" class="padding0 inner_tb" 
+							style="height: 25px;">
+								<sku-cell grid-value="matrix.tmp[0][x][0]" grid-y="0" grid-x="x" grid-mode="matrix.res.mode" grid-index="0" preview-items="previewItems(0, x)" grid-sku="value.sku" hover-edit="hoverEdit"  changed-skus="changedSkus" grid-balance="matrix.cellValue"></sku-cell>
+								<div ng-show=" (matrix.SelectedInventory == value.sku && value.sku != '') && matrix.showhover==true " ng-if="matrix.invavaillength > 0">
+									<inventory-data></inventory-data>
+								</div>
+							</td>
+						</tr>
+
+						<tr data-ng-repeat="(key, y) in matrix.y_axis_values" ng-if="matrix.y_axis_length > 0" style="height: 2.2em;">
+							<td ng-if="key == 0" rowspan="{{matrix.y_axis_length}}" class="verticalText1" style = "background:#ddd;">
+								<div class="rotated-text"><span class="rotated-text-inner">{{matrix.y_axis_name}}</span></div>
+							</td>
+							<td style = "background:#f7f7f7;">
+								<span ng-hide="{{matrix.y_is_color}}"><strong>{{y}}</strong></span>
+								<span ng-show="{{matrix.y_is_color}}" style="background:{{y}};background-color:red;width: 1em; height: 1em; display: inline-block; border-radius: 5px;"> </span>
+							</td>
+							<td data-ng-repeat="(x, value) in matrix.final_ar[y] track by $index" ng-class="{'bg-info' : value.index_values === matrix.selected_values, 'greycell' : value.sku == '','locHover': true}" ng-mouseover="hoverIn(value.sku)" ng-mouseleave="hoverOut()" class="padding0 inner_tb"> 
+								<sku-cell ng-if="value.sku" grid-value="value" grid-y="y" grid-x="value.x_axis" grid-mode="matrix.res.mode" grid-index="$index" preview-items="previewItems(y, value.x_axis)"   grid-sku="value.sku" hover-edit="hoverEdit" changed-skus="changedSkus" grid-balance="matrix.cellValue">
+								</sku-cell>
+								<div ng-show="(matrix.SelectedInventory == value.sku && value.sku != '') && matrix.showhover==true " ng-if="matrix.invavaillength > 0">
+									<inventory-data></inventory-data>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="inventoryData.html" >
+      <div class="animate-show callout" style = "padding: 10px;width: auto; position: absolute;
+	   right:-80px;">
+        <b class="notch"></b>
+        <div class="inside_t" style = "height: auto;max-height: 150px;overflow-y: auto">
+          <table class="table table-striped table-bordered">
+            <tr ng-repeat="(key,value) in matrix.inventoryData1">
+              <td style = "padding:5px;">{{action.alllocations[key]}} </td>
+              <td style = "padding:5px 10px;">{{ value || 0 }}</td>
+            </tr>    
+          </table>
+        </div>
+      </div>
+</script>
+
+<!-- topfive highlight classes (if needed add these)-->
+<!-- 'bg-success':matrix.topquantities.indexOf(matrix.tmp[0][x][0][matrix.cellValue])!=-1 && matrix.cellValue =='sold','bg-danger':matrix.topquantities.indexOf(matrix.tmp[0][x][0][matrix.cellValue])!=-1 && matrix.cellValue =='returned','bg-primary':matrix.topquantities.indexOf(matrix.tmp[0][x][0][matrix.cellValue])!=-1 && matrix.cellValue =='received' -->

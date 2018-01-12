@@ -1,0 +1,30 @@
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+        <h3 class="page-header clearfix" ng-show="{{titleadd}}">{{ovcLabel.returnReceipt.labels.addnewreturn}} </h3>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<section>
+	<div ng-controller = "returnReceiptCtrl">
+			<div class="pro_menu  clearfix">
+				<ul class="nav nav-pills">
+					<li ng-class="{active:action.page == 1}"><a name="return_details"href id="ret_detail" ng-click="action.page = 1;">{{ovcLabel.returnReceipt.labels.returnDetail}}</a></li>
+					<li ng-class="{active:action.page == 2}"><a name="return_summarypage" href id="ret_check" ng-click="action.page = 2;">{{ovcLabel.returnReceipt.labels.returnsummary}}</a></li>
+				</ul>
+			</div>
+		<div>
+			<div class="ven_tblk clearfix">
+				<div class="row r_margin ng-scope">
+					<div class="col-md-12 stk_sear">
+						<div class="panel-default">
+							<div class="panel-body search_box">
+								<package-info></package-info>
+							 </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</section>

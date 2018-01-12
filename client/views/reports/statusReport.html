@@ -1,0 +1,147 @@
+<!--Style for This Page-->
+<style>
+	.table-bordered>thead>tr>th, .table-bordered>tbody>tr>td {
+	    border: 1px solid #ddd !important;
+	    text-align: center;
+	}
+	.link{
+		color: blue;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+</style>
+
+<!--Page Header-->
+<div class="row header_blk">
+	<div class="col-lg-12">
+		<h3 class="page-header" >{{ovcLabel.statusReport.heading}}
+			<div class="pull-right add_ven clearfix" ng-if="report.dataSet.statusReport.length">
+				<span>
+					<ovcdata-export pdf-id="balanceExport" type="BalanceReport" style = "margin-top:-5px;" heading="{{ovcLabel.statusReport.heading}}"></ovcdata-export>
+				</span>
+			</div>	
+		</h3>
+	</div>
+</div>
+
+<!--Page Whole Div-->
+<div class="ven_tblk clearfix">
+	<div class="col-lg-12">
+		<div class="clearfix">
+			<form  angular-validator-submit="report.action.searchStatusReport()">
+			<!--Panel search Widget-->
+				<div class="panel-body search_box">
+					<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
+						<div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+							<div style="position: relative;" class="tooltip-pro">
+							<input type="text" id="common_heirarchy_check" class="form-control"
+								ng-model="location.displayName" ng-focus="showLoc = true"
+								placeholder="{{ovcLabel.poOrder.list.location}}"
+								style="padding: 6px 18px 6px 10px;"
+								ng-change="report.action.searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+								class="fa"
+								ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+								style="position: absolute; right: 7px; top: 10px;"></span>
+							</div>
+							<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+								node-label="name" ng-show="showLoc"
+								class="dropdown-menu treeViewDrop"
+								style="display: block; width: 300px;" mode="listlocation">
+							</div>
+						</div>
+					</div>
+					<span class="col-sm-12 col-xs-12 col-md-3 col-lg-3 tooltip-pro noPadding" ng-init="Status = 'balanceReport'">
+						<div  class= "col-md-12" multiselect-common="" items="report.dataSet.balanceType" selected-items="report.form.selectedStatusBalance" content="'productProperty'" naming="{{ovcLabel.statusReport.placholder.balanceType}}" dynamic="Status" tooltip-placement="top" uib-tooltip="{{report.action.getSelecteditem(report.form.selectedStatusBalance)}}"></div>
+					</span>
+					<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2" >
+						<input type="number" ng-model ="report.form.fromQuantity" placeholder="{{ovcLabel.statusReport.fromQuantity}}" class="form-control" name="fromQuantity" ng-change="rangeValidation()" >
+					</div>
+					<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2" >
+						<input type="number" ng-model ="report.form.toQuantity" placeholder="{{ovcLabel.statusReport.toQuantity}}" class="form-control" name="toQuantity" ng-change="rangeValidation()" >
+						<span  ng-show  =  "isInvalidRange.qty" class  =  "alert alert-danger">{{ovcLabel.advanceSearch.invalidQtyRange}}					
+						</span>
+					</div>	
+					<div class="col-sm-6 col-xs-12 col-md-2 col-lg-2 noPadding">
+						<button id="ovcSearchBtn" type="submit" class="btn btn-primary" ng-click="report.action.searchStatusReport(report.form);" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.statusReport.buttons.search}}</button>
+						<button id="ovcResetBtn" type="submit" class="btn btn-primary" ng-click="report.action.resetStatusReport()"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.statusReport.buttons.reset}}</button>
+					</div>
+
+					<br clear="all"/><br clear="all"/>
+					
+					<div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+						<ovcautocomplete  class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="looksearch"  id="slpsearch" ng-model="report.form.product" attr-placeholder="{{ovcLabel.statusReport.searchField}}" click-activation="false" data="report.dataSet.autoCompleted" on-type="report.action.typedData" ng-model-options ="{ updateOn: 'default', debounce: {'default': 300} }" ng-click="report.action.onclick()" ></ovcautocomplete>
+					</div>
+					<!-- <div class="col-md-2">
+						<a class='btn' ng-click="basiclookup = !basiclookup">{{basiclookup? ovcLabel.statusReport.buttons.basic:ovcLabel.statusReport.buttons.advanced}}</a>
+					</div> -->
+					<br clear="all"/><br clear="all"/>
+					<!-- <div class="row stk_sear" ng-show="basiclookup" id="advanced">
+				   		<div ng-repeat = "(key,value) in  report.dataSet.propertyvalue.productProperty" class="inline_box">
+							<div  class= "col-md-12" multiselect-common="" items="" selected-items="" naming="{{value.propertyName}}" dynamic="'name'+value.propertyName" prodata="value" style="margin-bottom: 10px;" reset="value.reset">
+							</div>
+						</div>
+					</div> -->
+				</div>
+				<!--Panel search Widget-->
+			</form>
+		</div>
+		<!--under panel widget-->
+		
+	    <div class="panel-body search_box" style="border:none;" ng-if="report.dataSet.showstatus">
+			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+				<div class="table-responsive" >
+				<!-- <p>Total number of SKUs  : 3</p> -->
+				<!-- <p>{{ovcLabel.statusReport.totalSKUs}}   : {{report.dataSet.styleSkuData.style}}</p>
+				<p>{{ovcLabel.statusReport.totalStyles}}: {{report.dataSet.styleSkuData.sku}}</p> -->
+					<table class="table table-striped table-bordered" id="balanceExport">
+						<thead>
+							<tr style="background-color: #f8f8f8;">
+								<th>{{ovcLabel.statusReport.location}}&nbsp;<a class="sort_align" ng-click="sort_by('locationId');"><i class="fa " ng-class="{'fa-sort': predicate!='locationId','fa-sort-asc': predicate=='locationId' && reverse===false,'fa-sort-desc': predicate=='locationId' && reverse===true}"></i></a></th>
+								<th>{{ovcLabel.statusReport.productCode}}&nbsp;<a class="sort_align" ng-click="sort_by('Style');"><i class="fa " ng-class="{'fa-sort': predicate!='Style','fa-sort-asc': predicate=='Style' && reverse===false,'fa-sort-desc': predicate=='Style' && reverse===true}"></i></a></th>
+								<th>{{ovcLabel.statusReport.SKU}}&nbsp;<a class="sort_align" ng-click="sort_by('sku');"><i class="fa " ng-class="{'fa-sort': predicate!='sku','fa-sort-asc': predicate=='sku' && reverse===false,'fa-sort-desc': predicate=='sku' && reverse===true}"></i></a></th>
+								<th>{{ovcLabel.statusReport.barcode}}&nbsp;<a class="sort_align" ng-click="sort_by('barcode');"><i class="fa " ng-class="{'fa-sort': predicate!='sku','fa-sort-asc': predicate=='barcode' && reverse===false,'fa-sort-desc': predicate=='barcode' && reverse===true}"></i></a></th>
+								<th>{{ovcLabel.statusReport.description}}&nbsp;<a class="sort_align" ng-click="sort_by('description');"><i class="fa " ng-class="{'fa-sort': predicate!='description','fa-sort-asc': predicate=='description' && reverse===false,'fa-sort-desc': predicate=='description' && reverse===true}"></i></a></th>
+								<th>{{ovcLabel.statusReport.balanceType}}&nbsp;<a class="sort_align" ng-click="sort_by('balanceType');"><i class="fa " ng-class="{'fa-sort': predicate!='balanceType','fa-sort-asc': predicate=='balanceType' && reverse===false,'fa-sort-desc': predicate=='balanceType' && reverse===true}"></i></a></th>
+								<th>{{ovcLabel.statusReport.currentBalance}}&nbsp;<a class="sort_align" ng-click="sort_by('value');"><i class="fa " ng-class="{'fa-sort': predicate!='value','fa-sort-asc': predicate=='value' && reverse===false,'fa-sort-desc': predicate=='value' && reverse===true}"></i></a></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(sku,reportData) in report.dataSet.statusReport | orderBy : predicate :reverse">
+								<td>{{report.dataSet.locNameObj[reportData.locationId] ? report.dataSet.locNameObj[reportData.locationId] : ''}}</td>
+								<td>{{reportData.productCode}}</td>
+								<td>{{reportData.sku}}</td>
+								<td>{{reportData.barcode}}</td>
+								<td>{{reportData.description}}</td>
+								<td>{{report.dataSet.balanceTable[reportData.balanceType] ? report.dataSet.balanceTable[reportData.balanceType] : reportData.balanceType}}</td>
+								<!-- <td>{{report.balanceType}}</td> -->
+								<td>{{reportData.balanceTotal ? reportData.balanceTotal : reportData.value}}</td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+        </div>
+        <div class="panel-body search_box" style="border:none;" ng-if="report.dataSet.errorData">
+			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+				<h3 id="ovcError" class="text-danger text-center">{{ovcLabel.statusReport.norecordsFound}}</h3>
+			</div>
+		</div>
+        <div class="panel-body fliter_i" ng-if="report.dataSet.showError">
+
+			<uib-pagination total-items="report.dataSet.totalItems"  items-per-page ="report.dataSet.entryLimit"  ng-model="report.dataSet.currentPage"  max-size = "5"  boundary-links="true" ng-change="report.action.pageChanged();" ></uib-pagination>
+						
+			<div class="col-md-3 pglimit">
+				<div class="pg_limit page_size_drdn">
+					<label>{{ovcLabel.balanceReport.list.pagesize}}:</label>
+					<select  convert-to-number	ng-model="report.dataSet.entryLimit" class="pgsizes" ng-change="report.action.searchStatusReport(report.form)">
+						<option>10</option>
+						<option>20</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":NumberInt(1),"key":{"_id":NumberInt(1)},"name":"_id_","ns":"sar.identitycounters"},{"v":NumberInt(1),"unique":true,"key":{"field":NumberInt(1),"model":NumberInt(1)},"name":"field_1_model_1","ns":"sar.identitycounters","required":true,"index":NumberInt(-1),"background":true,"safe":null}]}

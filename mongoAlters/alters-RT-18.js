@@ -1,0 +1,20 @@
+//STOCK-1815.
+
+db.getCollection('config_tbl').remove({'featureId':'CollectPOInformationUponReturn'});
+db.getCollection("config_tbl").insert({"locationOrGroupId" : "posMClient-grp-all","applicationId" : "SAR","moduleId" : "Orders","featureGroup" : "returns","featureId" : "CollectPOInformationUponReturn","featureName" : "Collect PO Information Upon Return","featureDescription" : null,"featureType" : "boolean","featureListId" : null,"featureValue" : "","displaySeqNumber" : null,"defaultValue" : "1","isPublic" : "1","parentFeatureId" : null,"fileName" : "posMClient/sar.ovccfg","visibilityExpression" : null,"isDeleted" : false,"lastModified" : new Date(),"created" : new Date()});
+
+db.getCollection('config_tbl').remove({'featureId':'CollectRMANumberUponReturn'});
+db.getCollection("config_tbl").insert({"locationOrGroupId" : "posMClient-grp-all","applicationId" : "SAR","moduleId" : "Orders","featureGroup" : "returns","featureId" : "CollectRMANumberUponReturn","featureName" : "Collect RMA Number Upon Return","featureDescription" : null,"featureType" : "boolean","featureListId" : null,"featureValue" : "","displaySeqNumber" : null,"defaultValue" : "1","isPublic" : "1","parentFeatureId" : null,"fileName" : "posMClient/sar.ovccfg","visibilityExpression" : null,"isDeleted" : false,"lastModified" : new Date(),"created" : new Date()});
+// STOCK-1980
+db.getCollection('config_tbl').remove({'featureId':'showImageByDefault'});
+db.getCollection("config_tbl").insert({"locationOrGroupId":"posMClient-grp-all","applicationId":"SAR","moduleId":"stockModule","featureGroup":"stockLookUpProductAttribute","featureId":"showImageByDefault","featureName":"Show Image by Default","featureDescription":null,"featureType":"boolean","featureListId":null,"featureValue":"0","displaySeqNumber":null,"defaultValue":"1","isPublic":"1","parentFeatureId":null,"fileName":"posMClient/sar.ovccfg","visibilityExpression":null,"isDeleted":false,"lastModified": new Date(),"created":new Date()});
+
+//STOCK-1930
+db.getCollection('config_tbl').remove({'featureId':'numberOfSKUByDefaultInNegativeStockBalance'});
+db.getCollection("config_tbl").insert({"locationOrGroupId":"posMClient-grp-all","applicationId":"SAR","moduleId":"stockModule","featureGroup":"stockLookUpProductProperty","featureId":"numberOfSKUByDefaultInNegativeStockBalance","featureName":"Number of SKUs shown in Negative Balance Report by default","featureDescription":null,"featureType":"numeric","featureListId":null,"featureValue":"","displaySeqNumber":null,"defaultValue":"5","isPublic":"1","parentFeatureId":null,"fileName":"posMClient/sar.ovccfg","visibilityExpression":null,"isDeleted":false,"lastModified":new Date(),"created":new Date(),"__v":0.0});
+// STOCK-1984
+db.getCollection('config_tbl').remove({'featureId':'productMaterialGroup'});
+db.getCollection("config_tbl").insert({"locationOrGroupId": "posMClient-grp-all","applicationId": "SAR","moduleId": "stockModule","featureGroup": "stockLookUpProductProperty","featureId": "productMaterialGroup","featureName": "Product Material Group","featureDescription": null,"featureType": "boolean","featureListId": null,"featureValue": "","displaySeqNumber": null,"defaultValue": "1","isPublic": "1","parentFeatureId": null,"fileName": "posMClient/sar.ovccfg","visibilityExpression": null,"isDeleted": false,"lastModified": new Date(),"created":new Date()});
+//STOCK-1784
+db.getCollection('config_tbl').remove({'featureId':'enablePackageatmanualreceipt'});
+db.getCollection("config_tbl").insert({"locationOrGroupId":"posMClient-grp-all","applicationId":"SAR","moduleId":"Orders","featureGroup":"manualReceipts","featureId":"enablePackageatmanualreceipt","featureName":"Enable Package at manual receipt","featureDescription":null,"featureType":"boolean","featureListId":null,"featureValue":"","displaySeqNumber":null,"defaultValue":"1","isPublic":"1","parentFeatureId":null,"fileName":"posMClient/sar.ovccfg","visibilityExpression":null,"isDeleted":false,"lastModified":new Date(),"created":new Date(),"__v":0.0});

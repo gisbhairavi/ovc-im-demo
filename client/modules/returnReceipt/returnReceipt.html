@@ -1,0 +1,792 @@
+<div >
+    <div ng-controller="returnReceiptCtrl" class="panel">
+		<div ng-show="action.page == 2">
+			<div class="row" >
+				<div class="col-sm-12 col-xs-12 col-md-4 export_pre_header" ng-if="action.type == 'return'  ">
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.rma_type}}</label> <span class="view_ot">: {{translation.returnstypelist[form.rma_type]}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.vendorId}}</label> 
+					<span class="view_ot">: {{formData.vendordata[form.vendorId]}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.shipToLocation}}</label>
+					<span class="view_ot">: {{formData.tostoredata[form.shipToLocation]}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.createdBy}}</label> <span class="view_ot">: {{form.createdBy}}</span></p>
+					<p class="clearfix" ng-if="form.reasoncode"><label class="mar_al view_p">{{lang.labels.reasoncode}}</label> <span class="view_ot">: {{resCodeArray[form.reasoncode]}}</span></p>
+					<p class="clearfix" ng-show="false"><label class="mar_al view_p">{{ovcLabel.returnReceipt.list.returnNo}}</label> <span class="view_ot">: {{form.returnNumber}}</span></p>
+				</div>
+				<div class="col-sm-12 col-xs-12 col-md-4 export_pre_header" ng-if="action.type == 'return'  ">
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.order}}</label><span class="view_ot">: {{form.order_number}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.erpOrderNumber}}</label><span class="view_ot">: {{form.erpOrderNumber}}</span></p>			
+					<p class="clearfix" ng-if="roleConfig.CollectRMANumberUponReturn == true  "><label class="mar_al view_p">{{lang.labels.rmaNumber}}</label><span class="view_ot">: {{form.rmaNumber}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.specialInstructions}}</label> <span class="view_ot">: {{form.specialInstructions}}</span></p>
+				</div>
+				<div class="col-sm-12 col-xs-12 col-md-4 export_pre_header" ng-if="action.type == 'manual' ">
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.receiptType}}</label><span class="view_ot">: {{translation.manual.receipttype[form.receiptType]}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.shipToLocation}}</label><span class="view_ot">: {{formData.tostoredata[form.shipToLocation]}}</span></p>
+					<p class="clearfix" ng-hide="orderfmstore"  ng-class="orderfmstore ? 'hide_pdf' : ''"><label class="mar_al view_p">{{lang.labels.FromLocation}}</label> <span class="view_ot">: {{formData.fromstoredata[form.FromLocation]}}</span></p>
+					<p class="clearfix" ng-hide = "vendorhide" ng-class="vendorhide ? 'hide_pdf' : ''"><label class="mar_al view_p">{{lang.labels.vendorId}}</label class="mar_al view_p"> <span class="view_ot">: {{formData.vendordata[form.vendorId]}}</span></p>
+					<p class="clearfix" ng-if = "!showdata" ng-class="!showdata ? '' : 'hide_pdf'"><label class="mar_al view_p">{{lang.labels.ship_date}}</label> <span class="view_ot">: {{form.shipDate}}</span></p>	
+					<p class="clearfix" ng-if = "!showdata" ng-class="!showdata ? '' : 'hide_pdf'"><label class="mar_al view_p">{{lang.labels.receivedDate}}</label> <span class="view_ot">: {{form.receivedDate}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.createdBy}}</label> <span class="view_ot">: {{form.createdBy}}</span></p>
+					<p class="clearfix" ng-if="!showdata"><label class="mar_al view_p">{{lang.labels.asnNumber}}</label> <span class="view_ot">: {{form.asnNumber}}</span></p>	
+				</div>
+				<div class="col-sm-12 col-xs-12 col-md-4 export_pre_header" ng-if="action.type == 'manual' ">
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.order}}</label><span>: {{form.order_number}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.erpOrderNumber}}</label><span class="view_ot">: {{form.erpOrderNumber}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.asnId}}</label><span class="view_ot">: {{form.asnId}}</span></p>
+					<p class="clearfix"><label class="mar_al view_p">{{lang.labels.specialInstructions}}</label> <span class="view_ot">: {{form.specialInstructions}}</span></p>
+				</div>
+				<div class="col-sm-12 col-xs-12 col-md-4">
+					<div>
+						<div class="p_total">
+				  			<span class="ven_tblk clearfix" ng-if = "showdata && action.type== 'manual' || action.type == 'return' "><label>{{lang.labels.noofpackages}}</label>: <label class="view_tot">{{form.numberOfPackages}}</label></span>
+							<span class="ven_tblk clearfix" ><label>{{lang.labels.noOfSkus}}</label>: <label class="view_tot">{{form.numberOfSKU}}</label></span>
+							<span class="ven_tblk clearfix"><label>{{lang.labels.totalqty}}</label>: <label class="view_tot">{{form.numberOfProducts}}</label></span>
+							<span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{lang.labels.subtotal}}</label>: <label class="view_tot">{{currency}} {{form.PoSubtotal |number : 2}}</label></span>
+							<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{lang.labels.tax}}</label>: <label class="view_tot">{{currency}} {{form.totalPoTax |number : 2}}</label></span>
+							<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{lang.labels.VAT}}</label>: <label class="view_tot">{{currency}} {{form.totalPoVAT |number : 2}}</label></span>
+							<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{lang.labels.totalcost}}</label>: <label class="view_tot">{{currency}} {{form.totalPoCost |number : 2}}</label></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="action.page == 1">
+	        <div class="panel-body">
+				<div class="row" ng-if="action.type == 'return'  ">
+					<div class="col-lg-12">
+						<div class="col-sm-12 col-xs-12 col-md-4">
+							<drop-down  drop-data="rma_type" require="true"></drop-down>
+							<span ng-show="action.formerror['rma_type']" class="alert alert-danger">{{action.formerrormsg['rma_type']}}</span>
+							<drop-down drop-data="vendorId" require="true"></drop-down>
+							<span ng-show="action.formerror['vendorId']" class="alert alert-danger">{{action.formerrormsg['vendorId']}}</span>
+							<drop-down drop-data="shipToLocation" require="true"></drop-down>
+							<span ng-show="action.formerror['shipToLocation']" class="alert alert-danger">{{action.formerrormsg['shipToLocation']}}</span>
+							<drop-down drop-data="reasoncode" require="true"></drop-down>
+							<span ng-show="action.formerror['reasoncode']" class="alert alert-danger">{{action.formerrormsg['reasoncode']}}</span>
+							<text-box drop-data="createdBy"></text-box>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-4">
+							<div class="form-group" ng-if="roleConfig.CollectPOInformationUponReturn == true  ">	
+								<label class="control-label">{{lang.labels.order}}</label>
+							 	<!-- <autocomplete  attr-input-class="form-control"  class="search_scroll"  ng-model="form.order_number" attr-placeholder="{{lang.labels.order}}" click-activation="false" data="formData.purchaseOrders" on-type="getOrderIds" attr-input-autocomplete="off" ></autocomplete> -->
+							 	<autocomplete class="search_scroll" attr-input-class="form-control" attr-input-id="ordersearch" ng-model="form.order_number" attr-placeholder="{{lang.labels.order}}" click-activation="false" data="formData.purchaseOrders" on-type="orderServiceFun" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></autocomplete>
+							</div>
+							<span ng-show="action.formerror['order_number']" class="alert alert-danger">{{action.formerrormsg['order_number']}}</span>
+							<!-- <text-box drop-data="erpOrderNumber" ng-if="roleConfig.CollectPOInformationUponReturn == true  "></text-box> -->
+							<div class="form-group" ng-if="roleConfig.CollectPOInformationUponReturn == true  ">	
+								<label class="control-label">{{lang.labels.erpOrderNumber}}</label>
+							 	<autocomplete class="search_scroll" attr-input-class="form-control" attr-input-id="ordersearch" ng-model="form.erpOrderNumber" attr-placeholder="{{lang.labels.order}}" click-activation="false" data="formData.erpOrders" on-type="erpNumServiceFun" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></autocomplete>
+							</div>
+							<text-box drop-data="rmaNumber" ng-if="roleConfig.CollectRMANumberUponReturn == true  "></text-box>
+							<text-area drop-data="specialInstructions"></text-area>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-4">
+							<div>
+								<div class="p_total">
+									 <span class="ven_tblk clearfix" ng-if = "showdata && action.type== 'manual' || action.type == 'return' "><label>{{lang.labels.noofpackages}}</label>: <label class="view_tot">{{form.numberOfPackages}}</label></span>
+									 <span class="ven_tblk clearfix" ><label>{{lang.labels.noOfSkus}}</label>: <label class="view_tot">{{form.numberOfSKU}}</label></span>
+									 <span class="ven_tblk clearfix"><label>{{lang.labels.totalqty}}</label>:  <label class="view_tot">{{form.numberOfProducts}}</label></span>
+									  <span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{lang.labels.subtotal}}</label>: <label class="view_tot">{{currency}} {{form.PoSubtotal |number : 2}}</label></span>
+									  <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{lang.labels.tax}}</label>: <label class="view_tot">{{currency}} {{form.totalPoTax |number : 2}}</label></span>
+									  <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice"><label>{{lang.labels.VAT}}</label>: <label class="view_tot">{{currency}} {{form.totalPoVAT |number : 2}}</label></span>
+									  <span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{lang.labels.totalcost}}</label>: <label class="view_tot">{{currency}} {{form.totalPoCost |number : 2}}</label></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" ng-if="action.type == 'manual' ">
+					<div class="col-lg-12">
+						<div class="col-sm-12 col-xs-12 col-md-4">
+							<drop-down drop-data="receiptType" require="true"></drop-down>
+							<span ng-show="action.formerror['receiptType']" class="alert alert-danger">{{action.formerrormsg['receiptType']}}</span>
+							<drop-down drop-data="shipToLocation" require="true"></drop-down>
+							<span ng-show="action.formerror['shipToLocation']" class="alert alert-danger">{{action.formerrormsg['shipToLocation']}}</span>
+							<div  ng-hide="orderfmstore">
+								<drop-down drop-data="FromLocation" require="true"></drop-down>
+								<span ng-show="action.formerror['FromLocation']" class="alert alert-danger">{{action.formerrormsg['FromLocation']}}</span>
+							</div> 
+							<div ng-hide = "vendorhide">
+								<drop-down drop-data="vendorId" require="true"></drop-down>
+								<span ng-show="action.formerror['vendorId']" class="alert alert-danger">{{action.formerrormsg['vendorId']}}</span>
+							</div>
+							<div class="form-group" 
+								ng-if = "!showdata && action.type == 'manual' ">
+								<label class="control-label">{{lang.labels.ship_date}}</label>
+								<input id="common_shiptoDate" calendar  ng-model='form.shipDate'  class="form-control hidcal"  ng-change='change_frdate()'  />
+							</div>
+							<div class="form-group" 
+								ng-if = "!showdata && action.type == 'manual'">
+								<label class="control-label">{{lang.labels.receivedDate}}
+								</label>
+								<input id="common_receiveDate" calendar  ng-model='form.receivedDate'  class="form-control hidcal" ng-change='change_todate()' />
+							</div>
+							<text-box drop-data="createdBy"></text-box>
+							<div class="form-group"  ng-if = "!showdata && action.type == 'manual'" >
+								<label class="control-label">{{lang.labels.asnNumber}}
+								</label>
+								<input calendar  ng-model='form.asnNumber'  class="form-control hidcal"  ng-disabled = "true"/>
+							</div>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-4">
+							<label class="control-label">{{lang.labels.order}}</label>
+							 <autocomplete class="search_scroll" attr-input-class="form-control" attr-input-id="ordersearch" ng-model="form.order_number" attr-placeholder="{{lang.labels.order}}" click-activation="false" data="formData.purchaseOrders" on-type="orderServiceFun" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></autocomplete>
+							<span ng-show="action.formerror['order_number']" class="alert alert-danger">{{action.formerrormsg['order_number']}}</span>
+							<div class="form-group">	
+								<label class="control-label">{{lang.labels.erpOrderNumber}}</label>
+							 	<autocomplete class="search_scroll" attr-input-class="form-control" attr-input-id="ordersearch" ng-model="form.erpOrderNumber" attr-placeholder="{{lang.labels.order}}" click-activation="false" data="formData.erpOrders" on-type="erpNumServiceFun" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></autocomplete>
+							</div>
+							<text-box drop-data="asnId" require="true"></text-box>
+							<span ng-show="action.formerror['asnId']" class="alert alert-danger">{{action.formerrormsg['asnId']}}</span>
+							<text-area drop-data="specialInstructions"></text-area>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-4">
+							<div>
+								<div class="p_total">
+									<span class="ven_tblk clearfix" ng-if = "showdata && action.type== 'manual' || action.type == 'return'  "><label>{{lang.labels.noofpackages}}</label>: <label class="view_tot">{{form.numberOfPackages}}</label></span>
+									<span class="ven_tblk clearfix" ><label>{{lang.labels.noOfSkus}}</label>: <label class="view_tot">{{form.numberOfSKU}}</label></span>
+									<span class="ven_tblk clearfix"><label>{{lang.labels.totalqty}}</label>: <label class="view_tot">{{form.numberOfProducts}}</label></span>
+									<span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{lang.labels.subtotal}}</label>: <label class="view_tot">{{currency}} {{form.PoSubtotal |number : 2}}</label></span>
+									<span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{lang.labels.tax}}</label>: <label class="view_tot">{{currency}} {{form.totalPoTax |number : 2}}</label></span>
+									<span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice && puprice" ><label>{{lang.labels.VAT}}</label>: <label class="view_tot">{{currency}} {{form.totalPoVAT |number : 2}}</label></span>
+									<span class="ven_tblk clearfix"  ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{lang.labels.totalcost}}</label>: <label class="view_tot">{{currency}} {{form.totalPoCost |number : 2}}</label></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	    </div>
+    	<div class="form-group">
+			<div class="row" >
+				<form ng-submit = "addgetProductDetails(form.addskuData)">
+					<div class="col-lg-12" 	
+						ng-if="!showdata && action.type == 'manual'" ng-controller="stylematrixctrl" ng-show="action.page == 1">
+						<!--<div class="col-sm-12 col-xs-12 col-md-4">									
+							<autocomplete attr-input-name="commonskuSearch" attr-id="skuData" class="search_scroll" attr-input-class="prod_result  form-control" ng-model="form.addskuData.sku" attr-placeholder="{{translation.messages[0].search_by_sku}}..." ng-model-options ="{ updateOn: 'default', debounce: {'default': 300} }" click-activation="false"  data="srchedSkuProducts" on-type="srchSkuProduct" ng-click="addclearStyle(form.addskuData)" ></autocomplete>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-4" ng-if ="config.showskugroup" >
+							<autocomplete attr-input-name="commonstyleSearch" attr-id="skuData" class="search_scroll" attr-input-class="prstyle_result form-control" ng-model="form.addskuData.style" attr-placeholder="{{translation.messages[0].search_style}}" click-activation="false" data="srchedStyleProducts" on-type="srchStyleProduct" ng-click="addclearSku(form.addskuData)" ></autocomplete>
+						</div>-->
+						<div class="col-sm-8">
+							<ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="form.addskuData.sku" attr-placeholder="{{lang.package.search}}..." click-activation="false" data="srchedSkuProducts" on-type="srchSkuProduct" ng-click="addclearStyle(form.addskuData)" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+						</div>
+						<div class="col-sm-12 col-xs-12 col-md-4" >		
+							<button id="sku_addBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt"  class="btn btn-primary" type="submit"><i class="fa fa-plus"></i> {{lang.buttons.add}}</button>
+							<span class="file-input btn btn-primary btn-file" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt">{{lang.buttons.import}}
+						    	 <input type="file" ng-click ="noPackageFileupload($event)"  on-read-file="uploadreturn($fileContent,$file)" file-model="orderfile" accept=".dat"/>
+						    </span>
+						</div>							
+						
+						<div  class="col-sm-12"  id="asn_style_matrix">
+						</div>
+						<div class=" col-md-6 erroralert">
+							<span ng-show="action.formerror['skuData']" class="alert alert-danger">{{action.formerrormsg['skuData']}}</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row" ng-if=" showdata && action.type== 'manual' ||action.type == 'return'  ">
+			<div class="col-md-6 erroralert" ng-show="action.page == 1">
+				<button name="manual_addpackage_new" id="ovcPackageAdd" class="btn btn-primary add_package" ng-if=" action.type == 'manual'" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" ng-click="addPackages();">{{lang.buttons.addPackage}}</button>
+				<button name="return_addpackage_new" id="ovcPackageAdd" class="btn btn-primary add_package" ng-if=" action.type == 'return'" ng-disabled = "!userRolePermissions.orderPermissions.modifyReturns " ng-click="addPackages();">{{lang.buttons.addPackage}}</button><!-- <span class="star_iconf">*</span> -->
+				<span ng-show="action.formerror['skuData']" class="alert alert-danger">{{action.formerrormsg['skuData']}}</span>
+			</div>
+        </div>
+        <div class="col-sm-12"  >
+			<div >
+                <table class="table export_package_table"  id="return_summary_export" ng-if = "form.addskuData.productDetails">
+                    <tbody>
+						<!--Style Group Configration-->
+                        <tr  ng-repeat="(key,product) in form.addskuData.productDetails"  ng-if ="config.showskugroup && !showdata">
+                            <td >
+                                <table id="common_MR_click" class="table table-bordered style_head export_table_data" ng-click = "receipt_Style =! receipt_Style">
+                                    <thead class="style_head">
+                                        <tr >
+                                            <th class="sty_max">{{lang.package.style}}</th>
+                                            <th class="des_max">{{lang.package.description}}</th>
+											<th>{{lang.package.color}}</th>
+                                            <th>{{lang.package.totalQty}}</th>
+											<th ng-show="action.page == 1" class="hide_pdf">{{lang.package.action}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="style_head">
+                                        <tr>
+                                            <td>{{key}}</td>
+                                            <td>{{product[0].productDescription}}</td>
+											<td>{{product[0].styleColor}}</td>
+                                            <td>{{product[0].qty}}</td>
+											<td ng-show="action.page == 1" class="hide_pdf"><button class="btn btn-link padding_0" ng-click="addremovePackageStyle(key);"><span class="fa fa-trash-o"></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table export_table_data" ng-show = "receipt_Style">
+                                    <thead>
+                                        <tr>
+                                        	<th>{{lang.package.lineNo}}
+                                        	</th>
+                                        	<th>{{lang.package.sku}}</th>
+                                            <th>{{lang.package.description}}
+                                            </th>
+                                            <th  ng-if="config.config_arr.selectedProductVariants">{{lang.package.productVarients}}</th><!-- 
+											<th>{{translation.purchaseorders[0].length}}</th>
+											<th>{{translation.purchaseorders[0].waist}}</th>
+											<th>{{translation.purchaseorders[0].size}}</th> -->
+											<th>{{lang.package.wac}}</th>
+											<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{lang.package.productprice}}</th>
+                                            <th>{{lang.package.uom}}</th>
+                                            <th>{{lang.package.qty}}</th>
+											<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{lang.package.totalPurchasePrice}}</th>
+											<th ng-show="action.page == 1" class="hide_pdf">{{lang.package.action}}
+											</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="($index,sku) in product[0].skus">
+                                            <td>{{sku.lineNumber}}</td>
+                                            <td id="common_skuValue"><p class="td-content">{{sku.sku}}</p>
+                                           	</td>
+                                            <td><p class="td-content">{{sku.description}}</p></td>
+                                            <td ng-if="config.config_arr.selectedProductVariants">
+                                            <div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br></div>
+                                            </td><!-- 
+                                            <td ng-if="config.config_arr.ReturnsProductAttribute && action.type	==	'manual'">
+                                            <div ng-repeat="($index,attribute) in config.config_arr.ReturnsProductAttribute.featureValue" class="product_report"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br></div>
+                                            </td> --><!-- 
+											<td ng-if="sku.length != null">{{sku.length }}</td>
+											<td ng-if="sku.length == null">-</td>
+											<td ng-if="sku.waist != null">{{sku.waist }}</td>
+											<td ng-if="sku.waist == null">-</td>
+											<td ng-if="sku.size !=	'' ">{{sku.size}}
+											</td>
+											<td ng-if="sku.size	==	''	">-</td> -->
+											<td>{{currency}} {{sku.wac | number : 2}}</td>
+                                            <td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost |number : 2}}</td>
+											<td>
+									  			<select ng-options=" uom.value as uom.name for uom in UOM  | orderBy:'name' "  ng-model="sku.selectedUOM" class="form-control hide_pdf" ng-show="action.page == 1"><option value="">--{{lang.package.selectUom}}--</option>
+									  			</select>
+									  			<span ng-show="action.page == 2">{{UOMvalues[sku.selectedUOM]}}</span>
+									  		</td>
+											<td class="pdf-qty" ng-init="sku.originalQty =	false;">
+												<div class="form-group " ng-class="{'has-error returnsku':action.formerror[sku.sku]==false}">
+													<button class="myAnchor btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="adddecrease($index,sku.qty,sku.productCode); 
+													addidminmax(sku.qty,1,$index,sku.productCode);
+													addcalcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+													</button>
+													<input type="text" class="myAnchor qty-center form-control" ng-model="sku.qty" min = "1"
+													ng-attr-title="{{action.formerrormsg[sku.sku]}}"  bs-tooltip ng-change="sku.qty = minmax(sku.qty, 1); checkqtyempty(sku.qty); addcalcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode); sku.changed = sku.originalQty == sku.qty ? false : true ;"  ng-show="action.page == 1" only-digits/>
+													<button class="btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="addincrease($index,sku.qty,sku.productCode); 
+													addidminmax(sku.qty,1,$index,sku.productCode);
+													addcalcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+													</button>
+													<span ng-show="action.page == 2">{{sku.qty}}</span>
+												</div>
+											</td>
+											<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax | number : 2}}
+											</td>
+											<td ng-show="action.page == 1" class="hide_pdf">
+												<button class="btn btn-link pull-right padding_0" ng-click="addremovePackageSkus($index, sku.qty, sku.total,sku.totalnotax, sku.totalProductTax, sku.totalProductVat,  sku.productCode);"><span class="fa fa-trash-o"></button>
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+						<!--SKU Group Condition -->
+                        <tr>
+                        	<td>
+                            <table class="table export_table_data" ng-if = "!config.showskugroup">
+                                <thead ng-show="!isEmpty(form.addskuData.productDetails)">
+                                    <tr>
+                                        <th>{{lang.package.lineNo}}</th>
+                                        <th>{{lang.package.sku}}</th>
+                                        <th>{{lang.package.description}}
+                                        </th>
+                                        <th  ng-if="config.config_arr.selectedProductVariants">{{lang.package.productVarients}}</th>
+										<th>{{lang.package.wac}} </th>
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{lang.package.productprice}}</th>
+                                        <th>{{lang.package.uom}}</th>
+                                        <th>{{lang.package.qty}}</th>
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{lang.package.totalPurchasePrice}}</th>
+										<th ng-show="action.page == 1" class="hide_pdf">{{lang.package.action}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="(key,product) in form.addskuData.productDetails" >
+                                        <tr ng-repeat="($index,sku) in product[0].skus">
+                                           	<td>{{sku.lineNumber}}</td>
+                                            <td id="common_skuValue"><p class="td-content">{{sku.sku}}</p>
+                                            </td>
+                                            <td><p class="td-content">{{sku.description}}</p></td>
+                                            <td ng-if="config.config_arr.selectedProductVariants">
+                                            <div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br></div>
+                                            </td><!-- 
+											<td ng-if="sku.length != null">{{sku.length }}</td>
+											<td ng-if	="sku.length == null">-</td>
+											<td ng-if="sku.waist != null">{{sku.waist }}</td>
+											<td ng-if="sku.waist == null">-</td>
+											<td ng-if="sku.size !=	'' ">{{sku.size}}
+											</td>
+											<td ng-if="sku.size	==	''	">-</td> -->
+											<td> {{currency}} {{sku.wac | number : 2}}</td>
+                                            <td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost |number : 2 }}</td>
+											<td>
+								  				<select ng-options=" uom.value as uom.name for uom in UOM  | orderBy:'name' "  ng-model="sku.selectedUOM" class="form-control hide_pdf" ng-show="action.page == 1"><option value="">--{{lang.package.selectUom}}--</option></select>
+								  				<span ng-show="action.page == 2">{{UOMvalues[sku.selectedUOM]}}</span>
+								  			</td>
+											<td class="pdf-qty" ng-init="sku.originalQty 	=	false;">
+												<button name="common_skudecreseqty" class="myAnchor btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="adddecrease($index,sku.qty,sku.productCode); 
+												addidminmax(sku.qty,1,$index,sku.productCode);
+												addcalcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+												<input name="common_skuqty" type="text" ng-model="sku.qty" min = "1" class="myAnchor qty-center form-control" 
+												ng-change="sku.qty = minmax(sku.qty, 1); checkqtyempty(sku.qty); addcalcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode); sku.changed = sku.originalQty == sku.qty ? false : true ;"  ng-show="action.page == 1" only-digits/>
+												<button name="common_skuIncreseqty" class="btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="addincrease($index,sku.qty,sku.productCode); 
+												addidminmax(sku.qty,1,$index,sku.productCode);
+												addcalcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+												<span ng-show="action.page == 2">{{sku.qty}}</span>
+											</td>
+											<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax | number : 2 }}</td>
+											<td ng-show="action.page == 1" class="hide_pdf">
+												<button class="btn btn-link pull-right padding_0" ng-click="addremovePackageSkus($index, sku.qty, sku.total,sku.totalnotax, sku.totalProductTax, sku.totalProductVat,  sku.productCode);"><span class="fa fa-trash-o"></span></button>
+											</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+			</div>
+        </div>
+		<div class="col-sm-12" >
+			
+			<div ng-repeat="(kyyy,obj) in form.packageData" ng-if="(showdata && action.type== 'manual' &&  !obj.reversepackage  || action.type == 'return') && form.packageData.length > 0 ">
+
+				<div class="package_recipt">
+                	<div class="package_wrapper clearfix">
+                    	<div class="col-sm-10 col-xs-10 package_table" style="border: 1px solid #ddd;">
+                        	<table class="table export_package_table" id="return_summary_export">
+                            	<thead class="pack_head">
+                                	<tr  ng-if="action.page == 1" class="hide_pdf">
+										<th ng-if="action.type == 'return'">
+											<!--<div class="package_header">
+											<div class="col-md-3"><div><div class="col-md-5  package_id ">{{translation.returnreceipt.pack}} :</div>  <div class="col-md-5  package_id">{{obj.packageId}}</div></div>  </div> -->
+											<div class="col-md-4 col-sm-12 col-xs-12">
+												<div class="package_input">
+													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 package_input ">{{lang.package.pack}} :</div>
+													<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12"><input type="text" class="form-control" ng-model="obj.packageId" />
+													</div>
+												</div>  
+											</div>
+											<div class="col-md-4 col-sm-12 col-xs-12">
+												<div class="package_input">
+													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 package_input">{{lang.package.trackNo}} : 
+													</div>
+													<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" class="form-control" ng-model="obj.trackingNumber" />
+													</div> 
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-12 col-xs-12" >
+												<div class="package_input">
+													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 package_input">{{lang.package.shipDate}}: 
+													</div>
+													<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+														<input calendar1 class="form-control"  ng-model="obj.shipDate" />
+													</div>
+												</div>
+											</div>
+										</th>
+										<th ng-if="action.type == 'manual' && showdata">
+											<!-- <div class="package_header"> -->
+											<!-- <div class="col-md-3"><div><div class="col-md-5  package_id ">{{translation.returnreceipt.pack}} :</div>  <div class="col-md-5  package_id">{{obj.packageId}}</div></div>  </div> -->
+											<div class="col-md-3">
+												<div class="package_input mpack">
+													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12  package_input">{{lang.package.pack}} :</div>
+													<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 mpack">
+														<input type="text" class="form-control" ng-model="obj.packageId" />
+													</div>
+												</div>  
+											</div>
+											<div class="col-md-3">
+												<div class="package_input mpack">
+													<div class="col-md-6 package_input">{{lang.package.trackNo}} : 
+													</div>
+													<div class="col-md-6 mpack">
+														<input type="text" class="form-control" ng-model="obj.trackingNumber" />
+													</div> 
+												</div>
+											</div>
+											<div class="col-md-3" >
+												<div class="package_input mpack">
+													<div class="col-md-5 package_input mpack">{{lang.package.shipDate}}: 
+													</div>
+													<div class="col-md-7 mpack">
+														<input calendar1 class="form-control"  ng-model="obj.shipDate" />
+													</div>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="package_input mpack">
+													<div class="col-md-5 package_input mpack">{{lang.package.receivedDate}}: 
+													</div>
+													<div class="col-md-7 mpack">
+														<input calendar1 class="form-control"  ng-model="obj.receivedDate" />
+													</div>
+												</div>
+											</div>
+										</th>
+                                	</tr>
+								 	<tr ng-show="action.page == 2">
+										<th  ng-if="action.type == 'return' ">
+											<div class="package_header export_header">
+												<div class="col-md-3 col-sm-12 col-xs-12  export_header_item">
+													<div>
+														<div class="col-md-12 col-sm-12 col-xs-12 col-lg-5  package_id"> <span class="export_header_label export_label">{{lang.package.pack}}</span> :
+														</div>  
+														<div class="col-md-12 col-sm-12 col-xs-12 col-lg-5  package_id export_header_value export_value">{{obj.packageId}}</div>
+													</div> 
+												</div>
+												<div class="col-md-5  col-sm-12 col-xs-12 export_header_item">
+													<div class="package_input">
+														<div class="col-md-12 col-sm-12 col-xs-12 col-lg-5  package_input clearfix"><span class="export_header_label export_label">{{lang.package.trackNo}}</span> : 
+														</div>
+														<div class="col-md-12 col-sm-12 col-xs-12 col-lg-7 package_text export_header_value export_value">
+														{{obj.trackingNumber}}
+														</div> 
+													</div>
+												</div>
+												<div class="col-md-4 col-sm-12 col-xs-12 export_header_item">
+													<div class="package_input">
+														<div class="col-md-12 col-sm-12 col-xs-12 col-lg-5 package_input"><span class="export_header_label export_label">{{lang.package.shipDate}}</span>: 
+														</div>
+														<div class="col-md-12 col-sm-12 col-xs-12 col-lg-7 package_text export_header_value export_value">
+														{{obj.shipDate}}
+														</div>
+													</div>
+												</div>
+											</div>
+										</th>
+										<th  ng-if="action.type == 'manual'">
+											<div class="package_header">
+												<div class="col-md-3">
+													<div>
+														<div class="col-md-5  package_id "><span class="export_label">{{lang.package.pack}} </span> :
+														</div>  
+														<div class="col-md-5  package_id export_value">{{obj.packageId}}
+														</div>
+													</div> 
+												</div>
+												<div class="col-md-3">
+													<div class="package_input">
+														<div class="col-md-6  package_input clearfix"> <span class="export_label">{{lang.package.trackNo}} </span> : 
+														</div>
+														<div class="col-md-6 package_text export_value">
+														{{obj.trackingNumber}}
+														</div>
+													 </div>
+												</div>
+												<div class="col-md-3" >
+													<div class="package_input">
+														<div class="col-md-7 package_input clearfix"> <span class="export_label">{{lang.package.shipDate}} </span> : 
+														</div>
+														<div class="col-md-5 package_text export_value">
+														{{obj.shipDate}}
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3" >
+													<div class="package_input">
+														<div class="col-md-7 package_input clearfix "> <span class="export_label">{{lang.package.receivedDate}} </span> : 
+														</div>
+														<div class="col-md-5  package_text export_value">
+														{{obj.receivedDate}}
+														</div>
+													</div>
+												</div>
+											</div>
+										</th>
+                                	</tr>
+                            	</thead>
+                            	<tbody >
+									<tr  ng-if="action.page == 1"  ng-controller="stylematrixctrl" class="hide_pdf">
+										<td>
+											<div class="form-group">
+												<form ng-submit="getProductDetails(kyyy,obj)">
+													<div class="row">
+														<div class="col-md-12">
+															<div class="col-sm-8">
+																<ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="obj.sku" attr-placeholder="{{lang.package.search}}..." click-activation="false" data="srchedSkuProducts" on-type="srchSkuProduct" ng-click="clearStyle(kyyy,obj)" ng-keyup="getpackagedata(kyyy)" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+															</div>
+															<div class="col-md-3 col-sm-5 col-xs-12" ng-if="action.type == 'manual' ||  action.type == 'return' ">		
+																<button id="ovcSkuAdd" ng-if="action.type == 'manual'" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn  btn-primary" type="submit"><i class="fa fa-plus"></i> {{lang.buttons.add}}
+																</button>
+																<button id="ovcSkuAdd" name="return_addsku"  ng-if="action.type == 'return'" ng-disabled = "!userRolePermissions.orderPermissions.modifyReturns" class="btn  btn-primary" type="submit"><i class="fa fa-plus"></i> {{lang.buttons.add}}
+																</button>
+																<span id="ovcFileUpload" class="file-input btn btn-primary btn-file pull-right">{{lang.buttons.import}}
+															    	<input type="file" ng-click="returnSkus(obj)" on-read-file="uploadreturn($fileContent,$file,kyyy)" file-model="retunfile" accept=".dat"/>
+															    </span>
+															</div>
+														</div>
+														<br /><br clear="all" />
+														<div class="col-md-12">
+															<div id="package_style_{{kyyy}}"></div>
+														</div>
+													</div>
+												</form>
+											</div>
+										</td>
+									</tr>
+									<!--Style Group Configration-->
+                                	<tr  ng-repeat="(key,product) in obj.productDetails"  ng-if ="config.showskugroup && showSkuDetails">
+                                    	<td ng-if="obj.productDetails[key][0].skus.length>0">
+                                        	<table id="return_skuclick" class="table table-bordered style_head export_table_data" ng-click = "receipt_Style =! receipt_Style">
+                                            	<thead class="style_head">
+                                                	<tr>
+                                                    	<th class="sty_max">{{lang.package.style}}</th>
+                                                    	<th class="des_max">{{lang.package.description}}</th>
+														<th>{{lang.package.color}}</th>
+                                                    	<th>{{lang.package.totalQty}}</th>
+														<th ng-show="action.page == 1" class="hide_pdf">{{lang.package.action}}</th>
+                                                	</tr>
+                                            	</thead>
+                                            	<tbody class="style_head">
+                                                	<tr>
+                                                    	<td>{{key}}</td>
+                                                    	<td>{{obj.productDetails[key][0].productDescription}}</td>
+														<td>{{obj.productDetails[key][0].styleColor}}</td>
+                                                    	<td>{{obj.productDetails[key][0].qty}}</td>
+														<td ng-show="action.page == 1" class="hide_pdf"><button class="btn btn-link padding_0" ng-click="removePackageStyle(kyyy,key);"><span class="fa fa-trash-o"></button></td>
+                                                	</tr>
+                                           		</tbody>
+                                        	</table>
+                                        	<table class="table export_table_data" ng-show = "receipt_Style">
+                                            	<thead>
+                                                	<tr>
+                                                    	<th>{{lang.package.lineNo}}</th>
+                                                    	<th>{{lang.package.sku}}</th>
+                                                    	<th>{{lang.package.description}}</th>
+                                            			<th  ng-if = "config.config_arr.selectedProductVariants">{{lang.package.productVarients}}</th>
+														<th>{{lang.package.wac}}</th>
+														<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{lang.package.productprice}}</th>
+                                                   		<th>{{lang.package.uom}}</th>
+                                                    	<th>{{lang.package.qty}}</th>
+														<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{lang.package.totalPurchasePrice}}</th>
+														<th ng-show="action.page == 1" class="hide_pdf">{{lang.package.action}}</th>
+                                                	</tr>
+                                            	</thead>
+                                            	<tbody>
+                                                	<tr ng-repeat="($index,sku) in obj.productDetails[key][0].skus">
+                                                    	<td>{{sku.lineNumber}}</td>
+                                                    	<td id="return_sku_value"><p class="td-content">{{sku.sku}}</p></td>
+                                                    	<td><p class="td-content">{{sku.description}}</p></td>
+                                                    	<td ng-if="config.config_arr.selectedProductVariants">
+                                                    	<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br></div>
+                                                    	</td>
+														<td>{{currency}} {{sku.wac | number : 2}}</td>
+                                                    	<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost |number : 2}}</td>
+														<td>
+									  						<select ng-options=" uom.value as uom.name for uom in UOM  | orderBy:'name' "  ng-model="sku.selectedUOM" class="form-control hide_pdf" ng-show="action.page == 1"><option value="">--{{lang.package.selectUom}}--</option></select>
+									  						<span ng-show="action.page == 2">{{UOMvalues[sku.selectedUOM]}}</span>
+									  					</td>
+									  					
+														<td class="pdf-qty" ng-init = "sku.changed = false;">
+															<div class="form-group " ng-class="{'has-error returnsku':action.formerror[sku.sku]==false}">
+																<p class="pm_box">
+																	<button name="return_sku_qtyincrease" class="myAnchor btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="decrease($index,sku.qty,sku.productCode,kyyy); 
+																	idminmax(sku.qty,1,$index,sku.productCode,kyyy);
+																	calcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode,kyyy); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+																	<i class="fa fa-minus" aria-hidden="true"></i>
+																	</button>
+																	<input name="return_skuqty" type="text" class="myAnchor qty-center form-control" ng-model="sku.qty" min = "1"
+															 		ng-attr-title="{{action.formerrormsg[sku.sku]}}"  bs-tooltip ng-change="sku.qty = minmax(sku.qty, 1); checkqtyempty(sku.qty); calcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode,kyyy); sku.changed = sku.originalQty == sku.qty ? false : true ;"  ng-show="action.page == 1" only-digits/>
+																	<button name="return_sku_qtydecrease"  class="btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="increase($index,sku.qty,sku.productCode,kyyy); 
+																	idminmax(sku.qty,1,$index,sku.productCode,kyyy);
+																	calcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode,kyyy); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+																	<i class="fa fa-plus" aria-hidden="true"></i>
+																	</button>
+																</p>
+																<span ng-show="action.page == 2">{{sku.qty}}</span>
+															</div>
+														</td>
+														<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax | number : 2}}</td>
+														<td ng-show="action.page == 1" class="hide_pdf">
+														<button class="btn btn-link pull-right padding_0" ng-click="removePackageSkus($index, sku.qty, sku.total,sku.totalnotax, sku.totalProductTax, sku.totalProductVat,  sku.productCode,kyyy);"><span class="fa fa-trash-o"></button>
+														</td>
+                                               		</tr>
+                                            	</tbody>
+                                        	</table>
+                                    	</td>
+                                	</tr>
+									<!---SKU Group Condition -->
+                                	<tr>
+                                		<td>
+										<table class="table export_table_data" ng-if = "!config.showskugroup">
+                                        	<thead ng-show="!isEmpty(obj.productDetails)">
+                                            	<tr>
+                                                	<th>{{lang.package.lineNo}}</th>
+                                                	<th>{{lang.package.sku}}</th>
+                                                	<th>{{lang.package.description}}</th>
+                                           	 		<th  ng-if = "config.config_arr.selectedProductVariants">{{lang.package.productVarients}}</th>
+													<th>{{lang.package.wac}}</th>
+													<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{lang.package.productprice}}</th>
+                                               		<th>{{lang.package.uom}}</th>
+                                                	<th>{{lang.package.qty}}</th>
+													<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{lang.package.totalPurchasePrice}}</th>
+													<th ng-show="action.page == 1" class="hide_pdf">{{lang.package.action}}</th>
+                                            	</tr>
+                                        	</thead>
+                                        	<tbody ng-repeat="(key,product) in obj.productDetails"  ng-show="showSkuDetails" >
+                                            	<tr ng-repeat="($index,sku) in obj.productDetails[key][0].skus">
+                                                	<td>{{sku.lineNumber}}</td>
+                                                	<td id="common_sku_value"><p class="td-content">{{sku.sku}}</p></td>
+                                                	<td><p class="td-content">{{sku.description}}</p></td>
+                                                	<td ng-if="config.config_arr.selectedProductVariants">
+                                                	<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br/></div>
+                                                	</td>
+													<td> {{currency}} {{sku.wac | number : 2}}</td>
+                                                	<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost |number : 2}}</td>
+													<td>
+								  						<select ng-options=" uom.value as uom.name for uom in UOM  | orderBy:'name' "  ng-model="sku.selectedUOM" class="form-control hide_pdf" ng-show="action.page == 1"><option value="">--{{lang.package.selectUom}}--</option></select>
+								  						<span ng-show="action.page == 2">{{UOMvalues[sku.selectedUOM]}}</span>
+								  					</td>
+													<td class="pdf-qty" ng-init = "sku.changed = false;">
+														<button name="return_sku_qtydecrease" class="myAnchor btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="decrease($index,sku.qty,sku.productCode,kyyy); 
+														idminmax(sku.qty,1,$index,sku.productCode,kyyy);
+														calcItems1($index,sku.qty, 	sku.cost,sku.total,sku.sku, sku.productCode,kyyy, sku); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+														<i class="fa fa-minus" aria-hidden="true"></i>
+														</button>
+														<input type="text" ng-model="sku.qty" ng-class="sku.qtyClass" min = "1" class="myAnchor qty-center form-control" ng-model-options ="{ updateOn: 'default', debounce: {'default': 300} }"
+														ng-change="sku.qty = minmax(sku.qty, 1); checkqtyempty(sku.qty, sku); calcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode,kyyy ,sku); sku.changed = sku.originalQty == sku.qty ? false : true ;"  ng-show="action.page == 1" only-digits/>
+														<button name="return_sku_qtyincrease" class="btn btn-primary btn-sm" ng-show="action.page == 1" ng-click="increase($index,sku.qty,sku.productCode,kyyy); 
+														idminmax(sku.qty,1,$index,sku.productCode,kyyy);
+														calcItems1($index,sku.qty, sku.cost,sku.total,sku.sku, sku.productCode,kyyy , sku); sku.changed = sku.originalQty == sku.qty ? false : true ;">
+														<i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+														<br>
+                                                        <span ng-if="sku.qtyValidation" class="qtyZero" style="color: red;font-size: 13px;">Quantity Should be greater than 0</span>
+														<span ng-show="action.page == 2">{{sku.qty}}</span>
+													</td>
+													<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax  ? sku.totalnotax : 0| number : 2}}</td>
+													<td ng-show="action.page == 1" class="hide_pdf">
+														<button class="btn btn-link pull-right padding_0" ng-click="removePackageSkus($index, sku.qty, sku.total,sku.totalnotax, sku.totalProductTax, sku.totalProductVat,  sku.productCode,kyyy);"><span class="fa fa-trash-o">
+														</button>
+													</td>
+                                            	</tr>
+                                        	</tbody>
+                                   		</table>
+                                   		</td>
+
+                                	</tr>
+                            	</tbody>
+                        	</table>
+                    	</div>
+                    	<div class="col-sm-2 col-xs-2 package_arrw" >
+                        	<a class="arrow_d return_arr" ng-init="showSkuDetails = true" ng-click="showSkuDetails = !showSkuDetails">
+                            <i class="fa" ng-class="{'fa-angle-left' : ! showSkuDetails, 'fa-angle-down' : showSkuDetails}"></i>
+                        	</a>
+							<button class="btn btn-link pull-right padding_0" ng-click="removePackage(kyyy);" ng-show="action.page == 1"><span class="fa fa-trash-o"></span></button>
+                   		</div>
+                	</div>
+				</div>	
+            </div>
+        </div>
+    	<div ng-show="errorSearch" class="col-md-6">
+			<span class =  "col-md-6 form-control" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">{{error_searchmsg}}</span>
+		</div>
+        <div class="ven_tblk clearfix">
+			<div class="row r_margin ng-scope">
+				<div class="save_bg">
+					<div class="save_can clearfix">
+						<div class="col-sm-12" ng-show="error_in_receipt">
+							<span class =  "col-md-12" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+							{{error_receiptmsg}}
+							</span>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="pull-right"  ng-if="action.type == 'return' ">
+									
+									<!-- <button class="btn btn-primary" ng-click="saveReturn(form, 'draft');">{{translation.buttontypes[0].save}}</button>
+									<button class="btn btn-primary" ng-click="saveReturn(form, 'returned');">{{translation.returns.return}}</button> -->
+									<button name="return_cancelBtn" class="btn btn-primary" ng-click="getreturnlist()">{{lang.buttons.cancel}}</button>
+									<button name="return_deleteBtn"class="btn btn-primary" ng-disabled="!userRolePermissions.orderPermissions.modifyReturns" ng-show="showtab1 && action.title=='edit' " ng-click="deleteReturn()">{{lang.buttons.delete}}</button>
+									<button name="common_cancelBtn"  class="btn btn-primary" ng-if="action.title != 'add' && action.title != 'copy' && userRolePermissions.orderPermissions.copyReturns" ng-click="copyReturnReceipt()">{{lang.labels.copyReturn}}</button>
+									<button name="return_saveasdraftBtn"class="btn btn-primary" ng-disabled="!userRolePermissions.orderPermissions.modifyReturns" ng-show="showtab1"  ng-click="saveReturn(form, 'draft',formData.vendordata);">{{lang.buttons.saveDraft}}</button>
+									<button name="return_saveBtn" class="btn btn-primary" ng-disabled="!userRolePermissions.orderPermissions.modifyReturns" ng-show="showtab1"  ng-click="saveReturn(form, 'returned' ,formData.vendordata);">{{lang.buttons.return}}</button>
+									<!-- <button class="btn btn-primary" ng-hide="showtab1" ng-click="getreturnlist()">{{translation.buttontypes[0].back}}</button> -->
+								</div>
+								<div class="pull-right"  ng-if="action.type == 'manual' && showdata">
+									<button name="common_cancelBtn"  class="btn btn-primary"  ng-click="getreceiptlist()">{{lang.buttons.cancel}}</button>
+									<button name="common_deleteBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn btn-primary" ng-show="showtab1 && action.title=='edit' " ng-click="deleteReceipt()">{{lang.buttons.delete}}</button>
+									<button name="common_cancelBtn"  class="btn btn-primary" ng-if="action.title != 'copy' && action.title != 'add' && userRolePermissions.orderPermissions.copyManualReceipt" ng-click="copymanualShipment()">{{lang.buttons.copyReceipt}}</button>
+									<button name="common_draftBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn btn-primary" ng-if="!action.received" ng-click="saveReceipt(form, 'draft', 'receiveInProgress');">{{lang.buttons.saveDraft}}</button>
+									<button name="common_receiveBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn btn-primary" ng-if="!action.received" ng-click="saveReceipt(form, 'received', 'received');">{{lang.buttons.receive}}</button>
+									<button  class="btn btn-primary" name="common_reverseBtn" ng-click="savereverse(form.packageData)" ng-if = "form.receiptStatus =='received' && userRolePermissions.orderPermissions.reverseManualReceipt" >{{lang.buttons.reverse}}</button>
+								</div>
+								<div class="pull-right"  ng-if="action.type == 'manual'  && !showdata ">
+									<button  name="common_cancelBtn"  class="btn btn-primary" ng-click="getreceiptlist()">{{lang.buttons.cancel}}</button>
+									<button  name="common_deleteBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn btn-primary" ng-show="showtab1 && action.title=='edit' " ng-click="deleteReceipt()">{{lang.buttons.delete}}</button>
+									<button name="common_cancelBtn"  class="btn btn-primary" ng-if="action.title != 'copy' && action.title != 'add' && userRolePermissions.orderPermissions.copyManualReceipt" ng-click="copymanualShipment()">{{lang.buttons.copyReceipt}}</button>
+									<button  name="common_draftBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn btn-primary" ng-if="!action.received" ng-click="addsaveReceipt(form, 'draft', 'receiveInProgress');">{{lang.buttons.saveDraft}}</button>
+									<button name="common_receiveBtn" ng-disabled = "!userRolePermissions.orderPermissions.executemanualReceipt" class="btn btn-primary" ng-if="!action.received" ng-click="addsaveReceipt(form, 'received', 'received');">{{lang.buttons.receive}}</button>
+									<button  class="btn btn-primary" name="common_reverseBtn" ng-click="savereverse(form.addskuData)" ng-if = "form.receiptStatus =='received' && userRolePermissions.orderPermissions.reverseManualReceipt" >{{lang.buttons.reverse}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+	<script type="text/ng-template" id="dropDown.html">
+    	<div class="form-group">
+     	<label>{{lang.labels[dataObj]}}</label>
+		<select id="receiptType" ng-options="item.value as item.name for item in formData[dataObj] | orderBy:'name' " ng-model="form[dataObj]" class="form-control"  ng-change="getreceipttype(form[dataObj])"  ng-if="dataObj == 'receiptType' ">
+			<option value="">{{lang.select[dataObj]}}</option>
+        </select>
+        <select id="reasonCode" ng-change="getReasonCode(form[dataObj])" ng-options="item.resId as item.resDesc for item in formData[dataObj] | orderBy:'name' " ng-model="form[dataObj]" class="form-control"  ng-if="dataObj === 'reasoncode' ">
+			<option value="">{{lang.select[dataObj]}}</option>
+        </select>
+        <select id="shipToLocation" ng-model="form[dataObj]" class="form-control"  ng-change="getstore_details(form[dataObj])"  ng-if="dataObj == 'shipToLocation' " >
+            <option value="">{{lang.select[dataObj]}}</option>
+            <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+            {{ item.indent }} {{ item.displayName }}
+            </option>
+        </select>
+
+		<select id="FromLocation" ng-options="item.value as item.name for item in formData[dataObj] | orderBy:'name' " ng-model="form[dataObj]" class="form-control" ng-change="getselected_store(form[dataObj])"  ng-if="dataObj == 'FromLocation' && config.organization_name == organization_struct['2'] ">
+		<option value="">{{lang.select[dataObj]}}</option>
+        </select>
+
+        <select id="FromLocation" ng-model="form[dataObj]" class="form-control"  ng-change="getselected_store(form[dataObj])"  ng-if="dataObj == 'FromLocation' && config.organization_name == organization_struct['1']" >
+            <option value="">{{lang.select[dataObj]}}</option>
+            <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+            {{ item.indent }} {{ item.displayName }}
+            </option>
+        </select>
+        
+        <select  ng-options="item.value as item.name for item in formData[dataObj] | orderBy:'name' " ng-model="form[dataObj]" id="{{dataObj}}" class="form-control" ng-change="receivedstore(dataObj)"
+		ng-if="dataObj != 'shipToLocation'  &&  dataObj != 'FromLocation'  && dataObj != 'receiptType' && dataObj != 'reasoncode'"><option value="">{{lang.select[dataObj]}}</option>
+        </select>
+    	</div>
+	</script>
+	<script type="text/ng-template" id="textBox.html">
+    	<div class="form-group">
+        	<label>{{lang.labels[dataObj]}}</label>
+		 	<input type="text" ng-model="form[dataObj]" class="form-control" placeholder="{{lang.placeholder[dataObj]}}" ng-if=" lang.labels[dataObj] == 'Created By' "  ng-disabled="true"/>
+        	<input type="text" ng-model="form[dataObj]" class="form-control" placeholder="{{lang.placeholder[dataObj]}}"  ng-if=" lang.labels[dataObj] != 'Created By' " />
+    	</div>
+	</script>
+	<script type="text/ng-template" id="textArea.html">
+    	<div class="form-group">
+        	<label>{{lang.labels[dataObj]}}</label>
+			<textarea ng-model="form[dataObj]" class="form-control spl_inst add_or" placeholder="{{lang.placeholder[dataObj]}}" /></textarea>
+    	</div>
+	</script>
+</div>

@@ -1,0 +1,126 @@
+{
+    "status": {
+        "CONFIRMEDQTY": "confirmedQty",
+        "SHIPPEDQTY": "shippedQty",
+        "RECEIVEDQTY": "receivedQty",
+        "CONFIRMED": "confirmed",
+        "UNCONFIRMED": "unconfirmed",
+        "REJECTED": "rejected",
+        "CONFIRMED_RVS": "confirmed_rvs",
+        "UNCONFIRMED_RVS": "unconfirmed_rvs",
+        "REJECTED_RVS": "rejected_rvs",
+        "DRAFT": "draft",
+        "DRAFTORDER": "draftOrder",
+        "INPROGRESS": "inProgress",
+        "SHIPPED"       :   "shipped",
+        "SUBMITTED"     :   "submitted"
+    },
+    "countStatus": {
+        "OPEN": "open",
+        "RECOUNT": "recount",
+        "VALIDATED": "validate",
+        "INPROCESS": "inprocess",
+        "SUBMITTED": "submitted",
+        "APPROVED": "approve",
+        "MODIFIED": "modified"
+    },
+    "confirmingStatus": [
+        "rejected",
+        "confirmed",
+        "unconfirmed",
+        "confirmed_rvs",
+        "unconfirmed_rvs",
+        "rejected_rvs"
+    ],
+    "orderStatus":{
+        "SUBMITTED"     :   "submitted",
+        "INPROGRESS"    :   "inProgress",
+        "CONFIRMED"     :   "confirmed",
+        "RECEIVED"      :   "received",
+        "PART_SHIPPED"  :   "partiallyShipped",
+        "RETURNED"      :   "returned",
+        "SHIPPED"       :   "shipped"
+    },
+    "orderConfirmingStatus":[
+        "confirmed",
+        "unconfirmed",
+        "rejected"
+    ],
+    "createPurchaseOrderType": {
+        "ZFUT": "Z-Future"
+    },
+    "POS_RETURN": "regularReturn",
+    "vendor": "55f06828f0cd979f7b9eadf6",
+    "stockUOM": "Each",
+    "shippingMethod": "FDEN",
+    "apis": {
+        "GETLOCATION": "apis/ang_getlocations",
+        "GETPRODUCTS": "apis/ang_loc_micro_products?locid=",
+        "SRCHPRODUCT": "apis/ang_getproducts?srch=",
+        "GETSTOCKJSON": "apis/ang_getstockjson?locid=",
+        "GETPRODUCTCOST": "apis/ang_getproductprice",
+        "GETSTYLEMATRIXSERVICE": "apis/ang_stylematrix_service?locid=",
+        "COUNTITEMSERVICE": "/countitem",
+        "TRANSACTIONSERVICE": "/invtransactionservice",
+        "INVENTORIESSERVICE": "/inventories?locationid=",
+        "GETSKUDETAIL": "apis/ang_loc_skuproducts?srch=",
+        "GETSKUDATAS": "apis/ang_loc_skudatas",
+        "GETORDERBYPONUMBER": "/order?purchaseordernumber=",
+        "GETUSERHIERARCHYLOCATION": "apis/ang_hierarchy_locations?usid=",
+        "GETUSERNAMEDETAILS": "apis/ang_username?user_id=",
+        "GETUSERNAMEALLDETAILS": "apis/ang_usernameall?user_id=",
+        "JMS_POSTDATA": "/jmshandler/publish?type=",
+        "JMS_GETDATA": "/jmshandler/receive?type=",
+        "UPDATEPURCHASEJSON": "/receivingpurchasejson",
+        "GETCODE": "/oauth/code",
+        "GETHEADERSCODE": "/oauth/token",
+        "GETALLPRODUCTS": "apis/ang_get_skudescription",
+        "GETPRODUCTPERFORMANCE": "/getProductPerformance",
+        "GETTRANTYPEQTYDATA": "/trantypeqtyData",
+        "GETORDERITEMBYORDERNUMBER":"/orderitem?purchaseordernumber="
+    },
+    "Error_data": {
+        "Empty JSON Received": "",
+        "Success": "",
+        "Connection Interrupted": "",
+        "Execution Failed": "",
+        "Connection Timed Out": "",
+        "Empty Queue": ""
+    },
+    "label": {
+        "ERROR": "error",
+        "SUCCESS": "success",
+        "NO_SKUS": "no skus for this product",
+        "NO_POID": "PO Id missing",
+        "NO_DATA": "No Data",
+        "PACKAGE_UPDATE": "package updated",
+        "INPUT_MISSING": "no input data",
+        "EmptyJSONReceived": "Empty JSON Received",
+        "NotJSON": "Not JSON",
+        "Success": "Success",
+        "ConnectionInterrupted": "Connection Interrupted",
+        "ExecutionFailed": "Execution Failed",
+        "ConnectionTimedOut": "Connection Timed Out",
+        "EmptyQueue": "Empty Queue",
+        "PRO_PERFORMANCE_ERROR": "Failed to get Product Performance Data"
+    },
+    "BALANCETRANTYPE": {
+        "oh": "INITIAL_STOCK_UPLOAD_OH",
+        "allocated": "INITIAL_STOCK_UPLOAD_ALLOCATED",
+        "reserved": "INITIAL_STOCK_UPLOAD_RESERVED",
+        "held": "INITIAL_STOCK_UPLOAD_HELD",
+        "returnToVendor": "INITIAL_STOCK_UPLOAD_RETURNTOVENDOR"
+    },
+    "scheduler": {
+        "rule": "0 */2 * * * *",
+        "posrule": "*/15 * * * * *",
+        "data": {
+            "clientId": "batchuser",
+            "clientName": "batchuser",
+            "clientSecret": "batchuser",
+            "firstName": "batchuser",
+            "lastName": "batchuser"
+        }
+    },
+    "tranType_or_directiveType": "RECEIVED_IN,IBT_RECEIPT_IN,MAN_RECEIPT_IN,MANUAL_RECEIPT_PO,MANUAL_RECEIPT_IBT_IN,PUSH_RECEIPT_IN,MISCRECEIPT,POSITIVECNTADJ"
+}

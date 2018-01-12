@@ -1,0 +1,135 @@
+<div class="row">
+	<form role="form" name="form" class="form-horizontal">
+		<div class="col-lg-12 " style="margin-top: 3%;">
+			<div class="col-md-2">
+				<label> {{ovcLabel.replenishmentFilters.filterName}} :</label>
+			</div>
+			<div class="form-group col-lg-6">{{F_edit.FilterName}}</div>
+		</div> 
+
+		<div class="col-lg-12" style="margin-top: 2%;">
+		
+			<div class="col-sm-6 panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+						{{ovcLabel.replenishmentFilters.location}}
+						</h4>
+					</div>
+					<div class="panel-collapse">
+						<div class="panel-body" style="max-height: 300px; overflow: auto;">
+							<span ng-repeat="locaName in selectedLocationVal track by $index"><span ng-if="countLoc != true"
+									class="label label-primary">{{locaName}}</span>
+							</span>
+							<span ng-if="countLoc == true" style="font-style: italic;" 
+									class="label label-default">{{selectedLocationVal}}</span>
+						</div>
+					</div>
+				</div>
+			</div> 
+			<div class="col-sm-6 panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							{{ovcLabel.replenishmentFilters.merchandiseGroup}}
+						</h4>
+					</div>
+					<div class="panel-collapse">
+						<div class="panel-body" style="max-height: 300px; overflow: auto;">
+							<span ng-repeat="merchandiseGroup in selectedmerchandiseVal track by $index" ng-if="countMer != true">
+								<span class="label label-primary">{{merchandiseGroup}}</span>
+							</span>
+							<span ng-if="countMer == true" style="font-style: italic;" 
+								class="label label-default">{{selectedmerchandiseVal}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="col-lg-12">
+				<div class=" col-sm-6 panel-group" ng-repeat = "(key,value) in  dropdownDashCall.productProperty track by $index">
+					<div class="panel panel-default">
+						<div class="panel-heading" >
+							<h4 class="panel-title" >
+								<a style="padding:2% 68% 2% 0%;"
+									>{{key}}</a>
+							</h4>
+						</div>
+						<div class="panel-collapse">
+							<div class="panel-body" style="max-height: 300px; overflow: auto;">
+								<span ng-repeat = "(valuekey,value) in  selectedname  track by $index" ng-if="selectedname[valuekey] != 'There is no selection'"> <span ng-if="valuekey == key"
+										class="label label-primary">{{value}}</span>
+								</span>
+								<span ng-repeat = "(valuekey,value) in  selectedname  track by $index" ng-if="selectedname[valuekey] == 'There is no selection'" > <span ng-if="valuekey == key" style="font-style: italic;" class="label label-default">{{selectedname[valuekey]}}</span>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class=" col-sm-6 panel-group" ng-repeat = "(key,value) in  dropdownDashCall.productAttribute track by $index">
+					<div class="panel panel-default">
+						<div class="panel-heading" >
+							<h4 class="panel-title" >
+								<a style="padding:2% 68% 2% 0%;"
+									>{{key}}</a>
+							</h4>
+						</div>
+						<div  class="panel-collapse">
+							<div class="panel-body" style="max-height: 300px; overflow: auto;">
+								<span ng-repeat = "(valuekey,value) in  selectednameAttribute track by $index"  ng-if="selectednameAttribute[valuekey] != 'There is no selection'" ><span ng-if="valuekey == key"
+										class="label label-primary">{{value}}</span>
+								</span>
+								<span ng-repeat = "(valuekey,value) in  selectednameAttribute track by $index"  ng-if="selectednameAttribute[valuekey] == 'There is no selection'"><span ng-if="valuekey == key"
+										class="label label-default" style="font-style: italic;">{{selectednameAttribute[valuekey]}}</span>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>  
+		<div class="col-md-12" style="display: none">
+			<div class="panel-default">
+				<div class="col-md-4 search_b">
+					<span>{{ovcLabel.replenishmentFilters.buttons.search}}:</span> <input
+						id="search" class="form-control" type="text" placeholder=""
+						ng-model="search" ng-disabled="molporder" name="search">
+				</div>
+				<form role="forms">
+					<div class="panel-default">
+						<div class="ven_tbody ">
+							<div class="row">
+
+								<div class="col-md-12">
+									<grouped-style-review></grouped-style-review>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</form>
+
+</div>
+	<div class="col-md-5 col-sm-7 search_btns porder_srch"
+			style="margin-top: 3%;">
+			<button id="common_RPL_cancel" type="reset" class="btn btn-primary rst_btn ng-binding"
+				ui-sref="ovc.ReplenishmentFilter">
+				{{ovcLabel.replenishmentFilters.buttons.cancel}}</button>
+			<button id="common_RPL_previous" type="reset" class="btn btn-primary rst_btn ng-binding"
+				ng-click="filterCancelAndNextBtn('advance_criteria');">
+				{{ovcLabel.replenishmentFilters.buttons.previous}}</button>
+			<button id="common_RPL_create" ng-show="titleadd" type="submit" class="btn btn-primary ng-binding" 
+				ng-click="saveReplenishmentFilter('ADD');"
+				style="margin-right: 10px;" ng-if = "userRolePermissions.modifyReplenishmentFilters">
+				{{ovcLabel.replenishmentFilters.buttons.create}}</button> 
+			<button id="common_RPL_save" ng-show="titleedit" type="submit" class="btn btn-primary ng-binding" 
+				ng-click="saveReplenishmentFilter('EDIT');"
+				style="margin-right: 10px;" ng-if = "userRolePermissions.modifyReplenishmentFilters">
+				{{ovcLabel.replenishmentFilters.buttons.save}}</button> 
+				
+				
+		</div>

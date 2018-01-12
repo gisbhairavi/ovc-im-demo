@@ -1,0 +1,16 @@
+<div class="dropdown pull-right">
+<div ng-if="!zoneTag"  class="printBtnMargin">
+	<button class="btn btn-link" id="printBtn" type="button" ng-click="exportData();"><span class="fa fa-file-pdf-o"></span> Print</button>
+
+	<button ng-if="!excelshow" class="btn btn-default dropdown-toggle" type="button" id="exportBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	Export
+	<span class="fa fa-clone"></span>
+	</button>
+	<ul class="dropdown-menu dropdown-menu-right" id= "exportExcelBtn" aria-labelledby="exportBtn">
+		<li><a href="javascript:void(0);" ng-click="exportExcelData();"><span class="fa fa-file-excel-o"> </span> Excel</a></li>
+	</ul>
+</div>
+<div ng-if="zoneTag" class="dropdown pull-right printBtnMargin" >
+	<button class="btn btn-primary" id="print" type="button" ng-click="exportData();">  {{zoneTagLabel}}</button>
+</div>
+</div>

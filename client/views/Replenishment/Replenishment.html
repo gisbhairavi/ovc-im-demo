@@ -1,0 +1,20 @@
+<div class="row header_blk">
+<div class="col-lg-12">
+        <h3 class="page-header">{{translation.sidebar[0].replenishment}}
+		</h3>
+		
+    </div>
+</div>
+<div ng-controller="replenishmentCtrl">
+	<div class="row r_margin">
+		<div class="ven_tblk clearfix">
+			<div class="col-md-12" style="padding:0;">
+	<div class="col-md-3">
+	<div class="form-group">				
+	<label class="control-label"> {{translation.locations[0].store}}</label>					
+	<select ng-options="col.id as col.displayName for col in store_datas"  class="form-control" name="locationId" ng-change="getlocation(ship.locationId)" ng-model="ship.locationId" validator = "myCustomValidator(ship.locationId)" required-message="'{{translation.messages[0].store_select}}'" required><option value="">-- {{translation.locations[0].select_store}} --</option></select></div>
+		</div></div>
+		<div class="col-md-5">
+			<div class="form-group">
+		 <button class="btn btn-primary" ng-disabled="!loc" ng-click="scheduler()" >{{translation.sidebar[0].replenishment}} 		</button> </div></div></div></div>
+		 </div>

@@ -1,0 +1,94 @@
+<button class="col-md-12 text-left btn btn-default" ng-if="dash" ng-click="redirect()">
+	<i class="fa fa-arrow-left" aria-hidden="true"></i>
+	{{ovcLabel.manualshipment.list.backtodashboard}}
+</button>
+<div>
+	<div class="row header_blk">
+		<div class="col-lg-12">
+			<h3 class="page-header" >{{ovcLabel.manualshipment.list.heading}}
+				<div class="pull-right add_ven clearfix">
+					<button id="ovcAddBtn" name="add_new_manualShipment_btn" type="button"  ui-sref="ovc.manualShipment-add"  title="{{ovcLabel.manualshipment.buttons.add_new_manualShipment}}" class="btn btn-primary" ><i class="fa fa-plus-circle"></i>{{ovcLabel.manualshipment.buttons.add_new_manualShipment}}</button>
+					<span ng-if="list.length > 0">
+						<ovcdata-export pdf-id="Inbound_ibt_export" heading="{{ovcLabel.manualshipment.export_Heading.listmanualshipment}}" ng-if="type_ibt == 'Inbound'"></ovcdata-export>
+						<ovcdata-export pdf-id="Outbound_ibt_export" heading="{{ovcLabel.manualshipment.export_Heading.listmanualshipment}} " ng-if="type_ibt == 'Outbound'"></ovcdata-export>
+					</span>
+				</div>	
+			</h3>
+		</div>
+	</div>
+
+	<div class="col-sm-12 clearfix">
+				<div class="panel-body search_box border_T0">
+					<div class="col-xs-12 col-sm-12 col-md-3 ">
+						<label class="control-label">{{ovcLabel.manualshipment.list.from_date}}</label>
+						<input calendar id="common_fromdate" ng-model='form.fromdate'  class="form-control hidcal"  ng-change='change_frdate()'  />
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3">
+						<label class="control-label">{{ovcLabel.manualshipment.list.to_date}}</label>
+						<input calendar id="common_todate" ng-model='form.todate'  class="form-control hidcal" ng-change='change_todate()' />
+					</div>
+						<span class="col-xs-12 col-sm-12 col-md-3"> 
+							<label class="control-label">{{ovcLabel.manualshipment.list.location}}</label><br />
+							<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+								<div style="position: relative;" class="tooltip-pro width_padd">
+									<input id="common_heirarchy_check" type="text" class="form-control"
+										ng-model="location.displayName" ng-focus="showLoc = true"
+										placeholder="{{ovcLabel.manualshipment.placeholder.location}}"
+										style="padding: 6px 18px 6px 10px;"
+										ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+										class="fa"
+										ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+										style="position: absolute; right: 7px; top: 10px;">
+								</div>
+								<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+									node-label="name" ng-show="showLoc"
+									class="dropdown-menu treeViewDrop"
+									style="display: block; width: 300px;" mode="listlocation"></div>
+							</div>
+						</span>
+					<div class="col-xs-12 col-sm-12 col-md-3">
+					<label class="control-label">{{ovcLabel.manualshipment.list.status}}</label>
+					<div  id="ovcStatusDrop" multiselect-common="" items=" statusData.manualshpmtStatus" selected-items=" statusData.manualshpmtStatusSelected" naming={{translation.locations[0].status}} dynamic="Status" >
+
+						
+					</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6" style="margin-top:25px;">
+						<input type="text" name="shipment_no" class="form-control" ng-model="form.transfer_number" placeholder="{{translation.manualshipment.ship_number}}"/>
+					</div>
+					<div class="col-sm-3 col-xs-3 col-md-3 adv_align">
+					<a id="ovcAdvancedBtn" class='btn' ng-click="advanceSearch()">{{advanced?ovcLabel.manualshipment.list.basic:ovcLabel.manualshipment.list.advanced}}</a>
+					</div>
+					<div ng-if="advSearch.isAdvanceSearch === true">
+						<div class = "row">
+							<advanced-search></advanced-search>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-3 pull-right" style="margin-top:25px;">
+						<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="searchPurchaseOrder(); dashremove();" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.manualshipment.buttons.search}}</button>
+						<button id="ovcResetBtn" type="submit" class="btn btn-primary ng-binding" ng-click="resetOrderStatus()" style="margin-right:10px;"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.manualshipment.buttons.reset}}</button>
+					</div>
+				</div>
+				<span  ng-show="action.fieldsrequired  && action.submitted" class="alert alert-danger ng-binding datevalid" >{{ovcLabel.manualshipment.error.dateerror}}</span>
+	</div>
+
+	    <div class="col-sm-12">
+			<ul class="nav nav-tabs">
+				<li ng-class="(type_ibt == 'Inbound') ? 'active' : ''">
+					<a name="shipment_inbound" data-toggle="tab" href="" ng-click = "inbound()">{{ovcLabel.manualshipment.list.inbound}}</a>
+				</li>
+				<li ng-class="(type_ibt == 'Outbound') ? 'active' : ''">
+					<a name="shipment_outbound" data-toggle="tab" href="" ng-click = "outbound()">{{ovcLabel.manualshipment.list.outbound}}</a>
+				</li>
+			</ul>
+	    </div>
+
+	    <div class="tab-content" ng-hide="action.itemsPerPage == 0">
+	    	<div role="tabpanel" class="tab-pane active" ng-include="'views/manualShipment/list.html'"></div>	
+	  	</div>
+	  	<div class="col-sm-12">
+	  		<div id="ovcError" ng-if="action.itemsPerPage == 0">{{ovcLabel.manualshipment.list.no_product}}</div>
+	  	</div>
+</div>
+
+<br clear="all" />

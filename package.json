@@ -1,0 +1,45 @@
+{
+  "name": "stock-module",
+  "version": "0.0.1",
+  "description": "The oneview commerce stock-module",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+	
+    "url": "git+https://github.com/OneviewCommerce/stock-module.git"
+  },
+  "author": "",
+  "license": "UNLICENCED",
+  "bugs": {
+    "url": "https://github.com/OneviewCommerce/stock-module/issues"
+  },
+  "homepage": "https://github.com/OneviewCommerce/stock-module#readme",
+  "private": true,
+  "dependencies": {
+    "basic-auth": "^1.0.3",
+    "body-parser": "^1.14.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "http-status-codes": "^1.0.5",
+    "lodash": "^3.10.1",
+    "mongoose": "^4.1.7",
+    "mongoose-paginate": "^4.2.0",
+    "request": "^2.61.0",
+    "throng": "^1.0.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-tape": "0.0.2",
+    "mockery": "^1.4.0",
+    "mockgoose": "^4.0.1",
+    "node-mocks-http": "^1.4.3",
+    "nodemon": "^1.5.0",
+    "sinon": "^1.16.1",
+    "tape": "^4.2.0"
+  }
+}

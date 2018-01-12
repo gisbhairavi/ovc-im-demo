@@ -1,0 +1,58 @@
+<div>
+
+<div class="col-sm-11 trans_det">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th> {{translation.asn_service.productCode}} </th>
+				<th> {{translation.asn_service.description}} </th>
+				<th> {{translation.asn_service.skuShipped}} </th>
+				<th> {{translation.asn_service.totalQuantityShipped}} </th>
+				<th> {{translation.asn_service.asnValue}} </th>
+			</tr>
+
+			<tr>
+				<td> {{key}} </td>
+				<td> {{productDetails[0].productDescription}} </td>
+				<td> {{productDetails.length}} </td>
+				<td> {{productDetails.totalQty}}</td>
+				<td> {{productDetails.totalCost | currency : translation.asn_service.currency}}</td>
+			</tr>
+		</thead>
+		<tbody ng-show=" ! productDetails.showDetails">
+			<tr>
+				<td colspan = "5">
+					<table class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th> {{translation.asn_service.lineNumber}} </th>
+								<th> {{translation.asn_service.sku}} </th>
+								<th> {{translation.asn_service.description}} </th>
+								<th> {{translation.asn_service.cost}} </th>
+								<th> {{translation.asn_service.expectedQty}} </th>
+								<th ng-if="(asn_obj.mode === 'edit')">{{translation.asn_service.qty}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(ln_no,skus) in productDetails" >
+								<td>{{ln_no+1}}</td>
+								<td>{{skus.sku}}</td>
+								<td>{{skus.description}}</td>
+								<td>{{skus.skuCost | currency : translation.asn_service.currency}}</td>
+								<td>{{skus.qty}}</td>
+								<td ng-if="(asn_obj.mode === 'edit')">
+									<input type="text" ng-model="$parent.skus.newQty" only-digits ng-change="updateParent(ln_no, key);" class="edit_box" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="col-sm-1">
+	<a class="arrow_d" ng-click="productDetails.showDetails = ! productDetails.showDetails"><i class="fa" ng-class="{'fa-angle-left' : productDetails.showDetails, 'fa-angle-down' : ! productDetails.showDetails}"></i></a>
+</div>
+
+</div>

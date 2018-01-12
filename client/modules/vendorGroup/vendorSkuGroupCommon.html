@@ -1,0 +1,139 @@
+<table style ="width:100%" class=" table-bordered table_bornone" id="order_summary_export">	
+	<thead>	
+		<tr ng-repeat="(vkey,vendor) in newmodule.skuslist">
+			<td>
+				<table class="vendor_group">
+					<tr>
+						<td >
+						<table style ="width:100%" class="table table-bordered style_head ds_vendor" ng-click = "vendor_details = !vendor_details" ng-class="{'export_table' :  withoutprint}">
+							<thead class="ds_vendor1">
+								<tr>
+									<th>{{translation.customerorder.vendor_name}}</th>
+									<th ng-if = " newmodule.title =='review'">{{translation.customerorder.vendor_ordernum}}</th>
+									<th ng-if = " newmodule.title =='review'">{{translation.purchaseorders[0].shipping_method}}</th>
+									<th>{{translation.ibt.total_qty}}</th>
+									<th>{{translation.receipt.total_skus}}</th>
+									<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{translation.purchaseorders[0].total_price}}</th>
+								</tr>
+							</thead>
+
+							<tbody class="style_body ds_vendor1">
+								<tr>
+									<td>{{customerorders.shippings[vkey].vendorname}}</td>
+									<td ng-if = " newmodule.title =='review'">{{vendor.vendorOrderNumber}}</td>
+									<td ng-if = " newmodule.title =='review'">{{translation.carrier[0][vendor.carrierCode]}}</td>
+									<td>{{vendor.qty}}</td>
+									<td>{{vendor.no_of_skus}}</td>
+									<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{vendor.subtotal}}</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+					<tr  class="vendor-style" >
+			
+						<td class="style-td">
+							<!-- <table class="table table-bordered style_head export_table" ng-click = "style_details = !style_details">
+								<thead >
+									<tr>
+										<th class="sty_max">{{translation.returnreceipt.style}}</th>
+										<th class="des_max">{{translation.returnreceipt.description}}</th>
+										<th>{{translation.purchaseorders[0].color}}</th>
+										<th>{{translation.ibt.total_qty}}</th>
+										<th >{{translation.receipt.total_skus}}</th>
+										<th ng-show="tab.isSet(1) && newmodule.title !='review'" class="hide_pdf">{{translation.interface.action}}</th>
+									</tr>
+								</thead>
+
+								<tbody class="style_body">
+									<tr>
+										<td>{{key}}</td>
+										<td>{{product.styleDescription}}</td>
+										<td>{{product.styleColor}}</td>
+										<td>{{product.qty}}</td>
+										<td>{{product.skus.length}}</td>
+										<td ng-show="tab.isSet(1) && newmodule.title !='review' "><button class="btn btn-link padding_0 hide_pdf" ng-click="deleteStyleGroup(key,vendor.vendorid,vendor.vendorid);"><span class="fa fa-trash-o"></button></td>
+									</tr>
+								</tbody>
+							</table> --><!-- SKUS -->
+							<table class="table sku_table export_table" ng-show = "vendor_details" ng-class="{'export_table' :  config}">
+								<thead>
+									<tr>
+										<th>{{translation.returnreceipt.line_no}}</th>
+										<th>{{translation.returnreceipt.sku}}</th>
+										<th>{{translation.returnreceipt.description}}</th>
+										<th  ng-if = "config.config_arr.selectedProductVariants">{{translation.labels[0].productVariants}}</th><!-- 
+										<th>{{translation.purchaseorders[0].length}}</th>
+										<th>{{translation.purchaseorders[0].waist}}</th>
+										<th>{{translation.purchaseorders[0].size}}</th> -->
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{translation.vendors[0].cost}}</th>
+										<th>{{translation.shipments[0].UOM}}</th>
+										<th class="hide_pdf">{{translation.returnreceipt.qty}}</th>
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{translation.purchaseorders[0].total_cost}}</th>
+										<th ng-if="tab.page == 1 && newmodule.title !='review' " class="hide_pdf">{{translation.interface.action}}</th>
+									</tr>
+								</thead>
+								<tbody class="trans-tooltip" ng-repeat="(key,product) in vendor.styles"   ng-if="product.skus.length>0" class="style_td" >
+									<tr ng-repeat="($index,sku) in product.skus | orderBy:'lineNumber'" ng-if = " newmodule.title =='review'">
+										<td>{{sku.lineNumber}}</td>
+										<td>{{sku.sku}}</td>
+										<td>{{sku.description}}</td>
+                                            <td ng-if="config.config_arr.selectedProductVariants">
+                                            <div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br></div>
+                                            </td><!-- 
+										<td ng-if="sku.length != null">{{sku.length}}</td><td ng-if="sku.length == null">-</td>
+										<td ng-if="sku.waist != null">{{sku.waist }}</td><td ng-if="sku.waist == null">-</td>
+										<td ng-if="sku.size !=	'' ">{{sku.size}}</td><td ng-if="sku.size	==	''	">-</td> -->
+										<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost | number:2}}</td>
+										<td>
+											<span>{{newmodule.uomvalues[sku.selectedUOM]}}</span>
+										</td>
+										<td class="hide_pdf">
+										<span>{{sku.qty}}</span></td>
+										<td style="width:130px" ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax | number:2}}</td>
+									</tr>
+
+									<tr ng-repeat="($index,sku) in product.skus | orderBy:'lineNumber'" ng-if = " newmodule.title !='review'">
+										<td>{{sku.lineNumber}}</td>
+										<td><p class="summary-td">{{sku.sku}}</p></td>
+										<td><p class="summary-td">{{sku.description}}</p></td>
+                                            <td ng-if="config.config_arr.selectedProductVariants">
+                                            <div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]}}</span><br></div>
+                                            </td>
+										<!-- <td ng-if="sku.length != null">{{sku.length}}</td><td ng-if="sku.length == null">-</td>
+										<td ng-if="sku.waist != null">{{sku.waist }}</td><td ng-if="sku.waist == null">-</td>
+										<td ng-if="sku.size !=	'' ">{{sku.size}}</td><td ng-if="sku.size	==	''	">-</td> -->
+										<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost | number:2}}</td>
+										<td>
+											 <select ng-options=" uom.value as uom.name for uom in newmodule.alluoms | orderBy:'name' "  ng-model="sku.selectedUOM" class="form-control" ng-if="tab.page == 1 && newmodule.title !='review'">
+												<option value="">--{{translation.purchaseorders[0].select_uom}}--</option>
+											</select>
+											<span ng-show="tab.page == 4|| newmodule.title =='review'">{{newmodule.uomvalues[sku.selectedUOM]}}</span>
+										</td>
+										<td class="pdf-qty">
+										<button class="btn btn-primary btn-sm" ng-show="tab.page == 1 && newmodule.title !='review'" ng-click="decrease($index,sku.qty,sku.style,sku.vendorid); idminmax(sku.qty, 1, $index, sku.style,sku.vendorid); calcqtychange($index,sku.qty, sku.cost,sku.total,sku.sku,sku.style,sku.vendorid);">
+										<i class="fa fa-minus" aria-hidden="true"></i>
+										</button>
+										<input type="text" ng-model="sku.qty" min = "1" class="qty-center form-control" ng-show="tab.page == 1 && newmodule.title !='review'" ng-change="sku.qty = minmax(sku.qty, 1); checkqtyempty(sku.qty);  calcqtychange($index,sku.qty, sku.cost,sku.total,sku.sku,sku.style,sku.vendorid);" only-digits/>
+										<button class="btn btn-primary btn-sm" ng-show="tab.page == 1 && newmodule.title !='review'" ng-click="increase($index,sku.qty,sku.style,sku.vendorid); idminmax(sku.qty, 1, $index, sku.style,sku.vendorid); calcqtychange($index,sku.qty, sku.cost,sku.total,sku.sku,sku.style,sku.vendorid);">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+										</button>
+										<span ng-show="tab.page == 4 || newmodule.title =='review'">{{sku.qty}}</span>
+										</td>
+										<td style="width:130px" ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax | number:2}}</td>
+										<td  ng-show=" tab.page == 1" class="hide_pdf">
+										<button class="btn btn-link pull-right padding_0" ng-click="deleteskus(sku.id,key,vendor.vendorid,vendor.vendorid);"><span class="fa fa-trash-o"></button>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</table>
+		
+			</td>
+		</tr>
+	</thead>
+</table>
+

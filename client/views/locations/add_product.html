@@ -1,0 +1,99 @@
+<div class="col-lg-12 stk_sear">
+			
+	<div class="add_vendorb clearfix"  ng-controller="stylematrixctrl">
+		<div class="col-lg-8 clearfix">
+			<div class="col-md-10 col-sm-10 col-xs-12" style="padding-left:0px; " >
+				<label class="control-label ng-binding">{{ovcLabel.stockLocation.product_name}}</label>
+				<div class="col-md-12" style="padding-left:0px; " >
+					<div class="col-md-6" style="padding-left:0px; " >
+						<autocomplete  class="search_scroll" attr-input-class="prod_result" ng-model="loc_add.skuresult" attr-placeholder="{{ovcLabel.stockLocation.placeholder.search_by_sku}}..." attr-input-id="SKUSearch" click-activation="false" data="product_detail.addedproducts" on-type="dosrchproduct" on-select="doSelectproduct" id="sku_search" ></autocomplete>
+					</div>
+				
+					<div class="col-md-6" style="padding-left:0px; " >
+						<autocomplete class="search_scroll"  attr-input-class="styles_result" ng-model="loc_add.styleresult"    attr-input-id="styleSearch" attr-placeholder="{{ovcLabel.stockLocation.placeholder.search_style}}" click-activation="false" data="product_detail.styleproducts" on-type="dostylesrch" on-select="dostyleselect" id="style_search" ></autocomplete>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-2 col-xs-12 search_btns stk_sear">
+				<div class="pg_limit add_btns">
+				<button type="button" id="productAdd" class="btn btn-primary" ng-click="addSkus(loc_add)"><i class="fa fa-plus"></i> {{ovcLabel.stockLocation.button.add}}</button>
+			
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-12" ng-show="showstyle"  id="locstylematrix"></div> 
+		<div class="col-lg-12 loc_skugroup" >
+			<div class="ven_tbody" ng-show="product_detail.list.length > 0" >
+				<div class="row">
+					<div class="col-md-12" >
+						<table class="table table-striped table-bordered">
+						<thead>
+							<th>{{ovcLabel.stockLocation.line_no}}</th>
+							<th>{{ovcLabel.stockLocation.sku}}</th>
+							<th>{{ovcLabel.stockLocation.product_name}}&nbsp;</th>
+							<th>{{ovcLabel.stockLocation.color}}</th>
+							<th>{{ovcLabel.stockLocation.length}}</th>
+							<th>{{ovcLabel.stockLocation.waist}}</th>
+							<th>{{ovcLabel.stockLocation.size}}</th>
+							<th>{{ovcLabel.stockLocation.UOM}}</th>
+							<!-- <th>{{translation.vendors[0].barcode}}&nbsp;</th> -->
+							<th>{{ovcLabel.stockLocation.minimum_locquantity}}</th>
+							<th>{{ovcLabel.stockLocation.restock_location}}</th>
+							<!-- <th>{{translation.buttontypes[0].delete}}</th> -->
+						</thead>
+						<!-- <tbody ng-show="filteredItems > 0"> -->
+						<tbody>
+							<!-- <tr ng-repeat="data in product_detail.list = (product_detail.list | orderBy : predicate :reverse) | filter : search | limitTo:entryLimit"> -->
+							<tr ng-repeat="(key,data) in product_detail.list">	
+								<td>{{data.lineNumber}}</td>
+								<td>{{data.sku}}</td>
+								<td>{{data.description}}</td>
+								<td>{{data.styleColor}}</td>		
+								<td>{{data.length}}</td>		
+								<td>{{data.waist}}</td>		
+								<td>{{data.size}}</td>
+								<td style="width:120px"><!-- {{data.selectedUOM}} -->
+								<select ng-options=" uom.value as uom.name for uom in product_detail.alluoms  | orderBy:'name' "  ng-model="data.selectedUOM" class="form-control">
+									<option value="">--{{ovcLabel.stockLocation.placeholder.select_uom}}--</option>
+								</select></td>		
+								<td style="width:120px" ><input type="number"   ng-model="data.qty" min = "1" class="form-control"/></td>
+								<td>
+								<select ng-options="col.id as col.displayName for col in product_detail.locations | orderBy:'displayName' " class="form-control" name="restockFromLocation"  ng-model="data.restockFromLocation"  ><option value="">-- {{ovcLabel.stockLocation.placeholder.select_stockingloc}} --</option></select>
+									
+								</td> 
+								<!-- <td><div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+										<div style="position:relative;">
+											<input type="text" class="form-control" ng-model="data.locationDisplayName" ng-focus="showLoc = true" placeholder="{{translation.select[0].store}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation(data.locationDisplayName);" />
+													
+											<span class="fa" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;"></span>
+										</div>
+										<div tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"  mode="stocking_location"  row="{{key}}"></div>
+									</div>
+								</td>  -->
+								<!-- <td><a  class="btn btn-primary del_i"  ng-hide="moluom" href="" ng-click="product_delete(data._id)"><i class="fa fa-trash"></i></a>
+								<a  class="btn btn-primary del_i"  ng-show="moluom"  ng-disabled="moluom" href="" ><i class="fa fa-trash"></i></a>
+								</td> -->
+							</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+				
+		<div class="col-md-12">
+			<div class="pull-right">
+			
+				<a  id="productCancel" ng-click="canceledit();" class="btn btn-primary">{{ovcLabel.stockLocation.button.cancel}}</button></a>
+				<a  id="productPrintTag" class="btn btn-primary" ng-click="">{{ovcLabel.stockLocation.button.print_tag}}</a>
+				<a  id="productSave" class="btn btn-primary" ng-click="product_detail.save()">{{ovcLabel.stockLocation.button.save}}</a>
+				
+			</div>
+
+		</div>
+	</div>
+</div>	
+
+
+

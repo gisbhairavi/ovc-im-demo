@@ -1,0 +1,20 @@
+ {
+     "tranType": {
+         "regularReturn": {
+            "6": "POS_RETURN",
+            "1": "POS_SALE"
+          },
+         "regularSale": "POS_SALE",
+         "layawaySale": "ALLOCATED",
+         "layawayFinalize": "ALLOCATED_SALE",
+         "layawayRefund": "LAY_POS_RETURN"
+     },
+     "type": {
+         "regularReturn": [6,1],
+         "regularSale": [1, 13, 14, 60, 74],
+         "layawaySale": [1],
+         "layawayFinalize": [1],
+         "layawayRefund": [1],
+         "voidItem": [2]
+     }
+ }

@@ -1,0 +1,106 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.vendors.heading.vendors}}
+			<div class="pull-right add_ven clearfix">
+				<!-- <a ui-sref="ovc.vendor-add" ng-click="add_newvendor" title="Add Vendor"><i class="fa fa-plus-circle"></i></a> -->
+				<a id="ovcAddBtn" ui-sref="ovc.vendor-add" ng-hide="moluom"  title="{{ovcLabel.vendors.buttons.addvendor}}" class="btn btn-primary"><i class="fa fa-plus-circle"></i>{{ovcLabel.vendors.buttons.addvendor}} </a>
+				<a id="ovcAddBtn" href="" ng-show="moluom"  ng-disabled="moluom" title="{{translation.vendors.buttons.addvendor}}" class="btn btn-primary"><i class="fa fa-plus-circle"></i>{{ovcLabel.vendors.buttons.addvendor}} </a>
+			</div>
+		</h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row r_margin">
+<div class="ven_tblk clearfix">
+    <div class="col-lg-12">
+        <div class="panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body search_box">
+                <div class="row">					
+					<form>
+						<div class="col-md-6 col-sm-6">
+							<input type="text"  name="search" id="search" placeholder="{{ovcLabel.vendors.placeHolder.list_vendor_search}}" class="form-control" ng-model = "search"/>
+						</div>
+						
+						<div class="col-md-5 col-sm-6 search_btns">
+							<button id="ovcResetBtn" type="reset" class="btn btn-primary rst_btn ng-binding" ng-click="vendor_reset()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.vendors.buttons.reset}}</button>
+							<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="vendor_search()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.vendors.buttons.search}}</button>
+						</div>
+					</form>
+				</div>
+				</div>
+                <!-- /.table-responsive -->
+              <div class="ven_tbody">
+				<div class="row">
+					<div class="col-md-12 table-responsive" ng-show="filteredItems > 0" >
+						<table class="table table-striped table-bordered">
+						<thead>
+							<th style="width:180px;">{{ovcLabel.vendors.vendorname}}&nbsp;<a class="sort_align" ng-click="sort_by('companyName');"><i class="fa fa-sort"></i></a></th>
+							<th style="width:200px;">{{ovcLabel.vendors.address}}&nbsp;</th>
+							<th>{{ovcLabel.vendors.accountnumber}}&nbsp;<a class="sort_align" ng-click="sort_by('accountNumber');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.vendors.companycode}}&nbsp;<a class="sort_align" ng-click="sort_by('companyCode');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.vendors.purchasingdepartment}}&nbsp;<a class="sort_align" ng-click="sort_by('purchasingDepartment');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.vendors.products}}</th>
+							<th >{{ovcLabel.vendors.status}}&nbsp;<a class="sort_align" ng-click="sort_by('status');"><i class="fa fa-sort"></i></a></th>
+							<th>{{ovcLabel.vendors.action}}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="data in list | orderBy : predicate :reverse | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+								<td class="name_li"><a id="vendor_edt" ui-sref="ovc.vendor-edit({vendorid:data._id})" ng-click="vendor_edt(data._id)">{{data.companyName}}</a></td>
+								<td>{{data.address1}}</td>
+								<td>{{data.accountNumber}}</td>
+								<td>{{data.companyCode}}</td>
+								<td>{{data.purchasingDepartment}}</td>
+								<td >
+								<a id="list_vendor_product" ng-if="!data.primarysupplier" ui-sref="ovc.vendor-edit({vendorid:data._id})" >
+									<button class="btn btn-primary" ng-disabled="moluom" ng-click="vendor_editprd(data._id)">{{ovcLabel.vendors.products}}</button>
+								</a>
+								<div class="primary_vendor" ng-if="data.primarysupplier">
+									<label>{{ovcLabel.vendors.primaryvendor}}</label>
+								</div>
+								</td>
+								<td><p ng-show="{{data.status}}">{{ovcLabel.vendors.active}}</p><p ng-hide="{{data.status}}">{{ovcLabel.vendors.inactive}}</p></td>
+								<td class="action_f"><a href="" id="vendor_delete" ng-hide="moluom"  ng-click="vendor_delete(data._id)" class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+								<a href=""  ng-show="moluom"  ng-disabled="moluom" class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+								<!--<a ui-sref="ovc.vendor-edit({vendorid:data._id})" ng-click="vendor_edt(data._id)"class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; {{translation.buttontypes[0].edit}}</a> <span>|</span>-->
+								<!-- <button class="btn btn-primary del_i" ng-show="moluom" ng-disabled="moluom" ><a href="" ng-click="" ><i class="fa fa-trash"></i></a></button>
+								
+								<button class="btn btn-primary del_i" ng-hide="moluom" ><a href="" ng-click="vendor_delete(data._id)" class="btn-primary" ><i class="fa fa-trash"></i></a></button> --></td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+					<div id="ovcError" class="col-md-12 panel-body" ng-if="filteredItems == 0">
+						<div class="col-md-12">
+							<h4>{{ovcLabel.vendors.errorMessage.novendorsfound}}</h4>
+						</div>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems > 0">    
+					<div class="panel-body fliter_i">
+						
+						<uib-pagination total-items="filteredItems"  items-per-page ="entryLimit"  ng-model="currentPage"  max-size = "5"  boundary-links="true" ng-change="" ></uib-pagination>
+						
+						<div class="col-md-3 pglimit">
+							<div class="pg_limit page_size_drdn">
+								<label>{{ovcLabel.vendors.page_size}}:</label>
+								<select convert-to-number ng-model="entryLimit"   class="pgsizes">
+									<option>10</option>
+									<option>20</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+		</div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+</div>

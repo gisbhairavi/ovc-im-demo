@@ -1,0 +1,77 @@
+
+<div class="col-md-12 trans_det">
+	<table  id="order_summary_export" style="width:100%;"  ng-show="!isEmptypagination(skuslist)">
+	<thead>	
+		<tr>
+			<td>
+				<table><thead><tr></tr></thead><tbody><td></td></tbody></table>
+				<table class="table sku_table export_table sku_config_head">
+					<thead>
+						<tr>
+							<th>{{translation.returnreceipt.line_no}}</th>
+							<th>{{translation.returnreceipt.sku}}</th>
+							<th>{{translation.returnreceipt.description}}</th>
+							<th  ng-if = "config.config_arr.selectedProductVariants">{{translation.labels[0].productVariants}}</th>
+							<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{translation.vendors[0].cost}}</th>
+							<th>{{translation.shipments[0].UOM}}</th>
+							<th>{{translation.returnreceipt.qty}}</th>
+							<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{translation.purchaseorders[0].total_cost}}</th>
+							<th ng-if = "action.editable && !isReversed" class="hide_pdf">{{translation.interface.action}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="($index,sku) in skuslist ">
+							<td>{{sku.lineNumber}}</td>
+							<td id="common_skuValue"><p class="summary-td">{{sku.productCode}}</p></td>
+							<td><p class="summary-td">{{sku.description}}</p></td>
+							<td ng-if="config.config_arr.selectedProductVariants">
+								<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]?sku.variants[attribute]:'-'}}</span><br></div>
+							</td>
+							<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.cost | number:2}}</td>
+							<td class="currentzone-handcount">
+								 <select ng-options=" uom.value as uom.name for uom in UOM  | orderBy:'name' "  ng-model="sku.selectedUOM" class="form-control noPadding" ng-change = "SKUQTYChange(sku)" ng-if = " action.editable && !isReversed" >
+									<option value="">--{{translation.purchaseorders[0].select_uom}}--</option>
+								</select>
+								<span ng-if = "!action.editable || isReversed" >{{UOMvalues[sku.selectedUOM]}}</span>
+							</td>
+							<td class="pdf-qty" ng-init = "sku.changed = false;">
+							<button type = "button" id="common_increaseBtnClick" class="btn btn-primary btn-sm" ng-if = "action.editable" ng-disabled = "isReversed" ng-click=" sku.qty = sku.qty - 1; SKUQTYChange(sku)">
+							<i class="fa fa-minus" aria-hidden="true"></i>
+							</button>
+                                                            <input id="common_qty" type="text" ng-model="sku.qty" min = "1" ng-class="{qtycls: sku.qty === 0 }" class="qty-center form-control"
+							ng-if = "action.editable" ng-disabled = "isReversed"
+							ng-change="SKUQTYChange(sku)"  ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }" only-digits/>
+							<button type = "button" id="common_decreaseBtnClick" class="btn btn-primary btn-sm" ng-if = "action.editable" ng-disabled = "isReversed" ng-click="sku.qty = sku.qty + 1 ; SKUQTYChange(sku)">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+							</button>
+                                                        <br>
+                                                        <span ng-if="sku.qty === 0" class="qtyZero" style="color: red;">Quantity Should be greater than 0</span>
+							<span ng-if = "!action.editable" >{{sku.qty}}</span>
+							</td>
+							<td style="width:130px" ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}} {{sku.totalnotax | number:2}}</td>
+							<td class="hide_pdf" ng-if = "action.editable && !isReversed" >
+								<button type = "button" class="btn btn-link pull-right padding_0" ng-click="deleteskus(sku.id);"><span class="fa fa-trash-o"></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</thead>
+	</table>
+	<div ng-if="form.total_count > 0">
+		<uib-pagination total-items="form.total_count" items-per-page = "form.entryLimit" ng-model="form.currentPage" class="pagination-sm" max-size = "5" boundary-links="true" ng-change="pageChanged()" ></uib-pagination>
+		<div class="col-md-3 pglimit">
+			<div class="pg_limit page_size_drdn">
+				<label>{{ovcLabel.adjustments.list.pagesize}}:</label>
+					<select  convert-to-number	ng-model="form.entryLimit" class="pgsizes" ng-change="pageChanged()">
+						<option>10</option>
+						<option>20</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+			</div>
+		</div>
+	</div>
+</div>
+						

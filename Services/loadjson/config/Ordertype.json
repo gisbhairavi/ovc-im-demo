@@ -1,0 +1,116 @@
+ {
+    "MAN": {
+         "submitted": "SUBMITTED_IN",
+         "unconfirmed": "UNCONFIRMED_IN",
+         "confirmed": "CONFIRMED_IN",
+         "shipped": "ASN_IN",
+         "received": "RECEIVED_IN",
+         "confirmed_rvs": "CONFIRMED_IN_RVS",
+         "unconfirmed_rvs": "UNCONFIRMED_IN_RVS",
+         "rejected_rvs": "REJECTED_IN_RVS",
+         "forceClosed": "FORCE_CLOSED_IN",
+         "rejected": "REJECTED_IN",
+         "closed": "ASN_CLOSE",
+         "shippedReversed": "PO_RECEIPT_RV",
+         "draftOrder": "PO_DRAFT_CREATE",
+         "deleted":"PO_DRAFT_DELETE"
+     },"ZFUT": {
+         "unconfirmed": "ZFUT_UNCONFIRMED_IN",
+         "confirmed": "ZFUT_CONFIRMED_IN",
+         "shipped": "ZFUT_ASN_IN",
+         "received": "ZFUT_RECEIPT_IN",
+         "confirmed_rvs": "ZFUT_CONFIRMED_IN_RV",
+         "unconfirmed_rvs": "ZFUT_UNCONFIRMED_IN_RV",
+         "rejected_rvs": "ZFUT_REJECTED_IN_RV",
+         "rejected": "ZFUT_REJECTED_IN",
+         "closed": "ZFUT_ASN_CLOSE",
+         "shippedReversed": "ZFUT_RECEIPT_IN_RV"
+     },
+     "RPL": {
+         "submitted": "SUBMITTED_IN",
+         "unconfirmed": "UNCONFIRMED_IN",
+         "confirmed": "CONFIRMED_IN",
+         "shipped": "ASN_IN",
+         "received": "RECEIVED_IN",
+         "confirmed_rvs": "CONFIRMED_IN_RVS",
+         "unconfirmed_rvs": "UNCONFIRMED_IN_RVS",
+         "rejected_rvs": "REJECTED_IN_RVS",
+         "forceClosed": "FORCE_CLOSED_IN",
+         "rejected": "REJECTED_IN",
+         "closed": "ASN_CLOSE",
+         "shippedReversed": "PO_RECEIPT_RV",
+         "draftOrder": "PO_DRAFT_CREATE",
+         "deleted":"PO_DRAFT_DELETE"
+     },
+     "IBT_M": {
+         "toStore": {
+             "submitted": "IBT_SUBMITTED_IN",
+             "unconfirmed": "UNCONFIRMED_IN",
+             "confirmed": "IBT_CONFIRMED_IN",
+             "shipped": "IN_TRANSIT_IN",
+             "received": "IBT_RECEIPT_IN",
+             "forceClosed": "FORCE_CLOSED_IN",
+             "rejected": "IBT_REJECTED_IN",
+             "closed": "ASN_CLOSE",
+             "shippedReversed": "IBT_RECEIPT_IN_RV",
+             "submitted_in_rvs":"IBT_SUBMITTED_IN_RVS",
+             "confirmed_in_rvs":"IBT_CONFIRMED_IN_RVS",
+             "rejected_in_rvs":"IBT_REJECTED_IN_RVS",
+             "lost": "IBT_LOST_IN",
+             "shippedMore": "IBT_SHIPPED_MORE_IN",
+             "shippedLess": "IBT_SHIPPED_LESS_IN",
+             "draftOrder": "IBT_DRAFT_CREATE",
+             "deleted":"IBT_DRAFT_DELETE"
+
+         },
+         "fromStore": {
+             "submitted": "IBT_SUBMITTED_OUT",
+             "unconfirmed": "UNCONFIRMED_OUT",
+             "confirmed": "IBT_CONFIRMED_OUT",
+             "shipped": "IN_TRANSIT_OUT",
+             "received": "IBT_RECEIPT_OUT",
+             "forceClosed": "FORCE_CLOSED_OUT",
+             "rejected": "IBT_REJECTED_OUT",
+             "closed": "ASN_CLOSE",
+             "shippedReversed": "IBT_RECEIPT_OUT_RV",
+             "submitted_out_rvs":"IBT_SUBMITTED_OUT_RVS",
+             "confirmed_out_rvs":"IBT_CONFIRMED_OUT_RVS",
+             "rejected_out_rvs":"IBT_REJECTED_OUT_RVS",
+             "lost": "IBT_LOST_OUT",
+             "shippedMore": "IBT_SHIPPED_MORE_OUT",
+             "shippedLess": "IBT_SHIPPED_LESS_OUT",
+             "draftOrder": "",
+             "deleted":""
+         }
+     },
+     "PUSH": {
+        "fromStore": {
+            "shipped": "MAN_SHIP_OUT",
+            "received":"PUSH_RECEIPT_OUT",
+            "shippedReversed":"PUSH_RECEIPT_OUT_RV",
+            "lost": "PUSH_LOST_OUT",
+            "shippedLess": "PUSH_SHIPPED_LESS_OUT",
+            "shippedMore": "PUSH_SHIPPED_MORE_OUT",
+            "draftOrder": "PUSH_DRAFT_CREATE",
+            "shipInProgress": "PUSH_DRAFT_CREATE",
+            "deleted":"PUSH_DRAFT_DELETE"
+        },
+        "toStore":{
+            "shipped": "MAN_SHIP_IN",
+            "received":"PUSH_RECEIPT_IN",
+            "shippedReversed":"PUSH_RECEIPT_IN_RV",
+            "lost": "PUSH_LOST_IN",
+            "shippedLess": "PUSH_SHIPPED_LESS_IN",
+            "shippedMore": "PUSH_SHIPPED_MORE_IN",
+            "shipInProgress": "PUSH_DRAFT_CREATE",
+            "draftOrder": "",
+            "deleted":""
+
+        }
+     },
+     "DROP_SHIP": {
+        "submitted": "DROP_SHIP_SUBMITTED",
+        "draftOrder": "DROP_SHIP_DRAFT_CREATE",
+        "deleted": "DROP_SHIP_DRAFT_DELETE"
+     }
+}

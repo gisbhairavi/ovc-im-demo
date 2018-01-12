@@ -1,0 +1,91 @@
+<div class="stk_sear">
+	<div class="col-md-12">
+		<div class="col-md-6">
+			<p><b>{{translation.ibt.ship_to}} :</b></p>
+			<!-- <form class="form-horizontal"> -->
+				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.customerorder.customer_name}}</label>
+				    <div class="col-sm-6">
+				      <input type="text" name="contactName" ng-model="customerorders.contactName"class="form-control">
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.customerorder.addline1}}</label>
+				    <div class="col-sm-6">
+				      <input type="text" name="toStreetNumber" ng-model="customerorders.toStreetNumber" class="form-control">
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.customerorder.addline2}}</label>
+				    <div class="col-sm-6">
+				      <input type="text" name="toStreetName" ng-model="customerorders.toStreetName" class="form-control">
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.vendors[0].city}}</label>
+				    <div class="col-sm-6">
+				      <input type="text" name="toCity" ng-model="customerorders.toCity" class="form-control">
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.vendors[0].zipcode}}</label>
+				    <div class="col-sm-6">
+				      <input type="text" name="toPostalCode" ng-model="customerorders.toPostalCode"  class="form-control">
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.vendors[0].country}}</label>
+				    <div class="col-sm-6">
+				    	<select data-ng-model="customerorders.toCountry" id="toCountry" class="form-control" name="toCountry" data-ng-options="country.label as country.countryname for country in countries" data-ng-change="GetSelectedCountry()"><option value="">-- {{translation.select[0].country}} --</option>
+						</select>
+				    	<!-- <select data-ng-model="customerorders.toCountry" id="toCountry" class="form-control" name="toCountry" data-ng-options="country.countryname for country in countries track by country.label" data-ng-change="GetSelectedCountry()"><option value="">-- {{translation.select[0].country}} --</option>
+						</select> -->
+				      <!-- <select id="countryCode" class="form-control"  data-ng-options="country.code as country.label for country in customData.country" name="toCountry" data-ng-model="customerorders.toCountry" ng-change=""><option value="" >-- {{translation.select[0].country}} --</option>
+					</select> -->
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.vendors[0].phone_number}}</label>
+				    <div class="col-sm-6">
+				      <input type="text" name="toPhoneNumber" ng-model="customerorders.toPhoneNumber" class="form-control">
+				    </div>
+  				</div>
+  				<div class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{translation.purchaseorders[0].email_add}}</label>
+				    <div class="col-sm-6">
+				      <input type="email" name="email" ng-model="customerorders.email" class="form-control">
+				    </div>
+  				</div>
+			<!-- </form> -->
+		</div>
+
+		<div class="col-md-6">
+			<p><b>{{translation.purchaseorders[0].shipping_method}} :</b></p>
+			<!-- <form class="form-horizontal"> -->
+				<div ng-repeat="(key,skuvendors) in customerorders.shippings" class="form-group clearfix">
+    				<label class="col-sm-5 control-label">{{skuvendors.vendorname}}</label>
+				    <div class="col-sm-7">
+				    	<select data-ng-model="customerorders.selectedvendors[skuvendors.vendorid]" class="form-control" name="{{skuvendors.vendorid}}" data-ng-options="item.id as item.description for item in skuvendors.alphacodes" data-ng-change="GetSelectedCarrierCodes()"><option value="">--{{translation.purchaseorders[0].select_method}}--</option>
+						</select>
+				    </div>
+				      <!-- <select data-ng-model="customerorders.selectedvendors[skuvendors.vendorid]" class="form-control" name="{{skuvendors.vendorid}}" data-ng-options="item for item in skuvendors.carriercode" data-ng-change="GetSelectedCarrierCodes()"><option value="">--{{translation.purchaseorders[0].select_method}}--</option>
+						</select>
+						{{skuvendors.alphacodes}}
+				    </div> -->
+  				</div>
+  				<!-- <div class="form-group">
+    				<label class="col-sm-3 control-label">{{translation.customerorder.bbDakota}}</label>
+				    <div class="col-sm-6">
+				      <input type="email" class="form-control">
+				    </div>
+  				</div> -->
+		<!-- 	</form> -->
+		</div>
+	</div>
+</div>
+<div class="col-sm-12">
+	<div class="pull-right">
+	<button name="co_previous_btn"type="button" class="btn btn-primary" ng-click="moveNextPreviousBtn('orderdetail');">{{translation.replenishmentFilters[0].previous}}</button>
+	<button name="co_nextbtn" type="button" class="btn btn-primary" ng-click="moveNextPreviousBtn('paymentdetail');">{{translation.buttontypes[0].next}}</button>
+	</div>
+</div>

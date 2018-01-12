@@ -1,0 +1,114 @@
+<div   ng-controller="stylematrixctrl" class="styleContainer" >
+	<div  ng-if="hidestyletable" class="select_product clearfix">
+		<div class="pro_pdding clearfix">
+			<div class="col-md-12">
+				<div id="imageId" class="col-md-4 col-sm-4 col-xs-4">
+					<div class="col-md-12" ng-if = "config.action.stockPr.imgbydefault">
+						<div class="product_img ">
+							<div class="media">
+								<img ng-src="{{product.img}}" alt="" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class = "col-md-12 styleMatrixHeader" ng-if = "data.styleMatrix.styleId">
+					<h4>
+						{{translation.productperformlabel.styleMatrix}}
+						<i class="fa fa-times-circle-o" ng-click = "action.closeStyleMatrix()"></i>
+					</h4>
+				</div> -->
+				
+
+				<div class="col-md-8 col-sm-8 col-xs-8 styleMatrixWrapper">
+					<div class="media-body" style="text-align:left;" ng-if="!replinshmentStyleMatrix">
+						<h4>{{res.productCode}}</h4>
+						<p>{{product.description}}</p>
+					</div>
+
+					<!-- <table class="table table-bordered" ng-if = "data.styleMatrix.styleId">
+				    	<thead style = "background:#ccc;">
+				      		<tr>
+				        		<th class = "col-md-2">{{translation.productperformlabel.ImageURL}}</th>
+								<th class = "col-md-3">{{translation.productperformlabel.Style}}</th>
+								<th class = "col-md-4">{{translation.productperformlabel.Description}}</th>
+								<th class = "col-md-2">{{translation.productperformlabel.Color}}</th>
+				      		</tr>
+				    	</thead>
+				    	<tbody>
+					      	<tr>
+					        	<td><img ng-src = "{{data.skuData[data.styleMatrix.styleId].image}}" width = "60px" height = "60px"/></td>
+								<td>{{data.styleMatrix.styleId}}</td>
+								<td>{{data.skuData[data.styleMatrix.styleId].styleDescription}}</td>
+								<td>{{data.skuData[data.styleMatrix.styleId].color}}</td>
+					      	</tr>
+				    	</tbody>
+				  	</table> -->
+				  	
+
+					<div class="table-responsive inner_table" style="max-width: 750px;">
+						<table class="table table-bordered text-center">
+							<thead>
+								<tr style = "background: #ddd;">
+									<th colspan="{{x_axis_length}}" class="text-center header_txt">
+										{{x_axis_name}}
+									</th>
+								</tr>
+								<tr style = "background: #f7f7f7;">
+									<td colspan="2" ng-if="y_axis_length > 0"> </td>
+									<td data-ng-repeat="x in x_axis_values">
+										<span ng-hide="{{x_is_color}}"><strong>{{x}}</strong></span>
+										<span ng-show="{{x_is_color}}" style="background:{{x}};background-color:red;width: 1em; height: 1em; display: inline-block; border-radius: 5px;"> </span>
+									</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-if="y_axis_length == 0">
+									<td data-ng-repeat="x in x_axis_values track by $index" ng-class="{ 'success' : tmp[0][x][0].indexed_tmp === selected_values, 'greycell' : res.sku == ''}" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" class="padding0 inner_tb" style="height: 25px;">
+										<grid-cell grid-value="tmp[0][x][0]" grid-y="0" grid-x="x" grid-mode="res.mode" grid-index="0" preview-items="previewItems(0, x)" grid-sku="value.sku" edit-items="editItems(0, x, 0)" hover-edit="hoverEdit"  changed-skus="changedSkus" hide-items="hideItems(0, x, 0)" get-default-reorder = "getDefaultReorder(tmp[0][x][0].sku)"></grid-cell>
+									</td>
+								</tr>
+
+								<tr data-ng-repeat="(key, y) in y_axis_values" ng-if="y_axis_length > 0" style="height: 2.2em;">
+									<td ng-if="key == 0" rowspan="{{y_axis_length}}" class="verticalText1" style = "background:#ddd;">
+										<div class="rotated-text"><span class="rotated-text-inner">{{y_axis_name}}</span></div>
+									</td>
+									<td style = "background:#f7f7f7;">
+										<span ng-hide="{{y_is_color}}"><strong>{{y}}</strong></span>
+										<span ng-show="{{y_is_color}}" style="background:{{y}};background-color:red;width: 1em; height: 1em; display: inline-block; border-radius: 5px;"> </span>
+									</td>
+									<td data-ng-repeat="(x, value) in final_ar[y] track by $index" ng-class="{'success' : value.index_values === selected_values, 'greycell' : value.sku == ''}" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" class="padding0 inner_tb"> 
+										<grid-cell ng-if="value.sku" grid-value="value" grid-y="y" grid-x="value.x_axis" grid-mode="res.mode" grid-index="$index" preview-items="previewItems(y, value.x_axis)"   grid-sku="value.sku" edit-items="editItems(y, value.x_axis, x)" hover-edit="hoverEdit"    changed-skus="changedSkus"   hide-items="hideItems(y, value.x_axis, x)" get-default-reorder = "getDefaultReorder(value.sku)"></grid-cell>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- <span class = "col-md-5 pull-right setDefaultOrder" ng-if = "data.styleMatrix.styleId && !(res.mode=='readOnly')">
+							<label style = "cursor: pointer;margin: 7px 0;"><input type = "checkbox" style = "float: left;margin: 4px 5px 0 0;" ng-model = "data.setDefaultReorderStyleMtrixChkbx" ng-change  = "action.setDefaultReorderStyleMtrix()" />{{translation.replenishmentRules[0].set_default_reorder_point}}</label>
+							<span class = "pull-right col-md-5">
+								<input type = "number" class = "form-control" min = "0" ng-model = "data.setDefaultReorderStyleMtrix" ng-change  = "action.setDefaultReorderStyleMtrix()" ng-readonly = "!data.setDefaultReorderStyleMtrixChkbx" style="padding: 10px;"/>
+							</span>
+						</span> -->
+						
+						<span  ng-if = "!data.styleMatrix.styleId">
+							<button  ng-if='res.mode=="edit"'  type="button" class="btn btn-primary pull-right" ng-click="saveVarients()"><i class="fa fa-plus"></i> {{ovcLabel.styleMatrix.add}}</button>
+						</span>
+					</div>
+					
+
+				</div>	
+				<div  class = "col-md-12">
+					<button ng-if = "data.styleMatrix.styleId && ! (res.mode=='readOnly')" class = "btn btn-primary pull-right" ng-click="saveVarients()" style="margin-top: 30px;">{{ovcLabel.styleMatrix.add}}</button>
+					<a id="commonshow_image" ng-click="config.action.stockPr.imgbydefault=!config.action.stockPr.imgbydefault" class="btn" style="float: left;">{{(config.action.stockPr.imgbydefault)?'Hide Image':'Show Image'}}</a>
+				</div>
+				<!-- <div class = "col-md-12 replenishmentStyleMatrixBtns" ng-if = "data.styleMatrix.styleId"> -->
+
+					<!-- <button class = "btn btn-primary" ng-click = "action.closeStyleMatrix()">{{ovcLabel.styleMatrix.cancel}}</button> -->
+					<!-- <button class = "btn btn-primary" ng-click="saveVarients()">{{ovcLabel.styleMatrix.save}}</button> -->
+				<!-- </div> -->
+			</div>
+			<!-- <a ng-click="config.action.stockPr.imgbydefault=!config.action.stockPr.imgbydefault" class="btn" style="float: left;">{{(config.action.stockPr.imgbydefault)?'Hide Image':'Show Image'}}</a> -->
+		</div>
+	</div>
+</div>

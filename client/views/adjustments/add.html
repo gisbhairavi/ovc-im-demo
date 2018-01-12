@@ -1,0 +1,167 @@
+
+<style>
+.alert-draftadjust{
+	background:blue;
+	color: white;
+	font-size: 16px;
+}
+</style><button class="col-md-12 text-left btn btn-default"  ng-click="back()" ng-if="stocklookup">
+  <i class="fa fa-arrow-left" aria-hidden="true"></i>{{ovcLabel.adjustments.list.back_stocklookup}}
+</button>
+<div class="row add_tit ng-scope" style="border-bottom : none !important;">
+	<div class="col-lg-12">
+        <h3 class="page-header clearfix">{{adjustmentTitle}} :  {{form.adjustNumber}}	
+	        <div class="orderst col-md-2 pull-right" >
+	        	<div class="pull-right">
+	        		<span class="label status" ng-class="{'alert-draftadjust': form.adjustStatus == 'Draft','alert-reversal-draft': form.adjustStatus == ovcLabel.adjustments.list.draft_reversal,
+	        		'alert-reversed': form.adjustStatus == ovcLabel.adjustments.list.draft_reversed }">{{form.adjustStatus}}</span>
+	        	</div>
+	        </div> 
+        </h3>
+    </div>
+</div>
+<div >
+	<!-- <form role="form" name="adjustmentform" > -->
+	<div class="row r_margin ng-scope" ng-controller="stylematrixctrl">
+		<div class="panel-default">
+			<div class="panel-body search_box">
+				<div class="col-lg-12">
+					<div class="col-sm-12 col-md-4">
+						<div class="v_edit " style="padding-left:0px;margin-bottom: 10px;" >
+							<label class="control-label">{{ovcLabel.adjustments.labels.store}} </label>
+							<select id="storelocation" ng-change = "selectstore()" class="form-control storelocation" name="shiptostore"  
+							ng-model="form.shiptostore" ng-disabled = "isReversal">
+                                <option value="">{{ovcLabel.adjustments.placeholder.selectStore}}</option>
+                                <option ng-repeat="item in flatLocations" value="{{ item.id }}" ng-disabled="{{item.type}}">
+                                {{ item.indent }} {{ item.displayName }}
+                                </option>
+                            </select>
+
+							<div class="erroralert">
+							<span ng-show="tab.error['storelocation']" class="alert alert-danger">
+							{{tab.errormsg['storelocation']}}</span>
+						</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label ng-binding">{{ovcLabel.adjustments.labels.adjustmentCode}}</label>
+							<select id="prcode" class="form-control adjustment_code"  data-ng-options="prtypes.code as prtypes.label for prtypes in adjustmentcode" name="adjustCode" data-ng-model="form.adjustCode" ng-change="getAdjustName(form.adjustCode)" ng-disabled = "isReversal" ><option value="" >{{ovcLabel.adjustments.placeholder.adjustmentCode}}</option>
+							</select>
+							<div class="erroralert">
+							<span ng-show="tab.error['prcode']" class="alert alert-danger">
+							{{tab.errormsg['prcode']}}</span>
+						</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label ng-binding">{{ovcLabel.adjustments.labels.adjustmentName}}</label>
+							<select id="adj_name" class="form-control adj_name"  data-ng-options="cole.tranTypeId as cole.tranName for cole in TranTypeData" ng-change="adjustmentname()" name="adjustName" data-ng-model="form.adjustName" ng-disabled = "isReversal" ><option value="" >{{ovcLabel.adjustments.placeholder.adjustmentName}}</option>
+							</select>
+							<div class="erroralert">
+							<span ng-show="tab.error['adj_name']" class="alert alert-danger">
+							{{tab.errormsg['adj_name']}}</span>
+						</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label ng-binding">{{ovcLabel.adjustments.labels.reasonCode}}</label>
+							<select id="res_code" class="form-control res_code"  data-ng-options="cole.resId as cole.resDesc for cole in ReasonCodeData" name="reasonCode" data-ng-model="form.reasonCode" ng-change="focustosku()" ><option value="" >{{ovcLabel.adjustments.placeholder.reasonCode}}</option>
+							</select>
+							<div class="erroralert">
+							<span ng-show="tab.error['res_code']" class="alert alert-danger">
+							{{tab.errormsg['res_code']}}</span>
+						</div>
+						</div>
+						
+						<div class="form-group" >
+							<label class="control-label ng-binding">{{ovcLabel.adjustments.labels.createdBy}}</label>
+							<input type = "text" class="form-control" ng-model = "form.createdby" ng-disabled="true" />
+						</div>
+					</div>
+
+					<div class="col-sm-12 col-md-4">
+						<div class="form-group">	
+							<label class="control-label">{{ovcLabel.adjustments.labels.orderNumber}}</label>
+							 <!-- <autocomplete   attr-input-class="form-control"  class="search_scroll"  id="ordersearch" ng-model="form.orderNumber" attr-placeholder="{{ovcLabel.adjustments.placeholder.orderNumber}}" click-activation="false" data="purchaseOrders" on-type="getOrderIds" attr-input-autocomplete="off" ng-disabled = "isReversal" attr-input-id="addpage_order_no"></autocomplete> -->
+							 <autocomplete class="search_scroll" attr-input-class="form-control" attr-input-id="ordersearch" ng-model="form.orderNumber" attr-placeholder="{{ovcLabel.adjustments.placeholder.orderNumber}}" click-activation="false" data="purchaseOrders" on-type="orderServiceFun" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></autocomplete>
+						</div>
+						<span ng-show="action.formerror['order_number']" class="alert alert-danger">{{action.formerrormsg['order_number']}}</span>
+					
+						<div class="form-group" ng-if = "isReversal || form.adjustStatus == ovcLabel.adjustments.list.draft_reversed">
+							<label class="control-label ng-binding">{{ovcLabel.adjustments.list.original_adjust}}</label>
+							: {{adjustment_no}}
+						</div>
+						<div class="form-group">
+							<label class="control-label ng-binding">{{ovcLabel.adjustments.labels.comments}}</label>
+							<textarea ng-disabled = "isReversal" class="spl_inst form-control add_or"  name="shipping_special" ng-model="form.comment" placeholder="{{ovcLabel.adjustments.placeholder.enterMessage}}"></textarea>
+						</div>							
+					</div>
+
+					<div class="col-sm-12 col-md-4">
+						<div>
+						 	<div class="p_total">
+						 		<span class="ven_tblk clearfix" ><label>{{ovcLabel.adjustments.labels.totalSku}}</label>: <label class="view_tot"> {{form.numberOfPackages}}</label></span>
+							 	<span class="ven_tblk clearfix" ><label>{{ovcLabel.adjustments.labels.totalQty}}</label>: <label class="view_tot">{{form.numberOfSKU}}</label></span>
+							 	<span class="ven_tblk clearfix" ng-if="userRolePermissions.permissions.viewPurchasePrice"><label>{{ovcLabel.adjustments.labels.totalPurchasePrice}}</label>: <label class="view_tot">{{currency}}  {{form.totalPurchaseCost | number : 2}}</label></span>
+						 	</div>
+						</div>
+					</div>
+					<br clear="all" />
+
+					<div class="col-md-10" style="padding-left:0px; " ng-if = "!isReversal">
+						<div class="col-md-5 pad_box" style="padding-left:0px; margin-left:15px; " >
+						<label class="control-label ng-binding">{{ovcLabel.adjustments.labels.products}}</label>
+							<ovcautocomplete class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="prodresult" id="slpsearch" ng-model="po_add.prodresult" attr-placeholder="{{ovcLabel.adjustments.placeholder.search}}" click-activation="false" data="addedproducts" on-type="dosrchproduct" on-select="doSelectproduct" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }"></ovcautocomplete>
+						</div>
+						<div class="col-md-3" style="margin-top: 24px;">
+							<button id="common_add_btn" class="btn btn-primary" ng-click="poAddSkus(po_add)"><i class="fa fa-plus"></i> {{ovcLabel.adjustments.buttons.add}}</button>
+						     <button id="ovcUploadBtn" class="file-input btn btn-primary btn-file pull-right">{{ovcLabel.adjustments.buttons.import}}
+						    	<input type="file" ng-click ="adjustFileupload($event)"  on-read-file="uploadAdjust($fileContent,$file,0)" file-model="adjustfile" accept=".dat"/>
+						    </button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 erroralert">
+				<span ng-show="tab.error['skusearch']" class="alert alert-danger">
+				{{tab.errormsg['skusearch']}}</span>
+			</div>
+
+			<div ng-if="loadmat == true">
+				<img src="images/loading.gif" />
+			</div>
+
+			<div class="row" ng-show="showstyle"  id="adjustmentmatrix" style="padding: 20px;"></div> 
+			<div class = "col-md-12">
+			<div class="ven_tbody ">
+				<div class="ven_tbody">
+					<div ng-if="!withPagination">
+						<grouped-style  skuitems="skuslist" ></grouped-style>
+					</div>
+					<div ng-if="withPagination">
+						<grouped-style  template-url="modules/styleGroup/SKU_GroupAdjustment.html" skuitems="skuslist" ></grouped-style>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="ven_tblk clearfix">
+		<div class="row r_margin ng-scope">
+			<div class="save_bg">
+				<div class="save_can clearfix">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button id="cancelBtn" type="submit" class="btn btn-primary"  ng-click="cancelBtn()">{{ovcLabel.adjustments.buttons.cancel}}</button>
+							<button id="deleteBtn" type="submit" class="btn btn-primary" ng-if = "form.adjustStatus == ovcLabel.adjustments.list.draft_reversed || form.adjustStatus == ovcLabel.adjustments.list.draft " ng-hide = "isReversal"  ng-click="deleteBtn()">{{ovcLabel.adjustments.buttons.delete}}</button>
+							<button type="submit" id = "adj_code" name="common_draft_btn" class="btn btn-primary"  ng-click="saveadjustment(form,po_add,'Draft');">{{ovcLabel.adjustments.buttons.saveDraft}}</button>
+							<button type="submit" id = "adj_code"  name="common_adjust_btn"  class="btn btn-primary"  ng-click="save_adjustment(form,po_add,'Adjusted');">{{ovcLabel.adjustments.buttons.adjust}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- </form> -->
+</div>
+<!--ng-show="action.editable">

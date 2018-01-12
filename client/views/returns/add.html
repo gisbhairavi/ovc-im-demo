@@ -1,0 +1,330 @@
+<div class="row add_tit ng-scope">
+	<div class="col-lg-12">
+        <h3 class="page-header clearfix" ng-show="{{titleadd}}">{{translation.returns.add_newreturn}} </h3>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<section ng-controller="TranstabCntrl as tab">
+		<div class="pro_menu  clearfix">
+			<ul class="nav nav-pills">
+				<li ng-class="{active:tab.isSet(1)}"><a href id="ret_detail" ng-click="tab.setTab(1)">{{translation.returns.ret_detail}}</a></li>
+				<li ng-class="{active:tab.isSet(2)}"><a href id="ret_check" ng-click="tab.setTab(2); ">{{translation.returns.ret_summary}}</a></li>
+				
+			</ul>
+		</div>
+<div ng-show="tab.isSet(1)">
+<div class="ven_tblk clearfix">
+	<div class="row r_margin ng-scope">
+		<div class="col-md-12 stk_sear">
+			<div class="panel-default">
+				<div class="panel-body search_box">
+					<div class="row">
+						<div class="col-lg-12">
+							<form role="form" name="form">
+								<!-- <div class="col-md-8"> -->
+									<div class="col-md-4">
+												
+										<div class="v_edit" style="padding-left:0px;margin-bottom: 10px;">
+												<label class="control-label ng-binding">{{translation.returns.rma_type}}</label>
+												<select id="prcode" class="form-control"  data-ng-options="prtypes.code as prtypes.label for prtypes in returntype" name="returncode" data-ng-model="return_add.returncode" ng-change="Getordertype(return_add.returncode)">
+												<option value="">-- {{translation.returns.sel_return}} --</option></select>
+										</div>
+											
+
+										<div class="v_edit" style="padding-left:0px;margin-bottom: 10px;">	
+												<label class="control-label ng-binding">{{translation.returns.ret_to}}</label>
+												<select ng-options=" vndr.vendorId as vndr.companyName for vndr in vendor_datas  | orderBy:'companyName' " class="form-control" name="vendorName" ng-model="return_add.vendorName" ng-change="GetSelectedVendor(return_add.vendorName)"  ng-disabled="vendor_datas.length==1">
+												
+												<option value="">-- {{translation.purchaseorders[0].select_vendor}} --</option></select>
+										</div>
+									
+										<div class="v_edit " style="padding-left:0px;margin-bottom: 10px;" >
+											<label class="control-label">{{translation.returns.ret_from}}: </label>
+								
+								
+											<select ng-options="col.id as col.displayName for col in store_datas | orderBy:'displayName' " class="form-control" name="shiptostore"  
+											ng-model="return_add.shiptostore" ng-change="getstore_details(return_add.shiptostore)" ><option value="">-- {{translation.locations[0].select_store}} --</option></select>
+								
+										</div>
+										<div class="v_edit" style="padding-left:0px;margin-bottom: 10px;">	
+											<label class="control-label">{{translation.counts[0].created_by}}: </label>
+									
+											<input class="form-control"  placeholder="{{translation.counts[0].created_by}}" ng-model="return_add.createdby" name="createdby"  ng-disabled="true">
+											
+										</div>						
+									</div>
+									<div class="col-md-4">	
+										<div class="form-group">
+											<label class="control-label">{{translation.purchaseorders[0].orderno}}: </label>
+											<autocomplete attr-input-class="form-control" attr-input-id="searchorder"  id="ordersearch" ng-model="return_add.orderNumber" attr-placeholder="{{translation.interface.searchOrderLabel}}" click-activation="false" data="purchaseOrders" attr-input-autocomplete="off" ></autocomplete>
+											
+										</div>
+										<div  class="form-group">
+										   <label class="control-label">{{translation.purchaseorders[0].erporder}}</label>
+											<input class="form-control" name="erpOrderNumber" ng-model="return_add.erpOrderNumber" />
+										</div>
+										<div class="form-group">
+										<label class="control-label">{{translation.purchaseorders[0].special_instructions}}:</label>
+										<textarea class="spl_inst form-control add_or"  name="shipping_special" ng-model="return_add.shipping_special" placeholder="{{translation.purchaseorders[0].enter_msg}}"></textarea>
+										</div>
+										
+									</div>	
+									
+								<div class="col-md-4">
+									<div>
+									 <div class="p_total">
+									  <span class="ven_tblk clearfix" ><label>{{translation.returns.no_of_packages}}</label> {{allreturns.allpackages}}</span>
+									   <span class="ven_tblk clearfix" ><label>{{translation.asn_service.noOfSkus}}</label> {{allreturns.allskus}}</span>
+								<!-- 	    <span class="ven_tblk clearfix" ><label>{{translation.asn_service.totalPackages}}</label> {{allreturns.allstyles}}</span> -->
+										<span class="ven_tblk clearfix"><label>{{translation.purchaseorders[0].tot_qty}}</label> {{allreturns.allqty}}</span>
+									<!--   <span class="ven_tblk clearfix"><label>{{translation.returns.total_wac}}</label>{{currency}} {{allreturns.allsubtotal}}</span> -->
+									  <span class="ven_tblk clearfix"><label>{{translation.purchaseorders[0].subtotal}}</label>{{currency}} {{allreturns.allsubtotal}}</span>
+									  <span class="ven_tblk clearfix" ><label>{{translation.purchaseorders[0].tax}}</label>{{currency}} {{allreturns.alltaxes}}</span>
+									  <span class="ven_tblk clearfix" ><label>{{translation.purchaseorders[0].VAT}}</label>{{currency}} {{allreturns.allvates}}</span>
+									  <span class="ven_tblk clearfix"><label>{{translation.purchaseorders[0].total_cost}}</label>{{currency}} {{allreturns.alltotal}}</span></div>
+									</div>
+								</div>
+									
+								</div>      
+							</form>
+					</div><!-- /.row (nested) -->
+					<div class="ven_tbody ">
+						<div class="ven_tbody">
+							<div class="row">
+								<div class="col-sm-12">
+									<div ng-show="true">
+
+										<div class="thumbnail media padding col-sm-12">
+											<div id="package_content"></div>
+											<div class="col-sm-2 pull-right createPackageBtn">
+												<button create-return-package-button   packageOrderSkus="packageOrderSkus"  oldasnTmpObj="oldasnTmpObj"    getreturnpacks="getreturnpacks()" class="btn btn-link" id="createPreturn"><span class="fa fa-plus-circle" style="font-size:1.5em;"> </span></button>
+											</div>
+
+											<div class="col-sm-12">
+												<div class="pull-right">
+												<button class="btn btn-primary" ng-click="getreturnlist()">{{translation.buttontypes[0].cancel}}</button>
+												<button class="btn btn-primary" ng-click="saveReturn();">{{translation.buttontypes[0].save}}</button>
+												<button class="btn btn-primary" ng-click="saveReturn();">{{translation.returns.return}}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="alert alert-warning" ng-show="asnNoResults">
+										{{translation.interface.no_results}}
+									</div>
+
+								</div>
+
+								<script type="text/ng-template" id="returnpackage.html">
+									<div class="result_content col-sm-10 sample-show-hide" ng-show="asn[packageId].show">
+										<div class="col-sm-12">
+											<div class="col-sm-3">
+												<label>{{translation.interface.package}} {{asnTmpObj[packageId].packageId}}</label>
+											</div>
+											<div class="col-sm-6">
+												<label>{{translation.interface.tracking_number}}:</label>
+					
+												<input type="text" class="form-control" ng-model="asnTmpObj[packageId].trackingNumber"  title="{{translation.interface.tracking_number}}" />
+											</div>
+										</div>
+										<div class="col-sm-12 thumbnail media padding result_content">
+											<div class="col-sm-12">
+												<div class="col-sm-12 paddingL_0">
+													<div class="col-sm-6">
+														<label class="control-label">{{translation.interface.ship_date}}: </label>
+														<div class="input-group date">
+															
+															<input calendar1  ng-model='asn[packageId].shipDate'  class="form-control"  ng-change='change_frdate(ncount.fromdate)' min-date="{{getDatetime | dateForm}}" required />
+															
+															<div class="input-group-addon">
+																<span class="glyphicon glyphicon-th"></span>
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<label class="control-label">{{translation.interface.delivery_date}}: </label>
+														<div class="input-group date">
+															
+															<input calendar1  ng-model='asn[packageId].expectedDeliveryDate'  class="form-control"  ng-change='change_todate(ncount.enddate)' min-date="{{newDate | dateForm}}" required />
+															
+															<div class="input-group-addon">
+																<span class="glyphicon glyphicon-th"></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 result_content paddingL_0">
+													<div class="col-sm-5">
+														<autocomplete  class="search_scroll" attr-input-class="prod_result" ng-model="asnTmpObj[packageId].prodresult" attr-placeholder="{{translation.messages[0].search_by_sku}}..." click-activation="false" data="addedproducts" on-type="dosrchproduct" on-select="doSelectproduct" id="scrol" ></autocomplete>
+														
+													</div>
+													<div class="col-sm-5" style="padding-left:0px; " >
+														<autocomplete class="search_scroll"  attr-input-class="styles_result" ng-model="asnTmpObj[packageId].styleresult"    attr-placeholder="{{translation.messages[0].search_style}}" click-activation="false" data="styleproducts" on-type="dostylesrch" on-select="dostyleselect" id="postyadd" ></autocomplete>
+														
+													</div>
+												
+													<button class="btn btn-primary col-sm-1" ng-click="addNewPackageSkus(packageId);">{{translation.interface.add}}</button>
+													
+
+													<button class="btn btn-link pull-right padding_0" ng-click="removePackage(packageId);"><span class="fa fa-trash-o"></button>
+												</div>
+												<div  class="col-sm-12"   ng-show="showstyle"  id="package_style_{{packageId}}"></div>
+											</div>
+											<div class="table-responsive col-sm-12 result_content">
+												<table class="table table-bordered">
+													<tr>
+														<th>{{translation.returns.lineno}}</th>
+														<th>{{translation.interface.skus}}</th>
+														<th>{{translation.interface.description}}</th>
+														
+													    <th>{{translation.transrules[0].WAC}}</th>
+														<th>{{translation.vendors[0].cost}}</th>
+														<th>{{translation.shipments[0].UOM}}</th>
+														<th>{{translation.interface.order_qty}}</th>
+														<th > {{translation.purchaseorders[0].total_cost}}</th>
+														<th>{{translation.interface.action}}</th>
+													</tr>
+													
+													<tr ng-repeat="($index,skuItem) in packageOrderSkus[packageId]">
+														<td>{{$index+1}}</td>
+														<td>{{skuItem.sku}}</td>
+														<td>{{skuItem.name}}</td>
+														<td>{{skuItem.wac}}</td>
+														<td > {{skuItem.cost}}</td>
+														<td style="width:150px">
+								  <select ng-options=" uom.id as uom.name for uom in UOM  | orderBy:'name' "  ng-model="skuItem.selectedUOM" class="form-control">
+									<option value="">--{{translation.purchaseorders[0].select_uom}}--</option></select> </td>
+														<td style="width:130px">
+															
+														    <input type="number" min="0" ng-model="skuItem.qty" class="form-control"  ng-change="calcItems1($index,skuItem.qty, skuItem.cost,skuItem.total,skuItem.sku,packageId)"/>
+														</td>
+														<td style="width:130px" >{{currency}} {{skuItem.totalnotax}}</td>
+														<td>
+															
+															<button class="btn btn-link pull-right padding_0" ng-click="removePackageSkus($index, skuItem.qty, skuItem.total,skuItem.totalnotax, skuItem.totalProductTax, skuItem.totalProductVat,  packageId);"><span class="fa fa-trash-o"></button>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div ng-show="tab.isSet(2)">
+
+		<div class="row r_margin ng-scope">
+			<div class="ven_tblk clearfix">
+				<div class="col-md-12">
+					<div class="panel-default">
+							<div class="panel-body search_box">
+								<div class="row">
+									<div class="col-lg-12 ">
+									
+									<div class="col-md-8">
+									<h4>{{translation.purchaseorders[0].order_summary}}:</h4>
+									<p ><label>{{translation.sidebar[0].vendors}}:</label> {{selvendor}} </p>
+									<p><label>{{translation.purchaseorders[0].shipping_tostore}}:</label>{{shippingstr1}}</p>
+									
+									</div>
+									<div class="col-md-4">
+										<div>
+										<div class="p_total">
+											<span class="ven_tblk clearfix" ><label>{{translation.returns.no_of_packages}}</label> {{allreturns.allpackages}}</span>
+											<span class="ven_tblk clearfix" ><label>{{translation.asn_service.noOfSkus}}</label> {{allreturns.allskus}}</span>
+									<!-- <span class="ven_tblk clearfix" ><label>{{translation.asn_service.totalPackages}}</label> {{allreturns.allstyles}}</span> -->
+											<span class="ven_tblk clearfix"><label>{{translation.purchaseorders[0].tot_qty}}</label> {{allreturns.allqty}}</span>
+									<!--<span class="ven_tblk clearfix"><label>{{translation.returns.total_wac}}</label>{{currency}} {{allreturns.allsubtotal}}</span> -->
+											<span class="ven_tblk clearfix"><label>{{translation.purchaseorders[0].subtotal}}</label>{{currency}} {{allreturns.allsubtotal}}</span>
+											<span class="ven_tblk clearfix" ><label>{{translation.purchaseorders[0].tax}}</label>{{currency}} {{allreturns.alltaxes}}</span>
+											<span class="ven_tblk clearfix" ><label>{{translation.purchaseorders[0].VAT}}</label>{{currency}} {{allreturns.allvates}}</span>
+											<span class="ven_tblk clearfix"><label>{{translation.purchaseorders[0].total_cost}}</label>{{currency}} {{allreturns.alltotal}}</span>
+										</div>		
+										</div>		
+									</div>
+						
+									</div>
+								</div>
+								
+							</div>
+						<div class="ven_tbody ">
+							<div class="row">
+							
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+					
+		<div class="ven_tblk clearfix">
+			<div class="row r_margin ng-scope">
+				<div class="save_bg">
+					<div class="save_can clearfix">
+						<div class="col-md-12">
+							<div class="pull-right">
+						
+						<!-- 	<a href  ng-click="add_error()" > <button type="submit" ng-click="order_adsub(po_add,O_add)" class="btn btn-primary">{{translation.buttontypes[0].submit}}</button></a>
+							<a ui-sref="ovc.purchaseorder-list" class="btn btn-primary" ng-click="">{{translation.buttontypes[0].cancel}}</a> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+</section>
+
+
+<style>
+	.autocomplete ul{
+		max-height:300px;
+		overflow-y:scroll;
+	}
+
+	.paddingL_0 {
+		padding-left: 0px;
+	}
+
+	.table-bordered>thead>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>tfoot>tr>td {
+	    border: 1px solid #ddd;
+	}
+
+	.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+	    background-color: #f9f9f9;
+	}
+
+	.result_content{
+		padding-top:20px;
+		/*padding-bottom:20px;*/
+	}
+
+	.padding_0{
+		padding:0px !important;
+	}
+	.padding{
+		padding:10px 10px 20px 10px;
+	}
+
+	.createPackageBtn{
+		position: relative;
+		top:54px;
+		margin-left:0 !important;
+	}
+	.sample-show-hide {
+	  -webkit-transition:all linear 0.5s;
+	  transition:all linear 0.5s;
+	}
+
+	.sample-show-hide.ng-hide {
+	  opacity:0;
+	}
+
+</style>

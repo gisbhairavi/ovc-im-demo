@@ -1,0 +1,109 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header">Zone 1
+		<div class="pull-right add_ven">
+<a class="btn-primary" title="Add Vendor" ui-sref="ovc.purchaseorder-add" href="#/ovc/purchaseorders/add">
+<i class="fa fa-print"></i> {{translation.buttontypes[0].print}}
+</a>
+</div>
+		</h3>
+		
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row r_margin">
+<div class="ven_tblk clearfix">
+    <div class="col-lg-12"  >
+		<!-- /.table-responsive -->
+		<div class="col-md-12" style="padding: 0px;">
+			<div class="srch_panel">
+				<form role="form" name="form" >
+					
+						<div class="panel-default">
+						<div class="panel-body search_box">
+						<div class="row">
+						
+						<div class="col-md-3 purs_order">
+										<p><label>{{translation.counts[0].zone_status}}:</label> open</p>
+										<p><label>{{translation.counts[0].zone_hand_countqty}}:</label> 30</p>
+										<p><label>{{translation.counts[0].zone_scan_qty}}:</label> 25</p>
+										<p><label>{{translation.counts[0].zone_sku_qty}}:</label> 5</p>
+										<p><label>{{translation.counts[0].operator_id}}:</label> 12345</p>
+										
+						</div>
+						<div class="col-md-5">
+						<div class="form-group col-md-12">
+						<label class="control-label ">Comment: </label>
+						<textarea class="form-control c_detail" placeholder="Text" ng-model="ncount.countcomments" name="countcomments" rows="3"></textarea>
+						</div>
+						</div>							
+						
+					</div>
+					</div>
+					<div class="col-md-8 pad_style">
+							<div class="form-group">
+								<div class="col-md-12" style="padding:0;">
+									<div class="col-md-6 col-sm-6 pad_style">
+									<input id="search" class="form-control" type="text" placeholder="Search for Number of Zones, Comment ..." name="search">
+									</div>
+								</div> 
+							</div>
+						</div>
+						<div class="col-md-2 search_btns ">
+						<div class="pg_limit ">
+							<button type="submit" class="btn btn-primary" id="moveship" ng-click="submitted=true"><i class="fa fa-plus"></i> {{translation.buttontypes[0].add}}</button>
+						</div>
+						</div>
+					</div>
+				</form>
+				<br clear="all" /><br clear="all" />
+			</div>		
+		</div>
+		<br clear="all" />
+			<form role="forms" name="forms" >
+					<table class="table table-striped table-bordered"  >
+						<thead>
+						<th></th>
+							<th>{{translation.vendors[0].sku}}</th>
+							<th>{{translation.locations[0].description}}</th>
+							<th>{{translation.purchaseorders[0].p_style}}</th>
+							<th>{{translation.purchaseorders[0].p_size}}</th>
+							<th>{{translation.purchaseorders[0].p_color}}</th>
+							<th>{{translation.counts[0].physical_location}}</th>
+							<th> {{translation.counts[0].bad_scans}}</th>
+							<th> {{translation.counts[0].total_count_qty}}</th>
+							
+						</thead>
+						<tbody>
+							
+							<tr>
+								<td>
+								<a class="btn btn-primary del_i" title="Add Vendor" ui-sref="ovc.purchaseorder-add" ><i class="fa fa-comment"></i></a></td>
+								<td>123456 </td>
+								<td>jeans </td>
+								<td >crop</td>
+								<td>S</td>
+								<td >Plain</td>
+								<td>DW1</td>
+								<td></td>
+								<td>5</td>
+							</tr>
+						</tbody>
+					</table>
+				
+				<div class="save_can acc_det clearfix" ng-show="filteredItems > 0">
+				<div class="col-md-12">
+					<div class="pull-right">
+						<button type="submit" class="btn btn-primary" ng-click="submitted=true"> {{translation.buttontypes[0].validate}}</button>
+						<button type="submit" class="btn btn-primary" ng-click="submitted=true"> {{translation.buttontypes[0].recount}}</button>
+						<a href class="btn btn-primary" ng-click="cancel_transaction()"> {{translation.buttontypes[0].cancel}}</a>
+					</div>
+					</div>
+				</div>
+			</form>	
+			</div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+</div>

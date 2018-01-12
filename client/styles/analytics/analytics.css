@@ -1,0 +1,213 @@
+
+#analyticsbody{overflow: auto;}
+.analytics-page  h3.balance-tit {
+    background: #ddd;
+    font-size: 18px;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+.analytics-page .zero_padd{
+	padding:0;
+}
+
+.analytics-page .zero_margin{
+	margin:0;
+}
+.analytics-page .ulanalytics > li > a:hover {
+    background: transparent;
+}
+.analytics-page .ulanalytics{
+	margin:0 auto; 
+	width:50% !important;
+  background-color: transparent;
+}
+
+.analytics-page .ulanalytics > li > a {
+    color:#5a5a5a;
+    text-align: center;
+}
+
+.analytics-page .nav-pills > li.in_process > a{
+  text-decoration: none;
+  border-bottom: 3px solid;
+  border-color: #4178BE;
+  font-weight: 600;
+}
+
+.analytics-page .pills_list_border {
+  border-right: 1px solid;
+  border-left: 1px solid;
+  border-bottom: none;
+  border-top: none;
+}
+
+.analytics-page .locHover{
+	position: relative;
+  color : #000;
+}
+
+.analytics-page .ulanalytics > li > a {
+ border-radius: 0px !important;
+}
+
+
+.analytics-page .ulanalyticsindex > li > a {
+    color:black;
+    text-align: center;
+    font-size: large;
+}
+
+.analytics-page .ulanalyticsindex > li.in_process > a {
+  text-decoration: none;
+  border-color: #4178BE;
+}
+
+.analytics-page .ulanalyticsindex{
+  margin:0 auto; 
+  width:50% !important;
+  background-color: #fff;
+}
+.analytics-page .headerborder{
+  font-family: "Open Sans",sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+  padding: 14px 20px;
+  border-bottom: 1px solid;
+}
+
+.analytics-page .bgcolor{
+  background-color: white;
+}
+
+.analytics-page .thbgcolor > thead {
+  background-color: #ddd;
+}
+.analytics-page .nav-pills > li > a {
+    font-size: 14px;
+    padding: 0 10px;
+    line-height: 36px;
+    border-bottom: 1px solid #ddd;
+}
+
+/*.analytics-page .thbgcolor > tbody > tr:first-child > td{
+  background-color: #f9e3a5 !important;
+}*/
+
+.analytics-page .soldh4 {
+  color:  #1da363;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.analytics-page .receivedh4 {
+  color:  #4b8bf5;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.analytics-page .returnedh4 {
+  color:   #dc4933;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.analytics-page .dynamicLable{
+  word-wrap: break-word; 
+  font-weight: bold;
+  text-transform: capitalize;
+  text-align: left;
+      margin: 3px 0;
+}
+.store-label span {
+    margin: 3px 0;
+}
+.analytics-page .dropdown-menu.treeViewDrop > ul ul {
+    margin: 3px;
+}
+
+.analytics-page ul.autocompletedropdown {
+    margin: 0px;
+}
+
+.analytics-page .iconPlace{
+  position:absolute;
+  right:7px;
+  top:10px;
+}
+
+.analytics-page .borderTransparent{
+  border:transparent;
+}
+
+.analytics-page .btn{
+  margin: 0px;
+}
+.analytics-page .ulanalytics > li {
+    background: #fff;
+    border: none;
+        margin: 0;
+}
+.analytics-page .nav-pills > li:hover > a {
+    border-bottom: 2px solid #4178BE;
+}
+.analytics-page .nav-pills > li > a:hover {
+    background: transparent;
+}
+.br_none {
+    border: none !important;
+}
+.analytics-page .pie-style {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 0 50px 0px;
+    padding: 30px 0px;
+}
+.store-label {
+    text-align: left;
+}
+.analytics-page .nav-pills > li {
+    margin: 0;
+}
+.td_wdth{width: 50%;}
+@media only screen and (max-width: 736px) {
+  .analytics-page .ulanalyticsindex{
+    margin:0 auto; 
+    width:100% !important;
+    background-color: #fff;
+  }
+
+  .analytics-page .ulanalytics{
+    margin:0 auto; 
+    width:100% !important;
+    background-color: #fff;
+  }
+}
+
+@media only screen and (max-width: 399px) {
+  .analytics-page .alert-danger{
+    font-size: 12px;
+  }
+  
+  .analytics-page .clearfix .alert-danger{
+    height: 48px;
+  }
+
+}
+@media (min-width: 1200px) {
+}
+@media (min-width: 980px) and (max-width: 1199px) {
+}
+@media (min-width: 768px) and (max-width: 979px) {
+}
+@media (max-width: 767px) {
+  .store-label {
+    text-align: left;
+    width: auto;
+    margin: 0 auto 20px auto;
+    display: table;
+}
+}
+@media (max-width: 480px) {
+}

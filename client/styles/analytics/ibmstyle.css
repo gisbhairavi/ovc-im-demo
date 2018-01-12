@@ -1,0 +1,126 @@
+.analytics-page .paddinghead {
+	padding: 10px 15px;
+}
+
+.analytics-page .paddingbody {
+	padding: 15px !important;
+}
+
+.analytics-page .autocomplete ul{
+  max-height:300px;
+  overflow-y:scroll;
+}
+
+.analytics-page .search_products_style {
+  background-color:  #ffcf49;
+  color: rgb(255,255,255);
+  padding: 5px;
+  width: 25%;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-weight: bold;
+  float: left;
+}
+
+.analytics-page .search_products_group{
+  background-color: #4b8bf5;
+  color: rgb(255,255,255);
+  padding: 5px;
+  width: 29%;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-weight: bold;
+  font-size: small;
+}
+
+.analytics-page .search_products_sku{
+  background-color: #4ed493;
+  color: rgb(255,255,255);
+  padding: 5px;
+  width: 25%;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-weight: bold;
+}
+
+.analytics-page .search_products_barcode{
+  background-color: #f98376;
+  color: rgb(255,255,255);
+  padding: 5px;
+  width: 25%;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-weight: bold;
+}
+
+.analytics-page .liAlignProperty{
+	min-width: 0px;
+}
+
+.analytics-page .animate-show:hover {
+  background: #ADDFFF !important;
+}
+
+.analytics-page .animate-show {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  width: 100px;
+  opacity: 6;
+  background: #ADDFFF !important;
+  z-index: 1;
+  position: absolute;
+}
+
+.analytics-page .inner_tb .animate-show {
+  background: transparent none repeat scroll 0 0;
+  right: 37px;
+  width: 192px;
+}
+
+.analytics-page .inner_tb .animate-show:hover {
+  background: none;
+}
+
+.analytics-page .trans_listor.animate-show {
+  background: transparent none repeat  0 0;
+  width: 286px;
+  padding-left: 0;
+}
+
+.analytics-page .inside_t {
+  height: auto;
+  max-height: 150px;
+  overflow-y: auto;
+  cursor: default;
+}
+
+.analytics-page .inside_t .table-striped > tbody > tr:nth-child(2n+1) > td, .inside_t .table-striped > tbody > tr:nth-child(2n) > td, .inside_t .table-striped > tbody > tr:nth-child(2n+1) > th,.trans_listor .table-striped > tbody > tr:nth-child(2n+1) > td ,.trans_listor .table-striped > tbody > tr:nth-child(2n+1) > th{
+  background-color: #addfff !important;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+}
+
+#wrapper .analytics-page .inside_t .table-striped > tbody > tr td,#wrapper .inside_t .table-striped > tbody > tr th{
+  padding: 0 10px;
+  border-collapse:collapse;
+  font-size: 13px;
+}
+
+#wrapper .analytics-page .inside_t .table-striped > tbody > tr{
+  border:none;
+}
+
+.analytics-page .tooltip {
+    position: fixed;
+}
+
+.analytics-page .trans-tooltip .tooltip{
+  position: absolute;
+
+}
+
+@media only screen and (max-width: 736px) {
+  .analytics-page .table{
+    margin-bottom: 20px; 
+  }
+}

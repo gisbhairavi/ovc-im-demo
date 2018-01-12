@@ -1,0 +1,65 @@
+{
+    "status": {
+        "CONFIRMEDQTY": "confirmedQty",
+        "SHIPPEDQTY": "shippedQty",
+        "RECEIVEDQTY": "receivedQty"
+    },
+    "countStatus": {
+        "OPEN": "open",
+        "RECOUNT": "recount",
+        "VALIDATED": "validate",
+        "INPROCESS": "inprocess",
+        "SUBMITTED": "submitted",
+        "APPROVED": "approve",
+        "MODIFIED": "modified"
+    },
+    "vendor": "55f06828f0cd979f7b9eadf6",
+    "stockUOM": "Each",
+    "shippingMethod": "FDEN",
+    "apis": {
+        "GETLOCATION": "apis/ang_getlocations",
+        "GETPRODUCTS": "apis/ang_loc_micro_products/locid:",
+        "GETSTOCKJSON": "apis/ang_getstockjson?locid=",
+        "GETPRODUCTCOST": "apis/ang_getproductprice",
+        "GETUSERHIERARCHYLOCATION": "apis/ang_hierarchy_locations?usid=",
+        "GET_ALL_HIERARCHY_LOCATION": "apis/ang_hierarchy_locations?isAllLocations=true",
+        "GETVENDOR": "/vendor",
+        "GETUOM" : "/uom",
+        "GETSKUDETAIL" : "apis/ang_loc_skuproducts?srch=",
+        "GETORDERBYPONUMBER":"/order?purchaseordernumber=",
+        "TRANSACTIONSERVICE": "/invtransactionservice",
+        "INVENTORIESSERVICE": "/inventories?locationid=",
+        "GETBARCODESKU" : "apis/ang_get_skus?srch= ",
+        "GETPARENTLOC": "apis/ang_parent_location?locationId=",
+        "LOGIN": "apis/ang_loginapi"
+    },
+    "pagination": {
+        "PAGE": "/page:"
+    },
+    "orderType": {
+        "RETURN": "RTN"
+    },
+    "DefaultlocationOrGroupId": "posMClient-grp-all",
+    "label": {
+        "ERROR" : "error",
+        "SUCCESS" : "success",
+        "NO_SKUS" : "no skus for this product",
+        "NO_POID" : "PO Id missing",
+        "NO_DATA" : "No Data",
+        "PACKAGE_UPDATE":"package updated",
+        "INPUT_MISSING":"no input data",
+        "NOT_UNIQUE_ID":"Unique Reason Code Id is required.",
+        "SKUSERVICEFAILS" : "Failed to get SKU details",
+        "NO_USER_DATA": "can not load user data."
+    },
+    "replenishmentRulesHeaders" : ["locationId","sku","reorder","maxOrder"],
+    "productConfiguration" : {
+        "productProperty" : "stockLookUpProductProperty",
+        "productAttribute" : "stockLookUpProductAttribute",
+        "balanceproperty"  : "stockBalanceReport"
+    },
+    "configFeatureType" : {
+        "SINGLESELECTDROPDOWN": "singleSelectDropDown"
+    }
+
+}

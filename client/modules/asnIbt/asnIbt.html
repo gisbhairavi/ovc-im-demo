@@ -1,0 +1,364 @@
+<div >
+    <div ng-controller="ibtTransferAsnCtrl" class="panel">
+		<div class="col-sm-12"   ng-show	=	"action.showasn">
+			<div ng-repeat="(kyyy,obj) in form.asnData"   ng-hide="obj.purchaseOrder.purchaseOrderAsn.purchaseOrderPackage[0].packageStatus	==	'shipInProgress'  &&  action.shippack == false ">
+				<div class="package_recipt">
+					<div class="package_wrapper clearfix">
+						<div class="col-sm-10 package_table">
+							<table class="table table-bordered">
+								<thead class="pack_head">
+									<tr  ng-if="obj.purchaseOrder.purchaseOrderAsn.purchaseOrderPackage[0].packageStatus	==	'shipInProgress' ">
+										<th  style="padding:0;"><div class="col-md-3 pull-right"><b class="export_value">{{ovcLabel.asnPackage.packageStatus[obj.purchaseOrder.purchaseOrderAsn.purchaseOrderPackage[0].packageStatus]}}</b></div></th>
+									</tr>
+									<tr>
+										
+										<th >
+											<div class="package_header">
+											<div class="col-md-3"><div class="package_input mpack">
+											<div class="col-md-6  package_input">{{ovcLabel.asnPackage.asnNumber}} :</div>
+											<div class="col-md-6 mpack"><input type="text" class="form-control" ng-model="obj.purchaseOrder.purchaseOrderAsn.asnId" /></div></div>  </div>
+											<div class="col-md-3" ><div class="package_input mpack"><div class="col-md-5 package_input mpack">{{ovcLabel.asnPackage.shipingdate}}: </div><div class="col-md-7 mpack">
+											<input calendar1 class="form-control"  ng-model="obj.purchaseOrder.purchaseOrderAsn.purchaseOrderPackage[0].shipDate"  min-date="{{getDatetime | dateForm}}" /></div></div>
+											</div>
+											<div class="col-md-3"><div class="package_input mpack"><div class="col-md-5 package_input mpack">{{ovcLabel.asnPackage.deliveryDate}}: </div><div class="col-md-7 mpack">
+											<input calendar1 class="form-control"  ng-model="obj.purchaseOrder.purchaseOrderAsn.purchaseOrderPackage[0].receivedDate" min-date="{{newDate | dateForm}}" /></div></div>
+											</div>
+											<div class="col-md-3"><div class="package_input mpack">
+											<div class="col-md-6 package_input">{{ovcLabel.asnPackage.trackingno}} : </div><div class="col-md-6 mpack">
+											<input type="text" class="form-control" ng-model="obj.purchaseOrder.purchaseOrderAsn.purchaseOrderPackage[0].trackingNumber" /></div> </div></div>
+											
+											</div>
+										</th>
+										
+									</tr>
+								
+								</thead>
+							   
+								<tbody  ng-show="showSkuDetails" >
+									<tr>
+										<td>
+											 <div class="form-group">
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="col-sm-5">	
+															<select class="form-control"  id="ovcSkuSelect" ng-model="obj.sku"  ng-options="item.SKU as item.SKU for item in action.orderSkus">													
+																<option value="">{{ovcLabel.asnPackage.selectSKU}}</option>
+															</select>
+															<span ng-if = "obj.errormessage" class="alert alert-danger ng-binding datevalid">{{ovcLabel.asnPackage.pleaseselectSKU}}</span>
+														</div>
+														
+														<div class="col-sm-2">		
+														<button  class="btn btn-primary" ng-click="getProductDetails(kyyy,obj.sku)"><i class="fa fa-plus"></i> {{ovcLabel.asnPackage.buttons.add}}</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<!--Style Configration-->
+									<tr ng-repeat="(key,product) in obj.purchaseOrder.purchaseOrderAsn.productDetails"  ng-if = "config.showskugroup">
+										<td ng-if="obj.purchaseOrder.purchaseOrderAsn.productDetails[key][0].skus.length>0" >
+											<table class="table table-bordered style_head" ng-click = "receipt_Style =! receipt_Style">
+												<thead class="style_head">
+													<tr>
+														<th class="sty_max">{{ovcLabel.asnPackage.productCode}}</th>
+														<th class="des_max">{{ovcLabel.asnPackage.description}}</th>
+														<th>{{ovcLabel.asnPackage.color}}</th>													 
+													</tr>
+												</thead>
+												<tbody class="style_head">
+													<tr>
+														<td>{{key}}</td>
+														<td>{{obj.purchaseOrder.purchaseOrderAsn.productDetails[key][0].productDescription}}</td>
+														<td>{{obj.purchaseOrder.purchaseOrderAsn.productDetails[key][0].styleColor}}</td>													
+													</tr>
+												</tbody>
+											</table>
+											<!-- SKUS-->
+											<table class="table" ng-show = "receipt_Style">
+												<thead>
+													<tr>
+														<th>{{ovcLabel.asnPackage.lineNumber}}</th>
+														<th>{{ovcLabel.asnPackage.sku}}</th>
+														<th>{{ovcLabel.asnPackage.description}}</th>
+														<!-- <th>{{translation.purchaseorders[0].length}}</th>
+														<th>{{translation.purchaseorders[0].waist}}</th>
+														<th>{{translation.purchaseorders[0].size}}</th> -->
+														<th  ng-if = "config.config_arr.selectedProductVariants">{{ovcLabel.asnPackage.productVarient}}</th>
+														<th>{{ovcLabel.asnPackage.UOM}}</th>
+														<th>{{ovcLabel.asnPackage.confirmed}}</th>
+														<th>{{ovcLabel.asnPackage.shipped}}</th>
+														<th >{{ovcLabel.asnPackage.action}}</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="($index,sku) in obj.purchaseOrder.purchaseOrderAsn.productDetails[key][0].skus">
+														<td>{{sku.lineNumber}}</td>
+														<td>{{sku.sku}}</td>
+														<td>{{sku.description}}</td>
+														<!-- <td ng-if="sku.length != null">{{sku.length }}</td><td ng-if="sku.length == null">-</td>
+														<td ng-if="sku.waist != null">{{sku.waist }}</td><td ng-if="sku.waist == null">-</td>
+														<td ng-if="sku.size !=	'' ">{{sku.size}}</td><td ng-if="sku.size	==	''	">-</td> -->
+														<td ng-if="config.config_arr.selectedProductVariants">
+															<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]?sku.variants[attribute]:'-'}}</span><br></div>
+														</td>
+														<td style="width:100px">
+														<span >{{UOMvalues[sku.selectedUOM]}}</span></td>
+														<td>{{sku.confirmedqty}}</td>
+														<td class="alignby-line">
+														<button class="btn btn-primary btn-sm" ng-click="decreaseshipqty(key, kyyy, $index); limitofsku(0, sku.shippedqty, key, kyyy, $index, sku.sku );">
+                              								<i class="fa fa-minus" aria-hidden="true"></i>
+                           								</button>
+														<input type="text" ng-model="sku.shippedqty" class="form-control qty-center" ng-blur="limitofsku(0, sku.shippedqty, key, kyyy, $index , sku.sku)" ng-model-options="{ updateOn: 'default', debounce: {'default': 300} }" only-digits/>
+														<button class="btn btn-primary btn-sm" ng-click="increaseshipqty(key, kyyy, $index);limitofsku(0, sku.shippedqty, key, kyyy, $index , sku.sku );">
+                              								<i class="fa fa-plus" aria-hidden="true"></i>
+                           								 </button>
+														</td>
+														<td >
+															<button class="btn btn-link pull-right padding_0" ng-click="removeAsnSkus($index, key,kyyy);"><span class="fa fa-trash-o"></button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<!--Sku Configration-->
+									<tr ng-if ="!config.showskugroup">
+										<td>
+											<table class="table" ng-if ="obj.purchaseOrder.purchaseOrderAsn.productDetails != undefined">
+												<thead style="border-bottom: 1px solid #DDD;">
+													<tr>
+														<th>{{ovcLabel.asnPackage.lineNumber}}</th>
+														<th>{{ovcLabel.asnPackage.sku}}</th>
+														<th>{{ovcLabel.asnPackage.description}}</th>
+														<!-- <th>{{translation.purchaseorders[0].length}}</th>
+														<th>{{translation.purchaseorders[0].waist}}</th>
+														<th>{{translation.purchaseorders[0].size}}</th> -->
+														<th  ng-if = "config.config_arr.selectedProductVariants">{{ovcLabel.asnPackage.productVarient}}</th>
+														<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.asnPackage.transferprice}}</th>
+														<th>{{ovcLabel.asnPackage.UOM}}</th>
+														<th>{{ovcLabel.asnPackage.confirmed}}</th>
+														<th>{{ovcLabel.asnPackage.shipped}}</th>
+														<th>{{ovcLabel.asnPackage.action}}</th>
+													</tr>
+												</thead>
+												<tbody ng-repeat="(key,product) in obj.purchaseOrder.purchaseOrderAsn.productDetails" >
+													<tr ng-repeat="($index,sku) in obj.purchaseOrder.purchaseOrderAsn.productDetails[key][0].skus">
+														<td>{{sku.lineNumber}}</td>
+														<td>{{sku.sku}}</td>
+														<td>{{sku.description}}</td>
+														<!-- <td ng-if="sku.length != null">{{sku.length }}</td><td ng-if="sku.length == null">-</td>
+														<td ng-if="sku.waist != null">{{sku.waist }}</td><td ng-if="sku.waist == null">-</td>
+														<td ng-if="sku.size !=	'' ">{{sku.size}}</td><td ng-if="sku.size	==	''	">-</td> -->
+														<td ng-if="config.config_arr.selectedProductVariants">
+															<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]?sku.variants[attribute]:'-'}}</span><br></div>
+														</td>
+														<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}}{{sku.cost}}</td>
+														<td style="width:100px">
+														<span >{{UOMvalues[sku.selectedUOM]}}</span></td>
+														<td>{{sku.confirmedqty}}</td>
+														<td  class="alignby-line">
+														<button class="btn btn-primary btn-sm" ng-click="decreaseshipqty(key, kyyy, $index); limitofsku(0, sku.shippedqty, key, kyyy, $index , sku.sku);">
+                              								<i class="fa fa-minus" aria-hidden="true"></i>
+                           								</button>
+														<input type="text" ng-model="sku.shippedqty" class="form-control qty-center" ng-blur="limitofsku(0, sku.shippedqty, key, kyyy, $index , sku.sku)"only-digits/>
+														<button class="btn btn-primary btn-sm" ng-click="increaseshipqty(key, kyyy, $index);limitofsku(0, sku.shippedqty, key, kyyy, $index, sku.sku);">
+                              								<i class="fa fa-plus" aria-hidden="true"></i>
+                           								 </button>
+														</td>
+														<td >
+															<button class="btn btn-link pull-right padding_0" ng-click="removeAsnSkus($index, key,kyyy);"><span class="fa fa-trash-o"></button>
+														</td>
+														
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+						<div class="col-sm-2 package_arrw">
+							<a class="arrow_d return_arr" ng-init="showSkuDetails = true" ng-click="showSkuDetails = !showSkuDetails">
+								<i class="fa" ng-class="{'fa-angle-left' : ! showSkuDetails, 'fa-angle-down' : showSkuDetails}"></i>
+							</a>
+							<!-- <button class="btn btn-link pull-right padding_0" ng-click="removeAsn(kyyy);" ><span class="fa fa-trash-o"></button> -->
+						</div>
+						<div class="col-sm-12">
+							<div class="pull-right" >						
+								<button class="btn btn-primary"  ng-click="shipAsn(form, 'shipInProgress',kyyy, obj.purchaseOrder.purchaseOrderAsn.productDetails);">{{ovcLabel.asnPackage.buttons.save}}</button>
+								<button class="btn btn-primary" ng-click="shipAsn(form, 'shipped',kyyy, obj.purchaseOrder.purchaseOrderAsn.productDetails);">{{ovcLabel.asnPackage.buttons.ship}}</button>
+							</div>							
+						</div>
+					</div>
+				
+				</div>
+            </div>
+        </div>
+		<div class="col-sm-12"   ng-hide	=	"action.showasn">
+			<div ng-repeat="(kyyy,obj) in form.packageData">
+				<div class="package_recipt">
+					<div class="package_wrapper clearfix">
+						<div class="col-sm-10 package_table">
+							<table class="table table-bordered">
+								<thead class="pack_head">
+									<tr>
+										<th >
+											<div class="package_header">
+											<div class="col-md-3"><div class="package_input mpack">
+											<div class="col-md-6  package_input">{{ovcLabel.asnPackage.package}} :</div>
+											<div class="col-md-6 mpack"><input type="text" class="form-control" ng-model="obj.packageId" /></div></div>  </div>
+											<div class="col-md-3" ><div class="package_input mpack"><div class="col-md-5 package_input mpack">{{ovcLabel.asnPackage.shipingdate}}: </div><div class="col-md-7 mpack">
+											<input calendar1 class="form-control"  ng-model="obj.shipDate" /></div></div>
+											</div>
+											<div class="col-md-3"><div class="package_input mpack"><div class="col-md-5 package_input mpack">{{ovcLabel.asnPackage.deliveryDate}}: </div><div class="col-md-7 mpack">
+											<input calendar1 class="form-control"  ng-model="obj.receivedDate" /></div></div>
+											</div>
+											<div class="col-md-3"><div class="package_input mpack">
+											<div class="col-md-6 package_input">{{ovcLabel.asnPackage.trackingno}} : </div><div class="col-md-6 mpack">
+											<input type="text" class="form-control" ng-model="obj.trackingNumber" /></div> </div></div>
+											
+											</div>
+										</th>
+										
+									</tr>
+								
+								</thead>
+							   
+								<tbody >
+									<tr>
+										<td>
+											 <div class="form-group">
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="col-sm-5">	
+															<select class="form-control"  id="ovcSkuSelect"  ng-model="obj.sku"  ng-options="item.SKU as item.SKU for item in action.orderSkus">													
+																<option value="">{{ovcLabel.asnPackage.selectSKU}}</option>
+															</select>
+														</div>
+														
+														<div class="col-sm-2">		
+														<button  class="btn btn-primary" ng-click="getProductDetails(kyyy)"><i class="fa fa-plus"></i> {{ovcLabel.asnPackage.buttons.add}}</button>
+														</div>
+														<div  class="col-sm-12"  id="package_style_{{kyyy}}"></div>
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr ng-repeat="(key,product) in obj.productDetails"  >
+										<td ng-if="obj.productDetails[key][0].skus.length>0" >
+											<table class="table table-bordered style_head" ng-click = "receipt_Style =! receipt_Style">
+												<thead class="style_head">
+													<tr>
+														<th class="sty_max">{{ovcLabel.asnPackage.productCode}}</th>
+														<th class="des_max">{{ovcLabel.asnPackage.description}}</th>
+														<th>{{ovcLabel.asnPackage.color}}</th>
+														<th ng-show="action.page == 1">{{ovcLabel.asnPackage.action}}</th>
+													</tr>
+												</thead>
+												<tbody class="style_head">
+													<tr>
+														<td>{{key}}</td>
+														<td>{{obj.productDetails[key][0].productDescription}}</td>
+														<td>{{obj.productDetails[key][0].styleColor}}</td>
+														<td ng-show="action.page == 1"><button class="btn btn-link padding_0" ng-click="removePackageStyle(kyyy,key);"><span class="fa fa-trash-o"></button></td>
+													</tr>
+												</tbody>
+											</table>
+											<!-- SKUS-->
+											<table class="table" ng-show = "receipt_Style">
+												<thead>
+													<tr>
+														<th>{{ovcLabel.asnPackage.lineNumber}}</th>
+														<th>{{ovcLabel.asnPackage.sku}}</th>
+														<th>{{ovcLabel.asnPackage.description}}</th>
+														<!-- <th>{{translation.purchaseorders[0].length}}</th>
+														<th>{{translation.purchaseorders[0].waist}}</th>
+														<th>{{translation.purchaseorders[0].size}}</th> -->
+														<th  ng-if = "config.config_arr.selectedProductVariants">{{ovcLabel.asnPackage.productVarient}}</th>
+														<th>{{ovcLabel.asnPackage.UOM}}</th>
+														<th>{{ovcLabel.asnPackage.confirmed}}</th>
+														<th>{{ovcLabel.asnPackage.shipped}}</th>
+														<th >{{ovcLabel.asnPackage.action}}</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="($index,sku) in obj.productDetails[key][0].skus">
+														<td>{{sku.lineNumber}}</td>
+														<td>{{sku.sku}}</td>
+														<td>{{sku.description}}</td>
+														<!-- <td ng-if="sku.length != null">{{sku.length }}</td><td ng-if="sku.length == null">-</td>
+														<td ng-if="sku.waist != null">{{sku.waist }}</td><td ng-if="sku.waist == null">-</td>
+														<td ng-if="sku.size !=	'' ">{{sku.size}}</td><td ng-if="sku.size	==	''	">-</td> -->
+														<td ng-if="config.config_arr.selectedProductVariants">
+															<div ng-repeat="($index,attribute) in config.config_arr.selectedProductVariants.featureValue" class="product_report" ng-if="sku.variants[attribute]"><span class="">{{translation.purchaseorders[0][attribute]?translation.purchaseorders[0][attribute]:attribute}} : </span><span class="">{{sku.variants[attribute]?sku.variants[attribute]:'-'}}</span><br></div>
+														</td>
+														<td style="width:100px">
+														<span >{{UOMvalues[sku.selectedUOM]}}</span></td>
+														<td>{{sku.confirmedqty}}</td>
+														<td class="alignby-line">
+														<button class="btn btn-primary btn-sm" ng-click="decreasepkgshipqty(key, kyyy, $index); limitofpkgsku(0, sku.shippedqty, key, kyyy, $index);">
+                              								<i class="fa fa-minus" aria-hidden="true"></i>
+                           								</button>
+														<input type="text" ng-model="sku.shippedqty" min = "0" class="form-control qty-center" only-digits/>
+														<button class="btn btn-primary btn-sm" ng-click="increasepkgshipqty(key, kyyy, $index);">
+                              								<i class="fa fa-plus" aria-hidden="true"></i>
+                           								 </button>
+														</td>
+														<td >
+															<button class="btn btn-link pull-right padding_0" ng-click="removePackageSkus($index, sku.qty, sku.total,sku.totalnotax, sku.totalProductTax, sku.totalProductVat,  sku.productCode,kyyy);"><span class="fa fa-trash-o"></button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+						<div class="col-sm-2 package_arrw">
+							<a class="arrow_d return_arr" ng-init="showSkuDetails = true" ng-click="showSkuDetails = !showSkuDetails">
+								<i class="fa" ng-class="{'fa-angle-left' : ! showSkuDetails, 'fa-angle-down' : showSkuDetails}"></i>
+							</a>
+							<button class="btn btn-link pull-right padding_0" ng-click="removePackage(kyyy);" ><span class="fa fa-trash-o"></button>
+						</div>
+					</div>
+				
+				</div>
+            </div>
+        </div>
+		
+		<div ng-if="userRolePermissions.orderPermissions.modifyTransfer">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<button  class="btn btn-primary add_package" ng-show	=	"action.showasn  && action.shippack "  ng-click="addAsns();">{{ovcLabel.asnPackage.buttons.addNewAsn}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+      <!--  {{form}} -->
+		<div class="save_bg">
+			<div >
+				<div class="col-sm-12" ng-show="error_in_receipt">
+					<span class =  "col-md-12" style = "background-color: #f2dede;border-color: #ebccd1;color: #b94a48;padding: 10px;">
+					{{error_receiptmsg}}
+					</span>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- <div class="pull-right"  ng-hide	=	"action.showasn">
+							<button class="btn btn-primary"  ng-click="shipAsnPacks(form, 'shipInProgress');">{{translation.buttontypes[0].save}}</button>
+							<button class="btn btn-primary" ng-click="shipAsnPacks(form, 'shipped');">{{translation.buttontypes[0].ship}}</button>								
+						</div> -->					
+					</div>
+				</div>
+			</div>
+		</div>
+			
+    </div>
+</div>

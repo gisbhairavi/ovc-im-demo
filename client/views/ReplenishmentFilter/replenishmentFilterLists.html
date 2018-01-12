@@ -1,0 +1,105 @@
+<div class="row header_blk">
+	<div class="col-lg-12">
+		<h3 class="page-header">
+			{{ovcLabel.replenishmentFilters.heading}}
+			<div class="pull-right add_ven clearfix" ng-if = "userRolePermissions.createReplenishmentFilters">
+				<a id="ovcAddBtn" class="btn btn-primary" title="Add New Filter"
+					ui-sref="ovc.ReplenishmentFilter-add"
+					href="#/ovc/replenishmentFilter/add"><i
+					class="fa fa-plus-circle"></i>{{ovcLabel.replenishmentFilters.addNewFilter}} </a>
+			</div>
+		</h3>
+	</div>
+</div>
+<div>
+	<br>
+	<div class="col-md-12 col-xs-12 col-sm-12">
+		<div class="panel-default">
+			<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 search_b" style="float:left">
+				<span>{{ovcLabel.replenishmentFilters.buttons.search}}:</span> <input
+					id="search" class="form-control" type="text" placeholder="{{ovcLabel.replenishmentFilters.placeholder.SearchByFilterName}}"
+					ng-model="search" ng-disabled="molporder" name="search">
+					 
+			</div>
+			 <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4">
+				<a id="ovcSearchBtn" class="btn btn-primary" title="Search"
+					ng-click="searchReplenishmentFilter()">{{ovcLabel.replenishmentFilters.buttons.search}}</a>
+			</div>
+			<div class="col-lg-1 col-md-2 col-sm-2 col-xs-4">
+				<a id="ovcResetBtn" class="btn btn-primary" title="Reset"
+					ng-click="replenishmentFilterReset()">{{ovcLabel.replenishmentFilters.buttons.reset}}</a>
+			</div>
+		</div>
+
+	</div>
+	<br>
+	<div class="ven_tbody col-md-12  col-xs-12 col-sm-12"
+		ng-show="filteredItems > 0">
+		<table class="table table-striped table-bordered" iphone-view >
+			<thead>
+				<th id="exist_RPLFilter">{{ovcLabel.replenishmentFilters.tableHeader.filterName}}&nbsp;<a
+					ng-click="sort_by('filterName');"><i class="fa fa-sort"></i></a></th>
+				<th>{{ovcLabel.replenishmentFilters.tableHeader.stores}}</th>
+				<th>{{ovcLabel.replenishmentFilters.tableHeader.numberOfSKUs}}&nbsp;<a
+					ng-click="sort_by('numberOfSkus');"><i class="fa fa-sort"></i></a></th>
+				<!-- <th>{{translation.replenishmentFilters[0].lastRun}}&nbsp;<a
+					ng-click="sort_by('lastModified');"><i class="fa fa-sort"></i></a></th> -->
+				<th>{{ovcLabel.replenishmentFilters.tableHeader.created}}</th>
+				<th><center>Action</center></th>
+				<th></th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="reasonData in list   =  (list  | orderBy : predicate :reverse) | limitTo:entryLimit">
+					<td><!-- <a
+						ui-sref="ovc.ReplenishmentFilter-edit({filterid:reasonData._id})">{{reasonData.filterName}}</a> -->
+						<a ng-if="!(userRolePermissions.modifyReplenishmentFilters)" >{{reasonData.filterName}}</a>
+          				<a ng-if="userRolePermissions.modifyReplenishmentFilters" ui-sref="ovc.ReplenishmentFilter-edit({filterid:reasonData._id})">{{reasonData.filterName}}</a>
+					</td>
+					<td>
+						<div ng-if="reasonData.locName.locName.length <= 2 ">
+							<span ng-repeat="LocalData in reasonData.locName.locName">
+								{{LocalData}}{{$last ? '' : ','}} </span>
+						</div>
+						<div ng-if="reasonData.locName.locName.length >2" class="tooltip-replinshment">
+							<span tooltip-placement="bottom" uib-tooltip="{{convertToArray(reasonData.locName.locName)}}">
+								{{reasonData.locName.locName[0]}},{{reasonData.locName.locName[1]}}..
+							</span>
+						</div>
+					</td>
+					<td>{{reasonData.numberOfSkus}}</td>
+					<!-- <td>{{reasonData.lastRun | datetimeForm}}</td> -->
+					<td>{{reasonData.created | datetimeForm}}</td>
+					<td>
+						<center><button id="common_Filter_Delete" type="button" class="btn btn-primary" ng-click="deleteFilter(reasonData._id)" ng-if = "userRolePermissions.modifyReplenishmentFilters">{{ovcLabel.replenishmentFilters.buttons.delete}}</button>
+					
+						<button ng-hide=hideDelete id="common_Filter_Run" type="button" class="btn btn-primary" ng-if = "userRolePermissions.runReplenishmentFilters" ng-click = "runReplenishment(reasonData._id)">{{translation.replenishmentFilters[0].run}}</button></center>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	 
+	<div id="ovcError" class="col-md-12 col-xs-12 col-sm-12 panel-body" ng-if="filteredItems === 0">
+		<div class="col-md-12">
+			<h4 class="ng-binding">{{ovcLabel.replenishmentFilters.noFilterFound}}</h4>
+		</div>
+	</div>
+	<div class="col-md-12 col-xs-12 col-sm-12" ng-show="totalItems > 0">
+		<uib-pagination total-items="totalItems"
+			items-per-page="entryLimit" ng-model="currentPage"
+			class="pagination-sm" boundary-links="true" ng-change="pageChanged()"></uib-pagination>
+		<div class="col-md-3 pglimit">
+			<div class="pg_limit page_size_drdn">
+				<label>{{ovcLabel.replenishmentFilters.pagesize}}:</label> <select
+					convert-to-number ng-model="entryLimit" class="pgsizes"
+					ng-change="reasonServiceFunc()">
+					<option>10</option>
+					<option>20</option>
+					<option>50</option>
+					<option>100</option>
+				</select>
+			</div>
+		</div>
+
+	</div>
+</div>

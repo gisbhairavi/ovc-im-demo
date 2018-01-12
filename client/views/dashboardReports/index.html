@@ -1,0 +1,137 @@
+<div class="col-sm-12 heading">
+	<h3>
+		{{ovcLabel.dashboard.heading}}
+		<small class="pull-right btn-link" id="dashboard_filter" ng-click="action.showFilter = ! action.showFilter">
+			{{ovcLabel.dashboard.filter}}
+			<span class="fa" ng-class="(action.showFilter) ? 'fa-arrow-down' : 'fa-arrow-up'"></span>
+		</small>
+	</h3>
+</div>
+
+<div class="col-sm-12 clearfix">
+			<div class="panel-body search_box border_T0" ng-show="action.showFilter">
+				<div class="col-sm-3">
+					<label class="control-label">{{ovcLabel.dashboard.fromdate}}</label>
+					<input calendar  ng-model='form.fromdate'  class="form-control hidcal"  ng-change='change_frdate()' id="common_fromdate" />
+				</div>
+				<div class="col-sm-3">
+					<label class="control-label">{{ovcLabel.dashboard.todate}}</label>
+					<input calendar  ng-model='form.todate'  class="form-control hidcal" ng-change='change_todate()' id="common_todate"/>
+				</div>
+				<!-- <div class="col-sm-3">
+					<label class="control-label">{{translation.locations[0].store}}</label>
+					
+					<select ng-options="col.id as col.displayName for col in ship.store_datas | orderBy:'displayName' " class="form-control" name="locationId"  
+					ng-model="ship.locationId"  ><option value="">-- {{translation.locations[0].select_store}} --</option></select>
+				</div> -->
+				<!-- <span class="col-sm-3"> 
+					<label class="control-label">{{translation.replenishmentFilters[0].location}}</label><br />
+					<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+						<div style="position: relative;" class="tooltip-pro">
+							<input type="text" class="form-control"
+								ng-model="location.displayName" ng-focus="showLoc = true"
+								placeholder="{{translation.replenishmentFilters[0].location}}"
+								style="padding: 6px 18px 6px 10px;"
+								ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+								class="fa"
+								ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+								style="position: absolute; right: 7px; top: 10px;"></span>
+						</div>
+						<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+							node-label="name" ng-show="showLoc"
+							class="dropdown-menu treeViewDrop"
+							style="display: block; width: 300px;" mode="listlocation"></div>
+					</div>
+				</span> -->
+
+				<div class="col-sm-3">
+					<label class="control-label">{{ovcLabel.dashboard.Location}}</label><br />
+					<div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+						<div style="position:relative;">
+							<input type="text" class="form-control" ng-model="ship.locationDisplayName" ng-focus="showLoc = true" id="dashboard_store" placeholder="{{ovcLabel.dashboard.selectstore}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation(ship.locationDisplayName);" />
+									
+							<span class="fa" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;"></span>
+						</div>
+						<div tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" replinsh-rules = "true" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"></div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-3 col-lg-3" style="margin-top:25px;">
+					<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="filterReports()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.dashboard.buttons.search}}</button>
+					<button id="ovcResetBtn" type="reset"  class="btn btn-primary ng-binding" ng-click="resetOrderStatus()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.dashboard.buttons.reset}}</button>
+				</div>
+				<span  ng-show="fieldsRequired" class="alert alert-danger ng-binding datevalid" >{{ovcLabel.dashboard.dateerror}}</span>
+			</div>
+
+		<div  class="padding_L0 " ng-class="(action.maximize.order_pie) ? 'col-sm-12' : 'col-sm-6'">
+			<div class="chart_box">
+				<h4 class="text-center panel-heading box_header" ng-mouseenter="action.maximize.chartorder_pie = true"  ng-mouseleave="action.maximize.chartorder_pie = false" >
+					{{ovcLabel.dashboard.order.orderstatus}}
+					<span class="pull-right icon_expand" id="orderStatus_expand">
+						<i class="fa animated"  ng-class="{'fa-compress' : action.maximize.order_pie, 'fa-expand' : ! action.maximize.order_pie, 'fadeInUp' : action.maximize.chartorder_pie}" ng-click="maximizeChart('order_pie');" ng-show="action.maximize.chartorder_pie"></i>
+					</span>
+				</h4>	
+				<ul class="nav nav-pills nav-justified order_status_report" id="color_nav">
+    						<li ng-class="{active:action.active_order === 1}"><a id="purchase" ng-click="action.active_order = 1;getstatus('MAN')">{{ovcLabel.dashboard.order.purchase}}</a></li>
+   							<li ng-class="{active:action.active_order === 2}"><a id="transfer" ng-click="action.active_order = 2;getstatus('IBT_M')">{{ovcLabel.dashboard.order.transfer}}
+   							 </a></li>
+   							<li ng-class="{active:action.active_order === 3}"><a id="shipment" ng-click="action.active_order = 3;getstatus('PUSH')" >{{ovcLabel.dashboard.order.manualshipment}}</a></li>
+    						<li ng-class="{active:action.active_order ===4}"><a id="return" ng-click="action.active_order = 4;getstatus('RTN')">{{ovcLabel.dashboard.order.return}}</a></li>
+    						<li ng-class="{active:action.active_order === 5}"><a id="dropship"  ng-click="action.active_order = 5;getstatus('DROP_SHIP')">{{ovcLabel.dashboard.order.dropship}}</a></li>
+    						<li ng-class="{active:action.active_order === 6}"><a id="receipt"  ng-click="action.active_order = 6;getstatus('RECEIPT')"> {{ovcLabel.dashboard.order.manualreceipt}}</a></li>
+  					</ul>
+			    <nvd3 class="totalHead" options="options_pie" data="data.selected"></nvd3>
+
+			</div>
+	    </div>
+	    <div class="padding_R0" ng-class="(action.maximize.inventory) ? 'col-sm-12' : 'col-sm-6'">
+	    	<div class="chart_box inventory_chart">
+				<h4 class="text-center panel-heading box_header" ng-mouseenter="action.maximize.chartinventory = true"  ng-mouseleave="action.maximize.chartinventory = false" >
+					{{ovcLabel.dashboard.lowinventory.lowinventalert}}
+					<span class="pull-right icon_expand" id="lowinventory_expand">
+						<i class="fa animated"  ng-class="{'fa-compress' :action.maximize.inventory, 'fa-expand' : ! action.maximize.inventory, 'fadeInUp' : action.maximize.chartinventory}" ng-click="maximizeChart('inventory');" ng-show="action.maximize.chartinventory"></i>
+					</span>
+				</h4>
+		        <nvd3 options="options_multibar" data="multibar_data"></nvd3>
+		    </div>
+	    </div>
+	    <div class="padding_L0" ng-class="(action.maximize.negative) ? 'col-sm-12' : 'col-sm-6'">
+	    	<div class="chart_box inventory_chart">
+				<h4 class="text-center panel-heading box_header" ng-mouseenter="action.maximize.negative_inventory = true"  ng-mouseleave="action.maximize.negative_inventory = false" >
+					{{ovcLabel.dashboard.inventory.negative}}
+					<span class="pull-right icon_expand" id="negative_expand">
+						<i class="fa animated"  ng-class="{'fa-compress' :action.maximize.negative, 'fa-expand' : ! action.maximize.negative, 'fadeInUp' : action.maximize.negative_inventory}" ng-click="maximizeChart('negative');" ng-show="action.maximize.negative_inventory"></i>
+					</span>
+				</h4>
+					<table class="table table-bordered" ng-show="negativeInventory_data.length > 0">
+						<thead class="table_head_in">
+							<tr>
+								     		<th class="table_header_trhr">{{ovcLabel.dashboard.inventory.sku}}</th>
+							     			<th class="table_header_tr">{{ovcLabel.dashboard.inventory.balancetype}}</th>
+								     		<th class="table_header_tr">{{ovcLabel.dashboard.inventory.currentbalance}}</th>
+							</tr>	     		
+									 </thead> 
+					</table>					 
+					<div class="fix-table-scroll-neg" ng-show="negativeInventory_data.length > 0">
+						<table class="table table-bordered  table-striped">
+								     <tbody>
+								     	<tr ng-repeat="data in negativeInventory_data">
+								     		<td class="table_header_trhr"><a ng-click="get_negative_val(data.sku)">{{data.sku}}</a></td>
+								     		<td class="table_header_tr">{{ovcLabel.dashboard.inventory[data.balanceType]}}</td>
+								     		<td class="table_header_tr">{{data.value}}</td>
+								     	</tr>
+								     	</tbody>
+						 </table> 	    
+					</div>
+					<div ng-hide="negativeInventory_data.length > 0" class="no_neg_table">
+						{{ovcLabel.dashboard.nodataavaliable}}
+ 					</div>
+						<center  class="more_btn_neg" ng-show="show_more_btn">
+							</i><a  ng-click="show_more()" id="showmore_button">{{ovcLabel.dashboard.inventory.showmore}}<i class="fa fa-arrow-down"></i></a>
+						</center>
+						<center  class="more_btn_neg" ng-show="show_less_btn">
+							<a ng-click="show_less()" id="showless_button">{{ovcLabel.dashboard.inventory.showless}}<i class="fa fa-arrow-up"></i></a>
+						</center>
+			 </div>
+		</div>
+</div>
+<br clear="all" />

@@ -1,0 +1,385 @@
+<div class="analytics-page" ng-if="!noAuth">
+
+	<div id="analyticshead" ng-if="analyticsView.analyticHeader" class="row header_blk ng-scope paddinghead" >
+		<div class="col-lg-12">
+			<h3 class="headerborder">{{translation.analytics.analytics}}</h3>
+		</div>
+	    <!-- /.col-lg-12 -->
+	</div>
+
+	<div id="analyticsbody" class="col-md-12 zero_padd stk_sear bgcolor paddingbody" ng-style="style()" resizeanalytics>
+		<form name="analyticform" ng-submit="analyticsControl.getresults()">
+
+			<div class="col-md-12 bgcolor">
+				<div class="row">
+					<div class="col-md-3 form-group">
+						<div class="dropdown col-sm-12 form-group zero_margin zero_padd" click-out="showLoc=false">
+							<div class="header_se">
+								<input type="text" id="locationId" class="form-control" ng-model="analyticsView.locationDisplayName" ng-focus="showLoc = true" placeholder="{{translation.select[0].store}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation(analyticsView.locationDisplayName);" />
+										
+								<span class="glyphicon" ng-class="{'glyphicon-chevron-up' : showLoc, 'glyphicon-chevron-down' : ! showLoc, 'iconPlace' : true}"></span>
+							</div>
+							<div tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" stock-lookup = "true" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"  mode="analytic"></div>
+							<span ng-show="analyticsView.error['locationId']" class="alert alert-danger">{{analyticsView.errormsg['locationId']}}</span>
+						</div>
+					</div>
+					<div class="col-md-2 form-group">
+						<div class="btn-group col-md-12 zero_padd form-control borderTransparent" dropdown="">
+							<button id="datevalid" dropdown-toggle="" aria-expanded="false" data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-block text-left" type="button">
+								{{analyticsView.displayDate}}
+								<span ng-if="analyticsView.showCaret" class="glyphicon glyphicon-chevron-down iconPlace"></span>
+							</button>
+							<ul role="menu" class="dropdown-menu liAlignProperty">
+								<li ng-repeat="value in analyticsControl.Dateselection">
+									<a target="_blank" ng-click="analyticsView.displayDate =	value.label;controlFunction.dateLevelChange(value.code);">{{value.label}}</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-5 form-group">
+						<ovcautocomplete    class="search_scroll" attr-input-class="form-control prod_result" attr-input-id="product"  id="slpsearch" ng-model="analyticsView.product" attr-placeholder="{{translation.buttontypes[0].search}}..." click-activation="false" data="analyticsControl.autocomplete" on-type="controlFunction.srchproduct" on-select="controlFunction.selectproduct" ></ovcautocomplete>
+						<span ng-show="analyticsView.error['product']" class="alert alert-danger form-control zero_margin">{{analyticsView.errormsg['product']}}</span>
+					</div>
+
+					<div class="col-md-2 form-group text-center">
+						<button type="submit" class="btn btn-primary" ><i class="fa fa-search" style="margin-right:3px;"></i>{{translation.buttontypes[0].search}}</button>
+					</div>
+						
+				</div>		
+			</div>
+
+			<div class="col-md-12 zero_padd stk_sear" ng-if="analyticsView.datelevel == 'custom'">
+				<div class= "col-md-3 form-group" ng-if="analyticsView.datelevel == 'custom'">
+					<input calendar  ng-model='analyticsView.startDate'  class="form-control hidcal" ng-change='controlFunction.startDate()' ng-focus="controlFunction.datePicker()" placeholder="Start Date" />
+				</div>
+				<div class= "col-md-3 form-group" ng-if="analyticsView.datelevel == 'custom'">
+					<input calendar  ng-model='analyticsView.endDate'  class="form-control hidcal"  ng-change='controlFunction.endDate()' ng-focus="controlFunction.datePicker()" placeholder="End Date" />
+				</div>
+				<div class="col-md-7 form-group zero_margin clearfix">
+					<span ng-show="analyticsView.error['datevalid']" class="alert alert-danger form-control">{{analyticsView.errormsg['datevalid']}}</span>
+				</div>
+			</div>
+			<br>
+		</form>
+
+		<div class="col-md-12 zero_padd bgcolor">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="col-md-12">
+						<div class="col-md-4 media">	
+							<img ng-src="{{action.product.img}}" alt=""  style="width: 100%;"/>		
+						</div>
+						<div class="col-md-8"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="col-md-12">
+		                <div class="row" id="analyticstylematrix" ng-show="matrixdata.showstyle">
+		                	<analytic-matrix></analytic-matrix>
+		                </div>
+					</div>
+				</div>
+			</div>
+			<br>
+		</div>
+
+		<div class="col-md-12 zero_padd bgcolor pie-style text-center" ng-if="analyticsView.showRoundBar || matrixdata.showskuVarients" >
+			<div class="col-md-6 zero_padd store-label clearfix">
+				<div class="col-sm-6" ng-repeat="(key,value) in analyticsView.skuVarients" ng-if="matrixdata.showskuVarients">
+						<p><label class="dynamicLable col-md-7 zero_padd zero_margin">{{key}}</label>
+						<span class="col-md-5 zero_padd text-left">: {{value}}</span></p>
+				</div>
+			</div>
+			<div class="col-md-6 zero_padd clearfix" ng-if="analyticsView.showRoundBar">
+				<div class="col-md-4 zero_padd">
+					<h4 class="soldh4">{{translation.analytics.sold}}</h4>
+					<div class="zoomtext">
+			            <circular-progress
+			                value= analyticsView.sold
+			                max="100"
+			                orientation="1"
+			                radius="40"
+			                stroke="12"
+			                progress-color="#1da363"
+			                iterations="100"
+			                animation="easeInOutCubic"
+			                label= analyticsView.sold
+			            ></circular-progress>
+		            </div>
+				</div>
+				<div class="col-md-4 zero_padd">
+					<h4 class="receivedh4">{{translation.analytics.received}}</h4>
+					<div class="zoomtext">
+			            <circular-progress
+			                value= analyticsView.received
+			                max="100"
+			                orientation="1"
+			                radius="40"
+			                stroke="12"
+			                progress-color="#4b8bf5"
+			                iterations="100"
+			                animation="easeInOutCubic"
+			                label= analyticsView.received
+			            ></circular-progress>
+			        </div>
+				</div>
+				<div class="col-md-4 zero_padd">
+					<h4 class="returnedh4">{{translation.analytics.returned}}</h4>
+					<div class="zoomtext">
+			            <circular-progress
+			                value= analyticsView.returned
+			                max="100"
+			                orientation="1"
+			                radius="40"
+			                stroke="12"
+			                progress-color=" #dc4933"
+			                iterations="100"
+			                animation="easeInOutCubic"
+			                label= analyticsView.returned
+			            ></circular-progress>
+		            </div>
+				</div>
+			</div>
+			<br><br>
+		</div>
+
+		<div class="col-md-12 zero_padd bgcolor">
+			<div class="row">
+				<div class="col-md-12">
+						<div class="col-md-12"   ng-show="matrixdata.showbalances" >
+							<section>
+
+								<div class="col-md-12 zero_padd analyticsAnchor">
+							        <ul class="nav nav-pills ulanalyticsindex">
+							            <li ng-class="{in_process:action.page == 1}"><a href ng-click="action.page = 1">{{translation.analytics.inv_avail}}</a></li>
+							            <li ng-class="{in_process:action.page == 2}"><a href ng-click="action.page = 2">{{translation.analytics.price_promo}}</a></li>
+							        </ul>
+							        <br>
+							    </div>
+
+							    <div class="col-md-12 zero_padd" ng-show="action.page == 1">
+
+							    	<div class="col-md-3 zero_padd">
+								    	<h4>{{translation.analytics.physical}}</h4>
+								    </div>
+
+								    <div class="col-md-4 zero_padd">
+										<table id="table" class="table table-striped  stocklook_tb  table-fixed" >
+											<tbody class="stk_height "> 
+												<tr class="height_scr" >
+													<td colspan="4" class="height_scr zero_padd">
+														<table class="table table-striped  col-md-12 zero_margin">
+															<tr>
+																<td  class="stock_pad stock_pad1 zero_padd">
+																	<table class="table table-striped  zero_margin">
+																	
+																		<tr  ng-repeat = "bdata in analyticsView.balancefields1" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+																			<td class="br_none trans-tooltip td_wdth "><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;">{{bdata.title}}</div></td>
+																			<td   ng-mouseover="hoverIn(matrixdata.skudetail.skudata.sku,bdata.label)" ng-mouseleave="hoverOut()"id="{{bdata.id}}" style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+																				
+																				<!-- <center>{{data.OH}}</center> --><center>{{matrixdata.skudetail.invdata[bdata.Name]}}</center>
+																				<div ng-show="analyticsView.SelectedInventory == bdata.label && analyticsView.showhover==true " ng-if="analyticsView.invavaillength > 0">
+																					<inventory-data tabid="{{bdata.Name}}"></inventory-data>
+																				</div>
+																			</td>
+																		</tr>
+																	</table>
+																</td>	
+															</tr>
+														</table>
+													</td>
+												</tr>
+										</tbody>
+										</table>
+									</div>
+
+									<div class="col-md-1 zero_padd">
+									</div>
+
+									<div class="col-md-4 zero_padd">
+										<table id="table" class="table table-striped stocklook_tb  table-fixed" >
+											<tbody class="stk_height "> 
+												<tr class="height_scr" >
+													<td colspan="4" class="height_scr zero_padd">
+														<table class="table table-striped col-md-12 zero_margin">
+															<tr>
+																<td class="stock_pad stock_pad2 zero_padd">
+																	<table class="table table-striped  zero_margin">
+																	
+																		<tr ng-repeat = "bdata in analyticsView.balancefields2" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+																		<td class="trans-tooltip br_none td_wdth "><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;" >{{bdata.title}}</div></td>
+																			<td   ng-mouseover="hoverIn(matrixdata.skudetail.skudata.sku,bdata.label)" ng-mouseleave="hoverOut()" style=" border-right: medium none; border-top: medium none;" class="br_none td_wdthr">
+																				<center>{{matrixdata.skudetail.invdata[bdata.Name]}}</center>
+																				<div ng-show="analyticsView.SelectedInventory == bdata.label && analyticsView.showhover==true " ng-if="analyticsView.invavaillength > 0">
+																					<inventory-data ></inventory-data>
+																				</div>	
+																			</td>
+																		</tr>
+																	</table>
+																</td>	
+															</tr>
+														</table>
+													</td>
+												</tr>
+										</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div class="col-md-12 zero_padd" ng-show="action.page == 1">
+									<br>
+									<div class="col-md-3 zero_padd">
+										<h4>{{translation.analytics.directive}}</h4>
+									</div>
+
+									<div class="col-md-4 zero_padd">
+										<table id="table" class="table table-striped  stocklook_tb  table-fixed" >
+											<thead><th class="text-center">{{translation.ibt.inbound}}</th></thead>
+											<tbody class="stk_height "> 
+												<tr class="height_scr" >
+													<td colspan="4" class="height_scr zero_padd br_none">
+														<table class="table table-striped  col-md-12 zero_margin">
+															<tr>
+																<td class="stock_pad stock_pad3 zero_padd br_none">
+																	<table  class="table table-striped  zero_margin">
+																		<tbody>
+																			<tr ng-repeat = "bdata in analyticsView.balancefields31" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+																				<td class="trans-tooltip  td_wdth br_none"><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;" >{{bdata.title}}</div></td>
+																				<td ng-mouseover="hoverIn(matrixdata.skudetail.skudata.sku,bdata.label,productIndex)" ng-mouseleave="hoverOut()" style=" border-right: medium none; border-top: medium none;" class="td_wdthr br_none">
+																					<center>{{matrixdata.skudetail.invdata[bdata.Name]}}</center>
+																					<div ng-show="analyticsView.SelectedInventory == bdata.label && analyticsView.showhover==true " ng-if="analyticsView.invavaillength > 0">
+																						<inventory-data ></inventory-data>
+																					</div>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>	 
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+									<div class="col-md-1 zero_padd">
+									</div>
+
+									<div class="col-md-4 zero_padd">
+										<table id="table" class="table table-striped stocklook_tb  table-fixed" >
+											<thead><th class="text-center">{{translation.ibt.outbound}}</th></thead>
+											<tbody class="stk_height "> 
+												<tr class="height_scr" >
+													<td colspan="4" class="height_scr zero_padd">
+														<table class="table table-striped  col-md-12 zero_margin">
+															<tr>
+																<td class="stock_pad stock_pad4 zero_padd br_none">
+																	<table  class="table table-striped  zero_margin">
+																	 	<tbody>
+																			<tr ng-repeat = "bdata in analyticsView.balancefields32" class="{{bdata.id}} {{bdata.parent1}} {{bdata.parent2}}">
+																				<td class="trans-tooltip  td_wdth br_none"><div tooltip-placement="bottom" uib-tooltip="{{bdata.info}}" style="border-left: medium none; border-top: medium none;">{{bdata.title}}</div></td>
+																				
+																				<td ng-mouseover="hoverIn(matrixdata.skudetail.skudata.sku,bdata.label)" ng-mouseleave="hoverOut()" style=" border-right: medium none; border-top: medium none;" class="td_wdthr">
+																					<center>{{matrixdata.skudetail.invdata[bdata.Name]}}</center>
+																					<div ng-show="analyticsView.SelectedInventory == bdata.label && analyticsView.showhover==true " ng-if="analyticsView.invavaillength > 0">
+																						<inventory-data></inventory-data>
+																					</div>
+																				</td>
+
+																			</tr>
+																	 	</tbody>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div class="col-md-12 zero_padd" ng-show="action.page == 2">
+
+									<div class="col-md-3 zero_padd">
+										<h4>{{translation.analytics.price_promo}}</h4>
+									</div>
+
+									<div class="col-md-9 zero_padd table-responsive">
+										<table class="table table-striped table-bordered thbgcolor">
+											<thead>
+												<th>{{translation.analytics.store}}&nbsp;<a class="sort_align" ng-click="sort_by('Store');"><i class="fa " ng-class="{'fa-sort': analyticsView.predicate!='Store','fa-sort-asc': analyticsView.predicate=='Store' && analyticsView.reverse===false,'fa-sort-desc': analyticsView.predicate=='Store' && analyticsView.reverse===true}"></i></a></th>
+												<th>{{translation.analytics.from_date}} &nbsp;<a class="sort_align" ng-click="sort_by('fromDate');"><i class="fa " ng-class="{'fa-sort': analyticsView.predicate!='fromDate','fa-sort-asc': analyticsView.predicate=='fromDate' && analyticsView.reverse===false,'fa-sort-desc': analyticsView.predicate=='fromDate' && analyticsView.reverse===true}"></i></a></th>
+												<th>{{translation.analytics.to_date}} &nbsp;<a class="sort_align" ng-click="sort_by('toDate');"><i class="fa " ng-class="{'fa-sort': analyticsView.predicate!='toDate','fa-sort-asc': analyticsView.predicate=='toDate' && analyticsView.reverse===false,'fa-sort-desc': analyticsView.predicate=='toDate' && analyticsView.reverse===true}"></i></a></th>
+												<th>{{translation.analytics.price}} &nbsp;<a class="sort_align" ng-click="sort_by('Cost');"><i class="fa " ng-class="{'fa-sort': analyticsView.predicate!='Cost','fa-sort-asc': analyticsView.predicate=='Cost' && analyticsView.reverse===false,'fa-sort-desc': analyticsView.predicate=='Cost' && analyticsView.reverse===true}"></i></a></th>
+												
+											</thead>
+											<tbody>		
+												<tr ng-repeat="(key,data) in analyticsView.priceDetails | orderBy : analyticsView.predicate :analyticsView.reverse" >
+													
+													<td>{{data.Store}}</td>
+													<td>{{data.fromDate ? (data.fromDate| dateForm) : '-' }}</td>
+													<td>{{data.toDate ? (data.toDate | dateForm) : '-' }}</td>
+													<td>{{analyticsView.currency}} {{data.Cost |number : 2}}</td>
+													<!-- <td>{{data.created | datetimeForm}}</td> -->
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+							</section>
+						</div>				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div ng-if="noAuth"><h3 class="text-danger text-center">You are not authorized user</h3></div>
+
+<script type="text/ng-template" id="inventoryData.html" >
+	<div class="animate-show callout" id="{{tableid}}" style = "padding: 10px;width: auto;" >
+		<b class="notch"></b>
+		<div class="inside_t">
+			<table class="table table-striped table-bordered">
+				<tr ng-repeat="(key,value) in analyticsView.inventoryData1">
+					<td style = "padding:5px;">{{key}} </td>
+					<td style = "padding:5px 10px;">{{ value }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</script>
+
+<style>
+.callout {
+    margin: 10px 0;
+    /* easy rounded corners for modern browsers */
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.callout .notch {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ADDFFF;
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+     /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+}
+</style>

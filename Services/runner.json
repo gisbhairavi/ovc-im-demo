@@ -1,0 +1,56 @@
+[//api_gateway
+  {
+    "uid": "api_gateway",
+    "script": "./api_gateway/bin/api_gateway.js",
+    "append": true
+},
+   //location
+  {
+   "uid": "location",
+    "script": "./location/bin/www",
+    "append": true
+},
+   //oauth2
+    { "uid": "oauth2orize-example",
+     "script": "./oauth2/app.js",
+     "append": true,
+   "name": "oauth2orize-example"
+},
+   //order
+{"uid": "order",
+    "script": "./order/bin/www",
+    "append": true
+},
+   //product
+  {
+    "uid": "product",
+    "script": "./product/bin/www",
+    "append": true
+},
+   //transaction
+  {
+    "uid": "transaction",
+    "script": "./transaction/bin/www",
+    "append": true
+},
+   //vendor
+  {"uid": "vendor",
+    "script": "./vendor/bin/www",
+    "append": true
+},
+   //loadjson
+  {"uid": "loadjson",
+    "script": "./loadjson/bin/www",
+    "append": true
+},
+   //loadjson
+  {"uid": "dashboard",
+    "script": "./dashboard/bin/www",
+    "append": true
+},
+//client
+  {"uid": "Client",
+    "script": "../client/server.js",
+    "append": true
+}
+]

@@ -1,0 +1,92 @@
+<div>
+	<style>
+
+		.table{
+			margin-bottom: 10px;
+		}
+		.arrow_d {
+			padding:0;
+		}
+		.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th{
+			background-color: #f9f9f9;
+		}
+
+		.table-bordered > thead > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+		    border: 1px solid #ddd; 
+		}
+		.asn_wrapper{
+			background:#fff;
+		}
+
+		.table.table-condensed th, td {
+			 border-top: none !important;
+			 border-bottom: none !important;
+		}
+
+		.table.table-condensed th {
+			 font-weight: normal;
+		}
+		.asn_details {
+			background-color: #cccccc;
+		}
+		.package_details {
+			background-color: #e6e6e6;
+			font-weight: bold;
+			width:100%;
+		}
+		#wrapper tr {
+			border: none !important;
+		}
+		.asn_details th p {
+			font-weight: 600;
+		}
+		.table>thead>tr>th {
+		    border: none;
+		    vertical-align: middle;
+		    padding: 10px 10px;
+		    max-width: 110px;
+		}
+		.table-algin{
+			width:97%;
+		}
+		.package_details th, .package_details td{
+			padding: 10px !important;
+			max-width: 120px !important;
+		}
+		.alert-success{
+			background-color: #E5F9E5;
+			color: #333 !important;
+		}
+		.alert-warning{
+			background-color: #FFF8EB;
+			color: #333 !important;
+		}
+		.alert-info{
+			background-color: #d9edf7;
+			color: #333 !important;
+		}
+		.alert-close{
+			background-color: #E8EFD0 !important;
+			color: #333 !important;
+		}
+		.head{
+			cursor:pointer;
+		}
+	</style>
+	<!-- <div    ng-show="action.showasn" ng-include="'/modules/directives/asn/asnibt_table.html'"  ></div>
+	<div    ng-hide="action.showasn" ng-include="'/modules/directives/asn/asnpackage_table.html'"  ></div> -->
+ 
+	<div ng-if="asnaction.ibt == true">
+		<div ng-if="shasn" ng-include="'/modules/directives/asn/asnibt_table.html'"  ></div>
+		<div ng-if="!shasn" ng-include="'/modules/directives/asn/asnpackage_table.html'"  ></div>
+	</div>
+	<div  ng-if="asnaction.ibt == false">
+		<div ng-include="'/modules/directives/asn/asnpackage_table.html'"  ></div>
+	</div>
+
+	<h3 id="ovcError" class="text-danger text-center ng-binding" ng-if="error.combination">{{error.message}}</h3>
+	<h3 id="ovcError" class="text-danger text-center ng-binding" ng-if="error.empty">{{error.message}}</h3>
+
+	
+</div>
+

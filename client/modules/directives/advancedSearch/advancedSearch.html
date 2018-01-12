@@ -1,0 +1,56 @@
+<div class="col-sm-12 col-xs-12">
+	<div ng-if = "advSearch.advSrchFields.sku == true" class="col-sm-12 col-md-3">
+		<div class="col-sm-12 stk_sear"  style="padding:0;">
+			<label class="control-label">{{ovcLabel.advanceSearch.skuorbarcode}}</label>
+			<autocomplete    class="search_scroll" attr-input-class="prod_result" attr-input-id="advancedskubarSearch"  id="slpsearch" ng-model="advSearch.advSearchData.result" attr-placeholder="{{ovcLabel.advanceSearch.placeholder.search_sku}}..." click-activation="false" data="transactions" on-type="dosrchproduct" on-select="doSelectProduct"></autocomplete>
+		</div>
+	</div>
+	<div ng-if = "advSearch.advSrchFields.quantity == true" class="col-md-3 col-sm-12 stk_sear">
+		<div class="row">
+			<div class="col-md-12">
+				<label class="control-label">{{ovcLabel.advanceSearch.quantityRange}}</label>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6">
+				<input type="number" min="0" placeholder="From" name="fromQty" id="search_no" ng-model='advSearch.advSearchData.fromQtyRange'  ng-change="rangeValidation()" class="form-control" only-digits/>
+				
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6">
+				<input type="number" min="0" placeholder="To" name="toQty" id="search_name" ng-model='advSearch.advSearchData.toQtyRange'  ng-change="rangeValidation()"  class="form-control" only-digits/>
+				
+			</div>
+			<span  ng-show  =  "isInvalidRange.qty" class  =  "alert alert-danger">
+				{{ovcLabel.advanceSearch.invalidQtyRange}}
+			</span>	
+		</div>
+	</div>
+</div>
+<div class="col-sm-12 col-xs-12">
+	<div ng-if = "advSearch.advSrchFields.asn == true" class="col-sm-12 col-xs-12 col-md-3">
+		<label class="control-label">{{ovcLabel.advanceSearch.asn_no}}</label>
+		<input type="text"  name="asnNo" id="search_asn" ng-model='advSearch.advSearchData.asnNo'   class="form-control" />
+	</div>
+	<div ng-if = "advSearch.advSrchFields.createdBy == true" class="col-sm-12 col-xs-12 col-md-3">
+		<label class="control-label">{{ovcLabel.advanceSearch.createdby}}</label>
+		<input type="text"  name="createdBy" id="search_no" ng-model='advSearch.advSearchData.createdBy'   class="form-control" />
+	</div>
+	<div ng-if = "advSearch.advSrchFields.price == true" class="col-sm-12 col-xs-12 col-md-3">
+		<div class="row">
+			<div class="col-md-12">
+				<label class="control-label">{{ovcLabel.advanceSearch.purPriceRange}}</label>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6">
+				<input type="number" placeholder="From" name="fromPriceRange" id="search_no" ng-model='advSearch.advSearchData.fromPriceRange'  ng-change="rangeValidation()"  class="form-control" />
+				
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6">
+				<input type="number" placeholder="To" name="toPriceRange" id="search_name" ng-model='advSearch.advSearchData.toPriceRange'  ng-change="rangeValidation()"  class="form-control" />
+			</div>
+			<span  ng-show  =  "isInvalidRange.price" class  =  "alert alert-danger">
+				{{ovcLabel.advanceSearch.invalidPriceRange}}
+			</span>	
+		</div>
+	</div>
+</div>
+<div>
+	
+</div>

@@ -1,0 +1,99 @@
+<header class="header">
+	<a href="" class="logo" style="background: #336699;">
+		<img src="images/logo_innerpage.png" style="margin: 2px 2px 4px -10px;" alt="IGOTIT" align="left">
+	</a>
+	<nav class="navbar navbar-static-top" role="navigation" style="background-color: #336699;">
+		<div class="navbar-right">
+			<h4 class="appVersCls">{{appVersion}}</h4>
+		</div>
+	</nav>
+</header>
+<div class="container">
+    <div class="row">
+		<div class="space-6"></div>
+		<div class="col-sm-10 col-sm-offset-1">
+			<div id="login-box" class="form-box login-box visible widget-box no-border">
+				<div class="widget-body">
+					<div class="widget-main">
+						<form name="loginForm" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class="col-sm-10 no-padding-right" for="email">{{translation.labels[0].username}} : </label>
+								<div class="col-sm-12">
+								   <span class="block input-icon input-icon-right">
+										<input type="text" class="form-control" placeholder="{{translation.labels[0].username}}" name="username" ng-model="login.username" autocomplete="off" required focus/>
+										<i class="ace-icon fa fa-user"></i>
+									</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-10 no-padding-right" for="password">{{translation.labels[0].password}} :</label>
+								<div class="col-sm-12">
+								   <span class="block input-icon input-icon-right">
+										<input type="password" class="form-control" name="psswrd" placeholder="{{translation.labels[0].password}}" ng-model="login.psswrd" required/>
+										<i class="ace-icon fa fa-lock"></i>
+									</span>
+								</div>
+							</div>
+							<div class="space"></div>
+							<div class="clearfix">
+								<div class="footer">
+									<button type="submit" class="btn bg-olive btn-block" ng-click="doLogin(login)" data-ng-disabled="loginForm.$invalid" id="log">
+										<i class="ace-icon fa fa-key"></i>
+										{{translation.buttontypes[0].login}}
+									</button>
+								</div>
+							</div>
+							<div class="space-4"></div>
+						</form>
+						
+					</div><!-- /widget-main -->
+				</div><!-- /widget-body -->
+			</div><!-- /login-box -->
+		<h3 ng-if="labelError" class="text-danger text-center ng-binding">There is problem in Label Resources. Please Check...</h3>
+		</div><!-- /position-relative -->
+	</div>
+</div><!-- /.page-content -->
+<div id="footer" style="float:right;">
+	<img src="images/login.png">
+</div>
+<style>
+html,body{
+	background:none repeat scroll 0 0 #fff !important;
+}
+.bg-olive {
+	background-color: #d1fbff !important;
+	color: black !important;
+	width: 50% !important;
+}#log {
+  margin-left: 90px !important;
+}
+#footer {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+#register {
+  margin-left: 85px !important;
+}
+.header {
+  position: relative;
+  max-height: 100px;
+  z-index: 1030;
+}
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  border:none;
+}
+.logo{
+	left: 10px;
+  background: #336699;
+  float: left;
+  position: absolute;
+  top: 0px;
+  z-index: 10001;
+}
+</style>

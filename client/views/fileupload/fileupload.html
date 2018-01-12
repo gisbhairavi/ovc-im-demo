@@ -1,0 +1,15 @@
+<div class="row header_blk">
+<div class="col-lg-12">
+         <h3 class="page-header">{{upload}}
+        </h3>
+        
+    </div>
+</div>
+<div><center>
+    <label class="control-label"><h3>{{ovcLabel.fileUpload.uplodeJson}}</h3> </label></br>
+    <span class="file-input btn btn-primary btn-file">{{ovcLabel.fileUpload.browse}}
+    <input type="file" name="uploaded_file"  file-model="myFile"        on-read-file="browse($fileContent)"/></span>
+    <button class="btn btn-primary" ng-disabled="!content" ng-click="uploadFile()" id="upload_file">{{ovcLabel.fileUpload.uploadme}}</button></center>
+
+</div>
+</div>

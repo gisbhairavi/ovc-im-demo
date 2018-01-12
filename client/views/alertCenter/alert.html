@@ -1,0 +1,47 @@
+<div ng-if="action.getAlertData == true">	
+    <section class="alert-height">
+        <ul class="nav nav-pills">
+            <li ng-class="{active:action.page == 1}"><a href ng-click="action.page = 1">{{translation.ibt.inbound}}</a></li>
+            <li ng-class="{active:action.page == 2}"><a href ng-click="action.page = 2">{{translation.ibt.outbound}}</a></li>
+        </ul>
+        <table class="table table-bordered table-bottom-none">
+			<tr style="background-color: rgb(125, 222, 253);">
+				<th>{{translation.purchaseorders[0].orderno}}</th>
+				<th>{{translation.transaction[0].type}}</th>
+				<th>{{translation.interface.update}}</th>
+			</tr>
+		</table>
+		<div class="fix-table-scroll">
+		<table class="table table-bordered table-bottom-none">
+			<tr ng-show="action.page == 1" ng-repeat="item in action.inboundDatas">
+				<td ng-if = "userRolePermissions.orderPermissions.viewOrder != true && (item.purchaseOrderType == 'MAN')">{{item.purchaseOrderNumber}}</td>
+				<td ng-if = "userRolePermissions.orderPermissions.transfer != true && item.purchaseOrderType == 'IBT_M'">{{item.purchaseOrderNumber}}</td>
+				<td class="name_li" ng-if="userRolePermissions.orderPermissions.viewOrder == true && (item.purchaseOrderType == 'MAN')"><a href="" ng-click="changeState(item._id,item.purchaseOrderType,item.type)">{{item.purchaseOrderNumber}}</a></td>
+				<td class="name_li" ng-if="userRolePermissions.orderPermissions.transfer == true && item.purchaseOrderType == 'IBT_M'"><a href="" ng-click="changeState(item._id,item.purchaseOrderType,item.type)">
+				{{item.purchaseOrderNumber}}</a></td>
+				<td class="name_li" ng-if="item.purchaseOrderType == 'PUSH'"><a href="" ng-click="changeState(item._id,item.purchaseOrderType,item.type)">{{item.purchaseOrderNumber}}</a></td>
+				<td>{{translation.alertOrder[item.purchaseOrderType]}}</td>
+				<td>{{translation.orderstatuslist[0][item.orderStatus]}}</td>
+			</tr>
+			<tr ng-show="action.page == 2" ng-repeat="item in action.outboundDatas">
+				<td ng-if = "userRolePermissions.orderPermissions.viewOrder != true && (item.purchaseOrderType == 'MAN')">{{item.purchaseOrderNumber}}</td>
+				<td ng-if = "userRolePermissions.orderPermissions.transfer != true && item.purchaseOrderType == 'IBT_M'">{{item.purchaseOrderNumber}}</td>
+				<td class="name_li" ng-if="userRolePermissions.orderPermissions.viewOrder == true && (item.purchaseOrderType == 'MAN')"><a href="" ng-click="changeState(item._id,item.purchaseOrderType,item.type)">{{item.purchaseOrderNumber}}</a></td>
+				<td class="name_li" ng-if="userRolePermissions.orderPermissions.transfer == true && item.purchaseOrderType == 'IBT_M'"><a href="" ng-click="changeState(item._id,item.purchaseOrderType,item.type)">{{item.purchaseOrderNumber}}</a></td>
+				<td class="name_li" ng-if="item.purchaseOrderType == 'PUSH'"><a href="" ng-click="changeState(item._id,item.purchaseOrderType,item.type)">{{item.purchaseOrderNumber}}</a></td>
+				<td>{{translation.alertOrder[item.purchaseOrderType]}}</td>
+				<td>{{translation.orderstatuslist[0][item.orderStatus]}}</td>
+			</tr>
+		</table>
+		</div>
+		<button ng-show = "! action.inboundLoad && action.page == 1" type="button" class="btn btn-primary btn-block" data-loading-text="Loading Data" ng-click="loadData('inbound')">{{translation.buttontypes[0].loadmore}}</button>
+		<button ng-show = "! action.outboundLoad && action.page == 2" type="button" class="btn btn-primary btn-block" data-loading-text="Loading Data" ng-click="loadData('outbound')">{{translation.buttontypes[0].loadmore}}</button>
+		
+    </section>
+</div>
+
+<div ng-if="action.getAlertData == false">
+	<section class="alert-height" style="padding-left: 120px">
+		{{'Loading...'}}
+	</section>
+</div>

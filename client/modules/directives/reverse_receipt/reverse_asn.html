@@ -1,0 +1,78 @@
+<!---STYLE Grouping---->
+<tr ng-repeat="(style,styledata) in asn_data.skus | array | filter : searchDetais" ng-show="configData.showskugroup">
+	<td colspan = "7">
+		<div class="col-sm-12 trans_det">
+			<table class="table table-condensed" ng-if="style != 'numberOfSKU'">
+				<thead class = "package_details head" ng-click="styleDetail = !styleDetail">
+					<tr>
+						<th> {{ovcLabel.asnPackage.productCode}} </th>
+						<th> {{ovcLabel.asnPackage.description}} </th>
+						<th> {{ovcLabel.asnPackage.skuShipped}} </th>
+						<th ng-if="asn_data.asnStatus != 'received'"> {{ovcLabel.asnPackage.totalQuantityShipped}} </th>
+						<th ng-if="asn_data.asnStatus === 'received' "> {{ovcLabel.asnPackage.totalQuantityReceived}} </th>  
+					</tr>
+					<tr>
+						<td  ng-show="style=='undefined'"></td>
+						<td ng-show="style!='undefined'"> {{styledata.stylecode}} </td>
+						<td> {{styledata.styleDescription}} </td>
+						<td> {{styledata.skus.length}} </td>
+						<td> {{styledata.TotalQuantity}}</td>
+					</tr>
+				</thead>
+				<tbody ng-show="styleDetail">
+					<tr>
+						<td colspan = "6">
+							<table class="table table-condensed">
+								<tr style = "border-bottom : 1px solid #ddd">
+									<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+									<th> {{ovcLabel.asnPackage.sku}} </th>
+									<th> {{ovcLabel.asnPackage.description}} </th>
+									<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+									<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+									<th ng-if= "asn_data.asnStatus === 'received' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+								</tr>
+								<tbody>
+									<tr ng-repeat="(ln_no,skus) in styledata.skuArr track by $index">
+										<td>{{skus.lineNumber}}</td>
+										<td>{{skus.sku}}</td>
+										<td>{{skus.description}}</td>
+										<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}}  {{skus.skuCost != '' ? skus.skuCost: 0 }}</td>
+										<td>{{skus.qty || 0}}</td>
+										<td ng-if = "asn_data.asnStatus === 'received' ">{{skus.newQty}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</td>
+</tr>
+<!---SKU Grouping---->
+<tr ng-show = "!configData.showskugroup" class="noborder">
+	<td colspan = "6">
+		<table class="table table-condensed"  >
+			<thead>
+				<tr>
+				<th> {{translation.asn_service.lineNumber}} </th>
+				<th> {{translation.asn_service.sku}} </th>
+				<th> {{translation.asn_service.description}} </th>
+				<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{translation.asn_service.cost}} </th>
+				<th> {{translation.asn_service.expectedQty}} </th>
+				<th ng-if= "asn_data.asnStatus === 'received' "> {{translation.asn_service.receivedQty}} </th>
+				</tr>
+			</thead>
+			<tbody style = "border-top : 1px solid #ddd" ng-repeat="(style,styledata) in asn_data.skus | array | filter : searchDetais">
+				<tr ng-repeat="(ln_no,skus) in styledata.skuArr track by $index">
+					<td>{{skus.lineNumber}}</td>
+					<td>{{skus.sku}}</td>
+					<td>{{skus.description}}</td>
+					<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{currency}}  {{skus.skuCost != '' ? skus.skuCost: 0 }}</td>
+					<td>{{skus.qty || 0}}</td>
+					<td ng-if = "asn_data.asnStatus === 'received' ">{{skus.newQty}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</td>
+</tr>

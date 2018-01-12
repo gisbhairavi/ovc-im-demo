@@ -1,0 +1,14 @@
+{
+  "browser": false,
+  "node": true,
+  "camelcase": true,
+  "eqeqeq": true,
+  "latedef": false,
+  "newcap": true,
+  "quotmark": "single",
+  "strict": false,
+  "undef": true,
+  "unused": "vars",
+  "eqnull": true,
+  "esnext": true
+}

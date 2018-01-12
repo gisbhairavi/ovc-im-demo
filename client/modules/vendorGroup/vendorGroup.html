@@ -1,0 +1,8 @@
+<div>
+	<div  ng-if="groupdata.roleConfig.showskugroup">
+		<div ng-include="'/modules/vendorGroup/vendorStyleGroupCommon.html'"></div>
+	</div>
+	<div  ng-if="!groupdata.roleConfig.showskugroup">
+		<div ng-include="'/modules/vendorGroup/vendorSkuGroupCommon.html'"></div>
+	</div>
+</div>

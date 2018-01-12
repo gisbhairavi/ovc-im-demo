@@ -1,0 +1,164 @@
+<tr><td colspan = "8" align = "right" ng-hide="(asn_item.asnStatus == 'receivedInFull')" ng-if="(asn_obj.mode != 'edit') && (asn_item.packcounts != 1)&& vwcloseasn && userRolePermissions.orderPermissions.modifyInTransit && (asn_item.asnStatus != 'closed')"><input type="button" class="btn btn-primary pull-right" value="{{translation.buttontypes[0].closeshipment}}" ng-click="closeBtn(asn_item);"/></td>
+</tr>
+<tr>
+	<td colspan="8">
+		<div ng-if = "asn_item.asnStatus == 'shippedReversed' && !asn_item.packageAsn && asn_item.numberOfStyles > 0">
+			<div class="col-md-12">	
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.receiptDate}}</label> : {{asn_item.receivedDate | dateForm}}</p>
+				</div>
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.receivedBy}}</label> : {{asn_item.receiveduser.firstName +' '+ asn_item.receiveduser.lastName}}</p>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.reversalDate}}</label> : {{asn_item.reversedate | dateForm}}</p>
+				</div>
+				<div class="col-sm-6">
+					<p><label class="control-label">{{ovcLabel.asnPackage.reversedBy}}</label> : {{asn_item.reverseduser.firstName +' '+ asn_item.reverseduser.lastName}}</p>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-sm-3">
+					<p><label class="control-label">{{ovcLabel.asnPackage.reason_code}}</label> : {{ovcLabel.asnPackage.reasonCode[asn_item.reasoncode]}}</p>
+				</div>
+			</div>
+		</div>
+	</td>
+</tr>
+
+<!---Style Configration-->
+<tr ng-repeat="styledata in asn_item.skus | array | filter : searchDetais" ng-show="config.showskugroup ">
+	<td colspan = "8">
+		<div class="col-sm-12 trans_det" ng-if="styledata.stylecode">
+			<table class="table table-condensed">
+				<thead class = "package_details head" ng-click="styleDetail = !styleDetail">
+					<tr>
+						<th> {{ovcLabel.asnPackage.productCode}} </th>
+						<th> {{ovcLabel.asnPackage.description}} </th>
+						<th> {{ovcLabel.asnPackage.skuShipped}} </th>
+						<th ng-if="asn_item.asnStatus != 'received'" > {{ovcLabel.asnPackage.totalQuantityShipped}} </th>
+						<th ng-if="asn_item.asnStatus === 'received' ">{{ovcLabel.asnPackage.totalQuantityShipped}} </th>
+						<th ng-if="asn_item.asnStatus === 'received' "> {{ovcLabel.asnPackage.totalQuantityReceived}} </th>
+						  
+					</tr>
+
+					<tr>
+						<td  ng-show="styledata.stylecode=='undefined'" class="hide_pdf"></td>
+						<td ng-show="styledata.stylecode!='undefined'"> {{styledata.stylecode}} </td>
+						<td> {{styledata.styleDescription}} </td>
+						<td> {{styledata.skuArr.length}} </td>
+						<td ng-if="asn_item.asnStatus === 'received'"> {{styledata.shippedQty}}</td>
+						<td> {{styledata.TotalQuantity}}</td>
+						
+					</tr>
+				</thead>
+				<tbody ng-show="styleDetail" ng-init = "styleDetail = (asn_obj.mode == 'edit')?true:flase">
+					<tr>
+						<td colspan = "6">
+							<table class="table table-condensed">
+								<thead>
+									<tr style = "border-bottom : 1px solid #ddd !important">
+										<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+										<th> {{ovcLabel.asnPackage.sku}}</th>
+										<th> {{ovcLabel.asnPackage.description}} </th>
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+										<th> {{ovcLabel.asnPackage.UOM}} </th>
+										<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+										<th ng-if= "asn_item.asnStatus === 'receivedInFull' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+										<th ng-if="(asn_obj.mode === 'edit')">{{ovcLabel.asnPackage.receivedQty}}</th>
+										<th></th>	
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="(ln_no,skus) in styledata.skuArr | orderBy:'lineNumber'"  class="{{ (skus.qty != skus.newQty &&  skus.newQty != '' && ((skus.qtyStatus != 'shipped' && skus.qtyStatus  != 'shippedReversed' && skus.qtyStatus  !=  'shipInProgress') || (asn_obj.mode == 'edit')) )? 'class-tr-bg' : 'no-class'}} ">
+										<td>{{skus.lineNumber}}</td>
+										<td>{{skus.sku}}</td>
+										<td>{{skus.description}}</td>		
+										<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.global.currency[asn_item.currency]}}  {{skus.skuCostAsn ? skus.skuCostAsn : skus.skuCostConfirm ? skus.skuCostConfirm : skus.skuCost | number:2}}</td>
+										<td ng-hide = "skus.is_new  === true">{{skus.producUom}}</td>
+										<td class="hide_pdf"ng-show = "skus.is_new  === true"> 
+											<select id="prcode" class="form-control"  data-ng-options="uomId as description for (uomId,description) in UOMvalues" name="uom" data-ng-model="skus.producUom">
+											</select>
+										</td>
+										<td>{{skus.qty || 0}}</td>
+										<td class="hide_pdf  pdf-qty" ng-if="(asn_obj.mode === 'edit')">
+											<p class="pm_box">
+												<button class="btn btn-primary btn-sm" ng-click="nopkgdecreaseqty(asn_item.asnId, styledata.stylecode, ln_no); limitnopkg(0, $parent.skus.newQty, asn_item.asnId, styledata.stylecode, ln_no);">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+												<input type="text" ng-model="$parent.skus.newQty" ng-change="changeQty(ln_no, key);" class="edit_box qty-center form-control" only-digits />
+												<button class="btn btn-primary btn-sm" ng-click="nopkgincreaseqty(asn_item.asnId, styledata.stylecode, ln_no)">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</p>
+										</td>
+										<td ng-if = "(asn_obj.mode === 'order' || asn_obj.mode === 'asn') && asn_item.asnStatus === 'receivedInFull' ">{{skus.newQty}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</td>	
+</tr>
+
+<!---Sku Configration-->
+<tr ng-show="!config.showskugroup"  class="noborder" >
+	<td colspan = "9">
+		<div class="col-sm-12 trans_det">
+			<table class="table table-condensed">
+				<tbody>
+					<tr>
+						<td colspan = "6">
+							<table class="table table-condensed">
+								<thead style="border-bottom: 1px solid #DDD;">
+									<tr>
+										<th> {{ovcLabel.asnPackage.lineNumber}} </th>
+										<th> {{ovcLabel.asnPackage.sku}} </th>
+										<th> {{ovcLabel.asnPackage.description}} </th>
+										<th ng-if="userRolePermissions.permissions.viewPurchasePrice"> {{ovcLabel.asnPackage.cost}} </th>
+										<th> {{ovcLabel.asnPackage.UOM}} </th>
+										<th> {{ovcLabel.asnPackage.expectedQty}} </th>
+										<th ng-if= "asn_item.asnStatus === 'receivedInFull' "> {{ovcLabel.asnPackage.receivedQty}} </th>
+										<th ng-if="(asn_obj.mode === 'edit')">{{ovcLabel.asnPackage.receivedQty}}</th>
+										<th></th>	
+									</tr>
+								</thead>
+								<tbody ng-repeat="(style,styledata) in asn_item.skus | array | filter : searchDetais" class = "noborder">
+									<tr ng-repeat="(ln_no,skus) in styledata.skuArr | orderBy:'lineNumber'"  class="{{ (skus.qty != skus.newQty &&  skus.newQty != '' && ((skus.qtyStatus != 'shipped' && skus.qtyStatus  != 'shippedReversed' && skus.qtyStatus  !=  'shipInProgress') || (asn_obj.mode == 'edit')) )? 'class-tr-bg' : 'no-class'}} ">
+										<td>{{skus.lineNumber}}</td>
+										<td >{{skus.sku}}</td>
+										<td>{{skus.description}}</td>
+										<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.global.currency[asn_item.currency]}}  {{skus.skuCostAsn ? skus.skuCostAsn : skus.skuCostConfirm ? skus.skuCostConfirm : skus.skuCost | number:2}}</td>
+										<td ng-hide = "skus.is_new  === true">{{skus.producUom}}</td>
+										<td class="hide_pdf" ng-show = "skus.is_new  === true"> 
+											<select id="prcode" class="form-control"  data-ng-options="uomId as description for (uomId,description) in UOMvalues" name="uom" data-ng-model="skus.producUom">
+											</select>
+										</td>
+										<td>{{skus.qty || 0}}</td>
+										<td class="hide_pdf pdf-qty" ng-if="(asn_obj.mode === 'edit')">
+											<p class="pm_box">
+												<button class="btn btn-primary btn-sm" ng-click="nopkgdecreaseqty(asn_item.asnId, styledata.stylecode, ln_no); limitnopkg(0, $parent.skus.newQty, asn_item.asnId, styledata.stylecode, ln_no);">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+												<input type="text" ng-model="$parent.skus.newQty"  ng-change="changeQty(ln_no, key);" class="edit_box qty-center form-control" only-digits/>
+												<button class="btn btn-primary btn-sm" ng-click="nopkgincreaseqty(asn_item.asnId, styledata.stylecode, ln_no)">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</p>
+										</td>
+										<td ng-if = "(asn_obj.mode === 'order' || asn_obj.mode === 'asn') && asn_item.asnStatus === 'receivedInFull' ">{{skus.newQty}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</td>	
+</tr>

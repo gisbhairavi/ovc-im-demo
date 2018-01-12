@@ -1,0 +1,179 @@
+<div>
+<div class  =  "row header_blk">
+    <div class  =  "col-lg-12">
+        <h3 class  =  "page-header clearfix">
+        	{{ovcLabel.adjustments.list.heading}}
+			<div class  =  "pull-right add_ven clearfix">
+				<a id="ovcAddBtn" class = "btn btn-primary" ng-if  =  "permission.crtAdjust" ui-sref = "ovc.adjustment-add"  title = "{{ovcLabel.adjustments.buttons.addAdjust}}"><i class = "fa fa-plus-circle"></i>{{ovcLabel.adjustments.buttons.addAdjust}}</a>
+
+				<a id="ovcAddBtn" href = "" class = "btn btn-primary" ng-if = "!permission.crtAdjust"  ng-disabled = "!permission.crtAdjust"  title = "{{ovcLabel.adjustments.buttons.addAdjust}}"><i class = "fa fa-plus-circle"></i>{{ovcLabel.adjustments.buttons.addAdjust}}</a>
+				<span ng-if="list.length > 0">
+					<ovcdata-export pdf-id="adjustmentListExport" heading="{{ovcLabel.adjustments.list.heading}}"></ovcdata-export>
+				</span>
+			</div>
+		</h3>
+	</div>
+</div>
+
+<div class="col-sm-12 clearfix" style = "margin: 10px 0 0;">
+<form  angular-validator-submit="searchAdjustment()">
+	<div class="panel-body search_box border_T0">
+	<div class="col-md-12 purchase_sech clearfix">
+		<div class="col-md-3 col-sm-12">
+			<label class="control-label">{{ovcLabel.adjustments.labels.fromdate}}</label>
+			<input calendar1 id="common_fromdate" ng-model='form.fromdate'  class="form-control hidcal"  ng-change='change_frdate()'  />
+		</div>
+		<div class="col-md-3 col-sm-12">
+			<label class="control-label">{{ovcLabel.adjustments.labels.todate}}</label>
+			<input calendar1 id="common_todate" ng-model='form.todate'  class="form-control hidcal" ng-change='change_todate()' />
+		</div>
+		<!-- <div class="col-sm-3">
+			<label class="control-label">{{ovcLabel.adjustments.labels.store}}</label>
+			
+			<div class="dropdown col-sm-12" style="padding:0px;"  click-out="showLoc=false">
+			<div style="position:relative;">
+				<input type="text" class="form-control" ng-model="locationDisplayName" ng-focus="showLoc = true" placeholder="{{ovcLabel.adjustments.labels.store}}" style="padding:6px 18px 6px 10px;" ng-change="searchLocation();" />
+						
+				<span class="fa" ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}" style="position:absolute;right:7px;top:10px;"></span>
+			</div>
+			<div tree-view="storeLocData" node-search="filterSearch()" node-label="name" ng-show="showLoc" class="dropdown-menu treeViewDrop" style="display:block; width:300px;"  mode="adjustments"></div>
+		</div>
+		{{form.locationDisplayName}}
+		</div> -->
+		<!-- <div class="col-sm-3">
+			<label class="control-label">{{ovcLabel.adjustments.labels.store}}</label>
+				<select ng-options="col.id as col.displayName for col in storeDatas" class="form-control" name="locationDisplayName"  ng-model="locationDisplayName"  ><option value="">-- {{ovcLabel.adjustments.placeholder.selectStore}} --</option></select>
+		</div> -->
+		<span class="col-md-3 col-sm-12"> 
+			<label class="control-label">{{ovcLabel.adjustments.labels.location}}</label><br />
+			<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+				<div style="position: relative;" class="tooltip-pro">
+					<input id="common_heirarchy_check" type="text" class="form-control"
+						ng-model="location.displayName" ng-focus="showLoc = true"
+						placeholder="{{ovcLabel.adjustments.placeholder.location}}"
+						style="padding: 6px 18px 6px 10px;"
+						ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+						class="fa"
+						ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+						style="position: absolute; right: 7px; top: 10px;">
+				</div>
+				<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+					node-label="name" ng-show="showLoc"
+					class="dropdown-menu treeViewDrop"
+					style="display: block; width: 300px;" mode="listlocation"></div>
+			</div>
+		</span>
+		
+		<div class="col-md-3 col-sm-12" >
+			<label class="control-label">{{ovcLabel.adjustments.labels.status}}</label>
+			<div  id="ovcStatusDrop" multiselect-common="" items="statusData.adjmntStatusList" selected-items="statusData.adjmntStatusSelected" naming={{ovcLabel.adjustments.placeholder.status}} dynamic="Status" >
+			</div>
+			</div>
+	</div>
+
+
+    <div class="col-md-12 clearfix">
+		<div class="col-md-3 col-sm-12">
+			<label class="control-label">{{ovcLabel.adjustments.labels.orderNumber}}</label>
+			<autocomplete attr-input-class="form-control" class="search_scroll" ng-model="form.orderNumber" attr-placeholder="{{ovcLabel.adjustments.placeholder.orderNo}}" click-activation="false" data="searchParam.purchaseOrders" attr-input-id="common_order_no"></autocomplete>
+		</div>
+		<div class="col-md-3 col-sm-12">
+			<label class  =  "control-label ng-binding">{{ovcLabel.adjustments.labels.adjustmentName}}</label>
+			<select id="adj_name" class="form-control"  ng-options="tranTypeId as tranName for (tranTypeId,tranName) in searchParam.tranTypeData" name="adjustName" ng-model="form.adjustment_name"  ng-disabled  =  "moluom"  >
+			
+			<option value="">{{ovcLabel.adjustments.placeholder.adjustmentName}}</option></select>
+		</div>
+		<div class="col-md-3 col-sm-12">
+			<label class  =  "control-label ng-binding">{{ovcLabel.adjustments.labels.adjustmentCode}}</label>
+			<select id="adj_code" class="form-control"  ng-options="prtypes.value as prtypes.name for prtypes in adjust_code" name="adjustCode" ng-model="form.adjustment_code"  ng-disabled  =  "moluom"  >
+			
+			<option value="">{{ovcLabel.adjustments.placeholder.adjustmentCode}}</option></select>
+
+		</div>
+		<div class="col-md-3 col-sm-12">
+			<label class="control-label">{{ovcLabel.adjustments.labels.adjustmentNumber}}</label>
+			<autocomplete attr-input-class="form-control" class="search_scroll" ng-model="form.adjustmentNum" attr-placeholder="{{ovcLabel.adjustments.placeholder.adjustmentNumber}}" click-activation="false" data="searchParam.adjustmentNumArr" attr-input-id="adjustment_no"></autocomplete>
+		</div>
+		<div class="col-md-3 col-sm-12 trans-search">
+		<a id="ovcAdvancedBtn" class='btn' ng-click="advanceSearch()">{{advanced?ovcLabel.adjustments.buttons.basic:ovcLabel.adjustments.buttons.advanced}}</a>
+		</div>
+		<div ng-if="advSearch.isAdvanceSearch === true">
+			<div class = "row">
+				<advanced-search></advanced-search>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 search_btns porder_srch" >
+			<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="searchAdjustment()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.adjustments.buttons.search}}</button>
+			<button id="ovcResetBtn" type="submit" class="btn btn-primary ng-binding" ng-click="resetAdjustmentStatus()"><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.adjustments.buttons.reset}}</button>
+		</div>
+	</div>
+	</div>
+</form>	
+	<span  ng-show="action2.fieldsrequired  && action2.submitted" class="alert alert-danger ng-binding datevalid" >{{ovcLabel.adjustments.error.date}}</span>
+</div>
+ <div class = "panel-body search_box border_T0">
+	<div class="ven_tbody">
+		<div class="row">
+			
+			<div class="col-md-12 table-responsive" ng-show = "list.length  >  0">
+				<table class="table table-striped table-bordered" iphone-view  style =" margin-top: 10px;" id="adjustmentListExport">
+					<thead>
+						<th >{{ovcLabel.adjustments.labels.adjustmentNumber}}&nbsp;<a class="sort_align" ng-click="sort_by('adjustmentNumber');"><i class="fa " ng-class="{'fa-sort': predicate!='adjustmentNumber','fa-sort-asc': predicate=='adjustmentNumber' && reverse===false,'fa-sort-desc': predicate=='adjustmentNumber' && reverse===true}"></i></a></th>
+						<th>{{ovcLabel.adjustments.labels.adjustmentCode}} &nbsp;<a class="sort_align" ng-click="sort_by('adjustmentCode');"><i class="fa " ng-class="{'fa-sort': predicate!='adjustmentCode','fa-sort-asc': predicate=='adjustmentCode' && reverse===false,'fa-sort-desc': predicate=='adjustmentCode' && reverse===true}"></i></a></th>
+						<th width="116px">{{ovcLabel.adjustments.labels.adjustmentName}} &nbsp;<a class="sort_align" ng-click="sort_by('adjustmentName');"><i class="fa " ng-class="{'fa-sort': predicate!='adjustmentName','fa-sort-asc': predicate=='adjustmentName' && reverse===false,'fa-sort-desc': predicate=='adjustmentName' && reverse===true}"></i></a></th>
+						<th>{{ovcLabel.adjustments.labels.reasonCode}} &nbsp;<a class="sort_align" ng-click="sort_by('ReasonCodeID');"><i class="fa " ng-class="{'fa-sort': predicate!='ReasonCodeID','fa-sort-asc': predicate=='ReasonCodeID' && reverse===false,'fa-sort-desc': predicate=='ReasonCodeID' && reverse===true}"></i></a></th>
+						<th >{{ovcLabel.adjustments.labels.status}}&nbsp;<a class="sort_align" ng-click="sort_by('adjustmentStatus');"><i class="fa " ng-class="{'fa-sort': predicate!='adjustmentStatus','fa-sort-asc': predicate=='adjustmentStatus' && reverse===false,'fa-sort-desc': predicate=='adjustmentStatus' && reverse===true}"></i></a></th>
+						<th >{{ovcLabel.adjustments.labels.order_ref}}&nbsp;<a class="sort_align" ng-click="sort_by('orderNumber');"><i class="fa " ng-class="{'fa-sort': predicate!='orderNumber','fa-sort-asc': predicate=='orderNumber' && reverse===false,'fa-sort-desc': predicate=='orderNumber' && reverse===true}"></i></a></th>
+						<th >{{ovcLabel.adjustments.labels.store}}&nbsp;<a class="sort_align" ng-click="sort_by('numberOfSKU');"><i class="fa " ng-class="{'fa-sort': predicate!='numberOfSKU','fa-sort-asc': predicate=='numberOfSKU' && reverse===false,'fa-sort-desc': predicate=='numberOfSKU' && reverse===true}"></i></a></th>
+						<th >{{ovcLabel.adjustments.labels.totalQty}}&nbsp;<a class="sort_align" ng-click="sort_by('orderStatus');"><i class="fa " ng-class="{'fa-sort': predicate!='orderStatus','fa-sort-asc': predicate=='orderStatus' && reverse===false,'fa-sort-desc': predicate=='orderStatus' && reverse===true}"></i></a></th>
+						<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.adjustments.labels.totalPurchasePrice}}&nbsp;<a class="sort_align" ng-click="sort_by('totalAdjustmentCost');"><i class="fa " ng-class="{'fa-sort': predicate!='totalAdjustmentCost','fa-sort-asc': predicate=='totalAdjustmentCost' && reverse===false,'fa-sort-desc': predicate=='totalAdjustmentCost' && reverse===true}"></i></a></th>
+						<th>{{ovcLabel.adjustments.labels.created}}&nbsp;<a class="sort_align" ng-click="sort_by('created');"><i class="fa " ng-class="{'fa-sort': predicate!='created','fa-sort-asc': predicate=='created' && reverse===false,'fa-sort-desc': predicate=='created' && reverse===true}"></i></a></th>
+						<th data-hidePdf="true" class="hideExport" ng-if="userRolePermissions.copyAdjustment">{{ovcLabel.adjustments.labels.action}}</th>
+					</thead>
+					<tbody>		
+						<tr ng-repeat="adjustment_data in list | orderBy : predicate :reverse" >
+							
+							<td class="name_li">
+								<a  id="adjustment_edit" ui-sref="ovc.adjustment-edit({adjust_id:adjustment_data._id})" ng-if="((adjustment_data.adjustmentStatus=='draft') || (adjustment_data.adjustmentStatus =='Draft') || (adjustment_data.adjustmentStatus =='rvs_draft'))">{{adjustment_data.adjustmentNumber}}</a>
+								<a  id="adjustment_edit" ui-sref="ovc.adjustment-summary({adjust_id:adjustment_data._id})" ng-if="((adjustment_data.adjustmentStatus =='adjusted') || (adjustment_data.adjustmentStatus =='Adjusted' ) || (adjustment_data.adjustmentStatus =='reversed' ) || (adjustment_data.adjustmentStatus =='reversed_draft') ||  (adjustment_data.adjustmentStatus =='adjusted_rvs'))">{{adjustment_data.adjustmentNumber}}</a>
+							</td>
+							<td>{{adjustment_data.adjustmentCode}}</td>
+							<td>{{adjustment_data.adjustmentName}}</td>
+							<td>{{adjustment_data.ReasonCodeID}}</td>
+							<td>{{translation.adjstatuslist[0][adjustment_data.adjustmentStatus]}}</td>
+							<td>{{adjustment_data.orderNumber}}</td>
+							<td>{{adjustment_data.storeId}}</td>
+							<td>{{adjustment_data.numberOfSKU}}</td>
+							<td ng-if="userRolePermissions.permissions.viewPurchasePrice">{{adjustment_data.currency}}{{adjustment_data.totalAdjustmentCost | number : 2}} </td>
+							<td>{{adjustment_data.created | datetimeForm}}</td>
+							<td  data-hidePdf="true" class="hideExport" ng-if="userRolePermissions.copyAdjustment">
+								<!-- <a href=""  ng-show  =  "permission.cpyAdjust" ng-if = "!adjustment_data.isReversed" ng-click="adjustmentCopy(adjustment_data._id)" class="btn btn-primary del_i" ><i class="fa fa-files-o"></i>
+								</a> -->
+								<a href="" id="copy_action_btn" ng-if = "!adjustment_data.isReversed"  ng-click="adjustmentCopy(adjustment_data._id , adjustment_data.adjustmentNumber)" class="btn btn-primary del_i" ><i class="fa fa-files-o"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="ovcError" ng-if= "action2.products"><h4 class = "text-center">{{ovcLabel.adjustments.list.noproducts}}</h4></div>	
+	<div class="col-md-12" ng-show="action2.totalItems > 0">
+		<uib-pagination total-items="action2.totalItems" items-per-page = "action2.entryLimit" ng-model="action2.currentPage" class="pagination-sm" boundary-links="true" ng-change="pageChanged()" ></uib-pagination>
+		<div class="col-md-3 pglimit">
+			<div class="pg_limit page_size_drdn">
+				<label>{{ovcLabel.adjustments.list.pagesize}}:</label>
+					<select  convert-to-number	ng-model="action2.entryLimit" class="pgsizes" ng-change="searchAdjustment()">
+						<option>10</option>
+						<option>20</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>
+

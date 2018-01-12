@@ -1,0 +1,23 @@
+{
+
+    "apis": {
+        "GETLOCATION": "apis/ang_getlocations",
+        "GETPRODUCTS": "apis/ang_loc_micro_products/locid:",
+        "GETSTOCKJSON": "apis/ang_getstockjson?locid=",
+        "GETPRODUCTCOST": "apis/ang_getproductprice",
+        "GETVENDORPRODUCTS": "apis/ang_vendor_skus",
+        "GETVENDOR": "/vendor"
+    },
+    "pagination": {
+        "PAGE": "/page:"
+    },
+    "label": {
+        "ERROR": "error",
+        "SUCCESS": "success",
+        "NO_SKUS": "no skus for this product",
+        "NO_POID": "PO Id missing",
+        "NO_DATA": "No Data",
+        "PACKAGE_UPDATE": "package updated",
+        "INPUT_MISSING": "no input data"
+    }
+}

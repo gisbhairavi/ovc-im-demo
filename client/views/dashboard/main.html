@@ -1,0 +1,18 @@
+<div id="wrapper">
+
+        <!-- Navigation -->
+    <ovc-header  ng-if="themeObject.leftSidebar"></ovc-header>
+    <!-- /.navbar-top-links -->
+    <!-- /.navbar-static-side -->
+    <div id="page-wrapper" style="min-height: 561px;{{themeObject.widgtWidth}}">
+      <ovc-sidebar ng-if="themeObject.leftSidebar"></ovc-sidebar>  
+        
+     <div ui-view>
+         
+     </div>
+        
+    </div>
+        <!-- /#page-wrapper -->
+        <div class="snackbar-container" data-snackbar="true" data-snackbar-duration="1000" data-snackbar-remove-delay="100"></div>
+        <to-top scrolled= '500'/>
+</div>

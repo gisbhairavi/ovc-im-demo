@@ -1,0 +1,156 @@
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.count.list.heading}}
+			<div id="add_newCountBtn" class="pull-right add_ven clearfix">
+				<a  id="ovcAddBtn" ng-if="!molcount"  ui-sref="ovc.Counts-add"  title="{{ovcLabel.count.buttons.add_count}}" class="btn btn-primary"><i class="fa fa-plus-circle"></i>{{ovcLabel.count.buttons.add_count}} </a>
+				<a id="ovcAddBtn" href="" ng-if="molcount"  ng-disabled="molcount"  title="{{ovcLabel.count.buttons.add_count}}" class="btn btn-primary"><i class="fa fa-plus-circle"></i>{{ovcLabel.count.buttons.add_count}} </a>
+			</div>
+			<span id="ovcReloadBtn" class="reload" type="reload" ng-click="zcount_search()" ><i class="fa fa-refresh" style="margin-right:3px;"></i></span>
+		</h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row r_margin">
+<div class="ven_tblk clearfix">
+    <div class="col-lg-12">
+        <div class="panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body search_box">
+                <div class="row">					
+					<form>
+						<div class ="col-md-12">
+							<span class="col-sm-12 col-md-3"> 
+								<label class="control-label">{{ovcLabel.count.list.location}}</label><br />
+								<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+									<div style="position: relative;" class="tooltip-pro">
+										<input id="common_heirarchy_check" type="text" class="form-control"
+											ng-model="location.displayName" ng-focus="showLoc = true"
+											placeholder="{{ovcLabel.count.placeholder.location}}"
+											style="padding: 6px 18px 6px 10px;"
+											ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+											class="fa"
+											ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+											style="position: absolute; right: 7px; top: 10px;"></span>
+									</div>
+									<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+										node-label="name" ng-show="showLoc"
+										class="dropdown-menu treeViewDrop"
+										style="display: block; width: 300px;" mode="listlocation"></div>
+								</div>
+							</span>
+
+							<div class= "col-sm-12 col-md-3">
+							 <label class="control-label">{{ovcLabel.count.list.status}}</label>
+				 			<div   id="ovcStatusDrop" multiselect-common="" dynamic="'status'" items="statusData.countStatusList" selected-items="statusData.countStatusSelected" naming={{ovcLabel.count.list.status}} ></div>
+				 			</div>
+							<div class="col-sm-12 col-md-3">
+								<label class="control-label"></label>
+								<input type="text"  name="searchbyName" id="search" placeholder="{{ovcLabel.count.list.countName}}" class="form-control" ng-model = "countsearch.searchCountName"/>
+							</div>	
+							<div class="col-sm-12 col-md-3">
+								<label class="control-label"></label>
+								<input type="text"  name="searchbyNumber" id="search" placeholder="{{ovcLabel.count.list.countNumber}}" class="form-control" ng-model = "countsearch.searchCountNumber"/>
+							</div>		
+						</div>
+						<div class ="col-md-12">
+							
+							<div class="col-md-6 search_btns stk_sear">
+								
+								<button id="ovcResetBtn" type="reset" class="btn btn-primary rst_btn ng-binding" ng-click="zcount_reset()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.count.buttons.reset}}</button>
+								<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="zcount_search()" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.count.buttons.search}}</button>
+								<button id="count_showChart"  class="btn btn-primary ng-binding" ng-click="showHideChart()" >{{displayCountChart ? ovcLabel.count.buttons.hideChart : ovcLabel.count.buttons.showChart}}</button>
+								<!-- <button id="count_hideChart" ng-show = "displayCountChart" class="btn btn-primary ng-binding" ng-click="showHideChart()" >{{translation.buttontypes[0].hideChart}}</button> -->
+							</div>
+						</div>
+					</form>
+				</div>
+				</div>
+				<div ng-if= "displayCountChart">
+					<div  class="padding_L0" ng-class="(action.maximize.count_item) ? 'col-sm-12' : 'col-sm-6'">
+				    	<div class="chart_box discrepency_chart">
+							<h4 class="text-center panel-heading box_header" ng-mouseenter="action.maximize.chartcount_item = true"  ng-mouseleave="action.maximize.chartcount_item = false" >
+								{{ovcLabel.count.list.count_item}}
+								<span class="pull-right icon_expand">
+									<i class="fa animated"  ng-class="{'fa-compress' :action.maximize.count_item, 'fa-expand' : ! action.maximize.count_item, 'fadeInUp' : action.maximize.chartcount_item}" ng-click="maximizeChart('count_item');" ng-show="action.maximize.chartcount_item"></i>
+								</span>
+							</h4>
+					        <nvd3 options="option_discrete" data="count_item_data"></nvd3>
+					    </div>
+				    </div>
+					 <div  class="padding_R0" ng-class="(action.maximize.count_pie) ? 'col-sm-12' : 'col-sm-6'">
+				    	<div class="chart_box">
+							<h4 class="text-center panel-heading box_header" ng-mouseenter="action.maximize.chartcount_pie = true"  ng-mouseleave="action.maximize.chartcount_pie = false" >
+								{{ovcLabel.count.list.count_status}}
+								<span class="pull-right icon_expand">
+									<i class="fa animated"  ng-class="{'fa-compress' :action.maximize.count_pie, 'fa-expand' : ! action.maximize.count_pie, 'fadeInUp' : action.maximize.chartcount_pie}" ng-click="maximizeChart('count_pie');" ng-show="action.maximize.chartcount_pie"></i>
+								</span>
+							</h4>
+							<nvd3 options="count_option_pie" data="count_data"></nvd3>
+						</div>
+				    </div>
+				</div>
+                <!-- /.table-responsive -->
+              <div class="ven_tbody">
+				<div class="row">
+					<div class="col-md-12 table-responsive" ng-show="filteredItems > 0" >
+						<table class="table table-striped table-bordered" iphone-view>
+						<thead>
+							<th>{{ovcLabel.count.labels.countNumber}}&nbsp;<a class="sort_align" ng-click="sort_by('_id')"><i class="fa " ng-class="{'fa-sort': predicate!='_id','fa-sort-asc': predicate=='_id' && reverse===false,'fa-sort-desc': predicate=='_id' && reverse===true}"></i></a></th>
+							<th >{{ovcLabel.count.labels.countName}}&nbsp;<a class="sort_align" ng-click="sort_by('name');"><i class="fa " ng-class="{'fa-sort': predicate!='name','fa-sort-asc': predicate=='name' && reverse===false,'fa-sort-desc': predicate=='name' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.count_type}} &nbsp;<a class="sort_align" ng-click="sort_by('countType');"><i class="fa " ng-class="{'fa-sort': predicate!='countType','fa-sort-asc': predicate=='countType' && reverse===false,'fa-sort-desc': predicate=='countType' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.store_name}} &nbsp;<a class="sort_align" ng-click="sort_by('storeName');"><i class="fa " ng-class="{'fa-sort': predicate!='storeName','fa-sort-asc': predicate=='storeName' && reverse===false,'fa-sort-desc': predicate=='storeName' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.status}} &nbsp;<a class="sort_align" ng-click="sort_by('cstatus');"><i class="fa " ng-class="{'fa-sort': predicate!='cstatus','fa-sort-asc': predicate=='cstatus' && reverse===false,'fa-sort-desc': predicate=='cstatus' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.created}} &nbsp;<a class="sort_align" ng-click="sort_by('created');"><i class="fa " ng-class="{'fa-sort': predicate!='created','fa-sort-asc': predicate=='created' && reverse===false,'fa-sort-desc': predicate=='created' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.started}} &nbsp;<a class="sort_align" ng-click="sort_by('countCreated');"><i class="fa " ng-class="{'fa-sort': predicate!='countCreated','fa-sort-asc': predicate=='countCreated' && reverse===false,'fa-sort-desc': predicate=='countCreated' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.approved}} &nbsp;<a class="sort_align" ng-click="sort_by('approvedDate');"><i class="fa " ng-class="{'fa-sort': predicate!='approvedDate','fa-sort-asc': predicate=='approvedDate' && reverse===false,'fa-sort-desc': predicate=='approvedDate' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.count.labels.action}}</th>
+						</thead>
+						<tbody ng-show="filteredItems > 0">
+							<tr ng-repeat="data in list | orderBy : predicate :reverse | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+								<td ng-show = "rolePerm.modifyZcounts"  id="exist_count" class="name_li"><a ui-sref="ovc.Counts-edit({id:data._id})" ng-click="vendor_edt(data._id)">{{data._id}}</a></td>
+								<td ng-show = "rolePerm.modifyZcounts==undefined">{{data._id}}</td>
+								<td>{{data.name}}</td>
+								<td>{{data.countType}}</td>
+								<td>{{allstores[data.locationId]}}</td>
+								<td>{{data.cstatus}}</td>
+								<td>{{data.created  | datetimeForm}}</td>
+								<td>{{data.countCreated | datetimeForm}}</td>
+								<td>{{data.approvedDate | datetimeForm}}</td>
+								<td id="countList_delete" class="action_f">
+								<a href="" ng-if="data.countStatus != 'approve'" ng-click="!molcount ? zcount_delete(data._id) : angular.noop" ng-disabled="molcount ? true : false" class="btn btn-primary del_i"><i class="fa fa-trash"></i></a>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+					<div class="col-md-12 panel-body" id="ovcError" ng-if="filteredItems == 0">
+						<div class="col-md-12">
+							<h4>{{ovcLabel.count.list.no_count}}</h4>
+						</div>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems > 0">    
+					<div class="panel-body fliter_i">
+						<uib-pagination total-items="filteredItems"  items-per-page ="entryLimit"  ng-model="currentPage"  max-size = "5"  boundary-links="true" ng-change="" ></uib-pagination>
+						<div class="col-md-3 pglimit">
+						<div class="pg_limit page_size_drdn">
+								<label>{{ovcLabel.count.list.pagesize}}:</label>
+								<select  convert-to-number ng-model="entryLimit" class="pgsizes">
+									<option>10</option>
+									<option>20</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+		</div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+</div>

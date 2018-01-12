@@ -1,0 +1,178 @@
+<div class="row">
+	<form role="form" name="form" class="form-horizontal">
+		<div class="col-md-12 ">
+			<fieldset>
+				<legend>
+					<label class="ng-binding">{{ovcLabel.replenishmentFilters.storeQuantities}}</label>
+				</legend>
+				<div>
+					<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12 " style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.reorderPoint}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="reorderPointFrom"
+									ng-model="storeQuantities.reorderPoint.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="reorderPointTo"
+									ng-model="storeQuantities.reorderPoint.to" />
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.currentOnHandQty}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="currentOnHandQtyFrom"
+									ng-model="storeQuantities.currentOnHandQty.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="currentOnHandQtyTo"
+									ng-model="storeQuantities.currentOnHandQty.to" />
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.storeTransferInQty}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="storeTransferInQtyFrom"
+									ng-model="storeQuantities.storeTransferInQty.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="storeTransferInQtyTo"
+									ng-model="storeQuantities.storeTransferInQty.to" />
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8  col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.storeTransferOutQty}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="storeTransferOutQtyFrom"
+									ng-model="storeQuantities.storeTransferOutQty.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="storeTransferOutQtyTo"
+									ng-model="storeQuantities.storeTransferOutQty.to" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-md-12 ">
+			<fieldset>
+				<legend>
+					<label class="ng-binding">{{ovcLabel.replenishmentFilters.pricing}}</label>
+				</legend>
+				<div>
+					<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.purchasePrice}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="purchasePriceFrom"
+									ng-model="pricing.purchasePrice.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="purchasePriceTo"
+									ng-model="pricing.purchasePrice.to" />
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.retailPrice}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="retailPriceFrom"
+									ng-model="pricing.retailPrice.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="retailPriceTo"
+									ng-model="pricing.retailPrice.to" />
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+						<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3%;padding:0">
+							<label class="control-label">
+								{{ovcLabel.replenishmentFilters.margin}} :</label>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.from}}: </label> <input
+									type="number" class="form-control" id="marginFrom"
+									ng-model="pricing.margin.from" />
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<label class="control-label">
+									{{ovcLabel.replenishmentFilters.to}}: </label> <input
+									type="number" class="form-control" id="marginTo"
+									ng-model="pricing.margin.to" />
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="col-md-5 col-sm-7  search_btns porder_srch"
+			style="margin-top: 3%;">
+			<button id="common_RPL_cancel" type="reset" class="btn btn-primary rst_btn ng-binding"
+				ui-sref="ovc.ReplenishmentFilter">
+				{{ovcLabel.replenishmentFilters.buttons.cancel}}</button>
+			<button id="common_RPL_previous" type="reset" class="btn btn-primary rst_btn ng-binding" ng-click="filterCancelAndNextBtn('protocol');"
+				>
+				{{ovcLabel.replenishmentFilters.buttons.previous}}</button>
+			<button id="common_RPL_next" type="submit" class="btn btn-primary ng-binding" ng-click="rediectToReviewPage('review');"
+				style="margin-right: 10px;">
+				{{ovcLabel.replenishmentFilters.buttons.next}}</button>
+			<!-- 	ng-click="asnSearch()"  -->
+
+		</div>
+	</form>
+</div>

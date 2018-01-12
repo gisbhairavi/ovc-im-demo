@@ -1,0 +1,9 @@
+{
+	"apis": 
+		{
+			"GETDASHLOGINPATH": "ang_loginapi",    
+			"JMS_POSTDATA": "/jmshandler/publish?type=", 
+			"JMS_GETDATA": "/jmshandler/receive?type=",
+			"GETDASHLOGIN": "ang_rerd_login"
+		}
+}

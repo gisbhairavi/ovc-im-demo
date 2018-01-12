@@ -1,0 +1,54 @@
+
+<style>
+	.popup_align h4,h6{
+	  text-align: center;
+	}
+	.popup_sold{
+		color:  #1da363;
+  		font-weight: bold;
+	}
+	.popup_received{
+		color:  #4b8bf5;
+  		font-weight: bold;
+	}
+	.popup_returned{
+		color:   #dc4933;
+  		font-weight: bold;
+	}
+	.custom-popover + .popover {
+		top: -27px !important;
+	}
+	.popover-title {
+	    background: #369;
+	    color: #fff;
+	    height: 40px;
+	}
+	.popover {
+	  min-width: 500px;
+	}
+	.popup_d3{
+      margin-top: 35px;
+      padding-left: 0;
+	}
+
+</style>
+
+<div class="col-md-12 hideExport" style="min-height: 200px;">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="popup_align">
+				<img ng-src="{{popData.imgData.ImageURL}}" alt="" width="100%"/></br>
+				<h6>{{popData.qtyData.sku}}</h6>
+			</div>
+		</div>
+		<div class="col-md-4 popup_align">
+			<h4 class="popup_sold">{{popData.qtyData.totalsold ? popData.qtyData.totalsold : 0}}</h4>
+			<h4>{{translation.analytics.sold}}</h4>
+			<h4 class="popup_received">{{popData.qtyData.totalreceived ? popData.qtyData.totalreceived : 0}}</h4>
+			<h4>{{translation.analytics.received}}</h4>
+			<h4 class="popup_returned">{{popData.qtyData.totalreturned ? popData.qtyData.totalreturned : 0}}</h4>
+			<h4>{{translation.analytics.returned}}</h4>
+		</div>
+		<div class="col-md-4 popup_d3" id="circularpieChart"></div>
+	 </div>
+</div>

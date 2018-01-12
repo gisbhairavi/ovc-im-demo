@@ -1,0 +1,73 @@
+
+<div class="top_header">
+	<div class="navbar navbar-default navbar-static-top " role="navigation" style="margin-bottom: 0" >
+		<div class="head_logo">
+			<div class="navbar-header">
+				<a class="navbar-brand ovcnav-brand" ><img src="images/logo_innerpage.png" /></a>
+			</div>
+			<div class="nav_icon"> 
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#" class="" style="
+				  padding: 7px 20px;color: #ffffff;background-color: #336699 !important;">{{ovcLabel.header.inventorymanagement}}</a></a></li>
+			</div>
+		</div>
+		
+		
+		<!-- /.navbar-header -->
+			
+			<ul class="nav navbar-nav head_menu" ng-controller="headerctrl" >
+			
+				 <li class="pull-right dropdown user-menu" >
+						<a class="dropdown-toggle admin_det admin_size" ng-attr-title="{{username}}"data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
+						<span class="lg_usrnme">
+						{{username}}	<i class="caret"></i>
+						</span>
+						</a>
+						<ul class="dropdown-menu dropdown-messages promenu_tab">
+							<!-- User image -->
+							<li class="user-header bg-light-blue"><img alt="User Image" class="img-circle pro_img" src="images/no_image.png">
+							<p>{{username1}}</p><p>{{appVersion}}</p>
+							</li>
+							 <!-- Menu Footer-->
+							<li class="user-footer clearfix">
+							<!--<div class="pull-left">
+							<a class="btn btn-default btn-flat" href="#"><i class="fa fa-user"></i>My profile</a>
+							</div>-->
+							<div class="pull-right logout_btn"><a class="btn btn-default btn-flat" ui-sref="logout" ><i class="fa fa-power-off" ></i>{{ovcLabel.header.logout}}</a>
+							</div>
+							</li>
+						</ul>
+					</li>
+					<li class="alert-li" click-outside="action.close()" outside-if-not = 'alertcontainer, alertdivission'>
+						 <a ng-model="action.collapsedAlert" ng-click="action.collapsedAlert = !action.collapsedAlert; loadActionCenter()" class="alertcontainer" id="alertBoxCONT"><i class="fa fa-clock-o fa-2x"></i></a>
+	    				<div ng-show="action.collapsedAlert"  class="alert-box alertdivission" id="alertBoxTable"><i class="fa fa-caret-up" aria-hidden="true"></i><div ng-include="'/views/alertCenter/alert.html'"></div></div>
+    				</li>
+    				<!-- <li ng-click="notify = false"><a style="padding: 12px 10px;" href="/XlxFile/balanceReport.xlsx" download="balanceReport.xlsx"><i class="fa fa-download fa-2x notifi"  ng-class="notify ? 'fa-blink' : '' " aria-hidden="true"></i></a><span class="notification">1<span></li> -->
+    				<li class="alert-li" click-outside="action.notify()" outside-if-not = 'notifycontainer, notifydivission'>
+						 <a ng-model="action.collapsednotify" ng-click="action.collapsednotify = !action.collapsednotify;" class="notifycontainer" id="notifyBoxCONT"><span class="progressdownload" ng-show="progressdownload"></span><i class="fa fa-download fa-2x notifi" aria-hidden="true"></i></a><span class="notification">{{notifyOnNumber}}</span>
+	    				<div ng-show="action.collapsednotify && downloadData.data.length"  class="alert-box notifydivission" id="notifyBoxTable"><i class="fa fa-caret-up" aria-hidden="true"></i><div ng-include="'/views/alertCenter/notify.html'"></div></div>
+    				</li>
+					
+				<!--  <li class="pull-right list_bx minipop_menu"><a class="dropdown-toggle admin_det" data-toggle="dropdown"><i class="fa fa-th fa-2x"></i></a>
+					<ul class="dropdown-menu dropdown-messages hoveropup">
+							User image
+						<li class="user-header bg-light-blue">
+							<div class="">
+							<div class="menu_blk1">
+							<span class="inner_icon"><a ui-sref="dashlogin"><i class="fa fa-tachometer"></i><p>Dashboard</p></a></span> -->
+							<!--<span class="inner_icon"><a href="#"><i class="fa fa fa-bar-chart"></i><p>Stock Module</p></a></span></div>
+							<div class="menu_blk2">
+							<span class="inner_icon"><a href="#"><i class="fa fa-tags"></i><p>Promotions</p></a></span>
+							<span class="inner_icon"><a href="#"><i class="fa fa-cogs"></i><p>Process Designer</p></a></span></div>-->
+							<!-- </div>
+					   </li>
+				  </ul>
+				 </li> -->
+				 <!--<li class="pull-right"><!--<div class="header_se"><input type="text" class="search_t" placeholder="search"/><span class="s_icon"><i class="fa fa-search"></i></span></div></li>-->
+
+			</ul>
+		
+		<header-notification></header-notification>
+		
+	</div>
+</div>

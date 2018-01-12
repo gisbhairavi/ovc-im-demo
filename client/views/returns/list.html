@@ -1,0 +1,186 @@
+
+<button class="col-md-12 text-left btn btn-default" ng-if="dash" ng-click="redirect()">
+	<i class="fa fa-arrow-left" aria-hidden="true"></i>
+	{{translation.buttontypes[0].backtodashboard}}
+</button>
+<div class="row header_blk">
+    <div class="col-lg-12">
+        <h3 class="page-header"> {{ovcLabel.returnReceipt.list.heading}}
+			<div class="pull-right add_ven clearfix">
+				<a name="return_addBtn" id="ovcAddBtn" ui-sref="ovc.returns-add"  title="{{ovcLabel.returnReceipt.buttons.addReturn}}" class="btn btn-primary" ng-class = "{disabled: ! userRolePermissions.orderPermissions.modifyReturns}"><i class="fa fa-plus-circle"></i>{{ovcLabel.returnReceipt.buttons.addReturn}} </a>
+				<sapn ng-if="list.length > 0">
+					<ovcdata-export pdf-id="pdf_export" heading="{{ovcLabel.returnReceipt.list.heading}}"></ovcdata-export>
+				</sapn>
+			</div>
+		</h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row r_margin">
+<div class="ven_tblk clearfix">
+    <div class="col-lg-12">
+        <div class="panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body search_box">
+                <div class="row">					
+					<form angular-validator-submit="porder_search(lorders)" >
+					<div class="col-md-12  purchase_sech">
+						
+						<div class="col-sm-12 col-md-3 col-xs-12">
+									<label class="control-label">{{ovcLabel.returnReceipt.list.fromdate}}</label>
+									<input id="common_fromdate" calendar  ng-model='lorders.fromdate'  class="form-control"  ng-change='change_frdate()'  />
+						</div>
+						<div class="col-sm-12 col-md-3 col-xs-12">
+									<label class="control-label">{{ovcLabel.returnReceipt.list.todate}}</label>
+									<input id="common_todate" calendar  ng-model='lorders.todate'  class="form-control" ng-change='change_todate()' />
+						
+						</div>
+						<span class="col-sm-12 col-md-3 col-xs-12"> 
+						<label class="control-label">{{ovcLabel.returnReceipt.list.location}}</label><br />
+							<div click-out="showLoc=false" class="dropdown col-sm-12" style="padding-left: 0px;" >
+								<div style="position: relative;" class="tooltip-pro width_padd">
+									<input id="common_heirarchy_check" type="text" class="form-control"
+										ng-model="location.displayName" ng-focus="showLoc = true"
+										placeholder="{{ovcLabel.returnReceipt.list.location}}"
+										style="padding: 6px 18px 6px 10px;"
+										ng-change="searchLocation(location.displayName);" tooltip-placement="bottom" uib-tooltip="{{location.title}}"/> <span
+										class="fa"
+										ng-class="{'fa-caret-up' : showLoc, 'fa-caret-down' : ! showLoc}"
+										style="position: absolute; right: 7px; top: 10px;">
+								</div>
+								<div tree-view="storeLocData" node-search="filterSearch()" check-box = "true"
+									node-label="name" ng-show="showLoc"
+									class="dropdown-menu treeViewDrop"
+									style="display: block; width: 300px;" mode="listlocation"></div>
+							</div>
+						</span>
+						<!-- <div class="col-sm-3">
+							<label class="control-label">{{translation.locations[0].store}}</label>
+							
+							<select ng-options="col.id as col.displayName for col in store_datas" class="form-control" name="shiptostore"  ng-model="lorders.shiptostore"  ><option value="">-- {{translation.locations[0].select_store}} --</option></select>
+						</div> -->
+						<div class="col-sm-12 col-md-3 col-xs-12">
+						<label class="control-label">{{ovcLabel.returnReceipt.list.status}}</label>
+					<div  id="ovcStatusDrop" multiselect-common="" items="statusData.returnStatusList" selected-items="statusData.returnStatusSelected" naming={{translation.locations[0].status}} dynamic="Status" >
+
+						
+					</div>
+					</div>
+						
+					</div>
+		<div class="col-md-12 col-sm-12 col-xs-12">
+		
+		<div class="col-sm-12 col-md-3 col-xs-12">
+						
+				<label class="control-label">{{ovcLabel.returnReceipt.list.orderNo}}</label>
+				<input type="text"  name="ponumber" id="search" ng-model='lorders.ponumber'   class="form-control" />
+			
+		</div>
+		
+		<div class="col-sm-12 col-md-3 col-xs-12">
+						
+				<label class="control-label">{{ovcLabel.returnReceipt.list.returnNo}}</label>
+				<input type="text"  name="erpnumber" id="erpsearch" ng-model='lorders.erpnumber'   class="form-control" />
+			
+		</div>
+		<div class="col-sm-12 col-md-3 col-xs-12 trans-search">
+		<a class='btn' id="ovcAdvancedBtn" ng-click="advanceSearch()">{{advanced ? ovcLabel.returnReceipt.buttons.basic : ovcLabel.returnReceipt.buttons.advanced}}</a>
+		</div>
+		<div ng-if="advSearch.isAdvanceSearch === true">
+			<div class = "row">
+				<advanced-search></advanced-search>
+			</div>
+		</div>
+		
+						<div class="col-md-3 col-sm-6 search_btns porder_srch">
+							<button id="ovcSearchBtn" type="submit" class="btn btn-primary ng-binding" ng-click="porder_search(lorders); dashremove();" style="margin-right:10px;"><i class="fa fa-search" style="margin-right:3px;"></i>{{ovcLabel.returnReceipt.buttons.search}}</button>
+							<button id="ovcResetBtn" type="reset" class="btn btn-primary rst_btn ng-binding" ng-click="porder_reset()" ><i class="fa fa-refresh" style="margin-right:3px;"></i>{{ovcLabel.returnReceipt.buttons.reset}}</button>
+						</div>
+						
+						<span  ng-show="fieldsrequired  && submitted" class="alert alert-danger ng-binding datevalid" >{{ovcLabel.returnReceipt.error.date}}</span>
+						</div>
+					</form>
+				</div>
+				</div>
+                <!-- /.table-responsive -->
+              <div class="ven_tbody">
+				<div class="row">
+					<div class="col-md-12 table-responsive" ng-show="filteredItems > 0">
+						<table class="table table-striped table-bordered" iphone-view id="pdf_export">
+						<thead>
+						
+							<th >{{ovcLabel.returnReceipt.list.returnNo}}&nbsp;<a class="sort_align" ng-click="sort_by('orderNumber');"><i class="fa " ng-class="{'fa-sort': predicate!='orderNumber','fa-sort-asc': predicate=='orderNumber' && reverse===false,'fa-sort-desc': predicate=='orderNumber' && reverse===true}"></i></a></th>
+							<th >{{ovcLabel.returnReceipt.list.returnType}}&nbsp;<a class="sort_align" ng-click="sort_by('ordertype');"><i class="fa " ng-class="{'fa-sort': predicate!='ordertype','fa-sort-asc': predicate=='ordertype' && reverse===false,'fa-sort-desc': predicate=='ordertype' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.returnReceipt.list.status}}&nbsp;<a class="sort_align" ng-click="sort_by('orderstus');"><i class="fa " ng-class="{'fa-sort': predicate!='orderstus','fa-sort-asc': predicate=='orderstus' && reverse===false,'fa-sort-desc': predicate=='orderstus' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.returnReceipt.list.orderrefernce}} &nbsp;<a class="sort_align" ng-click="sort_by('purchaseOrderNumber');"><i class="fa " ng-class="{'fa-sort': predicate!='purchaseOrderNumber','fa-sort-asc': predicate=='purchaseOrderNumber' && reverse===false,'fa-sort-desc': predicate=='purchaseOrderNumber' && reverse===true}"></i></a></th>
+							<th >{{ovcLabel.returnReceipt.list.store}}&nbsp;<a class="sort_align" ng-click="sort_by('recipient');"><i class="fa " ng-class="{'fa-sort': predicate!='recipient','fa-sort-asc': predicate=='recipient' && reverse===false,'fa-sort-desc': predicate=='recipient' && reverse===true}"></i></a></th>
+							<!--<th>{{translation.asn_service.noOfSkus}}&nbsp;<a class="sort_align" ng-click="sort_by('numberOfSKU');"><i class="fa " ng-class="{'fa-sort': predicate!='numberOfSKU','fa-sort-asc': predicate=='numberOfSKU' && reverse===false,'fa-sort-desc': predicate=='numberOfSKU' && reverse===true}"></i></a></th> -->
+							<th>{{ovcLabel.returnReceipt.list.qty}}</th>
+						<!-- 	<th >{{translation.returns.total_wac}}</th> -->
+							<th ng-if="userRolePermissions.permissions.viewPurchasePrice">{{ovcLabel.returnReceipt.list.totalcost}}&nbsp;<a class="sort_align" ng-click="sort_by('totalPoCost');"><i class="fa " ng-class="{'fa-sort': predicate!='totalPoCost','fa-sort-asc': predicate=='totalPoCost' && reverse===false,'fa-sort-desc': predicate=='totalPoCost' && reverse===true}"></i></a></th>
+							<th>{{ovcLabel.returnReceipt.list.created}}&nbsp;<a class="sort_align" ng-click="sort_by('created');"><i class="fa " ng-class="{'fa-sort': predicate!='created','fa-sort-asc': predicate=='created' && reverse===false,'fa-sort-desc': predicate=='created' && reverse===true}"></i></a></th>
+							
+							<th data-hidePdf="true" class="hideExport" ng-if="userRolePermissions.orderPermissions.copyReturns">{{ovcLabel.returnReceipt.list.action}}</th>
+						</thead>
+						<tbody>
+							
+							<tr ng-repeat="data in list = (list  | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" ng-class="((data.purchaseOrderType)=='RPL')? 'class-yellow' : 'yellow'">
+							
+								<td id="returns_order"><a  ui-sref="ovc.returns-edit({returnid:data._id})" >
+										{{data.orderNumber}}
+									   </a>
+								</td>
+								<td>{{data.ordertype}}</td>
+								<td>{{data.orderstus}}</td>
+								<td>{{data.purchaseOrderNumber}}</td>
+								<td>{{data.recipient}}</td>
+								<!-- <td>{{!data.numberOfSKU ? 0 : data.numberOfSKU}}</td>--> 
+								<td >{{data.numberOfProducts}}</td>
+								<!-- <td >{{data.totalPoCost}}</td>  -->
+								<td  ng-if="userRolePermissions.permissions.viewPurchasePrice">{{data.currency}}{{data.totalPoCost | number : 2}}</td>
+								<td>{{data.created | datetimeForm}}</td>
+								
+								
+								<td data-hidepdf="true"  class="hideExport" ng-if="userRolePermissions.orderPermissions.copyReturns"><button ng-disabled="!userRolePermissions.orderPermissions.modifyReturns" href="" ng-click="porder_copy(data._id)" class="btn btn-primary del_i"  ><i class="fa fa-files-o"></i></button>
+									
+								</td>
+							</tr>
+
+						</tbody>
+						</table>
+					</div>
+					<div  id="ovcError" class="col-md-12 panel-body" ng-if="filteredItems == 0">
+						<div class="col-md-12">
+							<h4>{{ovcLabel.returnReceipt.list.noreturns}}</h4>
+						</div>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems > 0">    
+					<div class="panel-body fliter_i">
+
+						<uib-pagination total-items="filteredItems"  items-per-page ="entryLimit"  ng-model="currentPage"  max-size = "5"  boundary-links="true" ng-change="" ></uib-pagination>
+						<div class="col-md-3 pglimit">
+						<div class="pg_limit page_size_drdn">
+								<label>{{ovcLabel.returnReceipt.list.pagesize}}:</label>
+								<select  convert-to-number ng-model="entryLimit" class="pgsizes">
+									<option>10</option>
+									<option>20</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+							</div>
+						</div>
+						</div>
+					</div>
+					
+				</div>
+				
+            </div>
+            <!-- /.panel-body -->
+        </div>
+		</div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+</div>
